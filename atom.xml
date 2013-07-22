@@ -9,9 +9,9 @@ layout: nil
     <updated>{{ site.time | date_to_xmlschema }}</updated>
     <id>http://gianarb.github.io</id>
     <author>
-        <name>Marco Pivetta</name>
-        <uri>http://ocramius.github.io/</uri>
-        <email>ocramius@gmail.com</email>
+        <name>Gianluca Arbezzano</name>
+        <uri>http://gianarb.github.io/</uri>
+        <email>gianarb92@gmail.com</email>
     </author>
     {% for post in site.posts %}
     <entry>
