@@ -4,8 +4,8 @@ layout: nil
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Gianluca Arbezzano - GianArb</title>
-    <link href="http://ocramius.github.io/atom.xml" rel="self"/>
-    <link href="http://ocramius.github.io/"/>
+    <link href="http://gianarb.github.io/atom.xml" rel="self"/>
+    <link href="http://gianarb.github.io/"/>
     <updated>{{ site.time | date_to_xmlschema }}</updated>
     <id>http://gianarb.github.io</id>
     <author>
