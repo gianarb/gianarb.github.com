@@ -136,7 +136,7 @@ ul.posts span {
 .post pre {
   border: 1px solid #ddd;
   background-color: #eef;
-  padding: 0 .4em;
+  padding: 5px;
 }
 
 .post ul, .post ol {
