@@ -135,7 +135,7 @@ ul.posts span {
 /* standard */
 .post pre {
   border: 1px solid #ddd;
-  background-color: #eef;
+  background-color: #000000;
   padding: 5px;
 }
 
@@ -145,7 +145,7 @@ ul.posts span {
 
 .post code {
   border: 1px solid #ddd;
-  background-color: #eef;
+  background-color: #000000;
   padding: 0 .2em;
 }
 

@@ -14,24 +14,24 @@ Zend Framework 2 implement a [Logger Component](https://github.com/zendframework
 {% highlight php %}
 <?php
 return array(
-  'service_manager' => array(
-    'abstract_factories' => array(
-      'Zend\Log\LoggerAbstractServiceFactory',
-    ),
-  ),
-  'log' => array(
-      'Log\App' => array(
-        'writers' => array(
-      	  array(
-    				'name' => 'stream',
-   					'priority' => 1000,
-   					'options' => array(
-    					'stream' => 'data/app.log',
-    				),
-    			),
-    		),
-   		),
-    ),
+	'service_manager' => array(
+		'abstract_factories' => array(
+			'Zend\Log\LoggerAbstractServiceFactory',
+		),
+	),
+	'log' => array(
+		'Log\App' => array(
+			'writers' => array(
+				array(
+					'name' => 'stream',
+					'priority' => 1000,
+					'options' => array(
+						'stream' => 'data/app.log',
+					),
+				),
+			),
+		),
+	),
 );
 {% endhighlight %}
 [LoggerAbstractServiceFactory](https://github.com/zendframework/zf2/blob/master/library/Zend/Log/LoggerServiceFactory.php) is a Service Factory, as an example,  into service Manager class Logger and will be used in the whole application. Log/App is the name of a single logger, and writer is an adapter that is used to choose the method of writing, in this case everything is written to file, but you can use a DB adapter and write your log into database.
@@ -40,12 +40,12 @@ return array(
 <?php
 namespace GianArb\Controller;
 class GeneralController
-  extends AbastractActionController
+	extends AbastractActionController
 {
-  public function testAction(){
-    $logger = $this->getServiceLocator()->get('Log\App');
-    $logger->log(\Zend\Log\Logger::INFO, "This is a little log!");
-  }
+	public function testAction(){
+		$logger = $this->getServiceLocator()->get('Log\App');
+		$logger->log(\Zend\Log\Logger::INFO, "This is a little log!");
+	}
 }
 {% endhighlight %}
 
@@ -54,14 +54,14 @@ With this configuration Log\App writes a string into data/app.log file, with INF
 {% highlight php %}
 <?php
 protected $priorities = array(
-  self::EMERG  => 'EMERG',
-  self::ALERT  => 'ALERT',
-  self::CRIT   => 'CRIT',
-  self::ERR    => 'ERR',
-  self::WARN   => 'WARN',
-  self::NOTICE => 'NOTICE',
-  self::INFO   => 'INFO',
-  self::DEBUG  => 'DEBUG',
+	self::EMERG  => 'EMERG',
+	self::ALERT  => 'ALERT',
+	self::CRIT   => 'CRIT',
+	self::ERR    => 'ERR',
+	self::WARN   => 'WARN',
+	self::NOTICE => 'NOTICE',
+	self::INFO   => 'INFO',
+self::DEBUG  => 'DEBUG',
 );
 {% endhighlight %}
 
