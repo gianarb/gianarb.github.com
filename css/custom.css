@@ -7,3 +7,11 @@ h1 {
 .follow-me {
 	margin-bottom: 10px;
 }
+
+.site {
+  font-size: 115%;
+  text-align: justify;
+  width: 100%;
+  margin: 3em auto 2em;
+  line-height: 1.5em;
+}
