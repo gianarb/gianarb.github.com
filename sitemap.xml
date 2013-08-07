@@ -1,0 +1,24 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	{% for post in site.posts %}
+		<url>
+			<loc>http://gianarb.github.io{{ post.url }}</loc>
+			<lastmod>{{ post.date }}</lastmod>
+
+			{% if post.changefreq %}
+				<changefreq>{{ post.changefreq}}</changefreq>
+			{% else %}
+				<changefreq>monthly</changefreq>
+			{% endif %}
+
+			{% if post.priority %}
+				<priority>{{ post.priority }}</priority>
+			{% else %}
+				<priority>0.8</priority>
+			{% endif %}
+		</url>
+	{% endfor %}
+</urlset> 

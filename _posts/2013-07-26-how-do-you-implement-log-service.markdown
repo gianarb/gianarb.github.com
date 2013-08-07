@@ -5,6 +5,8 @@ date:   2013-07-26 23:08:27
 categories: php
 tags: zf2, logger, log, zend framework, service manager
 summary: Implementation of logger service in Zend Framework 2
+priority: 0.6
+changefreq: yearly
 ---
 
 A log system is an essential element for any application. It is a way to check the status and use of the application. For a basic implementation you can refer to the  fig-stanrdars organization [PSR-3](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md) article, that describes th elogger interface.

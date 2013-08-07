@@ -5,6 +5,7 @@ date:   2013-07-22 23:08:27
 categories: me
 tags: me, developer, presentation, gianarb
 summary: Gianluca Arbezzano, developer, Italian, why open this blog?
+changefreq: monthly
 ---
 
 Hi! I'm Gianluca aka GianArb, I'm web developer, works with Php, SQL and noSql databases and in this time I'm 
