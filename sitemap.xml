@@ -6,7 +6,7 @@ layout: nil
 	{% for post in site.posts %}
 		<url>
 			<loc>http://gianarb.github.io{{ post.url }}</loc>
-			<lastmod>{{ post.date }}</lastmod>
+			<lastmod>{{ post.date | date_to_xmlschema}}</lastmod>
 
 			{% if post.changefreq %}
 				<changefreq>{{ post.changefreq}}</changefreq>
