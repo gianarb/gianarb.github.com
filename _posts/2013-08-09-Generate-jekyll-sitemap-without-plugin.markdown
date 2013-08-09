@@ -11,14 +11,10 @@ priority: 1
 This blog is a static blog and uses GitHub pages, GitHub pages are generally deployed using Jekyll.
 
 ### How can you generate a sitemap without Jekyll plugin?
-This gist answers your question.
-
-gist 6172377
-
+This [gist](https://gist.github.com/GianArb/6172377) answers your question.
 I use some post values: changefreq, date and priority, if you don't set any specific values for them default values are used that are, 0.8 for priority and month for frequency.
-
 In a single post you add this params for use correct params!
-{% highlight %}
+{% highlight php %}
 ---
 layout: post
 title:  "Why this blog?"
