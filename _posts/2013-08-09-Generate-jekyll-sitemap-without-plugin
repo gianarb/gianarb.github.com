@@ -13,7 +13,7 @@ This blog is a static blog and uses GitHub pages, GitHub pages are generally dep
 ### How can you generate a sitemap without Jekyll plugin?
 This gist answers your question.
 
-https://gist.github.com/GianArb/6172377
+gist 6172377
 
 I use some post values: changefreq, date and priority, if you don't set any specific values for them default values are used that are, 0.8 for priority and month for frequency.
 
@@ -31,3 +31,5 @@ changefreq: monthly
 {% endhighlight %}
 
 If you want to know more about the Sitemap Protocol read [this](http://www.sitemaps.org/protocol.html).
+
+[Marco](https://github.com/MarcoDeBortoli) thanks for English! :)
