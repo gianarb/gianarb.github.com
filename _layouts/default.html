@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/css/syntax.css">
         <link rel="stylesheet" href="/css/main.css">
         <link rel="stylesheet" href="/css/custom.css">
+        <link rel="stylesheet" href="/css/emojify.min.css">
         <script type="text/javascript">var switchTo5x=true;</script>
         <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
         <script type="text/javascript">stLight.options({publisher: "e0060b1d-5c02-490d-9a6e-e8b6c570d686", doNotHash:
@@ -44,4 +45,16 @@
           </div>
         </div> <!-- /container -->
     </body>
+    <script src="/js/emojify.min.js"></script>
+    <script>
+      emojify.setConfig({
+            emoticons_enabled: true,
+            people_enabled: true,
+            nature_enabled: true,
+            objects_enabled: true,
+            places_enabled: true,
+            symbols_enabled: true
+      });
+      emojify.run();
+</script>
 </html>
