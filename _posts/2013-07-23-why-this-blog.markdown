@@ -25,7 +25,7 @@ Chef, Vagrant, Composer, TDD....
 Community and Open Source are my pessions! Free code is a good method for to put oneself to the test, my street is very
 long but this is my [Github Account](http://github.com/GianArb)!
 
-## This is my face!
+### This is my face!
 <div style="text-align:center;">
 <img src="/img/posts/2013-07-19-why-this-blog.png" width="90%" />
 </div>
