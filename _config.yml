@@ -1,4 +1,4 @@
-name: GianArb's Blog
+name: "GianArb's Blog"
 pygments: true
 auto: true
 permalink: /blog/:title
