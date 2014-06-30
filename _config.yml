@@ -2,4 +2,5 @@ name: "GianArb's Blog"
 pygments: true
 auto: true
 permalink: /blog/:title
-MY_URL: http://gianarb.github.io
+MY_URL: http://gianarb.it
+markdown: kramdown
