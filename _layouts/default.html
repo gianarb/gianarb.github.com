@@ -5,46 +5,30 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{ page.title }}</title>
         <meta name="viewport" content="width=device-width">
-        <link href="/css/bootstrap-combined.min.css" rel="stylesheet"/>
-        <link href="/js/google-code-prettify/prettify.css" rel="stylesheet"/>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/syntax.css">
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/custom.css">
         <link rel="stylesheet" href="/css/emojify.min.css">
-        <script type="text/javascript">var switchTo5x=true;</script>
-        <script type="text/javascript" src="/js/buttons.js"></script>
-        <script type="text/javascript">stLight.options({publisher: "e0060b1d-5c02-490d-9a6e-e8b6c570d686", doNotHash:
-            false, doNotCopy: false, hashAddressBar: false});</script>
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			ga('create', 'UA-42585632-1', 'gianarb.github.io');
-			ga('send', 'pageview');
-		</script>
+        {% include ga.html %}
     </head>
+
     <body>
-
+        {% include navigator.html %}
         <div class="container">
-            <div class="site">
-            <div class="header">
-                <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-          </div>
-            {% include navigator.html %}
-
+          <div class="starter-template">
             {{ content }}
-
             <div class="tday">
-                <h1>Tweet of the day</h1>
-                <blockquote align="center" class="twitter-tweet" lang="it"><p><a href="https://twitter.com/GianArb">@GianArb</a> e i moduli ZF2 <a href="https://twitter.com/zfdayit">@zfdayit</a> <a href="http://t.co/uKPB3FqI9C">pic.twitter.com/uKPB3FqI9C</a></p>&mdash; PUG Torino (@PUGTorino) <a href="https://twitter.com/PUGTorino/statuses/431726343404130304">7 Febbraio 2014</a></blockquote>
+                <h3>Tweet of the day</h3>
+                <blockquote align="center" class="twitter-tweet" lang="en"><p>[<a href="http://t.co/Ve5Yt6E2On">http://t.co/Ve5Yt6E2On</a>] <a href="https://t.co/5dlqjKoAOH">https://t.co/5dlqjKoAOH</a> Gianluca Arbezzano - Cname gianarb.it&#10;&#10;goodbye wordpress</p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/statuses/483546728159649792">June 30, 2014</a></blockquote>
                 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
             {% include footer.html %}
           </div>
-        </div> <!-- /container -->
+        </div>
     </body>
+
     <script src="/js/emojify.min.js"></script>
     <script>
       emojify.setConfig({
@@ -56,5 +40,7 @@
             symbols_enabled: true
       });
       emojify.run();
-</script>
+      </script>
+      <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </html>
