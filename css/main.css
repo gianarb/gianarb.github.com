@@ -1,3 +1,6 @@
+body {
+    font-family: monospace, Arial, serif;
+}
 div.starter-template {
     margin-top: 7%;
 }
