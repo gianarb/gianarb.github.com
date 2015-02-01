@@ -1,5 +1,4 @@
 name: "GianArb's Blog"
-highlighter: true
 auto: true
 permalink: /blog/:title
 MY_URL: http://gianarb.it
