@@ -8,7 +8,6 @@ summary: "Wellcome Zend Framework 2.4.0.. New Release for this PHP framework"
 priority: 1
 ---
 Good morning Zend Framework 2.4.0!
-lalal
 
 This is a new minor release, it contains a lot of news, this is the [complete lists](https://github.com/zendframework/zf2/pulls?q=is%3Aclose+is%3Apr+milestone%3A2.4.0)
 
