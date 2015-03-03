@@ -11,14 +11,14 @@ changefreq: yearly
 Today all frameworks are **modulable** but it isn't just a beautiful word, behind it there are a lot of concepts and ideas:
 
 * The modularity helps you to reuse parts of code in different projects
-* Every component is indeipendent so you work on single part of code
+* Every component is indipendent so you work on single part of code
 * Every **component** solves a specific problem... it's a beautiful concept that helps you with maintainance!
 * other stuffs..
 
 As you can imagine there is a drawback, all this requires a big effort.  
 Ideally every component requires personal circle of release, repository, commits, pull requests, travis conf, documentation etc. etc.
 
-Anyway sereral shorcuts are available. For instance, *git subtree* could help you in this war but the key is this: you need an agreement to win.  
+Anyway several shorcuts are available. For instance, *git subtree* could help you in this war but the key is this: you need an agreement to win.  
 
 Zend Framwork Community choose another street, `Zend\Mvc` in this moment required:
 {% highlight json %}
