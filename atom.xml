@@ -7,18 +7,18 @@ layout: null
     <link href="http://gianarb.github.io/atom.xml" rel="self"/>
     <link href="http://gianarb.github.io/"/>
     <updated>{{ site.time | date_to_xmlschema }}</updated>
-    <id>http://gianarb.github.io</id>
+    <id>http://gianarb.it</id>
     <author>
         <name>Gianluca Arbezzano</name>
-        <uri>http://gianarb.github.io/</uri>
+        <uri>http://gianarb.it</uri>
         <email>gianarb92@gmail.com</email>
     </author>
     {% for post in site.posts %}
     <entry>
         <title>{{ post.title }}</title>
-        <link href="http://gianarb.github.io{{ post.url }}"/>
+        <link href="http://gianarb.it{{ post.url }}"/>
         <updated>{{ post.date | date_to_xmlschema }}</updated>
-        <id>http://gianarb.github.io{{ post.id }}</id>
+        <id>http://gianarb.it{{ post.id }}</id>
         <content type="html">{{ post.content | xml_escape }}</content>
     </entry>
     {% endfor %}
