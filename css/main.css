@@ -9,6 +9,16 @@ p.meta {
     color: #e0dede;
 }
 
+a:link, a:visited {
+  color: green;
+  text-decoration:none;
+}
+
+a:hover {
+  color: #00b200;
+  text-decoration:none;
+}
+
 .error-template {padding: 40px 15px;text-align: center;}
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
@@ -25,3 +35,41 @@ p.meta {
 .footer p.text-muted {
     margin: 14px 0 14px 0;
 }
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+#slogan .fa-heart-o {
+  color: green;
+}
+
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
+
+.footer {
+    position: absolute;
+    width:100%;
+    bottom: 0;
+    display:none;
+    background-color: #222;
+    border-color: #080808;
+}
+
+.footer p.text-muted {
+    margin: 14px 0 14px 0;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+a > .fa {
+  padding-left: 10px;
+}
+
