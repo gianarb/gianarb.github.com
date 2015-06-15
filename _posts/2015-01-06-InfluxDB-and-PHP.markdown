@@ -12,7 +12,7 @@ Influx DB is [time series database](http://en.wikipedia.org/wiki/Time_series_dat
 It supports SQL like queries and it has different entry points, REST API (tcp protocol) and UDP.
 
 <div class="row">
-<div class="col-md-4 col-md-offset-3"><img class="img-responsive" src="http://influxdb.com/images/influxdb-light400.png"></div>
+<div class="col-md-4 col-md-offset-3"><img class="img-responsive" src="/img/influxdb.png"></div>
 </div>
 We wrote a [sdk](https://github.com/corley/influxdb-php-sdk) to manage integration between Influx and PHP.
 
