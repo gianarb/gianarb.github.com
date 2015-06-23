@@ -8,6 +8,9 @@ summary: ZF\Console is a component written by zf-campus and Apigility organizati
 priority: 0.6
 changefreq: yearly
 ---
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Blogpost about console-skeleton-app for your console application <a href="http://t.co/WuVq0GZlxE">http://t.co/WuVq0GZlxE</a> <a href="https://twitter.com/hashtag/PHP?src=hash">#PHP</a> <a href="https://twitter.com/hashtag/ZF?src=hash">#ZF</a> <a href="https://twitter.com/hashtag/console?src=hash">#console</a> <a href="https://twitter.com/hashtag/develop?src=hash">#develop</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/613292048708468736">June 23, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <div class="alert alert-success" role="alert"><strong>Github: </strong>Article written about <a target="_blank" href="https://github.com/gianarb/console-skeleton-app">console-skeleton-app</a> 1.0.0</div>
 
 I'm writing a skeleton app to build console/bash application in PHP.  
