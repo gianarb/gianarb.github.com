@@ -8,24 +8,26 @@ summary: ZF\Console is a component written by zf-campus and Apigility organizati
 priority: 0.6
 changefreq: yearly
 ---
-I'm writing a skeleton app to build console/bash application in PHP.  
-This project is very easy and it depends from ZF\Console a zfcampus project and Zend\Console builds by ZF community.  
-In this moment it's only a blog of this two modules but in the future I have a to do list.  
+<div class="alert alert-success" role="alert"><strong>Github: </strong>Article written about <a target="_blank" href="https://github.com/gianarb/console-skeleton-app">console-skeleton-app</a> 1.0.0</div>
 
-* Integration with container system to manage dependence injaction
+I'm writing a skeleton app to build console/bash application in PHP.  
+This project is very easy and it depends on ZF\Console a zfcampus project and Zend\Console builds by ZF community.  
+I have a todo list for the future but for the time being it's just a blog post about these two modules.  
+
+* Integration with container system to manage dependency injection
 * Docs to test your command
-* Use case and different implementation
+* Use cases and different implementations
 
 ## ZF\Console and other components
 
 * [ZF\Console](https://github.com/zfcampus/zf-console) is maintained by zfcampus and it is used by Apigility
-* [zendframework\zend-console](https://github.com/zendframework/zend-console) is maintained by zendframework, all info into the [docs](http://framework.zend.com/manual/current/en/modules/zend.console.introduction.html)
+* [zendframework\zend-console](https://github.com/zendframework/zend-console) is maintained by zendframework, all the info are in the [documantation](http://framework.zend.com/manual/current/en/modules/zend.console.introduction.html)
 
 ## Tree
 
-This is my foldering's proposal, there are three entrypoint into the `bin` directory, bash, php and bat for Window.  
-I use composer to manage dependencies and I have included .lock file because this project is an APPLICATION not a library..  
-`conf` directory in this moment contains only routing definitions but in the future we can add services and other configurations.  
+This is my folders structure proposal, there are three entrypoint in the `bin` directory, one for bash, one for php and a bat for Window.  
+I use composer to manage my dependencies and I included .lock file because this project is an APPLICATION not a library..  
+`/config` directory contains only routing definitions but in the future we can add services and other configurations.  
 `src/Command/` contains my commands.  
 
 {% highlight bash %}
@@ -46,9 +48,9 @@ I use composer to manage dependencies and I have included .lock file because thi
 
 ## Bootstrap
 
-Applications' entrypoint, in this moment is very simple and it requires features..  
-In first we can move on the version into the parameters.php configuration file, same stuff for 'app' the application's name..  
-Ro load configurations from different sources I will use `Zend\Config`, very good component IMO.
+The Application's entrypoints are just example and they require few changes.
+First we have to change the version in the parameters.php configuration file and also change the application name `'app'` to what fits.  
+To load configurations from different sources I will use the well known `Zend\Config` component.
 
 {% highlight php %}
 <?php
@@ -73,7 +75,7 @@ exit($exit);
 {% endhighlight %}
 
 ## Routes
-`config/routes.php` contains router configurations this is an example but you can see all options [here](https://github.com/zfcampus/zf-console#defining-console-routes).
+`config/routes.php` contains router configurations. This is just an example but you can see all options [here](https://github.com/zfcampus/zf-console#defining-console-routes).
 
 {% highlight php %}
 <?php
@@ -90,7 +92,7 @@ return [
 ## Command
 
 Basic command to wish you a good day!  
-I have choised that a command doesn't extends any class because in my opinion is a good way to impart readability and simplicity.
+I decided that a command doesn't extends any class because in my opinion is a good way to impart readability and simplicity.
 
 {% highlight php %}
 <?php
@@ -110,5 +112,11 @@ class Hello
 {% endhighlight %}
 
 ## Troubleshooting and tricks
-* OSx return an error because zf-console use a function blocked into the mac os php installation.. Follow [#22](https://github.com/zfcampus/zf-console/pull/22)
-* [See this article](http://www.sitepoint.com/packaging-your-apps-with-phar/) to package your application in a phar archive.. 
+* OSx return an error because zf-console use a function blocked into the mac os php installation. Have a look at  PR[#22](https://github.com/zfcampus/zf-console/pull/22)
+* See [this](http://www.sitepoint.com/packaging-your-apps-with-phar/) article to package your application in a phar archive.. 
+
+<br/>
+<br/>
+<br/>
+
+<div class="well"><a target="_blank" href="https://twitter.com/__debo">@__debo</a> thanks for trying to fix my bad English</div>
