@@ -38,8 +38,7 @@ In this implementation I build network configuration and I create one instance o
 `Parameters` key is the list of external parameters that i can use to configure my template for example database and ec2 key pair, my root's password..  
 `Resources` key contains description of all actors of this infrastructure.  
 
-
-{% highlight json %}
+```json
 {
   "Parameters" : {
     "VPCName" : {
@@ -320,7 +319,7 @@ In this implementation I build network configuration and I create one instance o
     }
   }
 }
-{% endhighlight %}
+```
 
 ## Conclusion
 You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.  
@@ -335,7 +334,7 @@ This approach in my opinion is very powerful because you can versionare you infr
 ## Trick
 This chapter is insterestd because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with `db.app.staging`.
 
-{% highlight json %}
+```json
 "DatabaseRecordSet" : {
   "Type" : "AWS::Route53::RecordSet",
   "Properties" : {
@@ -351,4 +350,4 @@ This chapter is insterestd because it creates a RecordSet to map a CNAME DNS in 
      ]
   }
 }
-{% endhighlight %}
+```
