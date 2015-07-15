@@ -31,12 +31,12 @@ This solution could helps you to down cost.
 
 ## Current infrastructure
 
-![RDS and EC2 infrastructure](/img/cloudformation-staging/infra.jpg)  
+![RDS and EC2 infrastructure](/img/cloudformation-staging/infra.jpg)
 
-This is my template to build a simple application Frontend + MySQL (RDS).  
-In this implementation I build network configuration and I create one instance of RDS and one EC2 (my frontend).  
-`Parameters` key is the list of external parameters that i can use to configure my template for example database and ec2 key pair, my root's password..  
-`Resources` key contains description of all actors of this infrastructure.  
+This is my template to build a simple application Frontend + MySQL (RDS).
+In this implementation I build network configuration and I create one instance of RDS and one EC2 (my frontend).
+`Parameters` key is the list of external parameters that i can use to configure my template for example database and ec2 key pair, my root's password..
+`Resources` key contains description of all actors of this infrastructure.
 
 ```json
 {
@@ -322,16 +322,94 @@ In this implementation I build network configuration and I create one instance o
 ```
 
 ## Conclusion
-You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.  
+You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.
 You can logged into the web with key-pair chosen during the creation flow (default ga-eu) and I set default this mysql credential:
 
 * user gianarb
 * password test1234
 
-But you can change it before run this template because they are `Parameters`.  
+But you can change it before run this template because they are `Parameters`.
 This approach in my opinion is very powerful because you can versionare you infrastructure and you can delete and restore its quickly because if you delete cloudformation stack it rallback all resources, it is very easy!
 
 ## Trick
+
+Parameters node create a form into the AWS CloudFormation console to choose a lot of different variable values for example name of intances or key-pair to log in your EC2.
+
+```json
+{
+  "Parameters" : {
+    "VPCName" : {
+      "Type" : "String",
+      "Default" : "staging",
+      "Description" : "VPC name"
+    },
+    "ProjectName" : {
+      "Type" : "String",
+      "Default" : "app",
+      "Description" : "Project name"
+    },
+    "WebKey" : {
+      "Type" : "String",
+      "Default" : "web-key",
+      "Description" : "Ssh key to log into the web instances"
+    }
+}
+```
+
+<hr class="style-two">
+
+Resources node contains all elements of your infrastructure, EC2, RDS, VCP.. You can use the parameteters with a simple `Ref Key`.
+es. `[{"Key": "Name", "Value": "ProjectName"}]` resume the name of project specify into the parameter form.
+
+```json
+{
+  "Resources" : {
+    "Staging": {
+       "Type" : "AWS::EC2::VPC",
+       "Properties" : {
+          "CidrBlock" : "10.15.0.0/16",
+          "EnableDnsSupport" : true,
+          "EnableDnsHostnames" : true,
+          "InstanceTenancy" : "default",
+          "Tags" : [{"Key": "Name", "Value": {"Ref": "VPCName"}}]
+       }
+    },
+    "DatabaseSubnet1": {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "AvailabilityZone" : "eu-west-1a",
+        "CidrBlock" : "10.15.1.0/28",
+        "MapPublicIpOnLaunch" : true,
+        "VpcId": {
+          "Ref" : "Staging"
+        },
+        "Tags": [{"Key": "Name", "Value": "db-1a"}]
+      }
+    }
+}
+```
+
+<hr class="style-two">
+
+In your template you can describe VPC and create its subnet. You can resume specify resource and you can use it to build another
+```json
+WebSubnet1": {
+  "Type" : "AWS::EC2::Subnet",
+  "Properties" : {
+    "AvailabilityZone" : "eu-west-1a",
+    "CidrBlock" : "10.15.0.8/28",
+    "MapPublicIpOnLaunch" : true,
+    "VpcId": {
+      "Ref" : "Staging"
+    },
+    "Tags" : [{"Key": "Name", "Value": "web-1a"}]
+  }
+},
+```
+In this example I resumed `Staging` VPC to build its subnet.
+
+<hr class="style-two">
+
 This chapter is insterestd because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with `db.app.staging`.
 
 ```json
