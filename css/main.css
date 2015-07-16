@@ -23,6 +23,26 @@ a:hover {
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
 
+.post h2
+{
+    color: #00B200;
+    font-size:1.5em;
+    text-shadow: 2px 2px 8px #018401;
+}
+.post h3
+{
+    color: #00B200;
+    font-size:1.2em;
+}
+.post h4
+{
+    font-size:1.0em;
+}
+.post h5
+{
+    font-size:0.9em;
+}
+
 .footer {
     position: absolute;
     width:100%;
