@@ -12,21 +12,21 @@ changefreq: yearly
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Staging Environment
-There are few environment during my developer workflow, today I choice a little example:
+There are few environments during my developer workflow, today I chose a little example:
 
-* Production enviroment exists always, it runs stable application and you can not use its for your test.
+* Production enviroment always exists, it runs the stable application and you can not use it for your test.
 * **Staging** enviroment is a "pre-production" state.
-* Develop enviroment is instable and it run new features and fixed here there are the work of all team but it's not ready to go in production.
+* Develop enviroment is instable and it runs new features and fixes, here there's the work of all team but it's not ready to go in production.
 
 ![Staging graph](/img/cloudformation-staging/staging.jpg)
 
-Staing environment in my opinion coud be "volatile" we use it when ours product is ready to go in production for the last time it were unused. Maybe this statement isn't real in your work but if you think a little team of consultants that
- work on different project maybe this worlds have a sense.
+Staging environment in my opinion could be "volatile" version, we use it when our product is ready to go in production for the last time it was unused. Maybe this statement isn't real in your work but if you think a little team of consultants that
+ work on different projects maybe this words have a sense.
 
 ## AWS Cloudformation
-CloudCormaton is an AWS service that help you to orchestate all AWS service, you can write a template in JSON and you can use it to up an infrastructure with one click.
-This soluton helps me  to build and destroy this environment and we can pay it only if it's necessary, if you use a `stagin env == production env` it can be very very expensive.
-This solution could helps you to down cost.
+CloudFormation is an AWS service that helps you to orchestate all AWS services, you can write a template in JSON and you can use it to create an infrastructure with one click.
+This solution helps me  to build and destroy this environment and we can pay it only if it's necessary, if you use a `stagin env == production env` it can be very very expensive.
+This solution could help you to down cost.
 
 
 ## Current infrastructure
@@ -35,7 +35,7 @@ This solution could helps you to down cost.
 
 This is my template to build a simple application Frontend + MySQL (RDS).
 In this implementation I build network configuration and I create one instance of RDS and one EC2 (my frontend).
-`Parameters` key is the list of external parameters that i can use to configure my template for example database and ec2 key pair, my root's password..
+`Parameters` key is the list of external parameters that I can use to configure my template, for example database and EC2 key pair, my root's password..
 `Resources` key contains description of all actors of this infrastructure.
 
 ```json
@@ -323,17 +323,17 @@ In this implementation I build network configuration and I create one instance o
 
 ## Conclusion
 You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.
-You can logged into the web with key-pair chosen during the creation flow (default ga-eu) and I set default this mysql credential:
+You can log into the web interface with key-pair chosen during the creation flow (default ga-eu) and I set default this mysql credential:
 
 * user gianarb
 * password test1234
 
-But you can change it before run this template because they are `Parameters`.
-This approach in my opinion is very powerful because you can versionare you infrastructure and you can delete and restore its quickly because if you delete cloudformation stack it rallback all resources, it is very easy!
+But you can change it before running this template because they are `Parameters`.
+This approach in my opinion is very powerful because you can start versioning your infrastructure and you can delete and restore it quickly because if you delete the cloudformation stack it rollbacks all resources, it is very easy!
 
 ## Trick
 
-Parameters node create a form into the AWS CloudFormation console to choose a lot of different variable values for example name of intances or key-pair to log in your EC2.
+Parameters node create a form into the AWS CloudFormation console to choose a lot of different variable values, for example name of intances or key-pair to log in your EC2.
 
 ```json
 {
@@ -359,7 +359,7 @@ Parameters node create a form into the AWS CloudFormation console to choose a lo
 <hr class="style-two">
 
 Resources node contains all elements of your infrastructure, EC2, RDS, VCP.. You can use the parameteters with a simple `Ref Key`.
-es. `[{"Key": "Name", "Value": "ProjectName"}]` resume the name of project specify into the parameter form.
+es. `[{"Key": "Name", "Value": "ProjectName"}]` describe the name of the specific project into the parameter form.
 
 ```json
 {
@@ -391,7 +391,7 @@ es. `[{"Key": "Name", "Value": "ProjectName"}]` resume the name of project speci
 
 <hr class="style-two">
 
-In your template you can describe VPC and create its subnet. You can resume specify resource and you can use it to build another
+In your template you can describe VPC and create its subnet. You can also describe the specific resource and you can use it to build another
 ```json
 WebSubnet1": {
   "Type" : "AWS::EC2::Subnet",
@@ -410,7 +410,7 @@ In this example I resumed `Staging` VPC to build its subnet.
 
 <hr class="style-two">
 
-This chapter is insterestd because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with `db.app.staging`.
+This chapter is insteresting because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with `db.app.staging`.
 
 ```json
 "DatabaseRecordSet" : {
