@@ -36,7 +36,7 @@ In this implementation I build network configuration and I create one instance o
 `Parameters` key is the list of external parameters that I can use to configure my template, for example database and EC2 key pair, my root's password..
 `Resources` key contains description of all actors of this infrastructure.
 
-```json
+{% highlight json %}
 {
   "Parameters" : {
     "VPCName" : {
@@ -317,7 +317,7 @@ In this implementation I build network configuration and I create one instance o
     }
   }
 }
-```
+{% endhighlight %}
 
 ## Conclusion
 You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.
@@ -333,7 +333,7 @@ This approach in my opinion is very powerful because you can start versioning yo
 
 Parameters node create a form into the AWS CloudFormation console to choose a lot of different variable values, for example name of intances or key-pair to log in your EC2.
 
-```json
+{% highlight json %}
 {
   "Parameters" : {
     "VPCName" : {
@@ -352,14 +352,14 @@ Parameters node create a form into the AWS CloudFormation console to choose a lo
       "Description" : "Ssh key to log into the web instances"
     }
 }
-```
+{% endhighlight %}
 
 <hr class="style-two">
 
 Resources node contains all elements of your infrastructure, EC2, RDS, VCP.. You can use the parameteters with a simple `Ref Key`.
 es. `[{"Key": "Name", "Value": "ProjectName"}]` describe the name of the specific project into the parameter form.
 
-```json
+{% highlight json %}
 {
   "Resources" : {
     "Staging": {
@@ -385,12 +385,12 @@ es. `[{"Key": "Name", "Value": "ProjectName"}]` describe the name of the specifi
       }
     }
 }
-```
+{% endhighlight %}
 
 <hr class="style-two">
 
 In your template you can describe VPC and create its subnet. You can also describe the specific resource and you can use it to build another
-```json
+{% highlight json %}
 WebSubnet1": {
   "Type" : "AWS::EC2::Subnet",
   "Properties" : {
@@ -403,14 +403,14 @@ WebSubnet1": {
     "Tags" : [{"Key": "Name", "Value": "web-1a"}]
   }
 },
-```
+{% endhighlight %}
 In this example I resumed `Staging` VPC to build its subnet.
 
 <hr class="style-two">
 
 This chapter is insteresting because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with `db.app.staging`.
 
-```json
+{% highlight json %}
 "DatabaseRecordSet" : {
   "Type" : "AWS::Route53::RecordSet",
   "Properties" : {
@@ -426,7 +426,7 @@ This chapter is insteresting because it creates a RecordSet to map a CNAME DNS i
      ]
   }
 }
-```
+{% endhighlight %}
 
 <br/>
 <br/>

@@ -3,4 +3,4 @@ auto: true
 permalink: /blog/:title
 MY_URL: http://gianarb.it
 highlighter: rouge
-markdown: rdiscount
+markdown: kramdown
