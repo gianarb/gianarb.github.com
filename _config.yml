@@ -2,5 +2,4 @@ name: "GianArb's Blog"
 auto: true
 permalink: /blog/:title
 MY_URL: http://gianarb.it
-highlighter: rouge
 markdown: kramdown
