@@ -23,20 +23,9 @@ title: Gianluca Arbezzano - Developer
   </ul>
 </div>
 <hr class="style-two">
-<div class="row">
-    <div class="col-md-2 col-md-offset-2">
-        <a href='http://www.doctrine-project.org' target='_blank'><img src='/img/doctrine.png' border='0' alt='Doctrine Project' width="125px"/></a>
-    </div>
-    <div class="col-md-2">
-        <a href='http://vim-php.com' target='_blank'><img src='https://avatars3.githubusercontent.com/u/2125030?v=3&s=125' border='0' alt='Vim and Php Community'/></a>
-    </div>
-    <div class="col-md-2">
-        <a href='http://spaghetti.io' target='_blank'><img src='/img/spaghetti.png' border='0' alt='Spaghetti Blog' width="125px"/></a>
-    </div>
-    <div class="col-md-2">
-        <a href='https://github.com/ngutils' target='_blank'><img src='/img/ngutils.png' border='0' alt='AngularJs developer ngutils' width="125px"/></a>
-    </div>
-</div>
+
+{% include next-events.html %}
+
 <hr class="style-two">
 
 <div id="project" class="row">
@@ -65,83 +54,5 @@ title: Gianluca Arbezzano - Developer
           <li><span>{{ "1-10-2014" | date_to_string }}</span> &raquo; <a target="_blank" href="http://spaghetti.io/cont/article/vagrant-and-aws-provisioning-in-cloud/30/1.html">Vagrant and AWS provisioning in Cloud</a></li>
           <li><span>{{ "1-10-2014" | date_to_string }}</span> &raquo; <a target="_blank" href="http://spaghetti.io/cont/article/vagrant-provisioning-with-salt/4/1.html">Vagrant provisioning with Salt</a></li>
         </ul>
-    </div>
-</div>
-<hr class="style-two">
-<div class="row" id="events">
-  <h3>Events</h3>
-  <div class="table-responsive">
-      <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Event</th>
-              <th>Talk</th>
-              <th>Slide</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>12/09/2013</td>
-              <td><a href="http://milano.grusp.org/incontri-passati/" target="_blank">Pug Milano</a></td>
-              <td>Vagrant</td>
-              <td><a href="http://www.slideshare.net/GianlucaArbezzano/presentazione-def-26159972" target="_blank">Slideshare</a></td>
-            </tr>
-            <tr>
-              <td>07/02/2014</td>
-              <td><a href="http://2014.zfday.it/" target="_blank"> Zend Framework Day</a></td>
-              <td>C'è un modulo ZF2 per tutto! - There is a module for all</td>
-              <td><a href="http://www.slideshare.net/GianlucaArbezzano/zfdayit-2014-there-is-a-module-for-everything" target="_blank">Slideshare</a></td>
-            </tr>
-            <tr>
-              <td>27/03/2014</td>
-              <td><a href="http://milano.grusp.org/incontri-passati/" target="_blank">Pug Milano</a></td>
-              <td>Zend Queue</td>
-              <td><a href="http://www.slideshare.net/GianlucaArbezzano/queue-system-and-zendqueue-implementation" target="_blank">Slideshare</a></td>
-            </tr>
-            <tr>
-              <td>21/05/2014</td>
-              <td><a href="http://www.cloudparty.it/milano2014.html" target="_blank">CloudParty - Milano</a></td>
-              <td>Vagrant, riutilizzo dell'infrastruttura - Vagrant, reuse architecture</td>
-              <td><a href="http://www.slideshare.net/corleycloud/vagrant-reusable-code" target="_blank">Slideshare</a></td>
-            </tr>
-            <tr>
-              <td>21/05/2014</td>
-              <td><a href="http://www.eventbrite.it/e/biglietti-devparty-angularjs-12352046303" target="_blank">DevParty - Torino</a></td>
-              <td>Getting Start Chromecast developer</td>
-              <td><a href="http://www.slideshare.net/corleycloud/chromecast-devparty-torino-2014" target="_blank">Slideshare</a></td>
-            </tr>
-            <tr>
-              <td>07/10/2014</td>
-              <td><a href="https://www.eventbrite.it/e/time-series-database-php-influxdb-tickets-7333632091" target="_blank">PugTo</a></td>
-              <td>Time series Database,PHP & Influx DB</td>
-              <td><a href="http://gianarb.it/influxdb-slide/" target="_blank">Reveal</a></td>
-            </tr>
-            <tr>
-              <td>24/10/2014</td>
-              <td><a href="http://www.cloudparty.it/" target="_blank">CloudParty - Genova</a></td>
-              <td>Sviluppo di API REST con ZF2 & MongoDB</td>
-              <td><a href="http://gianarb.it/cloudparty-zf2-rest-slide" target="_blank">Reveal</a></td>
-            </tr>
-            <tr>
-              <td>30/01/2015</td>
-              <td><a href="http://www.cloudparty.it/" target="_blank">CloudParty - Bologna</a></td>
-              <td>AngularJs andvanced startup</td>
-              <td><a href="http://gianarb.it/talk-ng-startup/#/" target="_blank">Reveal</a></td>
-            </tr>
-            <tr>
-              <td>17/06/2015</td>
-              <td><a href="http://internetof.it/" target="_blank">InternetOfIT - Bologna</a></td>
-              <td>Delorean made in Home - Reaspberry, gobot and MQTT</td>
-              <td><a href="http://gianarb.it/internetofit-2015-slide/#/" target="_blank">Reveal</a></td>
-            </tr>
-            <tr>
-              <td>04/07/2015</td>
-              <td><a href="http://joomlafestival.eu/" target="_blank">JoomlaFestival - Milano</a></td>
-              <td>Joomla and Scalability with AWS Beanstalk</td>
-              <td><a href="http://gianarb.it/jfestival-scalability-2015/#/" target="_blank">Reveal</a></td>
-            </tr>
-          </tbody>
-        </table>
     </div>
 </div>

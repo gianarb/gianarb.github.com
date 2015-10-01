@@ -1,3 +1,6 @@
+/**
+ * General
+ */
 body {
     font-family: monospace, Arial, serif;
 }
@@ -19,10 +22,56 @@ a:hover {
   text-decoration:none;
 }
 
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+h3 small {
+    font-size: 0.5em;
+}
+
+a > .fa {
+  padding-left: 10px;
+}
+
+.conf {
+    height: 50px;
+    margin: 0 auto;
+}
+
+.conf-logo {
+    text-align: center;
+}
+
+/**
+ * Slogan home page
+ */
+#slogan .fa-heart-o {
+  color: green;
+}
+
+/**
+ * Navigator
+ */
+#top {
+    font-size:1.3em;
+}
+#top li i{
+    padding-right:3px;
+}
+
+/**
+ * Error page
+ */
 .error-template {padding: 40px 15px;text-align: center;}
 .error-actions {margin-top:15px;margin-bottom:15px;}
 .error-actions .btn { margin-right:10px; }
 
+/**
+ * Post
+ */
 .post h2
 {
     color: #00B200;
@@ -43,6 +92,9 @@ a:hover {
     font-size:0.9em;
 }
 
+/**
+ * Footer
+ */
 .footer {
     position: absolute;
     width:100%;
@@ -55,41 +107,3 @@ a:hover {
 .footer p.text-muted {
     margin: 14px 0 14px 0;
 }
-
-hr {
-  border: 0;
-  height: 1px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-
-#slogan .fa-heart-o {
-  color: green;
-}
-
-.error-template {padding: 40px 15px;text-align: center;}
-.error-actions {margin-top:15px;margin-bottom:15px;}
-.error-actions .btn { margin-right:10px; }
-
-.footer {
-    position: absolute;
-    width:100%;
-    bottom: 0;
-    display:none;
-    background-color: #222;
-    border-color: #080808;
-}
-
-.footer p.text-muted {
-    margin: 14px 0 14px 0;
-}
-
-hr {
-  border: 0;
-  height: 1px;
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-}
-
-a > .fa {
-  padding-left: 10px;
-}
-
