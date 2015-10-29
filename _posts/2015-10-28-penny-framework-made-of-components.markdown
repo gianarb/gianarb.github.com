@@ -10,21 +10,21 @@ priority: 0.6
 changefreq: yearly
 ---
 The PHP ecosystem is mature, there are a lot of libraries that help you to write
-good and custom applications.  Too much libraries require a strong knowledge to
-avoid the problem of maintanability but they open a world made on specific
-implementations for specific use case.
+good and custom applications. Too much libraries require a strong knowledge to
+avoid the problem of maintainability and they also open a world made on specific
+implementations for specific use cases.
 
-A big framework adds a big overhead under your business logic sometimes did of
-unused features cause of maintanability problems and chaos.
+A big framework adds a big overhead under your business logic sometimes, and some
+of those unused features could cause maintainability problems and chaos.
 
-Spend too much time reading the docs could be a problem, do you seem a system
-integrator and not a developer?! This are different works!
+Spending too much time reading the docs could be a problem, do you think you are
+a system integrator and not a developer?! These are different works!
 
 We are writing [penny](https://github.com/pennyphp/penny) to share this idea.
 This is a middleware, event driven framework to build the perfect
-implementation for your specific project. How start point we choice:
+implementation for your specific project. The starting point we chose is made of:
 
-* [Zend\Diactoros](https://github.com/zendframework/zend-diactoros) psr7 http
+* [Zend\Diactoros](https://github.com/zendframework/zend-diactoros) PSR-7 HTTP
 library
 * [Zend\EventManager](https://github.com/zendframework/zend-eventmanager) to
 design the application flow
@@ -32,13 +32,13 @@ design the application flow
 * [FastRouter](https://github.com/nikic/FastRoute) because it is fast and easy to
 use
 
-but we are working to substitute every part of penny with the libraries perfect
+but we are working to replace every part of penny with the libraries perfect
 for your use case.
 
 Are you curious to try this idea? We are writing a big documentation around penny.
 [docs.pennyphp.org/en/latest](http://docs.pennyphp.org/en/latest/)
 
-And we are a set of use cases:
+And we have a set of use cases:
 
 * [pennyphp/penny-classic-app](https://github.com/pennyphp/penny-classic-app)
 builds with plates
