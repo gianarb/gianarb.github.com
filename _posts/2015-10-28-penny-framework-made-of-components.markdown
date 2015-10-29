@@ -9,6 +9,10 @@ made of symfony, zend framework and other components."
 priority: 0.6
 changefreq: yearly
 ---
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/pennyphp?src=hash">#pennyphp</a> <a href="https://t.co/tsA2nE09GM">https://t.co/tsA2nE09GM</a> Why and what?! o.O <a href="https://twitter.com/hashtag/php?src=hash">#php</a> <a href="https://twitter.com/hashtag/framework?src=hash">#framework</a> to build <a href="https://twitter.com/hashtag/microservices?src=hash">#microservices</a> and application &quot;consciously&quot;</p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/659762064446083073">October 29, 2015</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
 <p class="text-center">
 <iframe src="https://ghbtns.com/github-btn.html?user=pennyphp&repo=penny&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
 </p>
