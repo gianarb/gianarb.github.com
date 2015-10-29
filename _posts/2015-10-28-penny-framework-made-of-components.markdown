@@ -3,12 +3,16 @@ layout: post
 title:  "Penny PHP framework made of components"
 date:   2015-10-27 23:08:27
 categories: php
-tags: framework, php, interoperability 
+tags: framework, php, interoperability
 summary: "Penny a PHP framework made of components, write your microframework
 made of symfony, zend framework and other components."
 priority: 0.6
 changefreq: yearly
 ---
+<p class="text-center">
+<iframe src="https://ghbtns.com/github-btn.html?user=pennyphp&repo=penny&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+</p>
+
 The PHP ecosystem is mature, there are a lot of libraries that help you to write
 good and custom applications. Too much libraries require a strong knowledge to
 avoid the problem of maintainability and they also open a world made on specific
