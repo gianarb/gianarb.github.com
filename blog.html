@@ -1,0 +1,17 @@
+---
+layout: default
+title: Blog
+---
+<div id="slogan" class="row" style="margin-bottom:50px">
+  <div class="col-md-12">
+    <div class="text-center">
+        <h1>Blog</h1>
+        <h2>Share my experience</h2>
+    </div>
+  </div>
+</div>
+
+{% for post in site.posts %}
+{% include post_detail.html %}
+<hr class="style-two">
+{% endfor %}

@@ -2,6 +2,7 @@
 layout: post
 title:  "Generale Jekyll sitemap without plugin"
 date:   2013-08-09 09:38:27
+img: /img/jekyll.png
 categories: jekyll
 tags: jekyll, sitemap, blog, seo
 summary: Generate sitemap for Jekyll blog, without plugin

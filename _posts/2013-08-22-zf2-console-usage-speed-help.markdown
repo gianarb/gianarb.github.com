@@ -2,6 +2,7 @@
 layout: post
 title:  "Zend Framework 2 - Console usage a speed help"
 date:   2013-08-22 08:08:27
+img: /img/zf.jpg
 categories: php
 tags: zf2, zend framework, console, usage
 summary: Zend Framework 2, console usage, write a speed console helper
@@ -23,6 +24,6 @@ class Module {
 }
 {% endhighlight %}
 
-You can write this function in a Module.php file, and create a basic helper to help you see when you write a bad command. 
+You can write this function in a Module.php file, and create a basic helper to help you see when you write a bad command.
 
 English by Rali :smile: Thanks!!!! :smile:

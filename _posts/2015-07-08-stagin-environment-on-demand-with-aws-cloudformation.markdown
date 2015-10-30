@@ -2,6 +2,7 @@
 layout: post
 title:  "Staging environment on demand with AWS Cloudformation"
 date:   2015-07-08 09:08:27
+img: /img/amazon-aws-logo.jpg
 categories: devops
 tags: automation, devops, cloud, aws
 summary: Build your stagin environment on demand with AWS Cloudformation

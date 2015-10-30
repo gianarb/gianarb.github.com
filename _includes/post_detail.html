@@ -1,0 +1,11 @@
+<div class="row">
+    <div class="col-md-2 text-center" style="maring:auto;">
+        <p>{{ post.date | date_to_string }}<p>
+        <p><img src="{{ post.img }}" style="max-height:200px" class="img-responsive"><p>
+    </div>
+    <div class="col-md-9">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.summary }}</p>
+        <p class=" text-right"><a href="{{ post.url }}" class="btn btn-success">Read more</a></p>
+    </div>
+</div>

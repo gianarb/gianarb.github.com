@@ -3,12 +3,13 @@ layout: post
 title:  "Why this blog?"
 date:   2013-07-22 23:08:27
 categories: me
+img: /img/myselfie.jpg-large
 tags: me, developer, presentation, gianarb
 summary: Gianluca Arbezzano, developer, Italian, why open this blog?
 changefreq: monthly
 ---
 
-Hi! I'm Gianluca aka GianArb, I'm web developer, works with Php, SQL and noSql databases and in this time I'm 
+Hi! I'm Gianluca aka GianArb, I'm web developer, works with Php, SQL and noSql databases and in this time I'm
 crazy for DevOps, Vagrant and Chef, than for manage this tool I'm learning Ruby.
 
 ### Why this blog?

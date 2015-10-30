@@ -3,8 +3,9 @@ layout: post
 title:  "Test your Symfony Controller and your service with PhpUnit"
 date:   2015-05-21 23:08:27
 categories: php
-tags: symfony, php, phpunit 
-summary: Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it! 
+img: /img/symfony.png
+tags: symfony, php, phpunit
+summary: Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it!
 priority: 0.6
 changefreq: yearly
 ---
@@ -43,7 +44,7 @@ class SomeStuffController extends FOSRestController
 }
 {% endhighlight %}
 
-`$this->container->getParameter("do_stuff")` is a boolean parameter that enable or disable a feature, How can I test this snippet?  
+`$this->container->getParameter("do_stuff")` is a boolean parameter that enable or disable a feature, How can I test this snippet?
 I can try to write a functional test but in my opinion is easier write a series of unit tests with PhpUnit to validate my expectations.
 
 ## Expectations
@@ -83,8 +84,8 @@ class SomeStuffControllerTest extends WebTestCase
     }
 }
 {% endhighlight %}
-This is my first expetection "If `do_stuff` param is true I call `stuff.service`".  
-In this controller I use a few objects, Http\Request, Container and `stuff.service` in this example is a `Some\Stuff` class.  
+This is my first expetection "If `do_stuff` param is true I call `stuff.service`".
+In this controller I use a few objects, Http\Request, Container and `stuff.service` in this example is a `Some\Stuff` class.
 In the first step I have created one mock for each object.
 
 {% highlight php %}
@@ -94,7 +95,7 @@ $container = $this->getMock("Symfony\Component\DependencyInjection\ContainerInte
 $service = $this->getMockBuilder("Some\Stuff")->disableOriginalConstructor()->getMock();
 {% endhighlight %}
 
-In the second step I have written my first expetctation, "Call only one time function `getParameter` from `$container` with argument do_stuff and it returns true".  
+In the second step I have written my first expetctation, "Call only one time function `getParameter` from `$container` with argument do_stuff and it returns true".
 
 {% highlight php %}
 <?php

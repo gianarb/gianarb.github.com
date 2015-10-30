@@ -2,6 +2,7 @@
 layout: post
 title:  "Build your Zend Framework Console Application"
 date:   2015-05-21 23:08:27
+img: /img/zf.jpg
 categories: php
 tags: php, console, automation, zend framework
 summary: ZF\Console is a component written by zf-campus and Apigility organization that help you to build console application using different Zend Framework components
@@ -13,9 +14,9 @@ changefreq: yearly
 
 <div class="alert alert-success" role="alert"><strong>Github: </strong>Article written about <a target="_blank" href="https://github.com/gianarb/console-skeleton-app">console-skeleton-app</a> 1.0.0</div>
 
-I'm writing a skeleton app to build console/bash application in PHP.  
-This project is very easy and it depends on ZF\Console a zfcampus project and Zend\Console builds by ZF community.  
-I have a todo list for the future but for the time being it's just a blog post about these two modules.  
+I'm writing a skeleton app to build console/bash application in PHP.
+This project is very easy and it depends on ZF\Console a zfcampus project and Zend\Console builds by ZF community.
+I have a todo list for the future but for the time being it's just a blog post about these two modules.
 
 * Integration with container system to manage dependency injection
 * Docs to test your command
@@ -28,10 +29,10 @@ I have a todo list for the future but for the time being it's just a blog post a
 
 ## Tree
 
-This is my folders structure proposal, there are three entrypoint in the `bin` directory, one for bash, one for php and a bat for Window.  
-I use composer to manage my dependencies and I included .lock file because this project is an APPLICATION not a library..  
-`/config` directory contains only routing definitions but in the future we can add services and other configurations.  
-`src/Command/` contains my commands.  
+This is my folders structure proposal, there are three entrypoint in the `bin` directory, one for bash, one for php and a bat for Window.
+I use composer to manage my dependencies and I included .lock file because this project is an APPLICATION not a library..
+`/config` directory contains only routing definitions but in the future we can add services and other configurations.
+`src/Command/` contains my commands.
 
 {% highlight bash %}
 ├── bin
@@ -52,7 +53,7 @@ I use composer to manage my dependencies and I included .lock file because this 
 ## Bootstrap
 
 The Application's entrypoints are just example and they require few changes.
-First we have to change the version in the parameters.php configuration file and also change the application name `'app'` to what fits.  
+First we have to change the version in the parameters.php configuration file and also change the application name `'app'` to what fits.
 To load configurations from different sources I will use the well known `Zend\Config` component.
 
 {% highlight php %}
@@ -94,7 +95,7 @@ return [
 
 ## Command
 
-Basic command to wish you a good day!  
+Basic command to wish you a good day!
 I decided that a command doesn't extends any class because in my opinion is a good way to impart readability and simplicity.
 
 {% highlight php %}
@@ -116,7 +117,7 @@ class Hello
 
 ## Troubleshooting and tricks
 * OSx return an error because zf-console use a function blocked into the mac os php installation. Have a look at  PR[#22](https://github.com/zfcampus/zf-console/pull/22)
-* See [this](http://www.sitepoint.com/packaging-your-apps-with-phar/) article to package your application in a phar archive.. 
+* See [this](http://www.sitepoint.com/packaging-your-apps-with-phar/) article to package your application in a phar archive..
 
 <br/>
 <br/>
