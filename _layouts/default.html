@@ -5,6 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{ page.title }}</title>
         <meta name="viewport" content="width=device-width">
+
+        <meta property="og:title" content="{{ page.title }}" />
+        <meta property="og:site_name" content="gianarb blog"/>
+        <meta property="og:url" content="{{site.MY_URL}}{{page.url}}" />
+        <meta property="og:description" content="{{ page.summary }}" />
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="{{site.MY_URL}}{{ page.img }}" />
+
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
         <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='http://gianarb.it/atom.xml'>
