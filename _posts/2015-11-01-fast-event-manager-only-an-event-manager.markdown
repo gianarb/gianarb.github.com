@@ -3,7 +3,7 @@ layout: post
 title:  "FastEventManager, only an event manager"
 date:   2015-11-01 10:08:27
 categories: php
-img: /img/github.jpg
+img: /img/github.png
 tags: php, events
 summary: "Penny a PHP framework made of components, write your microframework
 made of symfony, zend framework and other components."
