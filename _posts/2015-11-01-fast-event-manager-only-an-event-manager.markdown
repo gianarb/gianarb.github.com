@@ -18,8 +18,8 @@ changefreq: yearly
 > without resorting to the traditional inefficientpolling based mechanism.
 > by. [wiki](https://en.wikipedia.org/wiki/Event-Driven_Messaging)
 
-In PHP there are different implementation of this pattern, but I tried to write
-my idea.
+In PHP there are different implementation of this pattern, but [I tried to write
+my idea](https://github.com/gianarb/fast-event-manager).
 An easy to understand and to extends event manager based on regex.
 
 Why? Because it is a good way to match strings, it is flexible and powerful.
