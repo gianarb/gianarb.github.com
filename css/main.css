@@ -3,6 +3,9 @@
  */
 body {
     font-family: monospace, Arial, serif;
+    letter-spacing: 0.01rem;
+    font-size: 1.8rem;
+    line-height: 1.75em;
 }
 div.starter-template {
     margin-top: 16%;
@@ -54,9 +57,6 @@ a > .fa {
 /**
  * Navigator
  */
-#top {
-    font-size:1.3em;
-}
 #top li i{
     padding-right:3px;
 }
