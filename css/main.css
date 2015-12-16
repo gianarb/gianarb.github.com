@@ -91,6 +91,13 @@ a > .fa {
     font-size:0.9em;
 }
 
+.post img
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /**
  * Footer
  */
