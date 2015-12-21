@@ -55,7 +55,7 @@ there are different keywords
   the default port 3306.
 * `CMD` is the default command used during the run console command.
 
-{% highlight dockerfile %}
+{% highlight bash %}
 FROM ubuntu
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -s /bin/true /sbin/initctl
@@ -78,7 +78,7 @@ use the official [mysql](https://hub.docker.com/_/mysql/) and
 [wordpress](https://hub.docker.com/_/wordpress/) images.
 
 Download this images
-{% highlight dockerfile %}
+{% highlight bash %}
 docker pull wordpress
 docker pull mysql
 {% endhighlight %}
@@ -223,7 +223,7 @@ HaProxy. This is an example of configuration for our use case:
 wp1.gianarb.it and wp1.gianarb.it are two our customers and 54.229.190.73:8080,
 54.229.190.73:8081 are our wordpress.
 
-{% highlight config %}
+{% highlight bash %}
 ...
 frontend wp_mananger
         bind :80
@@ -240,7 +240,7 @@ backend backend_wp2
 Note: This configuration increase the scalability of our system, because we can
 add other service in order to support more traffic.
 
-{% highlight config %}
+{% highlight bash %}
 backend backend_wp1
         server server1 54.229.190.73:8080 check
         server server1 54.229.190.12:8085 check
