@@ -15,7 +15,7 @@ changefreq: yearly
 <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/docker?src=hash">#docker</a> and <a href="https://twitter.com/hashtag/wordpress?src=hash">#wordpress</a> for a better world.. <a href="https://t.co/o9c6YXvsl3">https://t.co/o9c6YXvsl3</a> Blogpost after my talk <a href="https://twitter.com/CodemotionIT">@CodemotionIT</a> How and Why? <a href="https://twitter.com/awscloud">@awscloud</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/679241680797700096">December 22, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-I am trying to rapresent a typical wordpress infrastructure
+I am trying to represent a typical wordpress infrastructure
 
 ![Wordpress typical infrastructure](/img/posts/2015-12-16/wp-infra.png)
 
@@ -48,7 +48,7 @@ Docker wrap LXC container to serve your application ready to go in an isolate
 environment, with own filesystem and dependencies.
 
 Worpdress in this implemetation has two containers, one to provide apache and
-php and one for mysql database.  This is an example of Dockerfile, it describe
+php and one for mysql database.  This is an example of Dockerfile, it describes
 how a docker container works it is very simple to understand, from this example
 there are different keywords
 
