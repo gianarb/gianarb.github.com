@@ -32,7 +32,7 @@ We are overwhelmed by the problems
 
 ![Problem](/img/posts/2015-12-16/problem.png)
 
-## [LXC Container](https://github.com/opencontainers/runc)
+## LXC Container
 
 > it is an operating-system-level virtualization environment for running multiple
 > isolated Linux systems (containers) on a single Linux control host.
@@ -44,8 +44,9 @@ Linux System**
 
 ## Docker
 
-Docker wrap LXC container to serve your application ready to go in an isolate
-environment, with own filesystem and dependencies.
+Docker borns as wrap of LXC container but now we use an own implementation
+[runc](https://github.com/opencontainers/runc) to serve your application ready
+to go in an isolate environment, with own filesystem and dependencies.
 
 Worpdress in this implemetation has two containers, one to provide apache and
 php and one for mysql database.  This is an example of Dockerfile, it describes
