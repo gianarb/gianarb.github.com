@@ -11,11 +11,13 @@ priority: 0.6
 changefreq: yearly
 ---
 
-Serverless, container, Aws lambda, [Gourmet](https://github.com/gianarb/gourmet) burs on this ideas,
-to improve my go knowledge and to work with the Docker API
+[Gourmet](https://github.com/gianarb/gourmet) is a work in progress application
+that allow you to execute little applications on an isolated environment, it
+dowloads your manifest and runs it in a container.
+I start this application to improve my go knowledge and to work with the Docker API
 I am happy to share my idea and my tests with Swam an easy way to scale this type of application. 
 
-Gourmet exposes an HTTP api, route `/project`, method POST that wait a body similar to
+Gourmet exposes an HTTP API available at the `/project` endpoint that accept a JSON request body like:
 
 {% highlight json %}
 {
@@ -29,14 +31,16 @@ Gourmet exposes an HTTP api, route `/project`, method POST that wait a body simi
 }
 {% endhighlight %}
 
-`img` is the started point docker image, `source`
-is your script, for my test I use an [easy php
-script](https://github.com/gianarb/gourmet-php-example) that send a message on SQS.
+* `img` is the started point docker image
+* `source` is your script
+* `env` is a list of environment variables that you can use on your script
+
+During my test I use this [php script](https://github.com/gianarb/gourmet-php-example) that send a message on SQS.
 
 Your script has a console entrypoint executables in this path `/bin/console` and
 gourmet uses it to run your program.
 
-To manage integration with docker I used `fsouza/go-dockerclient` an open source
+To integrate it with Docker I used `fsouza/go-dockerclient` an open source
 library written in go.
 
 {% highlight go %}
@@ -54,8 +58,8 @@ container, err := dr.Docker.CreateContainer(docker.CreateContainerOptions{
 })
 {% endhighlight %}
 
-This is an extract of my code and I use it to create a new container.
-After it I have a container started and I use the exec docker feature to
+This is a snippet that can be used to create a new container.
+With the container started I use the exec feature to
 extract your source and to run it.
 
 {% highlight go %}
@@ -81,7 +85,7 @@ err = dr.Docker.StartExec(exec.ID, docker.StartExecOptions{
 })
 {% endhighlight %}
 
-After each build Gourmet cleans all and destroy the container.
+After each build Gourmet cleans all and destroies the environment.
 
 {% highlight go %}
 err := dr.Docker.KillContainer(docker.KillContainerOptions{ID: containerId})
@@ -91,22 +95,26 @@ if(err != nil) {
 }
 return nil
 {% endhighlight %}
-Very easy, gourmet finished here!
 
-It could be different ipotetical use cases, high separated task, run a
-testsuite, dispatch specific functions.
+At the moment it is gourmet, It could be different hypothetical use cases:
+
+* high separated task
+* run a testsuite
+* dispatch specific functions
+
+A microservice to work with docker container easily.
 
 I thought about an easy way to scale this application and I found
 [Swarm](https://docs.docker.com/swarm/), it is a native cluster for docker and
 it seems awesome in first because  it is compatibile with the docker api.
 
 ## Swarm
-A Docker Swarm's cluster is very easy, I worked on this project
+A Docker Swarm's cluster is very easy to setup, I worked on this project
 [vagrant-swarm](https://github.com/gianarb/vagrant-swarm) to create a local
 environment but [the official
 documentation](https://docs.docker.com/swarm/install-manual/) is easy to follow.
 
-This type of clusters have two actors:
+Swarm's cluster has two actors:
 * A master is the entrypoint of your requests, it provide an HTTP
   api compatible with docker.
 * A series of nodes that communicate with the master.
