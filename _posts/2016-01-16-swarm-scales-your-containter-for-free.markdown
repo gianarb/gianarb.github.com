@@ -10,6 +10,8 @@ Swarm helps you to scale your containers on more servers."
 priority: 0.6
 changefreq: yearly
 ---
+<blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">An ocean of containers! With docker and swarm.. <a href="https://t.co/1dXoZYS3ZA">https://t.co/1dXoZYS3ZA</a> <a href="https://twitter.com/hashtag/docker?src=hash">#docker</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/696620821931036672">February 8, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 [Gourmet](https://github.com/gianarb/gourmet) is a work in progress application
 that allow you to execute little applications on an isolated environment, it
