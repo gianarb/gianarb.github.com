@@ -1,10 +1,10 @@
 ---
 layout: post
 title:  "ChatOps create your IRC bot in Go"
-date:   2015-02-28 10:08:27
+date:   2016-02-21 10:08:27
 categories: devops
-img: /img/docker.png
-tags: devops 
+img: /img/go.png
+tags: devops
 summary: "ChatOps is a strong topic it is growing day by day
 because now with the IaaS are allowed a new way to manage your
 infrastacture provide for you an API layer. You can implement it
@@ -38,7 +38,7 @@ for example Zend use Zend\Bot a good assistence written by DASPRiD.
 The ChatOps is an assistence oriented to decrease the distance between your
 infrastacture and your communication channels.
 
-I wrote a little library to communicate on IRC protocol, we can try to use it to
+I wrote a low level library to communicate on IRC protocol, we can try to use it to
 write our dummy bot.
 
 {% highlight go %}
