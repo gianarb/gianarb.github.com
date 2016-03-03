@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "InfluxDB PHP 1.3.0 is ready to go"
-date:   2015-02-26 10:08:27
+date:   2016-02-18 10:08:27
 categories: devops
 img: /img/influx.jpg
 tags: devops, influxdb
