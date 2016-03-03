@@ -12,6 +12,10 @@ provided by new relesae 1.3.0"
 priority: 0.6
 changefreq: yearly
 ---
+
+<blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">Shout out to <a href="https://twitter.com/GianArb">@GianArb</a> for shipping a new release of the InfluxDB-PHP library! Here&#39;s what&#39;s new: <a href="https://t.co/tJQIu9OCbL">https://t.co/tJQIu9OCbL</a></p>&mdash; InfluxData (@InfluxDB) <a href="https://twitter.com/InfluxDB/status/704403294592970752">February 29, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 We are happy to annuonce a new minor release, [Influxdb-php library](https://github.com/influxdata/influxdb-php) 1.3.0.
 
 This is a list of PRs merged in 1.3.0 since 1.2.2:
