@@ -26,7 +26,11 @@ approach that it has a name: ChatOps.
 * [So, What is ChatOps? And How do I Get Started?](https://www.pagerduty.com/blog/what-is-chatops/) by PagerDuty
 * [Say Hello to Hubot](https://github.com/blog/968-say-hello-to-hubot) by GitHub
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/IhzxnY7FIvg" frameborder="0" allowfullscreen></iframe>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/IhzxnY7FIvg" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
 
 IRC is an application layer protocol that facilitates communication. One of the
 most famouse open IRC server is freenode all most important open source projects
