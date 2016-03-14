@@ -84,7 +84,7 @@ without JenkinsCI.
 
 ## As a microservices
 
-![img/pipeline.svg](Continuous Integration and Deploy pipeline)
+![Continuous Integration and Deploy pipeline](/img/pipeline.svg)
 
 This is a summary of a pipeline, each pipeline follows this steps and from this
 point of view seems very easy!  
