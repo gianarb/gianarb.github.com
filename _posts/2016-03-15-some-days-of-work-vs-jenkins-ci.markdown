@@ -48,7 +48,7 @@ all but it's your task to create the perfect sub-set of tools the point 1
 work of your team to increase the develop and go the flow better.  
 Each tools that you add seems perfect until they don't becase a problem.
 
-# Scalable
+## Scalable
 An easy way to decrease the time for your job is split it in different little
 jobs and run them in parallel, you can check the codestyle and run your test
 suite in the same time for example.
@@ -56,7 +56,7 @@ Another good reason to create a scalable environment for your jobs is because
 your company would grow and the continuous integration system burns to helps it
 to grow and not to stop it.
 
-# Unique
+## Unique
 Jenkins, vagrant, ant, make, drone, docker are only a list of amazing tools to
 create the perfect pipeline to deploy and test your code but they are only a
 means the goal is indeed the best pipeline for your code and for your team.
@@ -84,7 +84,7 @@ without JenkinsCI.
 
 ## As a microservices
 
-[!img/pipeline.svg](Continuous Integration and Deploy pipeline)
+![img/pipeline.svg](Continuous Integration and Deploy pipeline)
 
 This is a summary of a pipeline, each pipeline follows this steps and from this
 point of view seems very easy!  
