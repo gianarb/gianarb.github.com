@@ -82,6 +82,19 @@ I don't know I use it but I am happy to experiment and there are a lot of new
 technologies and tools that maybe can help us to do a good work, with or
 without JenkinsCI.  
 
+## As a microservices
+
+[!img/pipeline.svg](Continuous Integration and Deploy pipeline)
+
+This is a summary of a pipeline, each pipeline follows this steps and from this
+point of view seems very easy!  
+Jenkins, drone as very stong solution but they are all in one, if you follow
+this image it's clear that maybe to create the own pipeline for your projects
+play with the LEGO to mount the best steps for your team and for your project
+it's possible.  
+
+I am happy to share some projects to implement this approach.
+
 ## Slimmer, proof of concept
 I tried to create a runner for my test suite, [slimmer](https://github.com/gianarb/slimmer),
 to implement this thought with docker and go.
