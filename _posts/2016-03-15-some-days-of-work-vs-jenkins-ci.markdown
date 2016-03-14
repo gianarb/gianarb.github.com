@@ -12,10 +12,13 @@ about this topic, here my internal battle vs Jenkins CI"
 priority: 0.6
 changefreq: yearly
 ---
+<blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/02HbnkzRsS">https://t.co/02HbnkzRsS</a> &quot;Some Days of work vs <a href="https://twitter.com/hashtag/JenkinsCI?src=hash">#JenkinsCI</a>&quot; Little things about continuous integration <a href="https://twitter.com/hashtag/ci?src=hash">#ci</a> <a href="https://twitter.com/hashtag/dev?src=hash">#dev</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/709466156453732352">March 14, 2016</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 Guys please move down your hands, I love JenkinsCI! I am not here to write a
-bad post about it!  
+bad post about it!
 I am here to share few days of reasonings about continuous
-inteagrations, Jenkins CI and all this strong topic.  
+inteagrations, Jenkins CI and all this strong topic.
 
 ## Reproducible
 There are a lot of tools that you can use to run tasks,
@@ -45,7 +48,7 @@ There are a lot of tools that you can choice to create the perfect pipeline ant
 it's very easy lost your focus and start to use too much tools, you must try
 all but it's your task to create the perfect sub-set of tools the point 1
 (Reusability) increase the value, use tools that you can reuse during the daily
-work of your team to increase the develop and go the flow better.  
+work of your team to increase the develop and go the flow better.
 Each tools that you add seems perfect until they don't becase a problem.
 
 ## Scalable
@@ -67,7 +70,7 @@ the best pipeline for your use case.
 One goal for your team is understand the status of the build without logged in
 any application, because enter into the Jenkins site (at first because it is
 not beautiful :P ) and it is another step to do other: create feature branch,
-submit pull request, write code lalala..  
+submit pull request, write code lalala..
 Use directly the pull request to create a connection with your job, you
 continuous integration system can submit a new comment or if you are working
 with GitHub you can use the status check, in this way you can help your
@@ -80,18 +83,18 @@ that you can install?
 
 I don't know I use it but I am happy to experiment and there are a lot of new
 technologies and tools that maybe can help us to do a good work, with or
-without JenkinsCI.  
+without JenkinsCI.
 
 ## As a microservices
 
 ![Continuous Integration and Deploy pipeline](/img/pipeline.svg)
 
 This is a summary of a pipeline, each pipeline follows this steps and from this
-point of view seems very easy!  
+point of view seems very easy!
 Jenkins, drone as very stong solution but they are all in one, if you follow
 this image it's clear that maybe to create the own pipeline for your projects
 play with the LEGO to mount the best steps for your team and for your project
-it's possible.  
+it's possible.
 
 I am happy to share some projects to implement this approach.
 
@@ -100,12 +103,12 @@ I tried to create a runner for my test suite, [slimmer](https://github.com/giana
 to implement this thought with docker and go.
 Go offers a lot of libraries and tools to create something in a bit of time and
 docker it's perfect because it creates isolated environment and it's very easy
-to scale with Swarm.  
+to scale with Swarm.
 In practice at the moment this console app exec a `build.slimmer` a bash script
-executable flexible and versionable.  
+executable flexible and versionable.
 [TravisCI](https://travis-ci.org) is powerful but the YML file is it a good way
 to describe a build? It's flexible? Maybe yes but I am curious to try a "low
-level" approach, because finally all becames a series of commands.  
+level" approach, because finally all becames a series of commands.
 I created also a series of agent to trigger notification quicly:
 [ircer](https://github.com/gianarb/ircer),
 [slacker](https://github.com/gianarb/slacker).  You can use them to notify the
