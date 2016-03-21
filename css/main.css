@@ -68,6 +68,16 @@ a > .fa {
     background-color: transparent;
 }
 
+.navbar-toggle .icon-bar {
+    background: black;
+}
+
+.navbar-toggle {
+    float: none;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
 /**
  * Error page
  */
