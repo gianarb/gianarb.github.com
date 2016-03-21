@@ -61,6 +61,13 @@ a > .fa {
     padding-right:3px;
 }
 
+.nav>li>a:hover,
+.nav>li>a:focus,
+.nav>li.active>a {
+    color: black;
+    background-color: transparent;
+}
+
 /**
  * Error page
  */
