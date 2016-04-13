@@ -124,6 +124,11 @@ a > .fa {
     margin-right: auto;
 }
 
+a.network-list {
+    font-size: 0.7em;
+    line-height: 0;
+}
+
 /**
  * Footer
  */
