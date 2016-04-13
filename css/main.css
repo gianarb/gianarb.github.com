@@ -99,17 +99,10 @@ a > .fa {
     margin-top: 10px;
     margin-left: 10px;
 }
-@media(max-width:767px){
-    div#top {
-        background: white;
-    }
+div#top {
+    background: #F1F1F1;
 }
 
-@media(min-width:768px) and (max-width:991px){
-    div#top {
-        background: white;
-    }
-}
 
 /**
  * Error page
