@@ -12,6 +12,27 @@ div.starter-template {
     margin-top: 5%;
 }
 
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
 p.meta {
     color: #e0dede;
 }
