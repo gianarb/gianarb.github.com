@@ -12,6 +12,18 @@ priority: 0.6
 changefreq: yearly
 ---
 
+<blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr"><a
+href="https://twitter.com/hashtag/docker?src=hash">#docker</a> inside docker
+and an overview about Jenkins 2 <a
+href="https://t.co/qa5ddjfhrs">https://t.co/qa5ddjfhrs</a> <a
+href="https://twitter.com/docker">@docker</a> <a
+href="https://twitter.com/jenkinsci">@jenkinsci</a> <a
+href="https://twitter.com/hashtag/container?src=hash">#container</a></p>&mdash;
+Gianluca Arbezzano (@GianArb) <a
+href="https://twitter.com/GianArb/status/727876226875068416">May 4,
+2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js"
+charset="utf-8"></script>
+
 Jenkins  is one of the most famous
 continuous integration and deployment tools, it’s written in Java and it helps
 you to manage your pipeline and all tasks that help you to put your code in
