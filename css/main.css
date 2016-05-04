@@ -3,7 +3,6 @@
  */
 
 body {
-    font-family: monospace, Arial, serif;
     letter-spacing: 0.01rem;
     font-size: 1.8rem;
     line-height: 1.75em;
@@ -19,14 +18,14 @@ div.starter-template {
     }
 }
 
-/* Extra Small Devices, Phones */ 
+/* Extra Small Devices, Phones */
 @media only screen and (max-width : 480px) {
     div.starter-template {
         margin-top: 16%;
     }
 }
 
-/* Custom, iPhone Retina */ 
+/* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
     div.starter-template {
         margin-top: 16%;
