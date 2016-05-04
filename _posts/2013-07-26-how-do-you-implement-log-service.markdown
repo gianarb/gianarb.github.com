@@ -2,7 +2,7 @@
 layout: post
 title:  "Zend Framework 2 - How do you implement log service?"
 date:   2013-07-26 23:08:27
-categories: php
+categories: [post]
 img: /img/zf.jpg
 tags: zf2, logger, log, zend framework, service manager
 summary: Implementation of logger service in Zend Framework 2

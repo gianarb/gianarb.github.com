@@ -2,7 +2,7 @@
 layout: post
 title:  "Penny PHP framework made of components"
 date:   2015-10-27 23:08:27
-categories: php
+categories: [post]
 img: /img/penny.jpg
 tags: framework, php, interoperability
 summary: "Penny a PHP framework made of components, write your microframework

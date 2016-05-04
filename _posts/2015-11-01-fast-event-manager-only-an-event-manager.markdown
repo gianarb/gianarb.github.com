@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "FastEventManager, only an event manager"
-date:   2015-11-01 10:08:27
-categories: php
+pate:   2015-11-01 10:08:27
+categories: [post]
 img: /img/github.png
 tags: php, events
 summary: "Penny a PHP framework made of components, write your microframework

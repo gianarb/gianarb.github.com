@@ -2,7 +2,7 @@
 layout: post
 title:  "Test your Symfony Controller and your service with PhpUnit"
 date:   2015-05-21 23:08:27
-categories: php
+categories: [post]
 img: /img/symfony.png
 tags: symfony, php, phpunit
 summary: Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it!

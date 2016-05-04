@@ -2,7 +2,7 @@
 layout: post
 title:  "Docker and wordpress for a better world"
 date:   2015-12-14 10:08:27
-categories: devops
+categories: [post]
 img: /img/docker.png
 tags: devops, docker
 summary: "Docker and wordpress to guarantee scalability, flexibilty and isolation.

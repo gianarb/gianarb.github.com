@@ -3,7 +3,7 @@ layout: post
 title:  "Git global gitignore"
 date:   2013-11-21 12:38:27
 img: /img/git.png
-categories: versioning
+categories: [post]
 tags: git, vcs, versioning
 summary: Git, manage global gitignote files or direcories
 priority: 1

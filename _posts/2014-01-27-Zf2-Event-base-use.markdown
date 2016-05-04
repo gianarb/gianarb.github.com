@@ -3,7 +3,7 @@ layout: post
 title:  "Zf2 Event, base use"
 date:   2013-11-21 12:38:27
 img: /img/zf.jpg
-categories: zf2, php, event
+categories: [post]
 tags: zf2, zend framework, php, events
 summary: "Zend Framework 2 base use of Events and Event manager"
 priority: 1

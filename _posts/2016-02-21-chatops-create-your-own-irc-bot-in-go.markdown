@@ -2,8 +2,8 @@
 layout: post
 title:  "ChatOps create your IRC bot in Go"
 date:   2016-02-21 10:08:27
-categories: devops
 img: /img/go.png
+categories: [post]
 tags: devops
 summary: "ChatOps is a strong topic it is growing day by day
 because now with the IaaS are allowed a new way to manage your

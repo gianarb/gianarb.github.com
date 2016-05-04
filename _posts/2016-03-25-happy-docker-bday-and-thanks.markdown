@@ -2,7 +2,7 @@
 layout: post
 title:  "Happy docker's birthday and thanks"
 date:   2016-03-25 10:08:27
-categories: event
+categories: [post]
 img: /img/dockerbday.png
 tags: docker, oss
 summary: "Just a post to say thanks docker for your awesome community and happy birthday!"

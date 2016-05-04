@@ -2,7 +2,7 @@
 layout: post
 title:  "Docker inside docker and overview about Jenkins 2"
 date:   2016-04-1 10:08:27
-categories: docker
+categories: [post]
 img: /img/docker.png
 tags: docker, oss, jenkins
 summary: "A little overview about Jenkins 2 but the main topic of the article

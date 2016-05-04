@@ -4,6 +4,7 @@ title:  "Zend Framework 2 - Console usage a speed help"
 date:   2013-08-22 08:08:27
 img: /img/zf.jpg
 categories: php
+categories: [post]
 tags: zf2, zend framework, console, usage
 summary: Zend Framework 2, console usage, write a speed console helper
 ---

@@ -2,7 +2,7 @@
 layout: post
 title:  "Swarm scales docker for free"
 date:   2015-12-14 10:08:27
-categories: devops
+categories: [post]
 img: /img/docker.png
 tags: devops, docker, swarm, gourmet
 summary: "Docker is an awesome tool to manage your container.

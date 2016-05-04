@@ -3,7 +3,7 @@ layout: post
 title:  "Influx DB and PHP implementation"
 date:   2015-01-06
 img: /img/influxdb.png
-categories: php, influxdb
+categories: [post]
 tags: php, influxdb
 summary: "InfluxDB a time series database and PHP integration"
 priority: 1
