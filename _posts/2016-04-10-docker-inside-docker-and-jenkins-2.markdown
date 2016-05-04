@@ -73,7 +73,7 @@ docker pull gianarb/jenkins:2.0
 If you are interested the main article to understand how run docker inside
 docker is written by
 [jpetazzo](https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/),
-the idea is run our jenkins container with `-priviled` enabled and share our
+the idea is run our jenkins container with `-privileged` enabled and share our
 docker binary and the socket `/var/run/docker.sock` to manage our
 communications.
 
@@ -88,6 +88,7 @@ docker run -v /var/run/docker.sock:/var/run/docker.sock \
     -v $(which docker):/usr/local/bin/docker \
     -p 5000:5000 -p 8080:8080 \
     -v /data/jenkins:/var/jenkins \
+    --privileged \
     --restart always \
     gianarb/jenkins:2.0
 {% endhighlight %}
