@@ -7,7 +7,7 @@
         <title>{{ page.title }}</title>
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="{{ page.summary }}">
-        <meta name="keywords" content="{{ page.tags }}">
+        <meta name="keywords" content="{{page.tags | join: ', '}}">
         <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
         <link rel="canonical" href="{{ site.MY_URL }}{{ page.url | replace:'index.html',''}}">
 
