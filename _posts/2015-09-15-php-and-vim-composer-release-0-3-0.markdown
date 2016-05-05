@@ -4,7 +4,7 @@ title:  "vim composer 0.3.0 is ready"
 date:   2015-09-15 23:08:27
 categories: [post]
 img: /img/vim.png
-tags: php, vim
+tags: [php]
 summary: vim-composer is a plugin to manage integration between composer and vim
 priority: 0.6
 changefreq: yearly

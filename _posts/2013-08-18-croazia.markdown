@@ -4,7 +4,7 @@ title:  "Croazia!"
 date:   2013-08-18 09:08:27
 categories: [post]
 img: /img/myselfie.jpg-large
-tags: holiday, croazia
+tags: [me] 
 summary: Gianluca Arbezzano, Italian, croazia
 changefreq: monthly
 ---

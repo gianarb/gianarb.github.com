@@ -4,7 +4,7 @@ title:  "Happy docker's birthday and thanks"
 date:   2016-03-25 10:08:27
 categories: [post]
 img: /img/dockerbday.png
-tags: docker, oss
+tags: [docker, event]
 summary: "Just a post to say thanks docker for your awesome community and happy birthday!"
 priority: 0.6
 changefreq: yearly
@@ -56,5 +56,5 @@ href="https://twitter.com/Delpedro47/status/712745923848351744">March 23,
 2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js"
 charset="utf-8"></script>
 
-Today we seen that also che community appreciate it!  
+Today we seen that also che community appreciate it!
 Happy Birthday and [see you next month](http://www.meetup.com/Docker-Dublin/)!

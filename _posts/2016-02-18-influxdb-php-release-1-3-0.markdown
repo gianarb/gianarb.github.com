@@ -4,7 +4,7 @@ title:  "InfluxDB PHP 1.3.0 is ready to go"
 date:   2016-02-18 10:08:27
 categories: [post]
 img: /img/influx.jpg
-tags: devops, influxdb
+tags: [devops, influxdb]
 summary: "InfluxDB is a time series database, it helps us to manage matrics,
 point and offert a stack of tools to collect and see this type of data. I am a
 maintainer of InfluxDB PHP integration. In this past I describe the news

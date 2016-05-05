@@ -4,7 +4,7 @@ title:  "Docker inside docker and overview about Jenkins 2"
 date:   2016-04-1 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: docker, oss, jenkins
+tags: [docker, ci]
 summary: "A little overview about Jenkins 2 but the main topic of the article
 is about how run docker inside docker to start a continuous integration system
 inside a container"

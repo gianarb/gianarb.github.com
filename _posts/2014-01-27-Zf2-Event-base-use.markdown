@@ -4,7 +4,7 @@ title:  "Zf2 Event, base use"
 date:   2013-11-21 12:38:27
 img: /img/zf.jpg
 categories: [post]
-tags: zf2, zend framework, php, events
+tags: [zf2, php]
 summary: "Zend Framework 2 base use of Events and Event manager"
 priority: 1
 ---

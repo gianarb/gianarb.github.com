@@ -4,7 +4,7 @@ title:  "Why this blog?"
 date:   2013-07-22 23:08:27
 categories: [post]
 img: /img/myselfie.jpg-large
-tags: me, developer, presentation, gianarb
+tags: [me]
 summary: Gianluca Arbezzano, developer, Italian, why open this blog?
 changefreq: monthly
 ---

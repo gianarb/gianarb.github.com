@@ -4,7 +4,7 @@ title:  "Penny PHP framework made of components"
 date:   2015-10-27 23:08:27
 categories: [post]
 img: /img/penny.jpg
-tags: framework, php, interoperability
+tags: [php]
 summary: "Penny a PHP framework made of components, write your microframework
 made of symfony, zend framework and other components."
 priority: 0.6

@@ -4,7 +4,7 @@ title:  "Generale Jekyll sitemap without plugin"
 date:   2013-08-09 09:38:27
 img: /img/jekyll.png
 categories: [post]
-tags: jekyll, sitemap, blog, seo
+tags: [jekyll]
 summary: Generate sitemap for Jekyll blog, without plugin
 priority: 1
 ---

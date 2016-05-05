@@ -4,7 +4,7 @@ title:  "Docker and wordpress for a better world"
 date:   2015-12-14 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: devops, docker
+tags: [devops, docker]
 summary: "Docker and wordpress to guarantee scalability, flexibilty and isolation.
 A lot of webagencies install all wordpress in the same server but how can they manage a disaster?
 AWS with Elastic Container Service could be a more professional solution."

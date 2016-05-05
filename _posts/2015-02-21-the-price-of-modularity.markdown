@@ -2,7 +2,7 @@
 layout: post
 title:  "The price of modularity"
 date:   2015-02-21 23:08:27
-tags: zf2, code, develop, modularity, reusable
+tags: [zf2, developer]
 categories: [post]
 summary: The modularity is not only a beautiful word, It has roles and a price.
 priority: 0.6

@@ -4,7 +4,7 @@ title:  "FastEventManager, only an event manager"
 pate:   2015-11-01 10:08:27
 categories: [post]
 img: /img/github.png
-tags: php, events
+tags: [php]
 summary: "Penny a PHP framework made of components, write your microframework
 made of symfony, zend framework and other components."
 priority: 0.6

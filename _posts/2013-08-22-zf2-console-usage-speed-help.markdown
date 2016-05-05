@@ -5,7 +5,7 @@ date:   2013-08-22 08:08:27
 img: /img/zf.jpg
 categories: php
 categories: [post]
-tags: zf2, zend framework, console, usage
+tags: [zf2, php]
 summary: Zend Framework 2, console usage, write a speed console helper
 ---
 With Zend Framework is very easy to write a command line tool to manage different things. But what if there are more commands? How do you remeber them all?

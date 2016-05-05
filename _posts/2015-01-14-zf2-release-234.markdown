@@ -4,7 +4,7 @@ title:  "Zend Framework release 2.3.4"
 date:   2015-01-14
 img: /img/zf.jpg
 categories: [post]
-tags: php, zf2
+tags: [php, zf2]
 summary: "Zend Framework release 2.3.4"
 priority: 1
 ---

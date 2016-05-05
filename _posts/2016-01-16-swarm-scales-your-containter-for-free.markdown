@@ -4,7 +4,7 @@ title:  "Swarm scales docker for free"
 date:   2015-12-14 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: devops, docker, swarm, gourmet
+tags: [devops, docker]
 summary: "Docker is an awesome tool to manage your container.
 Swarm helps you to scale your containers on more servers."
 priority: 0.6
@@ -17,7 +17,7 @@ changefreq: yearly
 that allow you to execute little applications on an isolated environment, it
 dowloads your manifest and runs it in a container.
 I start this application to improve my go knowledge and to work with the Docker API
-I am happy to share my idea and my tests with Swam an easy way to scale this type of application. 
+I am happy to share my idea and my tests with Swam an easy way to scale this type of application.
 
 Gourmet exposes an HTTP API available at the `/project` endpoint that accept a JSON request body like:
 

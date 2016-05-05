@@ -4,7 +4,7 @@ title:  "Some days of work vs Jenkins CI"
 date:   2016-02-21 10:08:27
 categories: [post]
 img: /img/jenkins.png
-tags: jenkins, continuous integration, go
+tags: [ci, devops]
 summary: "I love Jenkins CI is a beautiful and stable project to run job and
 manage continuous integration and deploy pipeline, few days ago I worked to
 improve the delivery pipeline in CurrencyFair and I started to do some thought

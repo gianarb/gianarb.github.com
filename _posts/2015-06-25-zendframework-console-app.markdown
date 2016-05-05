@@ -4,7 +4,7 @@ title:  "Build your Zend Framework Console Application"
 date:   2015-05-21 23:08:27
 img: /img/zf.jpg
 categories: [post]
-tags: php, console, automation, zend framework
+tags: [php, zf2]
 summary: ZF\Console is a component written by zf-campus and Apigility organization that help you to build console application using different Zend Framework components
 priority: 0.6
 changefreq: yearly
