@@ -77,7 +77,7 @@ like a summary. The main commands that you must run to create a cluster are
 ## On the master to start your cluster
 $ docker swarm init --listen-addr <master-IP(this ip)>:2377
 ## on each node to add it into the cluster
-$ docker swarm <master-ip>:2377
+$ docker swarm join <master-ip>:2377
 {% endhighlight %}
 
 <img class="img-responsive" alt="Docker Swarm architecture" src="/img/posts/swarm_arch.png">
