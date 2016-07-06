@@ -109,7 +109,7 @@ $ docker service create --name helloworld --replicas 1 alpine ping docker.com
 {% endhighlight %}
 
 With this example we push up a new service helloworld. It has one container from
-the alpine image and it pings docker.com site. 
+the alpine image and it pings docker.com site.
 
 {% highlight bash %}
 docker service ls
@@ -239,3 +239,6 @@ the topic around my next article. Please stay in touch follow me on
 <blockquote>
   <p>Thanks <a href="https://twitter.com/gpelly">@gpelly</a> for your review!</p>
 </blockquote>
+
+
+{% include docker-planet-newsletter.html %}

@@ -194,3 +194,5 @@ Docker Swarm supports the same Docker API in this way gourmet uses more nodes.
 {% highlight bash %}
 $ DOCKER_HOST="tcp://192.168.13.1:2333" ./gourmet api
 {% endhighlight %}
+
+{% include docker-planet-newsletter.html %}
