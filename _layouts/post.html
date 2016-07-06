@@ -1,32 +1,38 @@
 ---
 layout: default
 ---
-<div id="post-title row">
-  <div class="col-md-12">
-    <h1>{{ page.title }}</h1>
-  </div>
-</div>
-<p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}} </p>
+<div id="post" class="row">
+    <div class="col-md-offset-2 col-md-8">
 
+        <div id="post-title" class="row">
+          <div class="col-md-12">
+            <h1>{{ page.title }}</h1>
+          </div>
+        </div>
+        <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}} </p>
 
-<div class="post row">
-  <div class="col-md-12">
-    {{ content }}
-  </div>
+        <div class="post row">
+          <div class="col-md-12">
+            {{ content }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12" style="text-align:center">
+            <strong>Share :) </strong><div class="addthis_sharing_toolbox"></div>
+          </div>
+        </div>
+
+        <div class="post row">
+          <div class="col-md-12">
+              <div class="addthis_recommended_horizontal"></div>
+          </div>
+        </div>
+        <div id="disqus_thread"></div>
+
+    </div>
 </div>
 
-<div class="row">
-  <div class="col-md-12" style="text-align:center">
-    <strong>Share :) </strong><div class="addthis_sharing_toolbox"></div>
-  </div>
-</div>
-
-<div class="post row">
-  <div class="col-md-12">
-      <div class="addthis_recommended_horizontal"></div>
-  </div>
-</div>
-<div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'gianarbdeveloper'; // required: replace example with your forum shortname
     (function() {
