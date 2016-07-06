@@ -1,0 +1,67 @@
+---
+layout: default
+title: All about Docker from Docker Captain
+summary: Docker Season is a set of blogposts, resources and events about Docker
+    and all the microservices and distributed system ecosystem.  All contents are
+    provided by a Docker Captains.
+---
+<div class="row">
+  <div class="col-md-12">
+    <div id="slogan" class="row">
+      <div class="col-md-3">
+        <div class="text-center">
+            <img src="/img/captain.png" class="img-responsive" alt="Docker Captains are Docker experts
+            and leaders in their communities who demonstrate a commitment to
+            sharing their Docker knowledge with others"/>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <h2>Oh captain, my captain!</h2>
+        <blockquote>Docker Captains are Docker experts and leaders in their
+            communities who demonstrate a commitment to sharing their Docker
+            knowledge with others.
+            <p><a href="https://www.docker.com/community/docker-captains" target="_blank">by. Docker Inc</a></p>
+        </blockquote>
+        <p>
+            This <b>season</b> contains posts, resources and experiences about Docker and the big ecosystem that containers provides.
+            In the end of each blogpost there is a big space to leave your
+            comments and also help me to make more and bettle articles.
+            Share with me your experience and what are you looking on twitter
+            <a href="https://twitter.com/gianarb" taget="_blank">@gianarb</a>
+            as well!
+        </p>
+      </div>
+    </div>
+    <hr class="style-two">
+    <div id="blog" class="row">
+      <div class="row">
+          <div class="col-md-8">
+              <h3>Read something about Docker</h3>
+              {% for post in site.categories['post'] %}
+              {% if post.tags contains "docker" %}
+                  {% include post_detail.html %}
+              {% endif %}
+              {% endfor %}
+
+              <div class="row text-center">
+                  <div class="col-md-12">
+                    <a href="/blog.html" class="btn btn-lg btn-default">Read the blog</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-md-4" style="background:#F1F1F1;min-height:100%">
+              <div class="row text-center">
+                  <div class="col-md-12 text-center">
+                    <h3><a href="http://www.meetup.com/Docker-Dublin/" target="_blank">Join Dublin Meetup</a></h3>
+                    <img style="margin: 0 auto" src="/img/docker-dublin.jpeg" class="img-responsive">
+                    <p>21th July in collaboration with Jenkins Meetup we will
+                    speak about news from DockerCon and we will setup a CI
+                    cluster with Jenkins and Docker 1.12</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
