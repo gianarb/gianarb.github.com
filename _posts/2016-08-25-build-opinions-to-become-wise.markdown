@@ -5,7 +5,10 @@ date:   2016-08-25 12:08:27
 categories: [post]
 img: /img/myselfie.jpg-large
 tags: [me]
-summary: ""
+summary: "As a Software Engineer you need to build your own opinions about
+different topics like: linux or window? Editor or IDE? Containers or VM? There
+are different developers just for this reason. Make, share and change your
+opinions is the best way to grow. Not only like developer but also like human."
 priority: 0.6
 changefreq: yearly
 ---
