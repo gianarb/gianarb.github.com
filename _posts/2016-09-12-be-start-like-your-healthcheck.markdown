@@ -33,6 +33,12 @@ service with just a call.  A service could be ready or not and it’s in the bes
 situation to communicate its status.  It’s a like a patient, you need to ask
 him all what you need to make the best diagnosis and take a decision about it.
 
+<div class="post row">
+  <div class="col-md-12">
+      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
+  </div>
+</div>
+
 We can stay focused on a REST service, it exposes an API under the route
 /health. The response could has two different Status Code:
 

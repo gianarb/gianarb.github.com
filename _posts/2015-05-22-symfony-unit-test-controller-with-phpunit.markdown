@@ -47,6 +47,12 @@ class SomeStuffController extends FOSRestController
 `$this->container->getParameter("do_stuff")` is a boolean parameter that enable or disable a feature, How can I test this snippet?
 I can try to write a functional test but in my opinion is easier write a series of unit tests with PhpUnit to validate my expectations.
 
+<div class="post row">
+  <div class="col-md-12">
+      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
+  </div>
+</div>
+
 ## Expectations
 * If `do_stuff` parameter is false function get by my container will be call zero times
 * If `do_stuff` parameter is true function get by my container will be call one times

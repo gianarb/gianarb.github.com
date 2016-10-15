@@ -45,6 +45,12 @@ of this powerful tool with a series of new feature like:
 Jenkins is truly a wonder but the tool of the moment it’s docker, engine
 that allow you to work easier with the containers.
 
+<div class="post row">
+  <div class="col-md-12">
+      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
+  </div>
+</div>
+
 This two tools together are perfect to create an isolated environment to test
 and deploy your applications.
 

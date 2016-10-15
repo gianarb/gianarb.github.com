@@ -42,6 +42,12 @@ We are overwhelmed by the problems
 Wikipedia helps me to resolve one problem (theory), container is **isolated
 Linux System**
 
+<div class="post row">
+  <div class="col-md-12">
+      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
+  </div>
+</div>
+
 ## Docker
 
 Docker borns as wrap of LXC container but now we use an own implementation
