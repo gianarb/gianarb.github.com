@@ -45,7 +45,7 @@ happy to see as Docker make a big effort to involve and to use its community.
 
 <div class="post row">
   <div class="col-md-12">
-      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
+      {% include book-adv-lb.html %}
   </div>
 </div>
 
