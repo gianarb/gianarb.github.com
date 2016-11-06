@@ -35,7 +35,7 @@ To receive the first chapter free leave your email and if you like your twitter 
 			<input type="email" class="form-control" required="required" id="email" placeholder="Email">
 		  </div>
 		  <div class="form-group">
-			<label for="exampleInputPassword1">Password</label>
+			<label for="exampleInputPassword1">Twitter</label>
 			<input type="title" class="form-control" id="twitter" placeholder="@gianarb" pattern="^@.*">
 			<p class="help-block">The first letter needs to be a @</p>
 		  </div>
