@@ -39,8 +39,8 @@ To receive the first chapter free leave your email and if you like your twitter 
 			<input type="title" class="form-control" id="twitter" placeholder="@gianarb" pattern="^@.*">
 			<p class="help-block">The first letter needs to be a @</p>
 		  </div>
-          <p class="success get-chapter-thanks hidden">Thanksssm</p>
-          <p class="warning get-chapter-sorry hidden"><span class="err-text"></span>.
+          <p class="text-success get-chapter-thanks">Check your email! Thanks!</p>
+          <p class="text-warning get-chapter-sorry"><span class="err-text"></span>.
           Please notify the error with a comment or with an email</p>
 		  <button class="btn btn-default">Get your free copy</button>
 		</form>
@@ -64,6 +64,8 @@ Enjoy your reading and leave me a feedback about the chapter!
 
 <script>
     (function() {
+        $(".get-chapter-thanks").hide();
+        $(".get-chapter-sorry").hide();
         var api = "https://1lkdtyxdx4.execute-api.eu-west-1.amazonaws.com/prod";
         $("#get-chapter button").click(function(eve) {
             eve.preventDefault()
@@ -83,7 +85,7 @@ Enjoy your reading and leave me a feedback about the chapter!
                 $(".get-chapter-thanks").show();
             });
             requestChapter.fail(function(data) {
-                $('.err-text').html("["+data.code+"]"+ data.error);
+                $('.err-text').html("["+data.responseJSON.code+"]"+ data.responseJSON.text);
                 $(".get-chapter-sorry").show();
             });
         });
