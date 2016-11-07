@@ -27,8 +27,10 @@ The book is work in progress but you can find more information into the site
 To receive the first chapter free leave your email and if you like your twitter account:
 
 <div class="row">
-	<div class="col-md-3"></div>
 	<div class="col-md-6">
+        <img src="/img/the-fundamentals.jpg" class="img-responsive">
+    </div>
+	<div class="col-md-4">
 		<form id="get-chapter">
 		  <div class="form-group">
 			<label for="exampleInputEmail1">Email address *</label>
