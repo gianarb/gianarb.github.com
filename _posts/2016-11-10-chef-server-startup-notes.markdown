@@ -164,7 +164,7 @@ knife ssh check
 ```
 
 Know that we did that in our server and also in our local environment we can
-clone chef-pluto a repository that contains recipes, rules and cookbooks to
+clone [chef-pluto](https://github.com/gianarb/chef-pluto) a repository that contains recipes, rules and cookbooks to
 configure our node, we need to syncronize it into the server.
 
 ```bash
