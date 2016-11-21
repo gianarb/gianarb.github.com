@@ -153,7 +153,6 @@ cookbook_path []
 ssl_verify_mode          :verify_none
 ```
 
-#BAAAAAAAAAAAAA
 The last 2 commands download and validate the SSH certificate because in the
 default configuration the CA is unofficial and we need to force our client to
 trust the cert.
