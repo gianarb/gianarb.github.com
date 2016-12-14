@@ -5,7 +5,10 @@ date:   2016-12-14 08:08:27
 categories: [post]
 img: /img/docker.png
 tags: [docker, scaledocker]
-summary: ""
+summary: "Build and Run containers is important but ship them out of your laptop is the
+best part! A Registry is used to store and manage your images and all your
+layers. You can use a storage to upload and download them across your servers
+and to share them with your colleagues."
 changefreq: yearly
 ---
 Build and Run containers is important but ship them out of your laptop is the
@@ -161,7 +164,7 @@ correctly stored.
 it to manage build and it’s available for you from version 8.8 if you are
 already using this tool.
 
-<p class="text-muted">Thanks <a href="" target="_blank"><a
+<p class="text-muted">Thanks <a
 href="https://twitter.com/kishoreyekkanti" target="_blank">Kishore
 Yekkanti</a>, <a href="https://twitter.com/liuggio" target="_blank">Giulio De
 Donato</a> for your review.</p>
