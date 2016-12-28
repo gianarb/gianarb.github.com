@@ -3,7 +3,7 @@ layout: post
 title:  "About your images, security tips"
 date:   2016-12-28 08:08:27
 categories: [post]
-img: /img/docker.png
+img: /img/container-security.png
 tags: [docker, scaledocker]
 summary: "Everything unnecessary in your system could be a very stupid vulnerability. We
 already spoke about this idea in the capability chapter and  the same rule
