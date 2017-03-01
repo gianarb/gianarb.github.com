@@ -72,22 +72,31 @@ cd /tmp
 sudo apt-get update
 sudo apt-get install -y unzip curl
 curl -LS https://packages.chef.io/stable/ubuntu/16.04/chef-server-core_12.9.1-1_amd64.deb -o chef-server-core_12.9.1-1_amd64.deb
-dpkg -i chef-server-core_12.9.1-1_amd64.deb
-chef-server-ctl reconfigure
-curl -SL https://packages.chef.io/stable/ubuntu/16.04/chef-manage_2.4.3-1_amd64.deb -o chef-manage.deb
-dpkg -i chef-manage.deb
-chef-manage-ctl reconfigure --accept-license
+sudo dpkg -i chef-server-core_12.9.1-1_amd64.deb
+sudo chef-server-ctl reconfigure
 ```
 
-After this you are enable to see the interface over https in your browser, you
-can use the IP of your server. I need to remember you that this is just an
-example, the server is public and this is not a good practice AT ALL! You need
-to configure this service in your VPN to make it totally private.
+Our server is up an running reachable over HTTPS (port 443). This configuration
+is just for testing purpose. It's not a good practice leave a Chef Server public
+as we are doing. It's a better idea to close it under a VPN for example.
 
+Chef supports an authentication and authorization level based on users and
+companies. We are creating a new user called `Gianluca Arbezzano` with username
+`ga@thumpflow.com` and as password `hellociaobye`.
+We are also create an organization and we are associating user with org.
 ```bash
 chef-server-ctl user-create gianarb Gianluca Arbezzano ga@thumpflow.com 'hellociaobye' --filename /root/gianarb_test.pem
 chef-server-ctl org-create tf 'ThumpFlow' --association_user gianarb --filename /root/tf-validator.pem
 chef-server-ctl org-user-add tf gianarb
+```
+
+At this point we can configure a nice UI for our Chef Server with this simple
+commands:
+
+```bash
+sudo chef-server-ctl install chef-manage
+sudo chef-server-ctl reconfigure
+sudo chef-manage-ctl reconfigure --accept-license
 ```
 
 Chef-Server works with the concept of Organization and User. The organization
@@ -149,7 +158,7 @@ validation_client_name   'tf-validator'
 validation_key           '/root/tf-validator.pem'
 chef_server_url          'https://chef-server:443/organizations/tf'
 syntax_check_cache_path  '/root/.chef/syntax_check_cache'
-cookbook_path []
+cookbook_path            ["/home/gianarb/git/chef-pluto/cookbooks"]
 ssl_verify_mode          :verify_none
 ```
 
@@ -158,8 +167,8 @@ default configuration the CA is unofficial and we need to force our client to
 trust the cert.
 
 ```bash
-knife ssh fetch
-knife ssh check
+knife ssl fetch
+knife ssl check
 ```
 
 Know that we did that in our server and also in our local environment we can
@@ -167,9 +176,9 @@ clone [chef-pluto](https://github.com/gianarb/chef-pluto) a repository that cont
 configure our node, we need to syncronize it into the server.
 
 ```bash
-git clone git@github.com:gianarb/chef-pluto.git ~/chef-pluto
-cd ~/chef-pluto
-knife update .
+git clone git@github.com:gianarb/chef-pluto.git /home/gianarb/git/chef-pluto/chef-pluto
+cd /home/gianarb/git/chef-pluto/chef-pluto
+knife update /
 ```
 The last command update all our repository into the chef server. You can log in
 into the web ui and see the `micro` cookbook and the `power` rule.
