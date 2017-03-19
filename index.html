@@ -25,8 +25,8 @@ summary: Gianluca Arbezzano, my personal blog, Software Engineer
   <h3>Blog</h3>
   <div class="row">
       <div class="col-md-12">
-          {% for post in site.categories['post'] limit:1 %}
-              {% include post_detail.html %}
+          {% for post in site.categories['post'] limit:5 %}
+              {% include short_post.html %}
           {% endfor %}
       </div>
   </div>
@@ -40,19 +40,3 @@ summary: Gianluca Arbezzano, my personal blog, Software Engineer
 <hr class="style-two">
 
 {% include next-events.html %}
-<hr class="style-two">
-
-<div id="project" class="row">
-    <div class="col-md-12">
-        <h3>My Projects - FOSS maniac</h3>
-        <div class="col-md-12 text-center">
-            <a href="http://docli.gianarb.it" target="_blank">Docli</a> - <a href="http://gianarb.it/GaGooGl" targer="_blank">Zf2/GaGooGl</a> - <a href="http://github.com/corley/influxdb-php-sdk" target="_blank">PHP Influx DB SDK</a> - <a href="https://github.com/gianarb/zf2-influxdb-module" targer="_blank">Zf2/Influx DB module</a> - <a href="https://github.com/gianarb/go-irc" target="_blank">Go Irc</a>
-            <br>
-            <a href="http://github.com/gianarb/sendev-cast" target="_blank">Sender Chromecast for Dev</a> - <a href="http://github.com/gianarb/GaDisqus" target="_blank">Zf2/GaDisqus</a> - <a href="https://github.com/gianarb/corley-version-module" target="_blank">Zf2/CorleyVersion</a> - <a href="https://github.com/gianarb/awesome-angularjs" target="_blank">Awesome AngularJs</a>
-            <br>
-            <a href="https://github.com/gianarb/ng-deezer-sdk" target="_blank">Angular Deezer SDK</a> - <a href="https://github.com/gianarb/zf2-formatter" target="_blank">Zf2/Formatter</a> - <a href="https://github.com/gianarb/notify.vim" target="_blank">Notify.vim</a> - <a href="https://github.com/gianarb/girc" target="_blank">Girc - PHP IRc BOT</a>
-            <br>
-            <a href="https://github.com/gianarb/dotfiles" target="_blank">My dotfiels</a> - <a href="https://github.com/gianarb/virtualhosts-cookbooks" target="_blank">Chef Virtualhost</a>
-        </div>
-    </div>
-</div>
