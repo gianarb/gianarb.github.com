@@ -15,7 +15,7 @@ changefreq: yearly
 
 > “It is change, continuing change, inevitable change, that is the dominant
 > factor in society today. No sensible decision can be made any longer without
-> taking into account not only the world as it is, but the world as it will be... 
+> taking into account not only the world as it is, but the world as it will be...
 > This, in turn, means that our statesmen, our businessmen, our everyman must take
 > on a science fictional way of thinking”  Asimov, 1981
 
@@ -74,6 +74,7 @@ virtual server in a single machine.  There are different kind of virtualization:
 
 
 <img class="img-responsive" src="/img/virtualization.png">
+<a href="https://fntlnz.wtf/post/why-containers/" target="_blank"><small>img from fntlnz's blog. Thanks</small></a>
 
 
 The main differences between them is how they abstract the layers, application,
@@ -90,7 +91,7 @@ and on a specific feature provided by the kernel called Linux Containers (LXC):
 what we do when we build containers is create new isolated Linux systems into
 the same host, it means that we can not change the operation system for example
 because our virtualization layer doesn’t allow us to run Linux containers out of
-Linux.  
+Linux.
 
 # The reasons
 
