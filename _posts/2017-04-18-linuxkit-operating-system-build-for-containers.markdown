@@ -408,6 +408,13 @@ My plan is to create a configuration to test InfluxDB and play a bit with `qemu`
 to test it on different architectures and devices. Stay around a blogpost will
 come!
 
+Some Links: 
+
+* [INTRODUCING MOBY PROJECT: A NEW OPEN-SOURCE PROJECT TO ADVANCE THE SOFTWARE
+CONTAINERIZATION MOVEMENT](https://blog.docker.com/2017/04/introducing-the-moby-project/)
+* [github.com/linuxkit](https://github.com/linuxkit)
+* [github.com/moby](https://github.com/moby)
+
 <p class="text-muted">
     Reviewers: <a href="https://twitter.com/justincormack">Justin Cormack</a>
 </p>
