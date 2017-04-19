@@ -5,10 +5,10 @@ date:   2016-11-10 10:08:27
 categories: [post]
 img: /img/chef.png
 tags: [chef, devops]
-summary: "Docker The fundamental is the second chapter of my book Scale Docker.
-Drive your boat like a captain. I decided to share free the second chapter of
-the book. It covers getting started with Docker. It's a good tutorial for
-people that are no idea about how container means and how docker works."
+summary: "This tutorial explain how to setup a chef server on digitalocean from
+zero. It also shows how to use it to make a provisioning of one Chef Client.
+Chef is one of the most used provisioning tool. DevOps tool to apply
+infrastructure as code."
 changefreq: yearly
 ---
 I worked with different provisioning tools and configuration managers in the

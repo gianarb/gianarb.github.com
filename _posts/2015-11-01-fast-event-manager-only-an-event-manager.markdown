@@ -5,8 +5,10 @@ pate:   2015-11-01 10:08:27
 categories: [post]
 img: /img/github.png
 tags: [php]
-summary: "Penny a PHP framework made of components, write your microframework
-made of symfony, zend framework and other components."
+summary: "FastEventManager is a PHP library designed to be a smart and light
+event manager. You can use it in your applications or as a base component for
+your framework. It adds capabilities around events as attach and triggering of
+events."
 priority: 0.6
 changefreq: yearly
 ---

@@ -5,11 +5,10 @@ date:   2017-03-12 08:08:27
 categories: [post]
 img: /img/container-security.png
 tags: [docker, scaledocker]
-summary: "Everything unnecessary in your system could be a very stupid vulnerability. We
-already spoke about this idea in the capability chapter and  the same rule
-exists when we build an image. Having  tiny images with only what our
-application needs to run is not just a goal in terms of distribution but also
-in terms of cost of maintenance and security."
+summary: "Cloud computing, containers, devops, everything is moving so fast that
+sometime for big companies or CTO is very hard keep track of everything. What
+it's just a new trend and what I really need. This post contains my options and
+a bit of history about docker, cloud computing, aws and containers."
 changefreq: yearly
 ---
 
