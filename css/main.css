@@ -69,13 +69,6 @@ a > .fa {
 }
 
 /**
- * Slogan home page
- */
-#slogan .fa-heart-o {
-  color: green;
-}
-
-/**
  * Navigator
  */
 #top li i{
@@ -98,10 +91,10 @@ a > .fa {
     margin-top: 10px;
     margin-left: 10px;
 }
-div#top {
-    background: #F1F1F1;
-}
 
+div#top {
+    background: #FFF;
+}
 
 /**
  * Error page
