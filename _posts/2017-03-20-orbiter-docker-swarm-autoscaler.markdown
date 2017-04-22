@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "Orbiter an OSS Docker Swarm Autoscaler"
-date:   2017-03-12 08:08:27
+date:   2017-04-22 08:08:27
 categories: [post]
-img: /img/container-security.png
+img: /img/swarm.gif
 tags: [docker]
 summary: "Orbiter is an open source project design to become a cross provider
 autoscaler. At the moment it works like Zero Configuration Autoscaler for Docker
