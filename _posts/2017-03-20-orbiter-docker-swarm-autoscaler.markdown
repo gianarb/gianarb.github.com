@@ -13,6 +13,10 @@ InfluxDB, Kapacitor and Telegraf. We are going to use all this tools to create
 an autoscaling policy  for your Docker Swarm services."
 changefreq: yearly
 ---
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q1xfmfML8ok"
+frameborder="0" allowfullscreen></iframe>
+My presentation at the Docker HQ in San Francisco.
+
 ## Autoscaling
 One of the Cloud's dreams is a nice world when everything magically happen. You
 have unlimited resources and you are just going to use what you need and to pay
@@ -249,3 +253,4 @@ it, try and leave some feedback or request if you need something different.
 PR are also open if you are working with a different cluster manager or with a
 different provider, add a new one is very easy. It's just a new interface to
 implement.
+
