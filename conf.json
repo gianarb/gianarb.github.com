@@ -1,0 +1,21 @@
+{
+  "firstname": "Gianluca",
+  "lastname": "Arbezzano",
+  "title": "SRE at InfluxData",
+  "role": "Site Reliability Engineer",
+  "bio": "I am a Software Engineer that started my career in Turin as PHP developer. I moved in Dublin to make a new international experience and I almost worked as Build Engineer and DevOps. I recently join the InfluxData team as Site Reliability Engineer, I am taking care of our SaaS platform. Other than that I love open source and I am a Docker Captain and CNCF Ambassador. I am also making my first experience as grower of vegetables!",
+  "company": {
+    "name": "InfluxData",
+    "url": "https://influxdata.com"
+  },
+  "img": {
+    "big": "https://drive.google.com/open?id=0BzcmoKaDlxSGQ3VtbzZJZlFOdWc",
+    "small": "https://drive.google.com/open?id=0BzcmoKaDlxSGZFZnOUJfTWlObk0"
+  },
+  "url": {
+    "site": "https://gianarb.it",
+    "twitter": "https://twitter.com/gianarb",
+    "github": "https://github.com/gianarb",
+    "linkedin": "https://https://www.linkedin.com/in/gianlucarbezzan://www.linkedin.com/in/gianlucarbezzano/"
+  }
+}
