@@ -165,3 +165,7 @@ a.network-list {
 .bs-callout-info {
     border-left-color: #1b809e;
 }
+
+blockquote {
+    font-size: 2.3em;
+}
