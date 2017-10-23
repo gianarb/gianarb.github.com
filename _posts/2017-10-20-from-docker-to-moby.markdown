@@ -14,19 +14,19 @@ big announcement.
 
 It created confusion and some communities are still trying to understand what is
 going on. I think it's time to step back and see what we have after seven months
-for the announcement.
+after the announcement.
 
 1. `containerd` is living a new life, the first stable release will happen soon.
-   It went donated to CNCF.
-2. `notary` is the project behind `docker trust`. I wrote a full ebook about
-   [Docker Security](https://scaledocker.com) if you need to know more. It's
-   under the CNCF now.
+   It has been donated to CNCF.
+2. `notary` is the project behind `docker trust`. I wrote a full e-book about
+   [Docker Security](https://scaledocker.com) if you need to know more. This
+   also has been donated to the CNCF.
 3. github.com/docker/docker doesn't exist anymore there is a new repository
-   called github.com/moby/moby . It contains the same code but it opens the door
-   to a lot of new things.
+   called github.com/moby/moby .
 4. [CLI](https://github.com/docker/cli) has a separate home.
+5. docker-ce is the first example of moby assembling. It is made my Docker Inc.
 
-As you probably know containers are not real.
+Containers are not a first class citizen in Linux.
 
 <img class="img-responsive" src="/img/container-is-not-real.jpeg"/>
 
@@ -54,13 +54,15 @@ user interface based on what they need. Or to build their product on top of a
 open source project designed to be modular.
 
 Cloud and container moves fast Amazon with ECS, RedHat with OpenShift,
-Pivotal with Cloud Foundry, Docker with Docker, they are all pushing hard to
-build projects around containers to sell them at big and small corporations to
-make legacy projects less bored.
+Pivotal with Cloud Foundry, Mesos with Mesosphere, Microsoft with Azure
+Container Service, Docker with Docker, they are all pushing hard to build
+projects around containers to sell them at big and small corporations to make
+legacy projects less bored.
 
 > Legacy is the new buzzword
 
-Docker will continue to assemble and ship docker as we know it:
+Docker will continue to assemble and ship docker as we know it. The project is
+called `docker-ce`:
 
 ```
 apt-get install docker-ce
@@ -70,15 +72,13 @@ docker run -p 80:80 nginx:latest
 Everything happens down the street, in the open source ecosystem. Moby won't
 contain the CLI that new know.
 
-<--- I need to understand if this is true
 Moby won't have the swarmkit integration as we know it. It was something that
 Docker as company was looking to have. Mainly to inject an orchestrator in
-milion of laptops. Other companies and projects that are not using swarm don't
-need it.
---->
+million of laptops. Other companies and projects that are not using swarm don't
+need it and they will be able to remove it in some way.
 
 Companies like Pivotal, AWS are working on
-`contained` because other the runtime behind Docker it's what matters for a lot
+`containerd` because other the runtime behind Docker it's what matters for a lot
 of projects that are just looking to run containers without all the layers on
 top of it to make it friendly. ECS, Cloud Foundry are the actual layers on top
 of "what runs a container".
