@@ -70,7 +70,7 @@ docker run -p 80:80 nginx:latest
 ```
 
 Everything happens down the street, in the open source ecosystem. Moby won't
-contain the CLI that new know.
+contain the CLI that we know.
 
 Moby won't have the swarmkit integration as we know it. It was something that
 Docker as company was looking to have. Mainly to inject an orchestrator in
