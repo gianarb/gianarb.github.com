@@ -34,22 +34,22 @@ They are a combination of cgroups, namespaces and other kernel features. They ar
 also there from a lot of year. LXD is one of the first project that mentioned
 container but the API wasn't really friendly and only few people are using it.
 
-Docker created a clean and usable api that human been are happy to use. It
+Docker created a clean and usable api that human beings are happy to use. It
 created an ecosystem with an amazing and complete UX. Distribution, Dockerfile,
 `docker run`, `docker image` and so on.
 
 That's what Docker is, in my opinion. Other than a great community and a fast
 growing company.
 
-What Docker is doing with Moby is to give the ability at competitors, startups, new
+What Docker is doing with Moby is to give the ability to competitors, startups, new
 projects to join the ecosystem that we built in all these 4 years.
 
 Moby in other hands is giving the ability at Docker to take ownership of the
 clean and usable experience. The `Docker CLI` that we know and use every day
-will stay open source, but not part of the moby project. It will be owned by
+will stay open source, but not the moby project's part. It will be owned by
 Docker. As I wrote above, the code is already moved out.
 
-Moby gives the ability at other companies and organisations to build their
+Moby allows other companies and organisations to build their
 user interface based on what they need. Or to build their product on top of a
 open source project designed to be modular.
 
