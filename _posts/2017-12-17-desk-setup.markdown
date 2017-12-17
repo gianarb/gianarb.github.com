@@ -22,6 +22,15 @@ It is comfortable and it has a competitive price. It's flexible and well designe
 I don't have a lot to say about it. If you are not passionate about expensive
 and weird chairs you can go for this one. It will work!
 
+## Stand Mount
+
+My setup counts two boring Asus monitor, one horizontal and one vertical,
+Lorenzo suggested to me this [standmount support for two monitor](http://amzn.to/2yMe59C).
+
+Day by day I discover how bad I am using more than one monitor. Change focus so
+often is not for me but I like the vertical monitor when I am debugging some
+weird application.
+
 ## Asus Zenbook 3
 
 I have an [Asus Zenbook 3](http://amzn.to/2AHAy9N) the only usb-c is kind of a
@@ -80,7 +89,7 @@ current position from down to up or vice versa gives me some fresh power to
 end it well.
 
 I monitored the [Ikea
-Bekant](www.ikea.com/gb/en/products/desks/office-desks/bekant-desk-sit-stand-oak-veneer-black-spr-29061187/)
+Bekant](https://www.ikea.com/gb/en/products/desks/office-desks/bekant-desk-sit-stand-oak-veneer-black-spr-29061187/)
 for a lot of months but I was not sure about investing money a standind desk.
 
 I looked at them for so long that Ikea started a very good discount campaign and
