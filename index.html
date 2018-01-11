@@ -4,19 +4,37 @@ title: Gianluca Arbezzano - Developer
 tags: home, developer, gianarb
 summary: Gianluca Arbezzano, my personal blog, Software Engineer
 ---
-<div id="blog" class="row">
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="/img/me.jpg" class="img-responsive">
+            </div>
+            <div class="col-md-9">
+                <p>Hello, this is my person site. I use this space to share my
+                knowledge, what I do and to keep track of interesting things
+                around software development, scalability, linux. Sometime about
+                life, work and growing vegetables.</p> <p>You are more than
+                welcome and you should say hello to me on <a
+                href="https://twitter.com/gianarb">twitter</a> and have a look
+            at my <a href="/blog.html">blog</a>. Enjoy!</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
-        <h3>Posts</h3>
+        <h3>Posts <small><a href="/blog.html">go to older posts</a></small></h3>
         <div class="row">
           <div class="col-md-12">
               {% for post in site.categories['post'] %}
+              {% if forloop.index > 5 %}
+                  {% break %}
+              {% endif %}
                   {% include short_post.html %}
               {% endfor %}
-          </div>
-        </div>
-        <div class="row text-center">
-          <div class="col-md-12">
-
           </div>
         </div>
     </div>
