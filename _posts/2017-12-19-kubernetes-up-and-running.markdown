@@ -5,7 +5,7 @@ date:   2017-12-19 10:08:27
 categories: [post]
 tags: [book]
 img: /img/k8s-up-and-running.jpg
-summary: ""
+summary: "Kubernetes up and running review."
 changefreq: yearly
 ---
 I read ["Kubernetes up and running"](http://amzn.to/2zflChj) an O'Reilly book
@@ -20,7 +20,7 @@ cluster on scaleway with [Lorenzo](https://twitter.com/fntlnz).
 
 The book is well written, I read it in less than one week. The chapters are well
 split because I was able to jump "Builiding a Raspberry Pi Kubernetes cluster"
-because I am not really interested without any pain. 
+because I am not really interested without any pain.
 
 Chapters like "Deploying real world applications", "Service Discovery" are good
 and the book covers all the basic concepts that you need to know about
