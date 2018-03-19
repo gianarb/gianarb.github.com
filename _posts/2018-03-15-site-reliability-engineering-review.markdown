@@ -7,8 +7,8 @@ tags: [book, site reliability engineer, sre, microservices, oreally, google]
 summary: "A review about Site Reliability Engineering a book published by
 O'Reilly about Google and it's massive scale from the point of view of the
 engineers that made that scale possible. Distributed system, microservices and
-img: /img/sre-book.jpeg
 data driven development."
+img: /img/sre-book.jpeg
 changefreq: yearly
 ---
 I bought [Site Reliability Engineering](http://amzn.to/2pfeHBU) a lot of months
