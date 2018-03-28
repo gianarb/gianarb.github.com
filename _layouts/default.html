@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="content-language" content="en">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <head> <meta http-equiv="content-language" content="en">
+        <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>{{ page.title }}</title>
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="{{ page.summary }}">
@@ -27,12 +25,12 @@
         <link rel="stylesheet" href="/css/syntax.css">
         <link rel="stylesheet" href="/css/main.css">
 
-          <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-          <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
-          <script src="/js/custom.js"></script>
-          <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55b22e06669600af" async="async"></script>
-          <script>hljs.initHighlightingOnLoad();</script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+        <script src="/js/custom.js"></script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55b22e06669600af" async="async"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
 
         {% include ga.html %}
     </head>
@@ -40,9 +38,11 @@
     <body>
         {% include navigator.html %}
         <div class="container">
-          <div class="starter-template">
-            {{ content }}
-          </div>
+            <div class="row">
+              <div class="col-md-offset-2 col-md-8">
+                {{ content }}
+              </div>
+            </div>
         </div>
         {% include footer.html %}
     </body>

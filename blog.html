@@ -5,14 +5,12 @@ tags: home, developer, gianarb, blog
 summary: Gianluca Arbezzano, my personal blog, Software Engineer
 ---
 <div id="blog" class="row">
-    <div class="col-md-12">
-        <h3>Posts</h3>
-        <div class="row">
-          <div class="col-md-12">
-              {% for post in site.categories['post'] %}
-                  {% include short_post.html %}
-              {% endfor %}
-          </div>
-        </div>
+    <h3>Posts</h3>
+    <div class="row">
+      <div class="col-md-12">
+          {% for post in site.categories['post'] %}
+              {% include short_post.html %}
+          {% endfor %}
+      </div>
     </div>
 </div>

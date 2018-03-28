@@ -3,7 +3,6 @@
  */
 
 body {
-    letter-spacing: 0.01rem;
     font-size: 1.8rem;
     line-height: 1.75em;
     font-family: 'Roboto', sans-serif;
@@ -37,15 +36,6 @@ p.meta {
     color: #e0dede;
 }
 
-a:link, a:visited {
-  text-decoration:none;
-}
-
-a:hover {
-  color: #00b200;
-  text-decoration:none;
-}
-
 hr {
   border: 0;
   height: 1px;
@@ -72,14 +62,13 @@ a > .fa {
 /**
  * Navigator
  */
-#top li i{
-    padding-right:3px;
+.nav a {
+    color: black;
 }
-
 .nav>li>a:hover,
 .nav>li>a:focus,
 .nav>li.active>a {
-    color: black;
+    color: gray;
     background-color: transparent;
 }
 
@@ -91,10 +80,6 @@ a > .fa {
     float: none;
     margin-top: 10px;
     margin-left: 10px;
-}
-
-div#top {
-    background: #FFF;
 }
 
 /**
