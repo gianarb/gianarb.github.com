@@ -157,7 +157,7 @@ func () testHelperStartHTTPServer(t *testing.T) func() {
 func TestYourTest(t *testing.T) {
     hclose := testhelperStartHTTPServer()
     // All your logic and checks
-    defer hclose.Close()
+    defer hclose()
 }
 ```
 I used the same practice when I was writing integration tests using bash and
