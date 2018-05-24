@@ -4,11 +4,10 @@ title:  "Continuous Integration and silent checks. You are looking in the wrong 
 date:   2016-11-18 10:08:27
 categories: [post]
 img: /img/jenkins.png
-tags: [ci, devops]
+tags: [ci, devops, automation, container, docker]
 summary: "Bad and good practice when you setup a continuous integration job.
 Silent checks are not a good practice but analyze your code is the perfect way
 to understand how your codebase is evolving."
-changefreq: yearly
 ---
 Continuous Integration is a process of merging all developer working copies to
 shared mainline several times a day. In practice is when you have in place a

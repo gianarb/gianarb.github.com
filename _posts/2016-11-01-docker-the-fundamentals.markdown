@@ -4,7 +4,7 @@ title:  "Docker The fundamentals"
 date:   2016-08-25 12:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, book, ebook, learn, docker captain]
 summary: "Docker The fundamental is the second chapter of my book Scale Docker.
 Drive your boat like a captain. I decided to share free the second chapter of
 the book. It covers getting started with Docker. It's a good tutorial for

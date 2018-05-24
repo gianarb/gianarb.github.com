@@ -4,15 +4,24 @@ title:  "Zend Framework 2 - How do you implement log service?"
 date:   2013-07-26 23:08:27
 categories: [post]
 img: /img/zf.jpg
-tags: [php, zf2] 
-summary: Implementation of logger service in Zend Framework 2
+tags: [php, zf2, zend framework, zend, open source]
+summary: "Logging is a requirement for every application. In PHP and in every
+other language. It is the way your application has to tell you what its doing.
+This article is about how to implement a logger in a Zend Framework 2
+application in PHP. This solution achieve simplicity and usability."
 priority: 0.6
-changefreq: yearly
+changefreq: daily
 ---
 
-A log system is an essential element for any application. It is a way to check the status and use of the application. For a basic implementation you can refer to the  fig-stanrdars organization [PSR-3](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md) article, that describes th elogger interface.
+A log system is an essential element for any application. It is a way to check
+the status and use of the application. For a basic implementation you can refer
+to the  fig-stanrdars organization
+[PSR-3](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md)
+article, that describes th elogger interface.
 
-Zend Framework 2 implement a [Logger Component](https://github.com/zendframework/zf2/tree/master/library/Zend/Log), the following is an example of how to use it with service manager.
+Zend Framework 2 implement a [Logger
+Component](https://github.com/zendframework/zf2/tree/master/library/Zend/Log),
+the following is an example of how to use it with service manager.
 
 {% highlight php %}
 <?php
@@ -37,7 +46,13 @@ return array(
 	),
 );
 {% endhighlight %}
-[LoggerAbstractServiceFactory](https://github.com/zendframework/zf2/blob/master/library/Zend/Log/LoggerServiceFactory.php) is a Service Factory, as an example,  into service Manager class Logger and will be used in the whole application. Log/App is the name of a single logger, and writer is an adapter that is used to choose the method of writing, in this case everything is written to file, but you can use a DB adapter and write your log into database.
+
+[LoggerAbstractServiceFactory](https://github.com/zendframework/zf2/blob/master/library/Zend/Log/LoggerServiceFactory.php)
+is a Service Factory, as an example,  into service Manager class Logger and will
+be used in the whole application. Log/App is the name of a single logger, and
+writer is an adapter that is used to choose the method of writing, in this case
+everything is written to file, but you can use a DB adapter and write your log
+into database.
 
 {% highlight php %}
 <?php
@@ -52,7 +67,8 @@ class GeneralController
 }
 {% endhighlight %}
 
-With this configuration Log\App writes a string into data/app.log file, with INFO property. By default you can use an array of properties.
+With this configuration Log\App writes a string into data/app.log file, with
+INFO property. By default you can use an array of properties.
 
 {% highlight php %}
 <?php
@@ -68,9 +84,11 @@ self::DEBUG  => 'DEBUG',
 );
 {% endhighlight %}
 
-Usage of different keys is a good practice because it is very easy to write filter or log categories.
+Usage of different keys is a good practice because it is very easy to write
+filter or log categories.
 
-Another good practice, valid for all services in general, is to create your class extending single service.
+Another good practice, valid for all services in general, is to create your
+class extending single service.
 
 {% highlight php %}
 <?php
@@ -78,6 +96,7 @@ use Zend\Log\Logger
 class MyLogger extends Logger
 {% endhighlight %}
 
-This choice helps managing future customizations  of services and is another important layer for managing unexpected updates.
+This choice helps managing future customizations  of services and is another
+important layer for managing unexpected updates.
 
 Rali, thanks for your help with my robotic english! :P

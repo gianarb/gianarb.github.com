@@ -9,7 +9,6 @@ O'Reilly about Google and it's massive scale from the point of view of the
 engineers that made that scale possible. Distributed system, microservices and
 data driven development."
 img: /img/sre-book.jpeg
-changefreq: yearly
 ---
 I bought [Site Reliability Engineering](http://amzn.to/2pfeHBU) a lot of months
 ago. I read the ebook first but I am the kind of people that buy also paper

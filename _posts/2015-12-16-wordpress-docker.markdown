@@ -9,7 +9,7 @@ summary: "Docker and wordpress to guarantee scalability, flexibilty and isolatio
 A lot of webagencies install all wordpress in the same server but how can they manage a disaster?
 AWS with Elastic Container Service could be a more professional solution."
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 
 <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/docker?src=hash">#docker</a> and <a href="https://twitter.com/hashtag/wordpress?src=hash">#wordpress</a> for a better world.. <a href="https://t.co/o9c6YXvsl3">https://t.co/o9c6YXvsl3</a> Blogpost after my talk <a href="https://twitter.com/CodemotionIT">@CodemotionIT</a> How and Why? <a href="https://twitter.com/awscloud">@awscloud</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/679241680797700096">December 22, 2015</a></blockquote>

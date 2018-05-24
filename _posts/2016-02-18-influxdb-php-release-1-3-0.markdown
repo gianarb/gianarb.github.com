@@ -4,13 +4,14 @@ title:  "InfluxDB PHP 1.3.0 is ready to go"
 date:   2016-02-18 10:08:27
 categories: [post]
 img: /img/influx.jpg
-tags: [devops, influxdb]
+tags: [devops, influxdb, php, oss, open source, metrics, monitoring,
+observability]
 summary: "InfluxDB is a time series database, it helps us to manage matrics,
 point and offert a stack of tools to collect and see this type of data. I am a
 maintainer of InfluxDB PHP integration. In this past I describe the news
 provided by new relesae 1.3.0"
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">Shout out to <a href="https://twitter.com/GianArb">@GianArb</a> for shipping a new release of the InfluxDB-PHP library! Here&#39;s what&#39;s new: <a href="https://t.co/tJQIu9OCbL">https://t.co/tJQIu9OCbL</a></p>&mdash; InfluxData (@InfluxDB) <a href="https://twitter.com/InfluxDB/status/704403294592970752">February 29, 2016</a></blockquote>

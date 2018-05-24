@@ -4,7 +4,8 @@ title:  "Server time vs Response time"
 date:   2018-05-18 10:38:27
 img: /img/pastrami-sf.jpg
 categories: [post]
-tags: [monitoring, devops]
+tags: [monitoring, devops, observability, san francisco, metrics, capacity,
+cloud]
 summary: "How do you dimension an infrastructure? How can you calculate
 container limits or how many nodes your application requires to support a
 specific load? Response time and server time are two key measurements to monitor

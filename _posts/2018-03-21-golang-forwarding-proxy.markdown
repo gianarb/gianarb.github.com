@@ -4,7 +4,7 @@ title:  "How to use a Forwarding Proxy with golang"
 date:   2018-03-21 09:38:27
 img: /img/gopher.png
 categories: [post]
-tags: [golang, network, go, proxy, forwarding, privoxy, docker]
+tags: [golang, network, go, proxy, forwarding, privoxy, docker, kubernetes]
 summary: "Cloud, Docker, Kubernetes make your environment extremely dynamic, it
 has a lot of advantages but it adds another layer of complexity. This article is
 about forward proxy and golang. How to configure your http Client to use an

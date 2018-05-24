@@ -2,11 +2,16 @@
 layout: post
 title:  "The price of modularity"
 date:   2015-02-21 23:08:27
-tags: [zf2, developer]
+tags: [zf2, developer, open source, module, MVC, code segregation, SOLID]
 categories: [post]
-summary: The modularity is not only a beautiful word, It has roles and a price.
+summary: "Modularity is not only a beautiful word, It has roles and it is a
+methodology that helps you to keep your project easy to understand. Modularity
+is a key principle to have an easy on board of new developer in your application
+because it will look separated and simpler to approach. As a developer you
+should think about how your scaffolding and your code looks from the outside
+because in reality you read much more code compared with how code you write."
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 Today all frameworks are **modulable** but it isn't just a beautiful word, behind it there are a lot of concepts and ideas:
 

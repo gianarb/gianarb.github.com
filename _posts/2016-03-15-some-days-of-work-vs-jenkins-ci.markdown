@@ -4,13 +4,13 @@ title:  "Some days of work vs Jenkins CI"
 date:   2016-02-21 10:08:27
 categories: [post]
 img: /img/jenkins.png
-tags: [ci, devops]
+tags: [ci, devops, automation, jenkins, craft, go, opensource]
 summary: "I love Jenkins CI is a beautiful and stable project to run job and
 manage continuous integration and deploy pipeline, few days ago I worked to
 improve the delivery pipeline in CurrencyFair and I started to do some thought
 about this topic, here my internal battle vs Jenkins CI"
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr"><a href="https://t.co/02HbnkzRsS">https://t.co/02HbnkzRsS</a> &quot;Some Days of work vs <a href="https://twitter.com/hashtag/JenkinsCI?src=hash">#JenkinsCI</a>&quot; Little things about continuous integration <a href="https://twitter.com/hashtag/ci?src=hash">#ci</a> <a href="https://twitter.com/hashtag/dev?src=hash">#dev</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/709466156453732352">March 14, 2016</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

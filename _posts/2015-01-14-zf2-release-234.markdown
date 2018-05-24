@@ -4,18 +4,27 @@ title:  "Zend Framework release 2.3.4"
 date:   2015-01-14
 img: /img/zf.jpg
 categories: [post]
-tags: [php, zf2]
+tags: [php, zf2, Zend Framework, release, opensource]
 summary: "Zend Framework release 2.3.4"
+changefreq: daily
 priority: 1
 ---
-Zend Framework 2.3.4 is ready! After 4 mouths the new path version of ZF2 is published.
+Zend Framework 2.3.4 is ready! After 4 mouths the new path version of ZF2 is
+published.
 
-How all path release there aren't new important feature but the list of [pull requests](https://github.com/zendframework/zf2/pulls?q=is%3Aclosed+is%3Apr+milestone%3A2.3.4+) is very long.
+How all path release there aren't new important feature but the list of [pull
+requests](https://github.com/zendframework/zf2/pulls?q=is%3Aclosed+is%3Apr+milestone%3A2.3.4+)
+is very long.
 
 * [#7112](https://github.com/zendframework/zf2/pull/7112) You can find into /resources directory a ZF official logo
 * [#7087](https://github.com/zendframework/zf2/pull/7087) Happy new year by ZF!
 * [#6673](https://github.com/zendframework/zf2/issues/6673) `Zend\Http\Header` now support DateTime format for expire Cookie
 
-Zend Framework follow [semver](http://semver.org/) directives, `2.3.4` is a path release in this version there are a log list of [bug fixes](https://github.com/zendframework/zf2/pulls?q=is%3Aclosed+is%3Apr+milestone%3A2.3.4+label%3Abug)
+Zend Framework follow [semver](http://semver.org/) directives, `2.3.4` is a path
+release in this version there are a log list of [bug
+fixes](https://github.com/zendframework/zf2/pulls?q=is%3Aclosed+is%3Apr+milestone%3A2.3.4+label%3Abug)
 
-Good download [Zend Femework 2.3.4](https://github.com/zendframework/zf2/releases/tag/release-2.3.4), this is the [changelog](https://github.com/zendframework/zf2/blob/18534b6f2c14f52898bb208932fedacd5324be63/CHANGELOG.md)
+Good download [Zend Femework
+2.3.4](https://github.com/zendframework/zf2/releases/tag/release-2.3.4), this is
+the
+[changelog](https://github.com/zendframework/zf2/blob/18534b6f2c14f52898bb208932fedacd5324be63/CHANGELOG.md)

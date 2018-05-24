@@ -4,12 +4,12 @@ title:  "Watch demo about Docker 1.12 made during Docker Meetup"
 date:   2016-08-24 12:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker]
+tags: [docker, open source, orchestration, swarm, meetup, dublin, kubernetes,
+docker captain , cncf]
 summary: "Docker 1.12 contains a lot of news about orchestration and
     production. During August Docker Meetup in Dublin I presented with a demo a set
     of new features around this new release."
 priority: 0.6
-changefreq: yearly
 ---
 In August during the Docker Meetup I presented with a demo some new
 features provided by Docker 1.12.

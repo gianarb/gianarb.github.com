@@ -4,13 +4,13 @@ title:  "ChatOps create your IRC bot in Go"
 date:   2016-02-21 10:08:27
 img: /img/go.png
 categories: [post]
-tags: [devops]
+tags: [devops, chatops, hubot, github, automation, chat, javascript, open source]
 summary: "ChatOps is a strong topic it is growing day by day
 because now with the IaaS are allowed a new way to manage your
 infrastacture provide for you an API layer. You can implement it
 to create your automation layer. A pretty bot is a good assistence"
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 The infrastructure as a service (IaaS) opened new ways to manage your
 infrastructure.

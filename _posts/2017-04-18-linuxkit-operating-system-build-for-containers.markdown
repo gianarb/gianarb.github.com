@@ -4,14 +4,14 @@ title:  "LinuxKit operating system built for container"
 date:   2017-04-18 10:08:27
 categories: [post]
 img: /img/builder.gif
-tags: [docker, linuxkit, container]
+tags: [docker, linuxkit, container, linux, open source, immutability, operating
+system, docker captain]
 summary: "LinuxKit is a new tool presented during the DockerCon 2017 built by
 Docker to manage cross architecture and cross kernel testing. LinuxKit is a
 secure, portable and lean operating system built for containers. It supports
 different hypervisor as MacOS hyper or QEMU to run testsuite on different
 architectures. In this article I am showing you some basic concept above this
 tool. How it works and why it can be useful."
-changefreq: yearly
 ---
 Linuxkit is a new project presented by Docker during the DockerCon 2017. If we
 look at the description of the project on
@@ -408,7 +408,7 @@ My plan is to create a configuration to test InfluxDB and play a bit with `qemu`
 to test it on different architectures and devices. Stay around a blogpost will
 come!
 
-Some Links: 
+Some Links:
 
 * [INTRODUCING MOBY PROJECT: A NEW OPEN-SOURCE PROJECT TO ADVANCE THE SOFTWARE
 CONTAINERIZATION MOVEMENT](https://blog.docker.com/2017/04/introducing-the-moby-project/)

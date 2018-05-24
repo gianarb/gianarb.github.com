@@ -3,7 +3,8 @@ layout: post
 title:  "Git git git, but better"
 date:   2017-10-10 10:08:27
 categories: [post]
-tags: [docker]
+tags: [docker, docker captain, git, coreos, automation, infra as code,
+infrastructure]
 img: /img/git.png
 summary: "Doesn't matter for how much time you are using git or any version
 control system, you always have something to learn abut them. Not about the

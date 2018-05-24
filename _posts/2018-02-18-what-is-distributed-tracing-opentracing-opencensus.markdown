@@ -3,13 +3,14 @@ layout: post
 title:  "What is distributed tracing. Zoom on opencensus and opentracing"
 date:   2018-02-18 10:08:27
 categories: [post]
+tags: ["distributed tracing", opentracing, opencensus, tracing, distributed
+system, monitoring, cloud, observability]
 summary: "Distributed tracing is a fast growing concept. We increased the
 distributions for our applications and the consequence is a different complexity
 to monitor and understand what is going on across regions and applications
 (microservices). With this article I share something about what tracing is and
 my experience with opentracing and opencensus."
 priority: 0.6
-changefreq: yearly
 ---
 A few months ago I started to actively study, support and use opentracing and
 more in general the distributed tracing topic.

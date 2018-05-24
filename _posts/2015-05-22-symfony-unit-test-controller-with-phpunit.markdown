@@ -4,10 +4,11 @@ title:  "Test your Symfony Controller and your service with PhpUnit"
 date:   2015-05-21 23:08:27
 categories: [post]
 img: /img/symfony.png
-tags: [php]
-summary: Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it!
+tags: [php, symfony, opensource, phpunit, controller, dependency injection]
+summary: "Test your Symfony Controller with PhpUnit. You expect that if one
+parameter is true your action get a service by Dependence Injcation and use it!"
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 <blockquote align="center" class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Unit <a href="https://twitter.com/hashtag/test?src=hash">#test</a> for your <a href="https://twitter.com/hashtag/Controller?src=hash">#Controller</a> with <a href="https://twitter.com/hashtag/PhpUnit?src=hash">#PhpUnit</a> and <a href="https://twitter.com/hashtag/Symfony?src=hash">#Symfony</a>.. With a little use case of <a href="https://twitter.com/hashtag/DepedenceInjaction?src=hash">#DepedenceInjaction</a> test <a href="http://t.co/JNb39EyRly">http://t.co/JNb39EyRly</a> <a href="https://twitter.com/hashtag/php?src=hash">#php</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/601526550438215680">May 21, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

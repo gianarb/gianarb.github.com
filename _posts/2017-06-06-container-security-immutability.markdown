@@ -5,13 +5,12 @@ date:   2017-06-05 10:08:27
 categories: [post]
 img: /img/builder.gif
 img: /img/container-security.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, security, docker captain, ebook, book, learn, deploy]
 summary: "Docker, container and immutability. Have an immutable system has
 advantages not only from deploy, release and scalability point of view but also
 from security side. Deploy and build a new release quickly and high frequency
 improve the way you trust your provisioning system. Have the old environment
 still running and ready to be rolled back is another good point."
-changefreq: yearly
 ---
 
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">55 pages
@@ -89,14 +88,14 @@ during the update.
 You have also an instrument to analyse the attacked container with the command
 docker diff <container_id> This command shows the differences in the file system.
 
-It supports 3 events: 
+It supports 3 events:
 
-* A - Add 
-* D - Delete 
+* A - Add
+* D - Delete
 * C - Change
 
 In case of attack, you can commit the attacked container to analyse it later and
-replace it with the original image.  
+replace it with the original image.
 
 This flow is interesting but if you know that your application does not need to
 modify the file system you can use `–read-only` parameters to make the fs read
@@ -111,7 +110,7 @@ During this chapter we covered some practices and tools that you can follow or
 use to build a safe environment.
 
 In general, you need to close your application in an environment that provides
-only what you need and what you know. 
+only what you need and what you know.
 
 If your distribution or your container has something that you don’t have under
 your control or it is unused then it is a good idea remove these dark points.

@@ -4,7 +4,7 @@ title:  "Go testing tricks"
 date:   2018-04-17 10:38:27
 img: /img/gopher.png
 categories: [post]
-tags: [golang]
+tags: [golang, test, unit test, automation, fixture, trick, go]
 summary: "This post contains some feedback about how to write tests in Go."
 priority: 1
 ---

@@ -3,10 +3,13 @@ layout: post
 title:  "From Docker to Moby"
 date:   2017-10-20 10:08:27
 categories: [post]
-tags: [docker]
+tags: [docker, moby, docker captain, automation, cncf, ambassador]
 img: /img/docker.png
-summary: ""
-changefreq: yearly
+summary: "Docker announced during DockerCon a new project called Moby. Moby will
+be the new home for Docker and all the other open source projects like
+containerd, linuxkit, vpnkit and so on. Moby is the glue for all that open
+source code. It will look as an entire platform to ship, build and run
+containers at scale."
 ---
 At DockerCon 2017 Austin
 [Moby](https://blog.docker.com/2017/04/introducing-the-moby-project/) was the

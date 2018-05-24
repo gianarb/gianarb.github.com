@@ -3,12 +3,11 @@ layout: post
 title:  "Orbiter the Docker Swarm autoscaler on the road to BETA-1"
 date:   2017-08-09 10:08:27
 categories: [post]
-tags: [docker]
+tags: [docker, docker captain, swarm, orbiter, automation, devops, monitoring]
 img: /img/docker.png
 summary: "Orbiter is a project written in go. It is an autoscaler for Docker
 containers. In particular it works with Docker Swarm. It provides autoscaling
 capabilities for your services."
-changefreq: yearly
 ---
 Orbiter is an open source project written in go hosted on
 [GitHub](https://github.com/gianarb/orbiter). It provides autoscaling

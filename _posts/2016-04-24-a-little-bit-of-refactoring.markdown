@@ -4,11 +4,11 @@ title:  "A little bit of refactoring"
 date:   2016-04-24 10:08:27
 categories: [post]
 img: /img/refactoring.jpg
-tags: [php]
+tags: [php, refactoring, development, open source, speaker, conference, tech]
 summary: "Strategy to refactoring your code. Tricks about performance from
 PHPKonf Istanbul Conference."
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 I wrote this note during the [PHPKonf](http://phpkonf.org/), I spoke about
 [Jenkins and Continuous Delivery](http://gianarb.it/jenkins-real-world/#/) but

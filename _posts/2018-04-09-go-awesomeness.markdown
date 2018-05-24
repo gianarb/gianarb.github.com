@@ -4,7 +4,7 @@ title:  "The Go awesomeness"
 date:   2018-04-09 10:38:27
 img: /img/fight-club.jpg
 categories: [post]
-tags: [golang]
+tags: [golang, awesome, list, development, pprof, go, google, delve]
 summary: "After 1 year writing go every day at work this is why I like to work
 with it."
 priority: 1
@@ -79,7 +79,7 @@ visualization or static analysis on it for common calculation.
 
 ## 4. delve
 A good debugging session is the best way to approach a new application or to go
-deeper learning a language or a software. 
+deeper learning a language or a software.
 [delve](https://github.com/derekparker/delve) is easy to setup and to use. Even
 if you are not gdb/debugger superhero as I am not you will be able to make your
     first steps with delve. So it is a nice starting point too.

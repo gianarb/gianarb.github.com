@@ -4,7 +4,7 @@ title:  "Observability according to me"
 date:   2018-04-04 10:38:27
 img: /img/mountain-garbage.jpg
 categories: [post]
-tags: [observability, cloud]
+tags: [observability, cloud, influxdb, monitoring, distributed system, scale]
 summary: "Prometheus, InfluxDB, TimescaleDB, Cassandra and all the time series databases
 that show up every week is a clear sign that now we need more than just a way to
 store metrics. I think is now clear that collecting more metrics is the point.

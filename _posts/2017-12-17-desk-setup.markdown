@@ -3,9 +3,15 @@ layout: post
 title:  "Desk setup"
 date:   2017-12-17 10:08:27
 categories: [post]
-tags: [desk]
+tags: [desk, remote work, office, working from home, influxdata, currencyfair,
+standing desk]
 img: /img/docker.png
-summary: ""
+summary: "It is not a couple of months after i left CurrencyFair to start
+working at InfluxData. A lot of new things but working from home for a US based
+company is very hard. Dealing with a such big timezone requires a big effort.
+But I am very excited about how I am feeling working from home. That's why I
+decided to share my current office setup. Desktop, Zendbook and a lot of Ikea's
+things!"
 changefreq: yearly
 ---
 As you probably know in April 2017 I moved back after an year and half in Dublin
@@ -63,7 +69,7 @@ The [Logitech C922](http://amzn.to/2kEnJ9o) is not powerful enough to make me
 beautiful but it makes an amazing work and it's very good.
 
 If you record tutorials or workshop you should think about having one of this.
-It comes with a small tripod to setup it where ever you like. 
+It comes with a small tripod to setup it where ever you like.
 
 ## USB-C adapter
 

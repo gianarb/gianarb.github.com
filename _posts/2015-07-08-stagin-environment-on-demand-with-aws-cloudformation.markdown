@@ -4,10 +4,17 @@ title:  "Staging environment on demand with AWS Cloudformation"
 date:   2015-07-08 09:08:27
 img: /img/amazon-aws-logo.jpg
 categories: [post]
-tags: [devops, aws]
-summary: Build your stagin environment on demand with AWS Cloudformation
+tags: [devops, aws, automation, cloudformation, json, cloud, amazon web service,
+cf, infrastructure as code, infra as code]
+summary: "Environment are ephemeral. They come and go really quickly based on
+needs. AWS delivers a service called CloudFormation that allows you to easy
+describe via JSON or YALM specification a lot of AWS resources like EC2, Route53
+hosted zone and domains, RDS, VPC, subnet and almost everything you normally do
+via console. This is infrastructure as code applied to AWS resource allows you
+to version and push on git entire AWS environment. You can replicate it over and
+over."
 priority: 0.6
-changefreq: yearly
+changefreq: daily
 ---
 
 <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Staging environment on demand. To Work on <a href="https://twitter.com/hashtag/AWS?src=hash">#AWS</a> low level with <a href="https://twitter.com/hashtag/cloudformation?src=hash">#cloudformation</a> <a href="http://t.co/VWBR129637">http://t.co/VWBR129637</a> <a href="https://twitter.com/hashtag/cloud?src=hash">#cloud</a> <a href="https://twitter.com/hashtag/devops?src=hash">#devops</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/621691855810494464">July 16, 2015</a></blockquote>

@@ -3,7 +3,7 @@ layout: post
 title:  "Kubernetes up and running"
 date:   2017-12-19 10:08:27
 categories: [post]
-tags: [book]
+tags: [book, kubernetes, cncf, ambassador, review]
 img: /img/k8s-up-and-running.jpg
 summary: "Kubernetes up and running review."
 changefreq: yearly

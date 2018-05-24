@@ -4,12 +4,11 @@ title:  "Docker inside docker and overview about Jenkins 2"
 date:   2016-04-1 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker, ci]
+tags: [docker, ci, automation, devops, jenkins, container, docker captain]
 summary: "A little overview about Jenkins 2 but the main topic of the article
 is about how run docker inside docker to start a continuous integration system
 inside a container"
 priority: 0.6
-changefreq: yearly
 ---
 
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr"><a

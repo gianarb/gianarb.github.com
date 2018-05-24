@@ -4,13 +4,13 @@ title:  "FastEventManager, only an event manager"
 pate:   2015-11-01 10:08:27
 categories: [post]
 img: /img/github.png
-tags: [php]
+tags: [php eventmanager, framework, open source, oss]
 summary: "FastEventManager is a PHP library designed to be a smart and light
 event manager. You can use it in your applications or as a base component for
 your framework. It adds capabilities around events as attach and triggering of
 events."
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 
 > The Event-Driven Messaging is a design pattern, applied within the

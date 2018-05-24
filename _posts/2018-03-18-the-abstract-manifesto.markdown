@@ -4,7 +4,7 @@ title:  "The abstract manifesto"
 date:   2018-03-17 10:08:27
 categories: [post]
 changefreq: monthly
-tags: [book]
+tags: [code, development, abstract, manifesto]
 summary: "Often looking at the code I spot a lot of places where it looks too
 complicated. Disappointment is the feeling that I get reading classes with weird
 names or chain of abstractions or interfaces used only one time. Abstraction is

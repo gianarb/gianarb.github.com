@@ -4,7 +4,8 @@ title:  "Chef Server startup notes"
 date:   2016-11-10 10:08:27
 categories: [post]
 img: /img/chef.png
-tags: [chef, devops]
+tags: [chef, devops, automation, ruby, infrastructure, infra as code,
+digitalocean]
 summary: "This tutorial explain how to setup a chef server on digitalocean from
 zero. It also shows how to use it to make a provisioning of one Chef Client.
 Chef is one of the most used provisioning tool. DevOps tool to apply

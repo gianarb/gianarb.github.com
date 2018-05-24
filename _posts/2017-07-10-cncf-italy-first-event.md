@@ -4,13 +4,13 @@ title:  "CNCF Italy, first event about opentracing"
 date:   2017-06-05 10:08:27
 categories: [post]
 img: /img/cncf.jpeg
-tags: [cncf, event]
+tags: [cncf, event, meetup, devcampy, devops, automation, cloud, kubernetes,
+ambassador]
 summary: "CNCF is a branch of The Linux Foundation focused on Cloud Computing
 and modern scalable architectures. it's supporting tools like Kubernetes,
 Prometheus, containerd and so on. If you are using one of them or you are
 looking to know more about them, this is your meetup. Join us! hashtag CNCFItaly
 on twitter."
-changefreq: yearly
 ---
 
 CNCF is a branch of The Linux Foundation focused on Cloud Computing and modern

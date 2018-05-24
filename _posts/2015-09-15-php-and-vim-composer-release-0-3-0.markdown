@@ -7,7 +7,6 @@ img: /img/vim.png
 tags: [php]
 summary: vim-composer is a plugin to manage integration between composer and vim
 priority: 0.6
-changefreq: yearly
 ---
 <blockquote align="center" class="twitter-tweet" data-cards="hidden" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/vimForPHP?src=hash">#vimForPHP</a> <a href="https://t.co/EdczdpCrRc">https://t.co/EdczdpCrRc</a> <a href="https://twitter.com/hashtag/php?src=hash">#php</a> <a href="https://twitter.com/hashtag/vim?src=hash">#vim</a> Release 0.3.0 <a href="https://twitter.com/hashtag/composer?src=hash">#composer</a> plugin is ready! Thanks <a href="https://twitter.com/sensorario">@sensorario</a> for your work!</p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/641674841192574976">September 9, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

@@ -4,10 +4,12 @@ title:  "Build your Zend Framework Console Application"
 date:   2015-05-21 23:08:27
 img: /img/zf.jpg
 categories: [post]
-tags: [php, zf2]
-summary: ZF\Console is a component written by zf-campus and Apigility organization that help you to build console application using different Zend Framework components
+tags: [php, zf2, zend framework, open source, oss, cli]
+summary: "ZF Console is a component written by zf-campus and Apigility
+organization that help you to build console application using different Zend
+Framework components"
 priority: 0.6
-changefreq: yearly
+changefreq: weekly
 ---
 <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Blogpost about console-skeleton-app for your console application <a href="http://t.co/WuVq0GZlxE">http://t.co/WuVq0GZlxE</a> <a href="https://twitter.com/hashtag/PHP?src=hash">#PHP</a> <a href="https://twitter.com/hashtag/ZF?src=hash">#ZF</a> <a href="https://twitter.com/hashtag/console?src=hash">#console</a> <a href="https://twitter.com/hashtag/develop?src=hash">#develop</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/613292048708468736">June 23, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

@@ -4,12 +4,12 @@ title:  "Docker 1.12 orchestration built-in"
 date:   2016-06-20 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker]
+tags: [docker, release, swarm, cloud, orchestration, distributed system, docker
+captain]
 summary: "Docker 1.12 adds different new features around orchestration, scaling
 and deployment, in this article I am happy to share some tests I did with this
 version"
 priority: 0.6
-changefreq: yearly
 ---
 
 <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">Some

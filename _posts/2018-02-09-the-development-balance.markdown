@@ -4,7 +4,7 @@ title:  "The right balance"
 date:   2018-02-09 10:08:27
 categories: [post]
 changefreq: monthly
-tags: [book]
+tags: [work from home, cncf, ambassador, remote work, balance]
 summary: "My daily job as a developer is to find the right balance about
 everything. I would like to share what I think about this topic because the
 decisions that you take writing a system are the result of the

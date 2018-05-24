@@ -4,7 +4,7 @@ title:  "Go how to cleanup HTTP request terminated."
 date:   2018-04-25 10:38:27
 img: /img/gopher.png
 categories: [post]
-tags: [golang]
+tags: [golang, go, http]
 summary: "Cleaning up HTTP request, the most expensive one can be a huge
 performance improvement for your application. This short article shows how to
 handle HTTP request termination in Go."

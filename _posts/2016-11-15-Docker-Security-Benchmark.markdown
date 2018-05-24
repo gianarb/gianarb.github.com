@@ -4,12 +4,12 @@ title:  "Docker Bench Security"
 date:   2016-11-15 10:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, security, automation, devops, open source, docker
+captain]
 summary: "Container security is a hot topic because today containers
 are everywhere also in production. It means that we need to trust this
 technology and start to think about best practices and tools to make our
 container environment safe."
-changefreq: yearly
 ---
 Frequently, best practices help you to have a safe environment,
 [docker-bench-security](https://github.com/docker/docker-bench-security) is an

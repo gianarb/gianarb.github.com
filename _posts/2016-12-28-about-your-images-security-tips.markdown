@@ -4,13 +4,12 @@ title:  "About your images, security tips"
 date:   2016-12-28 08:08:27
 categories: [post]
 img: /img/container-security.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, book, docker captain, ebook, security]
 summary: "Everything unnecessary in your system could be a very stupid vulnerability. We
 already spoke about this idea in the capability chapter and  the same rule
 exists when we build an image. Having  tiny images with only what our
 application needs to run is not just a goal in terms of distribution but also
 in terms of cost of maintenance and security."
-changefreq: yearly
 ---
 
 Everything unnecessary in your system could be a very stupid vulnerability. We

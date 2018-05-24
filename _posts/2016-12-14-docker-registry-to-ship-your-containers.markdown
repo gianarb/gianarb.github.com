@@ -4,12 +4,11 @@ title:  "Docker registry to ship and manage your containers."
 date:   2016-12-14 08:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, docker captain, security, book, ebook, learn]
 summary: "Build and Run containers is important but ship them out of your laptop is the
 best part! A Registry is used to store and manage your images and all your
 layers. You can use a storage to upload and download them across your servers
 and to share them with your colleagues."
-changefreq: yearly
 ---
 Build and Run containers is important but ship them out of your laptop is the
 best part! The Registry is a very important tool that requires a bit more

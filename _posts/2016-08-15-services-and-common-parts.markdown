@@ -4,7 +4,8 @@ title:  “Microservices and common parts"
 date:   2016-08-14 12:08:27
 categories: [post]
 img: /img/distributed_system_planet.png
-tags: [distributed_system]
+tags: [distributed_system, distributed system, monitoring, microservices, open
+source, containers, cloud]
 summary: "When you think about microservices and distributed system there are a
     lot of parts that usually all your services require. Logging, monitoring,
     testing, distribution. Manage them in the best way it's one of the reason of
@@ -61,7 +62,7 @@ information only if you need to do some specific debugging in production. This s
 There are a lot of services and open source tools able to manage and storage this data. The real issue is decide which street follow.
 
 Are you interested to manage your logs or it’s a big effort for your company? You can move all to log entries and forgot about elastic search and kibana
-and similar in this case. Think about your environment and catch the best solution. Remember that it could be just a temporary solution. When you start a business you have different thoughts, start slim and easy. 
+and similar in this case. Think about your environment and catch the best solution. Remember that it could be just a temporary solution. When you start a business you have different thoughts, start slim and easy.
 
 ## Monitoring
 
@@ -115,7 +116,7 @@ critical section of your architecture because usually from it depends the securi
 your application and users.
 
 Oauth2 is a framework to manage authentication, I recommend it
-because it has a documentation already done, it’s a standard. 
+because it has a documentation already done, it’s a standard.
 You don't reivent anything, there are a lot of libraries and use cases about it that make it solid, flexible and reusable.
 
 ## Automation and Deploy
@@ -154,7 +155,7 @@ possible and efficient.
 
 ## Communication Layer
 
-A lot of companies have one communication layer in the 
+A lot of companies have one communication layer in the
 environment, JSON and REST. It’s a good choice, easy to implement and there are
 also a lot of tools to test, document and create client libraries.
 

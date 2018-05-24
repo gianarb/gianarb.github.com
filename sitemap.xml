@@ -11,7 +11,7 @@ layout: null
 			{% if post.changefreq %}
 				<changefreq>{{ post.changefreq}}</changefreq>
 			{% else %}
-				<changefreq>monthly</changefreq>
+				<changefreq>weekly</changefreq>
 			{% endif %}
 
 			{% if post.priority %}

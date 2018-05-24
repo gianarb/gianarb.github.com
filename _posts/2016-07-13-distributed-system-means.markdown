@@ -4,10 +4,10 @@ title:  "What Distributed System means"
 date:   2016-07-12 16:08:27
 categories: [post]
 img: /img/distributed_system_planet.png
-tags: [distributed_system]
+tags: [distributed_system, distributed system, discovery, orchestration,
+container, open source]
 summary: "I will speak about service discovery, micro services, container, virtual machines, schedulers, cloud, scalability and latency I hope to have, at the end of this experience a good number of posts in order to share what I know and how I work and approach this kind of challenges."
 priority: 0.6
-changefreq: yearly
 ---
 I choose  to put my experience about distributed system in a serie of blog
 posts on which I’ll  cover different topics.

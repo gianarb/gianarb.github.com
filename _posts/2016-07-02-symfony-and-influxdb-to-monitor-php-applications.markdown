@@ -4,10 +4,9 @@ title:  "Symfony and InfluxDB to monitor PHP application"
 date:   2016-07-02 10:08:27
 categories: [post]
 img: /img/influx.jpg
-tags: [php, influxdb, monitoring]
+tags: [php, influxdb, monitoring, open source, time series, symfony]
 summary: "How monitoring your Symfony and PHP applications with InfluxDB."
 priority: 0.6
-changefreq: yearly
 ---
 
 Symfony is one of the most famous PHP Frameworks in use right now, today we are

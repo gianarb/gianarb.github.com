@@ -4,12 +4,11 @@ title:  "Containers why we are here"
 date:   2017-03-12 08:08:27
 categories: [post]
 img: /img/container-security.png
-tags: [docker, scaledocker]
+tags: [docker, scaledocker, book, ebook, learn, docker captain]
 summary: "Cloud computing, containers, devops, everything is moving so fast that
 sometime for big companies or CTO is very hard keep track of everything. What
 it's just a new trend and what I really need. This post contains my options and
 a bit of history about docker, cloud computing, aws and containers."
-changefreq: yearly
 ---
 
 > “It is change, continuing change, inevitable change, that is the dominant

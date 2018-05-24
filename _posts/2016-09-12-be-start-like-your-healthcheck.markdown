@@ -4,7 +4,8 @@ title:  "Be smart like your healthcheck"
 date:   2016-08-25 12:08:27
 categories: [post]
 img: /img/docker.png
-tags: [docker, distributed_system]
+tags: [docker, distributed_system, distributed system, automation, devops,
+health check]
 summary: "In a distributed system environment has a simple way to know the
 status of your server help you do understand if it's ready to go in production.
 HealthCheck is simple and common but design a good one can help you do avoid

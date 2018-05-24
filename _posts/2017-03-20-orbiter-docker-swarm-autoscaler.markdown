@@ -4,14 +4,14 @@ title:  "Orbiter an OSS Docker Swarm Autoscaler"
 date:   2017-04-22 08:08:27
 categories: [post]
 img: /img/swarm.gif
-tags: [docker]
+tags: [docker, influxdb, swarm, orchestration, cloud, kapacitor, chronograf,
+tick stack, influxdata, monitoring, open source, oss]
 summary: "Orbiter is an open source project design to become a cross provider
 autoscaler. At the moment it works like Zero Configuration Autoscaler for Docker
 Swarm. It also has a basic implementation to autoscale Digitalocean. This
 project is designed with InfluxData a company that provides OSS solution like
 InfluxDB, Kapacitor and Telegraf. We are going to use all this tools to create
 an autoscaling policy  for your Docker Swarm services."
-changefreq: yearly
 ---
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Q1xfmfML8ok"
 frameborder="0" allowfullscreen></iframe>
