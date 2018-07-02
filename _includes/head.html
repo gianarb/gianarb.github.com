@@ -1,0 +1,46 @@
+<head> <meta http-equiv="content-language" content="en">
+    <meta charset="utf-8"> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="{{ page.summary }}">
+    <meta name="keywords" content="{{page.tags | join: ', '}}">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="{{ site.MY_URL }}{{ page.url | replace:'index.html',''}}">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:site_name" content="gianarb blog"/>
+    <meta property="og:url" content="{{site.MY_URL}}{{page.url}}" />
+    <meta property="og:description" content="{{ page.summary }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="{{site.MY_URL}}{{ page.img }}" />
+
+    <meta property="twitter:account_id" content="129952408" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@gianarb">
+    <meta name="twitter:creator" content="@gianarb">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.summary }}">
+    <meta name="twitter:image:src" content="{{site.MY_URL}}{{ page.img }}">
+    <meta name="twitter:image:width" content="500">
+    <meta name="twitter:image:height" content="500">
+    <meta name="twitter:domain" content="gianarb.it">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+    <script src="/js/custom.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55b22e06669600af" async="async"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    {% include ga.html %}
+</head>
