@@ -5,7 +5,7 @@ date:   2018-06-18 10:38:27
 img: /img/dna.jpg
 categories: [post]
 tags: [devops, observability, opentracing, tracing, distributed system,
-monitoring, logs, cloud]
+monitoring, logs, cloud, tracing]
 summary: "The key monitoring a distributed system is not logs, metrics or traces
 but how you are able to aggregate them. You can not observe and monitor a
 complex system looking at single signals."
