@@ -62,7 +62,7 @@ itslef. In this way you will have a bit more context.
 
 I can't convince you that interoperability is essential if you already analyzed
 the problem and you answered "No" to yourself.
-To build a trace you need to you need to agree on something over languages and
+To build a trace you need to agree on something over languages and
 applications.
 That's why I think a standard is something you can not avoid, at the end you
 will end up having one just for your company.
@@ -73,7 +73,7 @@ will end up having one just for your company.
 
 The applications that are writing traces is not important. Traces is cross
 platform and languages. Usually, you
-point an app to a tracer. It can be Zipkin, Jaeger or others. 
+point an app to a tracer. It can be Zipkin, Jaeger or others.
 
 The tracer takes all the traces, and it stores them in a storage. The databases are
 usually ElasticSearch, Cassandra, InfluxDB. It depends on which tracer you are
