@@ -155,3 +155,7 @@ a.network-list {
 blockquote {
     font-size: 2.3em;
 }
+.hero {
+        background-position: center center;
+    background-size: cover;
+}
