@@ -4,6 +4,7 @@ title:  "Apps I used during my nomad working"
 date:   2018-08-11 10:38:27
 img: /img/dna.jpg
 categories: [post]
+heroimg: /img/hero/tibet.jpg
 tags: [remote working, remote, apps, nomad working, digital, tech, yelp,
 workfrom, oBike]
 summary: "When I travel for conferences or now that I work in remote and I am a
@@ -27,10 +28,10 @@ But other things help me a lot. In general, they are come back to `planning.` I
 feel better when I have the time to look around and to be prepared for the city
 I am going to visit. There are a couple of apps that help me with that:
 
-## [WorkFrom](https://workfrom.co/) is a community of digital nomad and
-remote worker. It keeps up to date a database of pubs, libraries, restaurants,
-bars where you can work from.  It is very nice, and it has some nice feature
-like:
+## [WorkFrom](https://workfrom.co/)
+It is a community of digital nomad and remote worker. It keeps up to date a
+database of pubs, libraries, restaurants, bars where you can work from.  It is
+very nice, and it has some nice feature like:
 
 1. A map, so you can see what is around you
 2. Net speed measurement inside the app. Other than a detailed description of
@@ -51,19 +52,21 @@ walk around take a ride time to time is faster and helpful.
 Bonus point a lot of these apps have a free tier in means that you can even use
 them for free the first time you visit that city!
 
-## Yelp In general, I find [Yelp](https://www.yelp.com/) better than TripAdvisor
-for what concerns restaurant and place to eat. So when I am not able to spot
-    nothing good by myself during my walks around the city or when I am looking
-    for a specific kind of good I use Yelp.
+## Yelp
+In general, I find [Yelp](https://www.yelp.com/) better than TripAdvisor for
+what concerns restaurant and place to eat. So when I am not able to spot nothing
+good by myself during my walks around the city or when I am looking for a
+specific kind of good I use Yelp.
 
-## Adobe Scan For this
-[app](https://acrobat.adobe.com/us/en/mobile/scanner-app.html) I need to give
+## Adobe Scan
+For this [app](https://acrobat.adobe.com/us/en/mobile/scanner-app.html) I need to give
 credit to [Lorenzo](https://twitter.com/fntlnz) because he showed that app to me
 the first time. I use it a lot after a trip when I need to submit the expenses.
 It is always a very annoying work to do but at least with this app, I can take a
 set of pictures, and it will generate a single pdf ready to be submitted!
 
-## Revolut A few years ago when I was working at CurrencyFair I started to test
+## Revolut
+A few years ago when I was working at CurrencyFair I started to test
 and play with online banks and [Revolut](https://revolut.com/r/gianlu1b2) is
 very good when you are traveling around, and you need to manage different
 currencies. First of all, I like the idea to use a different card when I buy on
@@ -80,3 +83,6 @@ traditional banks, so this is a free win!
 Let me know on [Twitter](https://twitter.com/gianarb) if you have any other
 applications to suggest I will be happy to try them next time and maybe to add
 them here!
+
+
+<small><a href="https://www.newhdwallpapers.in/natural-hd-wallpapers/himalayas-mountain-series-tibet/" target="_blank">hero img credits</a> </small>
