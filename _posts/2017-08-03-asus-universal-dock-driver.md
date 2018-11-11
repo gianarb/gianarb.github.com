@@ -13,7 +13,7 @@ it better and to spend time on it.
 
 Lorenzo [(fntlnz)](https://twitter.com/fntlnz) is super on it! I am
 not, plus I bought a Zenbook 3. Super slim, less than 1kg, I can use it to cut
-ham probably but the unique USB-C is driving me crazy. 
+ham probably but the unique USB-C is driving me crazy.
 
 Probably more than the actual 40 degrees that I have in my home office now!
 It is probably why I am writing this post btw.

@@ -23,8 +23,8 @@ replacing lines of code one by one and if you poorly design the software
 somebody will pay the price of it. You or somebody else, probably somebody else
 looking at how quick a developer changes job.
 
-> it is in our hands as a developer to think about design, at
-least to save yourself from the dark
+> it is in your hands as a developer to think about design, at
+least to save yourself from the darkness
 
 In a fancy unicorn startup, you will hear that there is no time to think about
 design, if you are in tech probably that's not true, but there is always
@@ -33,10 +33,10 @@ a project that nobody cares but it needs to be fixed.
 Some other companies don't have time to think about design because they are
 always running against something.
 
-<img src="/img/hero/poverty.jpg" class="img-responsive" />
+![](/img/hero/poverty.jpg){: .img-fluid}
 
-So, as you can see, it is in our hands as a developer to think about design, at
-least to save yourself from the dark.
+So, as you can see, it is in your hands as a developer to think about design, at
+least to save yourself from the darkness.
 
 Recently I read ["Philosophy Software
 Design"](https://www.amazon.com/Philosophy-Software-Design-John-Ousterhout/dp/1732102201/)

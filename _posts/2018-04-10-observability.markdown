@@ -61,7 +61,7 @@ customer. All our effort should be moved on that side.
 I love this point of view because it brings us to what really matters, our
 applications.
 
-<img src="/img/mountain-garbage.jpg" class="img-responsive">
+<img src="/img/mountain-garbage.jpg" class="img-fluid">
 
 According to me the mountain of waste showed in the picture explains really well
 our current situation, we collected what ended up to be a lot of garbage and now

@@ -71,7 +71,7 @@ virtual server in a single machine.  There are different kind of virtualization:
 * Application virtualization like JVM.
 
 
-<img class="img-responsive" src="/img/virtualization.png">
+<img class="img-fluid" src="/img/virtualization.png">
 <a href="https://fntlnz.wtf/post/why-containers/" target="_blank"><small>img from fntlnz's blog. Thanks</small></a>
 
 

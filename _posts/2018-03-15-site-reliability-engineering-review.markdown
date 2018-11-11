@@ -30,7 +30,7 @@ some of them topic are well known but it's hard to find all this information in
 a single place.
 
 <img alt="Site Reliability Engineering book" src="/img/sre-book.jpeg"
-class="img-responsive">
+class="img-fluid">
 
 To be fair, it has 524 pages so it's not a fast read. It  took me few
 months but I keep it around when I need to explain concepts like how to

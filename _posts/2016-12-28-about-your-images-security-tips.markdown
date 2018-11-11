@@ -29,7 +29,7 @@ In the [release page](https://github.com/gianarb/micro/releases/tag/1.0.0),
 there are a list of binaries already compiled and ready to be used. In this
 case we can download the linux_386 binary.
 
-<img class="img-responsive" src="/img/security-image/micro-release.png">
+<img class="img-fluid" src="/img/security-image/micro-release.png">
 
 ```bash
 curl -SsL https://github.com/gianarb/micro/releases/download/1.0.0/micro_1.0.0_linux_386 > micro
@@ -131,7 +131,7 @@ Now we have an executable in ~/hyperclair
 
 The generated report looks like this:
 
-<img class="img-responsive" src="/img/security-image/report-clair.png">
+<img class="img-fluid" src="/img/security-image/report-clair.png">
 
 Hyperclair is just one of the implementations of clair, you can decide to use
 it or build your own implementation in your pipeline.

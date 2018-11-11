@@ -50,7 +50,7 @@ particular section.
 ## how a trace looks like?
 
 <img src="/img/trace.jpg" alt="How I image a trace for a distributed tracing
-app" class="img-responsive">
+app" class="img-fluid">
 
 In my mind, this is a picture for one trace. Every segment is a span.
 So, every span has a trace id, and every span has its own `span_id`.
@@ -69,7 +69,7 @@ will end up having one just for your company.
 
 ## how a tracing infrastructure looks?
 
-<img src="/img/tracing_infra.png" style="width:70%" alt="Sketch of tracing infrastructure." class="img-responsive">
+<img src="/img/tracing_infra.png" style="width:70%" alt="Sketch of tracing infrastructure." class="img-fluid">
 
 The applications that are writing traces is not important. Traces is cross
 platform and languages. Usually, you

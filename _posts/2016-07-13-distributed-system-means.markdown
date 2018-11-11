@@ -50,7 +50,7 @@ You are also mitigating the latency around your system because you are bringing
 your application near your customers and if you have a world wide traffic
 that’s param is really important.
 
-<img alt="Internet Global Submarine map" src="/img/global-submarine-cable.jpg" class="img-responsive">
+<img alt="Internet Global Submarine map" src="/img/global-submarine-cable.jpg" class="img-fluid">
 
 This is the map of the submarine cable (2014) and all know that internet is not
 in the air and serve different point in the world require different amount of

@@ -101,7 +101,7 @@ fine open DefaultController and try to send a page view metrics:
     }
 {% endhighlight %}
 
-<img class="img-responsive" alt="InfluxDB admin panel" src="/img/influxdb_admin.png">
+<img class="img-fluid" alt="InfluxDB admin panel" src="/img/influxdb_admin.png">
 
 Go into the homepage and in the meantime do a query like SELECT * FROM
 "symfony_influx"."".page_view into the InfluxDB's admin panel, you are sending
@@ -165,7 +165,7 @@ check the situation into the Admin Panel with a query like
 SELECT * FROM "symfony_influx"."".login.
 {% endhighlight %}
 
-<img class="img-responsive" alt="InfluxDB admin panel" src="/img/chronograf.png">
+<img class="img-fluid" alt="InfluxDB admin panel" src="/img/chronograf.png">
 
 The admin panel is not the best way to check our metrics, InfluxData provide a
 great dashboard called Chronograf, try to use this metric to create a graph

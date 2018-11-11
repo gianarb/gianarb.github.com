@@ -61,7 +61,7 @@ latency is under control and it is far from saturation. Bringing to the limit
 these two signals, in addition, is a key metric to estimate the correct sizing
 of the applications instances and infrastructure.
 
-<img alt="Market Street San Francisco, Pastrami Resturant Jewish Meseum" src="/img/pastrami-sf.jpg" class="img-responsive" />
+<img alt="Market Street San Francisco, Pastrami Resturant Jewish Meseum" src="/img/pastrami-sf.jpg" class="img-fluid" />
 
 Btw the Pastrami place exists! You should try it! I will be in SF in 2 weeks. So
 let me know about other places [@gianarb](https://twitter.com/gianarb).

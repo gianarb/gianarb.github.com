@@ -28,7 +28,7 @@ To receive the first chapter free leave your email and if you like your twitter 
 
 <div class="row">
 	<div class="col-md-6">
-        <img src="/img/the-fundamentals.jpg" class="img-responsive">
+        <img src="/img/the-fundamentals.jpg" class="img-fluid">
     </div>
 	<div class="col-md-4">
 		<form id="get-chapter">

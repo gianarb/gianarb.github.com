@@ -31,7 +31,7 @@ after the announcement.
 
 Containers are not a first class citizen in Linux.
 
-<img class="img-responsive" src="/img/container-is-not-real.jpeg"/>
+<img class="img-fluid" src="/img/container-is-not-real.jpeg"/>
 
 They are a combination of cgroups, namespaces and other kernel features. They are
 also there from a lot of year. LXD is one of the first project that mentioned

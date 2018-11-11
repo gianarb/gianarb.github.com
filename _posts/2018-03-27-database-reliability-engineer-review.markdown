@@ -15,7 +15,7 @@ You probably know the book [Site Reliability
 Engineer](https://gianarb.it/blog/site-reliability-engineering-review), if you don't I reviewed
 it a few days ago.
 
-<img src="/img/dbre-book.jpg" class="img-responsive">
+<img src="/img/dbre-book.jpg" class="img-fluid">
 
 This book walks the same experience but focused on databases. I work for
 InfluxData as SRE and I deal every days with databases running on our Cloud

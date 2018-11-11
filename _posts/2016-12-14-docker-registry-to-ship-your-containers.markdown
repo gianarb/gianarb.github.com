@@ -130,7 +130,7 @@ http://localhost:8081/ or with the IP of your Docker Machine if you are using
 Docker for Mac/Windows or Docker in Linux. The default credentials are username
 admin and password admin123.
 
-<img class="img-responsive" src="/img/docker-registry/nexus-image-loaded.png">
+<img class="img-fluid" src="/img/docker-registry/nexus-image-loaded.png">
 
 First of all we need to create a new Hosted Repository for Docker, we need to
 press the Settings Icon top left of the page, Repositories and Create
@@ -138,7 +138,7 @@ Repository. I called mine mydocker and you need to specify an HTTP port for
 that repository, we shared port 8082 during the run and for this reason I chose
 8082.
 
-<img class="img-responsive" src="/img/docker-registry/nexus-create-repo.png">
+<img class="img-fluid" src="/img/docker-registry/nexus-create-repo.png">
 
 Nexus has different kind of repositories Host means that it’s self hosted but
 you can also create a Proxy Repository to proxy for example the official Docker

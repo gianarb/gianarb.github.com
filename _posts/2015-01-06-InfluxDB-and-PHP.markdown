@@ -20,7 +20,7 @@ It supports SQL like queries and it has different entry points, REST API (tcp
 protocol) and UDP.
 
 <div class="row">
-<div class="col-md-4 col-md-offset-3"><img class="img-responsive" src="/img/influxdb.png"></div>
+<div class="col-md-4 col-md-offset-3"><img class="img-fluid" src="/img/influxdb.png"></div>
 </div>
 
 We wrote a [sdk](https://github.com/corley/influxdb-php-sdk) to manage

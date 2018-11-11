@@ -77,7 +77,7 @@ Registering how many applications it crosses to, for how long. Labeling these
 metrics you can event understand latency between services.
 
 <img src="http://www.hawkular.org/img/blog/2017/2017-04-19-jaeger-trace.png"
-class="img-responsive">
+class="img-fluid">
 <small>from http://www.hawkular.org/</small>
 
 Speaking in the right language, this image describes a trace. It's an HTTP to

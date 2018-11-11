@@ -100,14 +100,14 @@ docker run -v /var/run/docker.sock:/var/run/docker.sock \
 
 We connect on `http://docker-ip:8080` and start the new awesome wizard!
 
-<img class="img-responsive" alt="First Jenkins 2 page, grab from the log your key and start" src="/img/docker-in-docker/jenkins2-start.png">
+<img class="img-fluid" alt="First Jenkins 2 page, grab from the log your key and start" src="/img/docker-in-docker/jenkins2-start.png">
 
-<img class="img-responsive" alt="Jenkins's plugins wizard" src="/img/docker-in-docker/jenkins2-plugin.png">
+<img class="img-fluid" alt="Jenkins's plugins wizard" src="/img/docker-in-docker/jenkins2-plugin.png">
 
 To verify that all work we can create a new job it only runs `docker ps -a` our
 expectation is the same list of containers that we have out of jenkins.
 
-<img class="img-responsive" alt="Result of the first build" src="/img/docker-in-docker/jenkins2-result.png">
+<img class="img-fluid" alt="Result of the first build" src="/img/docker-in-docker/jenkins2-result.png">
 
 Now we can use run command from jenkins to manage our build with docker without
 any kind of plugins but anyway you are free to use [Docker

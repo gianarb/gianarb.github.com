@@ -107,7 +107,7 @@ Dependency management is probably the worst things that Go has. The good thing
 is that now we have [dep] and it should become the standard way to manage
 dependencies. Right now the situation looks a lot like this:
 
-<img class="img-responsive" src="/img/fight-club.jpg">
+<img class="img-fluid" src="/img/fight-club.jpg">
 
 Govender, go get, glide currently there are a lot of different ways to manage
 dependencies, and it generates a lot of confusion, but I hope at the end we will

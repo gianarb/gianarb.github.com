@@ -86,7 +86,7 @@ $ docker swarm init --listen-addr <master-IP(this ip)>:2377
 $ docker swarm join <master-ip>:2377
 {% endhighlight %}
 
-<img class="img-responsive" alt="Docker Swarm architecture" src="/img/posts/swarm_arch.png">
+<img class="img-fluid" alt="Docker Swarm architecture" src="/img/posts/swarm_arch.png">
 
 If you are not confident with docker swarm this is the architecture, this graph
 is provided by Docker Inc. and explains really well the design around this project.

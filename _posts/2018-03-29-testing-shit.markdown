@@ -36,7 +36,7 @@ When I can choose I don't use assertion libraries, the `testing` package is
 enough for me and dependency management in go is a pain, so fewer things I vendor
 better I feel about myself.
 
-<img src="/img/laziness.jpg" class="img-responsive" />
+<img src="/img/laziness.jpg" class="img-fluid" />
 
 I use fixtures, but I don't like them. I prefer to write more small tests than complicated fixtures.
 

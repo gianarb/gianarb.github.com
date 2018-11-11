@@ -52,25 +52,25 @@ Other links:
 Amazing event! here some pictures and the video is coming soon!
 
 <div class="slide w3-display-container">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-sponsor-1.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-1.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-5.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-8.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-9.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-10.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-12.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-13.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-14.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-15.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-16.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-17.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-20.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-21.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-22.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-23.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-24.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-25.jpg">
-    <img class="mySlides img-responsive" src="/img/cncf-first/Conf-27.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-sponsor-1.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-1.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-5.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-8.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-9.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-10.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-12.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-13.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-14.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-15.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-16.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-17.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-20.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-21.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-22.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-23.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-24.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-25.jpg">
+    <img class="mySlides img-fluid" src="/img/cncf-first/Conf-27.jpg">
     <button class="w3-button w3-display-left"
     onclick="plusDivs(-1)">&#10094;</button>
     <button class="w3-button w3-display-right"

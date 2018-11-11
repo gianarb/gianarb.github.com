@@ -34,7 +34,7 @@ your command come back with `0` in case of success or with another number if
 something fails. Sometime you can find in your continuous integration checks
 that put the status code in a silent mode. The check fails but it's not important enough.
 
-<img class="img-responsive" src="/img/the-wolf-ci.jpeg" alt="continuous integration party">
+<img class="img-fluid" src="/img/the-wolf-ci.jpeg" alt="continuous integration party">
 
 You have a check that runs but you are not asking people to care about the
 result. Probably because it's not important enough. There are few disadvantages
