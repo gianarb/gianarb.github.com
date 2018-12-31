@@ -190,3 +190,7 @@ blockquote span{
   font-weight: bold;
   margin-top:1em;
 }
+
+.highlighter-rouge {
+    width: 100%;
+}
