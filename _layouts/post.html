@@ -21,22 +21,20 @@ layout: default
 </section>
 {% endif %}
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-            <article>
+    <article class="col-md-8 offset-md-2">
+        <div id="post-title" class="row mt-3">
+            <h1>{{ page.title }}</h1>
+        </div>
+        <div class="row">
+            <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}}</p>
+        </div>
 
-                <div id="post-title" class="row mt-3">
-                    <h1>{{ page.title }}</h1>
-                </div>
-                <div class="row">
-                    <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}}</p>
-                </div>
-
-                <div class="post row">
-                    {{ content }}
-                </div>
-
-            </article>
+        <div class="post">
+            {{ content }}
+        </div>
+    </article>
     </div>
 </div>
 
