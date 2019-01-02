@@ -5,7 +5,8 @@
 body {
     font-size: 1rem;
     line-height: 1.75em;
-    font-family: 'Roboto', sans-serif;
+    /*font-family: 'Roboto', sans-serif;*/
+    font-family: 'Inter UI';
 }
 div.starter-template {
     margin-top: 5%;
