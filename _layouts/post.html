@@ -4,17 +4,7 @@ layout: default
 {% if page.heroimg != null %}
 <style>
 .bgimage {
-  width:100%;
-  height:300px;
-  background: url('{{ page.heroimg }}');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size:cover;
-  background-attachment: fixed;
-}
-.bgimage h5 {
-  color:white;
-  text-shadow:2px 2px #333;
+  background-image: url('{{ page.heroimg }}');
 }
 </style>
 <section class="bgimage">
@@ -23,7 +13,7 @@ layout: default
 
 <div class="container-fluid">
     <div class="row">
-    <article class="col-md-8 offset-md-2">
+    <article class="col-md-6 offset-md-3">
         <div id="post-title" class="row mt-3">
             <h1>{{ page.title }}</h1>
         </div>
