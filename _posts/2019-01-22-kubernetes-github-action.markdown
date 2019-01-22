@@ -18,6 +18,19 @@ running functions using containers called
 [gourmet](https://github.com/gianarb/gourmet) I don't buy the fact that it will
 make my code easy to manage. At least not to write API or web applications.
 
+<blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">I used the <a
+href="https://twitter.com/hashtag/GitHubActions?src=hash&amp;ref_src=twsrc%5Etfw">#GitHubActions</a>
+to verify and deploy code to a <a
+href="https://twitter.com/hashtag/kubernetes?src=hash&amp;ref_src=twsrc%5Etfw">#kubernetes</a>
+cluster <a href="https://t.co/nfkjmYKPKs">https://t.co/nfkjmYKPKs</a> I am
+impressed about how wonderful this feature is designed and implemented! <a
+href="https://twitter.com/github?ref_src=twsrc%5Etfw">@Github</a> you
+🤘!</p>&mdash; :w !sudo tee % (@GianArb) <a
+href="https://twitter.com/GianArb/status/1087640589838008321?ref_src=twsrc%5Etfw">January
+22, 2019</a></blockquote> <script async
+src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
 That's why I like what GitHub did because they used serverless for what I think
 it is designed for, extensibility.
 
