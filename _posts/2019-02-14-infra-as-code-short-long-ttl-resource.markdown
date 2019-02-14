@@ -80,7 +80,7 @@ that you end up having more AutoScaling Group with different configuration and
 usually, they go away and get replaced very often with varying versions of
 Kubernetes and so on.  This dynamicity brought as side effect the request of a
 more friendly UX for ops, in our case integrated with the kubectl for example.
-That's when we promoted AutoScaling Groups from a long TTL to a long TTL
+That's when we promoted AutoScaling Groups from a long TTL to a short TTL
 resource.  We developed a K8S CRD to create autoscaling groups and so on.
 
 The missing part is the **reconciliation** between long TTL and short TTL. As
