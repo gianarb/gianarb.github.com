@@ -1,8 +1,8 @@
 ---
 img: /img/gianarb.png
 layout: post
-title:  "Control Theory is dope"
-date:   2019-09-04 08:08:27
+title: "Control Theory is dope"
+date: 2019-09-04 08:08:27
 categories: [post]
 tags: [software design, design pattern]
 summary: "This is an introductive article about control theory applied to

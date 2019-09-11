@@ -1,8 +1,0 @@
-version: '2'
-services:
-  blog:
-    image: gianarb/jekyll:latest
-    ports:
-     - "4000:4000"
-    volumes:
-     - .:/opt/site
