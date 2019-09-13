@@ -9,7 +9,7 @@ reactive planning]
 summary: ""
 changefreq: daily
 ---
-Reading my recent blogposts you can spot my attempt to share what I learned and
+Reading my recent posts you can spot my attempt to share what I learned, and
 I am still studying around distributed system, control theory and provisioning.
 
 I wrote a quick introduction about why I think [reactive planning is a cloud
@@ -35,9 +35,9 @@ does not depend on a static state stored inside a database but on a dynamic
 source of truth.
 
 When I think about an orchestrator it is clear to me that there is no way to
-trust a cache layer in order to understand how many resources (vms, containers,
+trust a cache layer in order to understand how many resources (VMs, containers,
 pods) are running. We need to check them live because you never know what is
-happening to your workload. Those kind of applications are sensible to latency
+happening to your workload. Those kinds of applications are sensible to latency,
 and they require a fast feedback loop.
 
 That's one of the reason about why when you read about Kubernetes internals you
@@ -49,10 +49,10 @@ I wrote a small PoC, it is an application that I called
 [cucumber](https://github.com/gianarb/cucumber), it is available on GitHub and
 you can run it if you like.
 
-It is a CLI tools that provisions a set of resources on AWS. At the moment the
-provisioned architecture is very simple. You can define a number of EC2 and they
-will be created and assigned to a Route53 record. If the record does not exist
-the application will create it.
+It is a CLI tools that provisions a set of resources on AWS. The provisioned
+architecture is very simple. You can define a number of EC2 and, they will be
+created and assigned to a Route53 record, when the record does not exist the
+application will create it.
 
 I learned about how to think about problems like that. At the beginning of my
 career the approach was simple, "I know what to do, I need to write a program
@@ -60,16 +60,15 @@ that reads the request and does what need to be done". So you start configuring
 the AWS client, parsing the request and making a few API requests.
 
 Everything runs perfectly and you succeed at creating 100 clusters.
-
-Things starts to be more complicated, you have more resources to provisioning
+Thing starts to be more complicated, you have more resources to provisioning
 like load balancers, subnets, security groups and more business logic related to
-who can do what. Requests starts to be more than 5 at execution and the logic
+who can do what. Requests start to be more than 5 at execution and the logic
 somethings does not work as linear as it was doing before. At this point you
 have a lot of conditions and figuring out where the procedure failed and how to
 fix the issue becomes very hard.
 
-This is why my current approach is different. When I recognize this kind of
-pattern the first things I do is to check the state of the system.
+This is why my current approach is different when I recognize this kind of
+pattern I always start from the current state of the system.
 
 You can question the fact that at the first execution it is obvious that nothing
 is there, you can just create what ever needs to be created. And I agree on
@@ -88,7 +87,7 @@ do not know how to end the procedure, you will just wait for the next
 re-execution of the flow and it will be able to figure what is already created.
 In my example this patterns works great when provisioning the route53 DNS record
 because the DNS propagation can take a lot of time and in order to realize if
-the DNS record already exists or if there are the right amount of IPs attached
+the DNS record already exists or if there are the right amounts of IPs attached
 to it I use the
 [`net.LookupIP`](https://jameshfisher.com/2017/08/03/golang-dns-lookup/), it
 is the perfect procedure that can take an unknown amount of time to be
@@ -143,7 +142,7 @@ type Scheduler struct {
 
 ```
 
-`Plan` and `Procedure` are crucial but we need a way to execute a plan, it is
+`Plan` and `Procedure` are crucial, but we need a way to execute a plan, it is
 called scheduler. The `Scheduler` has an `Execture` function that accept a
 `Plan` and it executes it **until there is nothing left to do**. Procedures can
 returns other procedures it means that the scheduler needs to recursively
@@ -187,7 +186,7 @@ func (s *Scheduler) Execute(ctx context.Context, p Plan) error {
 ```
 
 The `react` function implements the recursion and as you can see is the place
-where the procedures gets executed `step.Do`.
+where the procedures get executed `step.Do`.
 
 ```go
 // react is a recursive function that goes over all the steps and the one
@@ -219,7 +218,7 @@ use. Other than what showed here the scheduler supports context cancellation and
 deadline. In this way you can set a timeout for every execution.
 
 One of the next big feature I will develop is a reusable reconciliation loop for
-plans. In cucumber it is very raw a goroutine and a WaitGroup to keep the main
+plans. In cucumber, it is very raw. Just a goroutine and a WaitGroup to keep the main
 process up:
 
 ```
@@ -269,7 +268,7 @@ if err := scheduler.Execute(ctx, &p); err != nil {
 }
 ```
 
-In cucumber we have only one Plan the `CreationPlan`. We create it based on the
+In cucumber there is only one Plan the `CreationPlan`. We create it based on the
 YAML file that contains the requested cluster. For example:
 
 ```yaml
@@ -277,12 +276,13 @@ name: yuppie
 nodes_num: 3
 dns_name: yeppie.pluto.net
 ```
+
 And it gets executed by the scheduler. As you can see if the schedule returns an
 error we do not exit, we do not kill the process. We do not panic! Because we
-know that things can break and our code is designed to break just a little bit
-and in  way it can be recovered.
+know that things can break and our code is designed to break just a little
+and in way it can be recovered.
 
-After the first execution the process spins up a goroutines that is the one I
+After the first execution the process spins up a goroutine that is the one I
 copied above to explain a raw and simple control loop.
 
 The process stays in the loop until we kill the process.
@@ -380,7 +380,7 @@ workflow.
 
 From my experience reactive planning makes refactoring or development very
 modular, as you can see you do not need to make all the flow rock solid since
-day one, because it is very time consuming, but you always have a clear
+day one, because it is very time-consuming, but you always have a clear
 entrypoint for future work. Everywhere you return or log an error can be
 replaced at some point with steps, making your flow rock solid from the
 observation you do from previous run.
@@ -448,9 +448,9 @@ func (s *ReconcileNodes) Do(ctx context.Context) ([]planner.Procedure, error) {
 ```
 
 As you can see I have only implemented the `RunInstnace` step, and there is a
-`TODO` left in the code, it means that scale down does not work atm.
+`TODO` left in the code, it means that scale down does not work for now.
 It returns the right steps required to matches the desired state, if there are 2
-nodes but we required 3 of them this steps will return only one `RunInstance`
+nodes, but we required 3 of them this steps will return only one `RunInstance`
 that will be executed by the scheduler.
 
 Last interesting part of the code is the `CreatePlan.Create` function. This is
