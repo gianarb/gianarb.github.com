@@ -5,7 +5,8 @@ title: "o11y.guru introduction and first set of iterations"
 date: 2019-11-09 08:08:27
 categories: [post]
 tags: [o11y.guru, introduction, side project, twitter]
-summary: ""
+summary: "Part of the o11y.guru series this post is an introduction for this
+side project and it describes the first architecture designed for the website."
 changefreq: daily
 ---
 

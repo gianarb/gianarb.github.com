@@ -5,7 +5,9 @@ title: "o11y.guru the history of the first bug"
 date: 2019-11-07 08:08:27
 categories: [post]
 tags: [o11y.guru, bug, honeycomb, twitter]
-summary: ""
+summary: "Part of the o11y.guru series this is about the first bug I discovered
+with the help of honeycomb and how I had to fix it twice in order to make it to
+work."
 changefreq: daily
 ---
 
