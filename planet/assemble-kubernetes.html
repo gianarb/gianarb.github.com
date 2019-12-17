@@ -1,52 +1,52 @@
 ---
 layout: default
-title: Docker Planet by a DockerCaptain
-summary: Docker Planet is a set of blogposts, resources and events about Docker
-    and all the microservices and distributed system ecosystem. All contents are
-    provided by a Docker Captains.
+title: Assemble Kubernetes by a CNCF Ambassador
+summary: Kubernetes is popular, flexible and powerful. A lot of people use it for ops, but it backed by code and its secret is the extendibility. I like to write code for Kubernetes. Custom Resource Definition, informers, operattor, crds, cluster-api, persistent volumes.
 ---
 <div class="container">
 
     <div class="row mt-3">
         <div class="col-md-12">
-            <h1>Assemble Kubernetes</h1>
+            <h2>
+                Assemble Kubernetes
+                <small class="text-muted">I build with <3 on top of Kuberntes</small>
+            </h2>
         </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-            <div class="text-center">
-                <img style="max-width:150px" src="https://images.youracclaim.com/size/680x680/images/f88d800c-5261-45c6-9515-0458e31c3e16/ckad%2Bfrom%2Bcncfsite.png" class="img-fluid" alt="ckad kubernetes certification"/>
-                <img style="max-width:150px" src="https://www.cncf.io/wp-content/uploads/2016/09/cncf_ambassador-300x245.png" class="img-fluid" alt="cncf ambassador"/>
-            </div>
-      </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <blockquote>
-                Cloud Native Ambassadors (CNAs) are individuals who are passionate about Cloud
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <img class="img-fluid" src="https://github.com/cncf/artwork/raw/master/other/ambassador/stacked/color/cncf-ambassador-stacked-color.png">
+        </div>
+        <div class="col-md-7 text-right">
+            <blockquote class="blockquote">
+                <p class="mb-0">Cloud Native Ambassadors (CNAs) are individuals who are passionate about Cloud
                 Native Computing Foundation technology and projects, recognized for their
-                expertise, and willing to help others learn about the framework and community.
-                <p><a
-                    href="https://www.cncf.io/people/ambassadors/"
-                    target="_blank">by. Clound Native Computing Foundation</a></p>
+                expertise, and willing to help others learn about the framework and community.</p>
+                <footer class="blockquote-footer">CNCF <cite title="cncf">website</cite></footer>
             </blockquote>
         </div>
     </div>
 
-    <hr class="style-two">
+    <div class="row mt-3">
+        <h3>Things to know about</h3>
+        <div class="col-md-12">
+            <ul>
+              <li><a href="https://github.com/profefe/kube-profefe" target="_blank">profefe/kube-profefe helps to implement continuous pprof profiling in Kubernetes</a></li>
+              <li><a href="https://get.oreilly.com/ind_extending-kubernetes.html" target="_blank">Report I wrote for O'Reilly "Extending Kubernetes"</a></li>
+              <li><a href="maito:ciao@gianarb.it" target="_blank">Do you need a kubernetes expert? Let's talk (happy to do OSS) <small>(no ops work, I am a coder)</small></a></li>
+            </ul>
+        </div>
+    </div>
 
-    <div id="blog" class="row">
-      <div class="row">
-          <div class="col-md-12">
-              <h3>Assample Kubernetes</h3>
-              {% for post in site.categories['post'] %}
-              {% if post.tags contains "kubeassemble" %}
-                  {% include post_detail.html %}
-              {% endif %}
-              {% endfor %}
-          </div>
+    <div id="blog" class="row  mt-3">
+      <div class="col-md-12">
+          <h3>Lesson learned along the way</h3>
+          {% for post in site.categories['post'] %}
+          {% if post.tags contains "kubeassemble" %}
+              {% include post_detail.html %}
+          {% endif %}
+          {% endfor %}
       </div>
     </div>
 
