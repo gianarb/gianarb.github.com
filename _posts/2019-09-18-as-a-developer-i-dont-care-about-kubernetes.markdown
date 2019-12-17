@@ -4,7 +4,7 @@ layout: post
 title: "Kubernetes is not for operations"
 date: 2019-09-18 08:08:27
 categories: [post]
-tags: [kubernetes, developer]
+tags: [kubernetes, developer, kubeassemble]
 summary: "Kubernetes it not for operations. It democratize resources and
 workloads. It can be the solution to bring developers closer to ops. But YAML is
 not the answer."

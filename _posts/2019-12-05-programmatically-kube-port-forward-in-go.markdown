@@ -4,7 +4,7 @@ layout: post
 title: "Programmatically Kubernetes port forward in Go"
 date: 2019-12-05 06:08:27
 categories: [post]
-tags: [kubernetes, k8s, golang]
+tags: [kubernetes, k8s, golang, kubeassemble]
 summary: "Depending on your networking configuration port forwarding will may be
 the unique way for you to reach pods or services running in Kubernetes. When you
 develop a CLI integration that has to interact with pods running inside the
@@ -152,4 +152,3 @@ free PDF.
 
 I hope you enjoyed it and [let me know](https://twitter.com/gianarb) what cool
 things you are gonna do port-forwarding the universe!
-

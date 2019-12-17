@@ -1,0 +1,53 @@
+---
+layout: default
+title: Docker Planet by a DockerCaptain
+summary: Docker Planet is a set of blogposts, resources and events about Docker
+    and all the microservices and distributed system ecosystem. All contents are
+    provided by a Docker Captains.
+---
+<div class="container">
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h1>Assemble Kubernetes</h1>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+            <div class="text-center">
+                <img style="max-width:150px" src="https://images.youracclaim.com/size/680x680/images/f88d800c-5261-45c6-9515-0458e31c3e16/ckad%2Bfrom%2Bcncfsite.png" class="img-fluid" alt="ckad kubernetes certification"/>
+                <img style="max-width:150px" src="https://www.cncf.io/wp-content/uploads/2016/09/cncf_ambassador-300x245.png" class="img-fluid" alt="cncf ambassador"/>
+            </div>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <blockquote>
+                Cloud Native Ambassadors (CNAs) are individuals who are passionate about Cloud
+                Native Computing Foundation technology and projects, recognized for their
+                expertise, and willing to help others learn about the framework and community.
+                <p><a
+                    href="https://www.cncf.io/people/ambassadors/"
+                    target="_blank">by. Clound Native Computing Foundation</a></p>
+            </blockquote>
+        </div>
+    </div>
+
+    <hr class="style-two">
+
+    <div id="blog" class="row">
+      <div class="row">
+          <div class="col-md-12">
+              <h3>Assample Kubernetes</h3>
+              {% for post in site.categories['post'] %}
+              {% if post.tags contains "kubeassemble" %}
+                  {% include post_detail.html %}
+              {% endif %}
+              {% endfor %}
+          </div>
+      </div>
+    </div>
+
+</div>

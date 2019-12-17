@@ -4,7 +4,7 @@ layout: post
 title:  "Extend Kubernetes via a Shared Informer"
 date:   2019-02-07 08:08:27
 categories: [post]
-tags: [kubernetes, k8s, shared informer, golang]
+tags: [kubernetes, k8s, shared informer, golang, kubeassemble]
 summary: "Kubernetes is designed to be extended. There a lot of way to do it via
 Custom Resource Definition for example. Kubernetes is an event-based
 architecture and you can use a primitive called Shared Informer to listen on the

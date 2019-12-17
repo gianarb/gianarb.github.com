@@ -5,7 +5,7 @@ layout: post
 title: "O'Reilly Report Extending Kubernetes"
 date: 2019-10-07 08:08:27
 categories: [post]
-tags: [kubernetes, custom resource definition, book, oreilly]
+tags: [kubernetes, custom resource definition, book, oreilly, kubeassemble]
 summary: "I wrote a report with O'Reilly called: Extending Kubernetes."
 changefreq: daily
 ---

@@ -4,7 +4,7 @@ layout: post
 title: "kubectl flags in your plugin"
 date: 2019-10-07 08:08:27
 categories: [post]
-tags: [kubernetes, flags, kubectl, plugin]
+tags: [kubernetes, flags, kubectl, plugin, kubeassemble]
 summary: "Develop cure custom kubectl plugins with friendly flags from the kubectl"
 changefreq: daily
 ---
