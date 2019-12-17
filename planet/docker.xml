@@ -18,7 +18,7 @@ layout: null
     <entry>
         <title>{{ post.title }}</title>
         <link href="http://gianarb.it{{ post.url }}"/>
-        <description>{{ post.summary | date_to_xmlschema }}</description>
+        <description>{{ post.summary | xml_escape }}</description>
         <image>{{ post.img | default: '/img/gianarb.png' }}</image>
         <updated>{{ post.date | date_to_xmlschema }}</updated>
         <id>http://gianarb.it{{ post.id }}</id>
