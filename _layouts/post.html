@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 {% if page.heroimg != null %}
 <style>
 .bgimage {
@@ -11,30 +12,32 @@ layout: default
 </section>
 {% endif %}
 
-<div class="container-fluid">
+<div class="container">
     <div class="row">
-    <article class="col-md-6 offset-md-3">
-        <div id="post-title" class="row mt-3">
-            <h1>{{ page.title }}</h1>
-        </div>
+        <div class="col-md-12">
+            <div id="post-title" class="row mt-3">
+                <h1>{{ page.title }}</h1>
+            </div>
 
-        <div class="row">
-            <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}}</p>
-        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}}</p>
+                </div>
+            </div>
 
-        <div class="row">
-            <div class="addthis_sharing_toolbox"></div>
-        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="addthis_sharing_toolbox"></div>
+                </div>
+            </div>
 
-        <div class="row post mt-3">
-            {{ content }}
+            <div class="row mt-3">
+                <div class="col-md-12">
+                {{ content }}
+                </div>
+            </div>
         </div>
-        <div class="keep">
-            <div class="addthis_recommended_horizontal"></div>
-        </div>
-    </article>
-    </div>
+    <div>
 </div>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55b22e06669600af"></script>
 
 

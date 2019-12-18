@@ -35,16 +35,10 @@ summary: Docker Planet is a set of blogposts, resources and events about Docker
 
             {% include docker-planet-newsletter.html %}
 
-            <div class="post row">
-              <div class="col-md-12">
-                {% include book-adv-lb.html %}
-              </div>
-            </div>
-
             <hr class="style-two">
             <div id="blog" class="row">
               <div class="row">
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                       <h3>Read something about Docker</h3>
                       {% for post in site.categories['post'] %}
                       {% if post.tags contains "docker" %}
