@@ -1,8 +1,8 @@
---
+---
 img: /img/profefe.png
 layout: post
 title: "Continuous profiling in Go with Profefe"
-date: 2020-01-03 06:08:27
+date: 2020-01-03 09:08:27
 categories: [post]
 tags: [golang, pprof, profefe]
 summary: "Taking a snapshot at the right time is nearly impossible. A very easy
@@ -10,6 +10,7 @@ way to fix this issue is to have a continuous profiling infrastructure that
 gives you enough confidence of having a profile at the time you need it."
 changefreq: daily
 ---
+
 There are a lot of articles about profiling in Go. Julia Evans for examples
 wrote ["Profiling Go programs with
 pprof"](https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/) and I rely on
