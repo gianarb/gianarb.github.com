@@ -14,7 +14,7 @@ layout: null
         <email>gianarb92@gmail.com</email>
     </author>
       {% for post in site.categories['post'] %}
-      {% if post.tags contains "kubeassemble" %}
+      {% if post.tags contains "kubernetes" %}
     <entry>
         <title>{{ post.title }}</title>
         <link rel="alternate" type="text/html" href="https://gianarb.it{{ post.url }}"/>
