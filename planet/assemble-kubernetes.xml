@@ -19,7 +19,7 @@ layout: null
         <title>{{ post.title }}</title>
         <link rel="alternate" type="text/html" href="https://gianarb.it{{ post.url }}"/>
         <description>{{ post.summary | xml_escape }}</description>
-        <image>{{ post.img | default: '/img/gianarb.png' }}</image>
+        <image>{{ post.img | default: '/img/assemble-kubernetes.png' }}</image>
         <updated>{{ post.date | date_to_xmlschema }}</updated>
         <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
         <id>https://gianarb.it{{ post.url }}</id>
