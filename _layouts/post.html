@@ -36,6 +36,25 @@ layout: default
                 {{ content }}
                 </div>
             </div>
+
+            {% if page.tags contains "kubernetes" %}
+            <div class="row mt-3 mb-3 box-border p-3">
+                <div class="offset-md-2 col-md-3">
+                    <img class="img-fluid" src="/img/assemble-kubernetes.png" />
+                </div>
+                <div class="col-md-5">
+                    <h3>Assemble Kubernetes</h3>
+                    <p>I write a lot about Kubernetes from a developer point of
+                    view. Not really focused on which Ingress to select, or how
+                    to configure CoreDNS. My focus is around its extensibility
+                    via: Custom Resource Definitions, Operators, Shared
+                    Informarmers and the Kubernetes Client. <a
+                    href="/planet/assemble-kubernetes">Read more about
+                it...</a></p>
+                </div>
+            </div>
+            {% endif %}
+
         </div>
     <div>
 </div>

@@ -2,6 +2,10 @@
  * General
  */
 
+.box-border {
+    border: solid #f7f7f9;
+}
+
 body {
     font-size: 1rem;
     line-height: 1.75em;
