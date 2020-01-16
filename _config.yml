@@ -4,3 +4,6 @@ title: "A voice from the Cloud"
 permalink: /blog/:title
 MY_URL: https://gianarb.it
 markdown: kramdown
+collections:
+  my_talks:
+    sort_by: lesson

@@ -1,0 +1,30 @@
+<div class="row">
+    <h3>{{ include.year }}</h3>
+    <div class="col-md-12">
+      <table class="table table-hover" id="2013">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Event</th>
+              <th>Talk</th>
+              <th>Slide</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for talk in include.talks %}
+            <tr>
+              <td>{{ talk.date | date_to_string }}</td>
+              <td><a href="{{ talk.eventLink }}">{{ talk.eventName }} {{ talk.city }}</a></td>
+              <td>{{ talk.title }}</td>
+              <td>
+                {% if talk.slide %}
+                <a href="{{ talk.slide }}" target="_blank">Slide</a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </div>
+</div>
+

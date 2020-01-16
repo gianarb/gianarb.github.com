@@ -17,12 +17,13 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
         </div>
     </div>
 
-    {% include next-events.html %}
+    {% assign talks2020 = site.my_talks | where:'date', "2020" %}
+    {% include talks_per_year.html year="2020" talks=talks2020 %}
 
     <div class="row">
         <h3>2019</h3>
         <div class="col-md-12">
-          <table class="table table-hover">
+          <table class="table table-hover" id="2019">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -138,7 +139,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
     <div class="row">
         <h3>2018</h3>
         <div class="col-md-12">
-          <table class="table table-hover">
+          <table class="table table-hover" id="2018">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -210,7 +211,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
     <div class="row">
         <h3>2017</h3>
         <div class="col-md-12">
-          <table class="table table-hover">
+          <table class="table table-hover" id="2017">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -392,7 +393,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
         <div class="row">
             <h3>2016</h3>
             <div class="col-md-12">
-              <table class="table table-hover">
+              <table class="table table-hover" id="2016">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -482,7 +483,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
         <div class="row">
             <h3>2015</h3>
             <div class="col-md-12">
-              <table class="table table-hover">
+              <table class="table table-hover" id="2015">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -542,7 +543,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
         <div class="row">
             <h3>2014</h3>
             <div class="col-md-12">
-              <table class="table table-hover">
+              <table class="table table-hover" id="2014">
                   <thead>
                     <tr>
                       <th>Date</th>
@@ -593,29 +594,7 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
             </div>
         </div>
 
-        <div class="row">
-            <h3>2013</h3>
-            <div class="col-md-12">
-              <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Event</th>
-                      <th>Talk</th>
-                      <th>Slide</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>12/09/2013</td>
-                      <td><a href="http://milano.grusp.org/incontri-passati/" target="_blank">Pug Milano</a></td>
-                      <td>Vagrant - What is it? Getting Started</td>
-                      <td><a href="http://www.slideshare.net/GianlucaArbezzano/presentazione-def-26159972" target="_blank">Slideshare</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-        </div>
-
+        {% assign talks2013 = site.my_talks | where:'date', "2013" %}
+        {% include talks_per_year.html year="2013" talks=talks2013 %}
     </div>
 </div>
