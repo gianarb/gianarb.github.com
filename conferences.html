@@ -8,323 +8,36 @@ speak about container, docker, observability, monitoring, go, cloud, kubernetes
 and a lot more. In this page you can find my next conferences and look at my talks."
 tags: [Technology Evangelism, speaker, conference, docker, security, distributed system, mointoring, observability, kubernetes, cncf ambassandor]
 ---
-<div class="container">
-    <div id="post" class="row mt-3">
-        <div id="slogan" class="row">
-            <div class="text-center">
-                <h1>Conferences</h1>
-            </div>
-        </div>
-    </div>
-
-    {% assign talks2020 = site.my_talks | where:'date', "2020" %}
-    {% include talks_per_year.html year="2020" talks=talks2020 %}
-
-    {% assign talks2019 = site.my_talks | where:'date', "2019" %}
-    {% include talks_per_year.html year="2019" talks=talks2019 %}
-
-    {% assign talks2018 = site.my_talks | where:'date', "2018" %}
-    {% include talks_per_year.html year="2018" talks=talks2018 %}
-
-    <div class="row">
-        <h3>2017</h3>
-        <div class="col-md-12">
-          <table class="table table-hover" id="2017">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Event</th>
-                  <th>Talk</th>
-                  <th>Slide</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>02/02/2017</td>
-                  <td><a href="https://www.meetup.com/Docker-Dublin/events/237090052/" target="_blank">
-                    Dublin Docker Meetup
-                  </a></td>
-                  <td>Docker 1.13 Overview and demo</td>
-                  <td><a href="https://www.slideshare.net/GianlucaArbezzano/dockerdublin-meetup-new-in-docker-113" target="_blank">Slide</a></td>
-                </tr>
-                <tr>
-                  <td>03/03/2017</td>
-                  <td><a href="https://www.meetup.com/Docker-Novosibirsk/events/237386446/" target="_blank">
-                    Docker Novosibirsk
-                  </a></td>
-                  <td>Docker in production</td>
-                  <td><a href="https://www.slideshare.net/GianlucaArbezzano/docker-novosibirsk-meetup-3-docker-in-production" target="_blank">Slide</a> - <a href="https://www.youtube.com/watch?v=lfex3RMH9o4&feature=youtu.be" target="_blank">Video</a></td>
-                </tr>
-                <tr>
-                  <td>28/03/2017</td>
-                  <td>Online</td>
-                  <td>Docker auto-scaling with TICKStack + obiter</td>
-                  <td><a target="_blank" href="https://www.influxdata.com/resources/influxdata-helps-docker-auto-scale-monitoring/?ao_campid=70137000000Jgw7">Resource</a></td>
-                </tr>
-                <tr>
-                  <td>23/03/2017</td>
-                  <td>Dublin Docker Meetup</td>
-                  <td>Containerd - what, why, how!?</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>03/04/2017</td>
-                  <td><a href="https://finance.jaxlondon.com/session/docker-in-production/" target="_blank">
-                    Finance JaxLondon
-                  </a></td>
-                  <td>Docker in production (workshop)</td>
-                  </a></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>04/03/2017</td>
-                  <td><a href="" target="_blank">
-                    DevOpsConf - London
-                  </a></td>
-                  <td>Listen your infrastructure and sleep</td>
-                  <td><a href target="_blank" href="https://www.slideshare.net/GianlucaArbezzano/tick-stack-listen-your-infrastructure-and-please-sleep">Slide</a></td>
-                </tr>
-                <tr>
-                  <td>17/05/2017</td>
-                  <td><a href="https://www.meetup.com/Docker-meetups/events/239675248/" target="_blank">
-                    Docker HQ - San Francisco
-                  </a></td>
-                  <td>Orbiter: an OSS Docker Swarm Autoscaler</td>
-                  <td><a href="https://www.youtube.com/embed/Q1xfmfML8ok" target="_blank">Video</a></td>
-                </tr>
-                <tr>
-                  <td>18/05/2017</td>
-                  <td><a href="https://infoshare.pl/speakers/#p871" target="_blank">
-                    Infoshare - Poland
-                  </a></td>
-                  <td>Listen to your application and sleep</td>
-                  <td><a href="https://www.slideshare.net/GianlucaArbezzano/monitor-your-application-and-sleep" target="_blank">Slides</a> <a href="https://www.youtube.com/watch?v=aGnmz6uxh4U" target="_blank">Video</a></td>
-                </tr>
-                <tr>
-                  <td>13/06/2017</td>
-                  <td><a href="https://devopsconference.de/session/continuous-delivery-with-jenkins-in-the-real-world/" target="_blank">
-                    DevOpsCon - Berlin
-                  </a></td>
-                  <td>Continuous Delivery with Jenkins in the real World</td>
-                  <td>
-                      <a href="https://www.slideshare.net/GianlucaArbezzano/jenkins-in-the-real-world-devopscon-2017" target="_blank">Slides</a>
-                      <a href="https://www.youtube.com/watch?v=SwCjvAZKQx8" target="_blank">Video</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>14/06/2017</td>
-                  <td><a href="https://devopsconference.de/session/security-tips-to-run-docker-in-production/" target="_blank">
-                    DevOpsCon - Berlin
-                  </a></td>
-                  <td>Security Tips to run Docker in Production</td>
-                  <td>
-                      <a href="https://www.slideshare.net/GianlucaArbezzano/security-tips-to-run-docker-in-production" target="_blank">Slides</a>
-                      <a href="https://www.youtube.com/watch?v=IgQv5chQHyc" target="_blank">Video</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>15/06/2017</td>
-                  <td><a href="http://2017.apiconf.it/" target="_blank">
-                    ApiConf - Turin
-                  </a></td>
-                  <td>Open Tracing, to order and understand your mess.</td>
-                  <td><a href="https://www.slideshare.net/GianlucaArbezzano/open-tracing-to-order-and-understand-your-mess-apiconf-2017" target="_blank">Slides</a></td>
-                </tr>
-                <tr>
-                  <td>30/06/2017</td>
-                  <td><a href="https://www.meetup.com/Milano-DevOps/events/240553329/" target="_blank">
-                    DevOps Meetup - Milan
-                  </a></td>
-                  <td>Time series database Pull vs Push.</td>
-                  <td><a href="https://www.slideshare.net/GianlucaArbezzano/monitoring-pull-vs-push-influxdb-and-prometheus" target="_blank">Slides</a></td>
-                </tr>
-                <tr>
-                  <td>11/07/2017</td>
-                  <td><a href="https://www.meetup.com/CNCF-Italy/events/241118593/" target="_blank">
-                    CNCF meetup - Turin
-                  </a></td>
-                  <td>What CNCF is? Opentracing in theory.</td>
-                  <td>
-                      <a target="_blank" href="https://www.slideshare.net/GianlucaArbezzano/overview-and-opentracing-in-theory-by-gianluca-arbezzano">Slides</a>
-                      <a target="_blank" href="http://devcampy.com/talks/cncf-italy/2017/06/14/opentracing-in-theory.html">Video</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>13/07/2017</td>
-                  <td><a href="http://webinars.devops.com/how-to-use-the-tick-stack-coreos-docker-to-make-your-saas-offering-better" target="_blank">
-                    DevOps.com  - Webinar
-                  </a></td>
-                  <td>How to Use the TICK Stack, CoreOS, & Docker to Make Your SaaS Offering Better.</td>
-                  <td><a href="https://www.slideshare.net/dms2032/how-to-use-the-tick-stack-coreos-docker-to-make-your-saas-offering-better?qid=7e64869d-4cc0-402a-85f1-ae3b5baf68ec&v=&b=&from_search=3" target="_blank">Slides</a></td>
-                </tr>
-                <tr>
-                  <td>05/09/2017</td>
-                  <td><a href="https://www.meetup.com/Docker-Randstad/events/242529039/" target="_blank">
-                          Docker Randstad - Amsterdam
-                  </a></td>
-                  <td>Orbiter: an OSS Docker Swarm Autoscaler</td>
-                  <td>
-                      <a target="_blank" href="https://www.slideshare.net/GianlucaArbezzano/orbiter-and-how-to-extend-docker-swarm">Slides</a>
-                      <a target="_blank" href="https://www.youtube.com/watch?v=p5Fz2hWCUms">Video</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>7/09/2017</td>
-                  <td><a href="http://cloudbusting.softwarecircus.io/bigtop" target="_blank">
-                          Software Circus - Amsterdam
-                  </a></td>
-                  <td>Glory, monitoring, analysis, understanding.</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>7/09/2017</td>
-                  <td><a href="http://cloudbusting.softwarecircus.io/bigtop" target="_blank">
-                          Software Circus - Amsterdam
-                  </a></td>
-                  <td>Workshop - The TICK stack from zero to something.</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>26/09/2017</td>
-                  <td><a href="https://www.percona.com/live/e17/sessions/influxdb-storage-engine-internals" target="_blank">
-                          Percona Live - Dublin
-                  </a></td>
-                  <td>InfluxDB Storage Engine Internals</td>
-                  <td><a href="" target="_blank">Slides</a></td>
-                </tr>
-                <tr>
-                  <td>28/09/2017</td>
-                  <td><a href="https://www.meetup.com/Docker-Dublin/events/243269448/" target="_blank">
-                          Docker Meetup - Dublin
-                  </a></td>
-                  <td>Orbiter: an OSS Docker Swarm Autoscaler</td>
-                  <td>
-                      <a target="_blank" href="https://www.slideshare.net/GianlucaArbezzano/orbiter-and-how-to-extend-docker-swarm">Slides</a>
-                      <a target="_blank" href="https://www.youtube.com/watch?v=p5Fz2hWCUms">Video</a>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
-        </div>
-    </div>
-
-
-    {% assign talks2016 = site.my_talks | where:'date', "2016" %}
-    {% include talks_per_year.html year="2016" talks=talks2016 %}
-
-        <div class="row">
-            <h3>2015</h3>
-            <div class="col-md-12">
-              <table class="table table-hover" id="2015">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Event</th>
-                      <th>Talk</th>
-                      <th>Slide</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>30/01/2015</td>
-                      <td><a href="http://www.cloudparty.it/" target="_blank">CloudParty - Bologna</a></td>
-                      <td>AngularJs andvanced startup</td>
-                      <td><a href="http://gianarb.it/talk-ng-startup/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>17/06/2015</td>
-                      <td><a href="http://internetof.it/" target="_blank">InternetOfIT - Bologna</a></td>
-                      <td>Delorean made in Home - Reaspberry, gobot and MQTT</td>
-                      <td><a href="http://gianarb.it/internetofit-2015-slide/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>04/07/2015</td>
-                      <td><a href="http://joomlafestival.eu/" target="_blank">JoomlaFestival - Milano</a></td>
-                      <td>Joomla and Scalability with AWS Beanstalk</td>
-                      <td><a href="http://gianarb.it/jfestival-scalability-2015/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>30/09/2015</td>
-                      <td><a href="http://torino.grusp.org/" target="_blank">PugTo - Torino</a></td>
-                      <td>Penny PHP MIDDLEWARE FRAMEWORK</td>
-                      <td><a href="http://gianarb.it/penny-philosophy/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>09/10/2015</td>
-                      <td><a href="http://2015.symfonyday.it" target="_blank">SymfonyDay 2015 - Reggio Emilia</a></td>
-                      <td>Doctrine ORM Cache layer - It is not a boomerang</td>
-                      <td><a href="http://gianarb.it/symfonyday-2015/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>22/10/2015</td>
-                      <td><a href="http://2015.angularconf.it" target="_blank">AngularConf 2015 - Torino</a></td>
-                      <td>AngularJs in Cloud</td>
-                      <td><a href="http://gianarb.it/angularconf-2015/#/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>20/11/2015</td>
-                      <td><a href="http://milan2015.codemotionworld.com" target="_blank">Codemotion 2015 - Milano</a></td>
-                      <td>Wordpress and scalability with Docker</td>
-                      <td><a href="http://gianarb.it/codemotion-2015/#/" target="_blank">Slides</a></td>
-                    </tr>
-                  </tbody>
-                </table>
+<div class="row">
+    <div class="col-md-12">
+        <div id="post" class="row mt-3">
+            <div id="slogan" class="row">
+                <div class="text-center">
+                    <h1>Conferences</h1>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <h3>2014</h3>
-            <div class="col-md-12">
-              <table class="table table-hover" id="2014">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Event</th>
-                      <th>Talk</th>
-                      <th>Slide</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>07/02/2014</td>
-                      <td><a href="http://2014.zfday.it/" target="_blank"> Zend Framework Day</a></td>
-                      <td>C'è un modulo ZF2 per tutto! - There is a module for all</td>
-                      <td><a href="http://www.slideshare.net/GianlucaArbezzano/zfdayit-2014-there-is-a-module-for-everything" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>27/03/2014</td>
-                      <td><a href="http://milano.grusp.org/incontri-passati/" target="_blank">Pug Milano</a></td>
-                      <td>Zend Queue</td>
-                      <td><a href="http://www.slideshare.net/GianlucaArbezzano/queue-system-and-zendqueue-implementation" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>21/05/2014</td>
-                      <td><a href="http://www.cloudparty.it/milano2014.html" target="_blank">CloudParty - Milano</a></td>
-                      <td>Vagrant, riutilizzo dell'infrastruttura - Vagrant, reuse architecture</td>
-                      <td><a href="http://www.slideshare.net/corleycloud/vagrant-reusable-code" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>21/05/2014</td>
-                      <td><a href="http://www.eventbrite.it/e/biglietti-devparty-angularjs-12352046303" target="_blank">DevParty - Torino</a></td>
-                      <td>Getting Start Chromecast developer</td>
-                      <td><a href="http://www.slideshare.net/corleycloud/chromecast-devparty-torino-2014" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>07/10/2014</td>
-                      <td><a href="https://www.eventbrite.it/e/time-series-database-php-influxdb-tickets-7333632091" target="_blank">PugTo - Torino</a></td>
-                      <td>Time series Database,PHP & Influx DB</td>
-                      <td><a href="http://gianarb.it/influxdb-slide/" target="_blank">Slides</a></td>
-                    </tr>
-                    <tr>
-                      <td>24/10/2014</td>
-                      <td><a href="http://www.cloudparty.it/" target="_blank">CloudParty - Genova</a></td>
-                      <td>Sviluppo di API REST con ZF2 & MongoDB</td>
-                      <td><a href="http://gianarb.it/cloudparty-zf2-rest-slide" target="_blank">Slides</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-        </div>
+        {% assign talks2020 = site.my_talks | where:'date', "2020" %}
+        {% include talks_per_year.html year="2020" talks=talks2020 %}
+
+        {% assign talks2019 = site.my_talks | where:'date', "2019" %}
+        {% include talks_per_year.html year="2019" talks=talks2019 %}
+
+        {% assign talks2018 = site.my_talks | where:'date', "2018" %}
+        {% include talks_per_year.html year="2018" talks=talks2018 %}
+
+        {% assign talks2017 = site.my_talks | where:'date', "2017" %}
+        {% include talks_per_year.html year="2017" talks=talks2017 %}
+
+        {% assign talks2016 = site.my_talks | where:'date', "2016" %}
+        {% include talks_per_year.html year="2016" talks=talks2016 %}
+
+        {% assign talks2015 = site.my_talks | where:'date', "2015" %}
+        {% include talks_per_year.html year="2015" talks=talks2015 %}
+
+        {% assign talks2014 = site.my_talks | where:'date', "2014" %}
+        {% include talks_per_year.html year="2014" talks=talks2014 %}
 
         {% assign talks2013 = site.my_talks | where:'date', "2013" %}
         {% include talks_per_year.html year="2013" talks=talks2013 %}

@@ -1,0 +1,14 @@
+---
+title: Docker 1.13 Overview and demo
+date: 2017-02-02T00:00:00Z
+slide: ""
+embedSlide: ""
+video: ""
+embedVideo: ""
+eventName: Dublin Docker Meetup
+eventLink: https://www.meetup.com/Docker-Dublin/events/237090052/
+city: ""
+links:
+  Slide: https://www.slideshare.net/GianlucaArbezzano/dockerdublin-meetup-new-in-docker-113
+
+---
