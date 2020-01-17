@@ -1,0 +1,13 @@
+---
+title: Docker 1.12 and orchestration built-in
+date: 2016-11-02T00:00:00Z
+slide: _blank
+embedSlide: ""
+video: _blank
+embedVideo: ""
+eventName: DevOps World - London
+eventLink: https://devopsworldevent.com/
+city: ""
+links: {}
+
+---

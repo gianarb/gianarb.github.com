@@ -1,0 +1,40 @@
+---
+layout: default
+title: "Mentoring Monday"
+summary: "Mentoring Monday is popular hashtag on Twitter #MentoringMonday that
+goes of on Monday, where you look or apply to be a mentor for a particular set
+of items. It can be work related or even a passion. I like to do it because I
+get to speak with a lot of enthusiast and interesting people. I decided to
+collect and re-post selected questions and response because almost all of them
+are made privatelly via DMs on Twitter."
+---
+<div class="container">
+
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h2 class="text-center">
+                <a
+                    href="https://twitter.com/hashtag/MentoringMonday?src=hashtag_click"
+                    target="_blank">#MentoringMonday</a></h2>
+            <p class="text-center">It's #MentoringMonday! Do you need a
+                    professional mentor?  What are you looking to learn? Are
+                    you willing to mentor someone else? What can you share?
+                    Post what topics interest you.  Use the hashtag
+                    #MentoringMonday so people see you. Search it for even more
+                    posts! <br>🎉 by <a
+                                 href="https://twitter.com/shehackspurple">@shehackspurple</a><p>
+        </div>
+    </div>
+
+    <div id="blog" class="row  mt-3">
+      <div class="col-md-12">
+          <h3></h3>
+          {% for post in site.categories['post'] %}
+          {% if post.tags contains "mentoringmonday" %}
+              {% include post_detail.html %}
+          {% endif %}
+          {% endfor %}
+      </div>
+    </div>
+
+</div>

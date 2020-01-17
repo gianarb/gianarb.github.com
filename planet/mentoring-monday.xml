@@ -1,0 +1,30 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Gianluca Arbezzano - GianArb</title>
+    <link href="http://gianarb.github.io/atom.xml" rel="self"/>
+    <link href="http://gianarb.github.io/"/>
+    <updated>{{ site.time | date_to_xmlschema }}</updated>
+    <id>http://gianarb.it</id>
+    <author>
+        <name>Gianluca Arbezzano</name>
+        <uri>http://gianarb.it</uri>
+        <email>gianarb92@gmail.com</email>
+    </author>
+      {% for post in site.categories['post'] %}
+      {% if post.tags contains "mentoringmonday" %}
+    <entry>
+        <title>{{ post.title }}</title>
+        <link rel="alternate" type="text/html" href="https://gianarb.it{{ post.url }}"/>
+        <description>{{ post.summary | xml_escape }}</description>
+        <image>{{ post.img | default: '/img/gianarb.png' }}</image>
+        <updated>{{ post.date | date_to_xmlschema }}</updated>
+        <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+        <id>https://gianarb.it{{ post.url }}</id>
+        <content type="html">{{ post.content | xml_escape }}</content>
+    </entry>
+      {% endif %}
+      {% endfor %}
+</feed>

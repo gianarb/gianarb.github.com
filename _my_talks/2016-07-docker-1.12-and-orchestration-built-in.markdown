@@ -1,0 +1,13 @@
+---
+title: Docker 1.12 and orchestration built-in
+date: 2016-07-21T00:00:00Z
+slide: ""
+embedSlide: ""
+video: https://www.youtube.com/watch?v=h7a7vhzjElo
+embedVideo: https://www.youtube.com/embed/h7a7vhzjElo
+eventName: Docker Meetup - Dublin
+eventLink: http://www.meetup.com/it-IT/Docker-Dublin/events/232168564/
+city: ""
+links: {}
+
+---
