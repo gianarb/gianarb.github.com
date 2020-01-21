@@ -7,3 +7,6 @@ markdown: kramdown
 collections:
   my_talks:
     sort_by: lesson
+  courses:
+    output: true
+    permalink: /:collection/:name
