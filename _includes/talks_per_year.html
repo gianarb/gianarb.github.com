@@ -17,10 +17,10 @@
               <td><a href="{{ talk.eventLink }}">{{ talk.eventName }} {{ talk.city }}</a></td>
               <td>{{ talk.title }}</td>
               <td>
-                {% if talk.slide %}
+                {% if talk.slide and talk.slide != ""  %}
                 <a href="{{ talk.slide }}" target="_blank">Slide</a>
                 {% endif %}
-                {% if talk.video != "" %}
+                {% if talk.video and talk.video != ""%}
                 <a href="{{ talk.video }}" target="_blank">Video</a>
                 {% endif %}
               </td>
