@@ -1,0 +1,25 @@
+---
+layout: page
+title: Tinyletter
+summary: ""
+tags: [newsletter]
+---
+<div class="mt-5 mx-auto text-center">
+    <div class="">
+        <form
+            action="https://tinyletter.com/gianarb"
+            method="post"
+            target="popupwindow"
+            onsubmit="window.open('https://tinyletter.com/gianarb', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+            <div class="form-group">
+                <label for="tlemail">Enter your email address</label>
+                <input type="text" class="form-control" name="email" id="tlemail" />
+                <input type="hidden" value="1" name="embed"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Subscribe" />
+                <p><a href="https://tinyletter.com" target="_blank">powered by TinyLetter</a></p>
+            </div>
+        </form>
+    </div>
+</div>
