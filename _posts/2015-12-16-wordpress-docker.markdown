@@ -270,5 +270,3 @@ Thanks for review <a href='https://twitter.com/fntlnz'
 target='_blank'>Lorenzo</a>! I'm in Ireland from 3 weeks but I am not ready to
 write an article without your english review!
 </div>
-
-{% include docker-planet-newsletter.html %}

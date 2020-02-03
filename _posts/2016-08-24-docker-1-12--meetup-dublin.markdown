@@ -47,5 +47,3 @@ allowfullscreen></iframe>
 * I tried to show the HealthCheck feature :)
 * How docker swarmkit manage containers update
 * service discovery
-
-{% include docker-planet-newsletter.html %}

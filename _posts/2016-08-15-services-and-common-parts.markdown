@@ -171,5 +171,3 @@ plan other posts to analyze some points better.
 
 Please let me know if in your experience there are other common part between
 your services.
-
-{% include distributed_system-planet-newsletter.html %}

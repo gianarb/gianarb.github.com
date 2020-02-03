@@ -85,5 +85,3 @@ replace single pieces and features but they create other kind of problems like
 architecture complexity, good knowledge of in different layers (DevOps point of
 view), network and chain of failures. All the topics that we already know must
 be adapter for this new architecture, monitoring, logging, deploy.
-
-{% include distributed_system-planet-newsletter.html %}

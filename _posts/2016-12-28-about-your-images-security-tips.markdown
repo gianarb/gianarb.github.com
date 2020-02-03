@@ -135,9 +135,3 @@ The generated report looks like this:
 
 Hyperclair is just one of the implementations of clair, you can decide to use
 it or build your own implementation in your pipeline.
-
-<div class="post row">
-  <div class="col-md-12">
-      {% include docker-security-newsletter.html %}
-  </div>
-</div>

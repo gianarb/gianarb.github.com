@@ -245,6 +245,3 @@ the topic around my next article. Please stay in touch follow me on
 <blockquote>
   <p>Thanks <a href="https://twitter.com/gpelly">@gpelly</a> for your review!</p>
 </blockquote>
-
-
-{% include docker-planet-newsletter.html %}

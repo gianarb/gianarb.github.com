@@ -117,5 +117,3 @@ your build.
 I used Jenkins like an example to run docker inside another container but you
 can use the same strategy to do the same with your applications if they require
 a strong connection with docker.
-
-{% include docker-planet-newsletter.html %}

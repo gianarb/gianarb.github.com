@@ -63,5 +63,3 @@ charset="utf-8"></script>
 
 Today we seen that also che community appreciate it!
 Happy Birthday and [see you next month](http://www.meetup.com/Docker-Dublin/)!
-
-{% include docker-planet-newsletter.html %}
