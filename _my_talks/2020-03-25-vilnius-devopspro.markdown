@@ -1,6 +1,6 @@
 ---
 title: Continuous Profiling Go Application Running in Kubernetes
-date: 2020-03-24
+date: 2020-03-25
 slide:
 embedSlide:
 video:
@@ -20,3 +20,12 @@ project called kube-profefe to integrate Kubernetes with Profefe. Kube-profefe
 contains a kubectl plugin to capture locally or on profefe profiles from running
 pods in Kubernetes. It also provides an operator to discover and continuously
 profile applications running inside Pods.
+
+Links:
+
+* ["Continuous profiling in Go with Profefe"](https://gianarb.it/blog/go-continuous-profiling-profefe)
+* ["Google-Wide Profiling: A Continuous Profiling Infrastructure for Data Centers"](https://research.google/pubs/pub36575/)
+* ["Stackdriver Profiler"](https://cloud.google.com/profiler/)
+* ["Continuous profiling Go app running in k8s"](https://gianarb.it/blog/continuous-profiling-go-apps-in-kubernetes)
+* [github.com/profefe/profefe](https://github.com/profefe/profefe)
+* [github.com/profefe/kube-profefe](https://github.com/profefe/kube-profefe)
