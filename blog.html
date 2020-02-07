@@ -15,17 +15,16 @@ Golang and is an active speaker at conferences throughout Europe, sharing
 his experiences and knowledge on projects that he is leading. This is my blog."
 date:   2013-07-22 23:08:27
 ---
-<div class="container">
-  <div class="row">
+<div class="row">
     <div class="col-sm mt-3">
         <h1>Posts</h1>
     </div>
-  </div>
-  <div class="row">
+</div>
+
+<div class="row">
     <div class="col-sm">
       {% for post in site.categories['post'] %}
       {% include post_detail.html %}
       {% endfor %}
     </div>
-  </div>
 </div>

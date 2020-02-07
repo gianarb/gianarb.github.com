@@ -175,7 +175,7 @@ The are other combinations for the capture command and you can get profiles from
 profefe, I will leave the rest to you!
 
 {:refdef:.text-center}
-![](/img/stopwatch.jpg){:.img-fluild}
+![](/img/stopwatch.jpg){:.img-fluid}
 {:refdef}
 
 {:.small .text-center}

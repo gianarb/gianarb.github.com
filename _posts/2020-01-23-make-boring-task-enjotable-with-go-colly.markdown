@@ -33,7 +33,9 @@ collections:
   my_talks:
     output: true
 ```
+
 I have created my first talk as a markdown file, just as I do for my posts:
+
 ```
 ---
 title: Continuous Profiling Go Application Running in Kubernetes
@@ -58,6 +60,7 @@ contains a kubectl plugin to capture locally or on profefe profiles from running
 pods in Kubernetes. It also provides an operator to discover and continuously
 profile applications running inside Pods.
 ```
+
 As you can see I decided to set a bunch of variables that I will hope to re-use
 where I will do the “single page” for each talk.
 
@@ -113,7 +116,7 @@ talks to convert in this new format, it means over 50 conferences to convert one
 by one in the new format made of files and YAML.
 
 {:refdef: class="text-center"}
-![https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif](https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif)
+![https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif](https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif){:.img-fluid}
 {: refdef}
 
 ## Scraping is my superpower
@@ -167,7 +170,7 @@ $ tree ./_my_talks/
 ```
 
 {:refdef: class="text-center"}
-![https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg](https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg)
+![https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg](https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg){:.img-fluid}
 {: refdef}
 
 Anyway, let’s get to some snippets!
@@ -192,10 +195,12 @@ var outputDir = "/tmp"
 
 var errorsToCheck = map[string]string{}
 ```
+
 Those are the variables and struct I set. The Talk represent every single talk,
 the dataLayout converts the way the end/start date is written into a time.Time
 object. `year` is a parameter that tells which table to scrape, `outputDir`
 tells where to place the files. Those 3 variables can be changed with cli flags:
+
 ```
 flag.StringVar(&year, "year", "2020", "The year used to identify the table to parse")
 flag.StringVar(&dateLayout, "date-layout", "_2 Jan 2006", "The golang format layour to parse the event date column")
@@ -203,6 +208,7 @@ flag.StringVar(&outputDir, "output-dir", "/tmp", "Where to place the generated f
 
 flag.Parse()
 ```
+
 `errorsToCheck` is an easy way to collect all the errors for every run. I
 printed them in a file, if the errors were easy to fix with a code change I did
 that, if they were easier to change modifying the current conference page I did
@@ -278,7 +284,7 @@ el.ForEach("a", func(_ int, el *colly.HTMLElement) {
 			u, err := url.Parse(talk.Video)
 			if err == nil {
 				talk.EmbedVideo = "https://www.youtube.com/embed/" + u.Query().Get("v")
-			} else {	
+			} else {
 errorsToCheck[row.Text+"/youtube_video_without_id"] = el.Text
 			}
 		} else {
