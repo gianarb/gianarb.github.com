@@ -4,7 +4,7 @@ layout: post
 title: "Unit test kubernetes client in Go"
 date: 2020-01-10 09:08:27
 categories: [post]
-tags: [golang, kubernetes]
+tags: [golang, kubernetes, mockmania]
 summary: "A flexible an easy to use testing framework makes all the difference.
 Kubernetes provides a fake client in Go that works like a charm."
 changefreq: daily
