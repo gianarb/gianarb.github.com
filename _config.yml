@@ -7,3 +7,4 @@ markdown: kramdown
 collections:
   my_talks:
     sort_by: lesson
+  third_party_posts:

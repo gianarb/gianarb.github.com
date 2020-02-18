@@ -1,0 +1,47 @@
+---
+layout: page
+title: "Posts I wrote in other platform"
+tags: [blog, testproject, docker, cncf, kubernetes]
+summary: ""
+date:   2020-02-17 23:08:27
+---
+<div class="row">
+    <div class="col-sm mt-3">
+        <h1>Third party posts</h1>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-7 text-center">
+        <img class="img-fluid" alt="gust blogging from Pixabay https://pixabay.com/illustrations/blogging-blog-guest-gastieren-1168076/" src="/img/guest-blogging.jpg">
+    </div>
+    <div class="col-md-5">
+        <p>It is not enough for me to build software; I love to share what I do
+        and how I code. I have a personal blog, but some time is way better to
+        participate wherever a community already lives.</p>
+
+        <p>This page is an attempt to collect the contributions I do outside of my blog: a
+        website for an open-source project, a company blog, a magazine.</p>
+
+        <p>I am happy to collaborate with you, if you think your community will
+        benefit from reading or hearing from what I am passionate about, you
+        have a podcast. Let me know on <a href="https://twitter.com/gianarb"
+        target="_blank">Twitter</a> or via <a href="mailto:ciao@gianarb.it"
+        target="_blank">email</a>.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm">
+      <ul>
+      {% assign tt = site.third_party_posts | sort: 'date' | reverse %}
+      {% for t in tt %}
+      <li>
+          {{ t.date | date_to_string }} >
+          <a href="{{ t.link }}">{{ t.title}}</a>
+          <small> by <a href="{{ t.vendorLink | uri_escape }}">{{ t.vendorName }}</a></small>
+      </li>
+      {% endfor %}
+      </ul>
+    </div>
+</div>
