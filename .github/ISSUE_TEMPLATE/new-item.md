@@ -9,10 +9,10 @@ assignees: ''
 
 **Title**: 
 
-**Abstract**: Summarize the post. Problem this post addresses, main points, proposed solution.
+**Abstract**: *Summarize the post. Problem this post addresses, main points, proposed solution.*
 
-**Prerequisites**: What readers have to know. List technologies, tools, concepts.
+**Prerequisites**: *What readers have to know. List technologies, tools, concepts.*
 
-**Takeaway**: List of three main takeaways
+**Takeaway**: *List of three main takeaways*
 
-**Next Steps**: Links or things readers can do to deep dive the content of your topic
+**Next Steps**: *Links or things readers can do to deep dive the content of your topic*
