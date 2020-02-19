@@ -245,3 +245,9 @@ a.network-list {
   font-size: 9px;
   line-height: 1;
 }
+
+.really {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
