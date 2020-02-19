@@ -38,8 +38,8 @@ date:   2020-02-17 23:08:27
       {% for t in tt %}
       <li>
           {{ t.date | date_to_string }} >
-          <a href="{{ t.link }}">{{ t.title}}</a>
-          <small> by <a href="{{ t.vendorLink | uri_escape }}">{{ t.vendorName }}</a></small>
+          <a target="_blank" href="{{ t.link }}">{{ t.title}}</a>
+          <small> by <a target="_blank" href="{{ t.vendorLink | uri_escape }}">{{ t.vendorName }}</a></small>
       </li>
       {% endfor %}
       </ul>
