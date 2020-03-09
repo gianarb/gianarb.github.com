@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Smart working does not need to be remote"
-date: 2020-03-24 09:08:27
+date: 2020-03-04 09:08:27
 categories: [post]
 tags: [remote, work]
 summary: "There is a different between remote work and smart work. You can have
