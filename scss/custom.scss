@@ -1,0 +1,359 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Your variable overrides
+$fa-font-path:        "./fonts/webfonts";
+
+@import "../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../node_modules/@fortawesome/fontawesome-free/scss/solid.scss";
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+/**
+ * General
+ */
+
+.box-border {
+    border: solid #f7f7f9;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.75em;
+    /*font-family: 'Roboto', sans-serif;*/
+    font-family: 'Inter UI';
+}
+div.starter-template {
+    margin-top: 5%;
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+    div.starter-template {
+        margin-top: 16%;
+    }
+}
+
+p.meta {
+    color: #e0dede;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+h3 small {
+    font-size: 0.5em;
+}
+
+a > .fa {
+  padding-left: 10px;
+}
+
+.conf {
+    height: 50px;
+    margin: 0 auto;
+}
+
+.conf-logo {
+    text-align: center;
+}
+
+/**
+ * Navigator
+ */
+.nav a {
+    color: black;
+}
+.nav>li>a:hover,
+.nav>li>a:focus,
+.nav>li.active>a {
+    color: gray;
+    background-color: transparent;
+}
+
+.navbar-toggle .icon-bar {
+    background: black;
+}
+
+.navbar-toggle {
+    float: none;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/**
+ * Error page
+ */
+.error-template {padding: 40px 15px;text-align: center;}
+.error-actions {margin-top:15px;margin-bottom:15px;}
+.error-actions .btn { margin-right:10px; }
+
+/**
+ * Post
+ */
+.post h2
+{
+    font-size:1.5em;
+}
+.post h3
+{
+    font-size:1.2em;
+}
+.post h4
+{
+    font-size:1.0em;
+}
+.post h5
+{
+    font-size:0.9em;
+}
+
+.post img
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a.network-list {
+    font-size: 0.7em;
+    line-height: 0;
+}
+
+/**
+ * Footer
+ */
+.footer {
+    position: absolute;
+    width:100%;
+    bottom: 0;
+    display:none;
+    background-color: #222;
+    border-color: #080808;
+}
+
+.footer p.text-muted {
+    margin: 14px 0 14px 0;
+}
+
+/**
+ * bs-callout
+ */
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.bs-callout-info {
+    border-left-color: #1b809e;
+}
+
+.hero {
+    background-position: center center;
+    background-size: cover;
+}
+
+.highlighter-rouge {
+    width: 100%;
+}
+
+.container-fluid {
+    margin-left: 0.5em;
+}
+
+.bgimage {
+  width:100%;
+  height:300px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+}
+.bgimage h5 {
+  color:white;
+  text-shadow:2px 2px #333;
+}
+
+/**
+ * Carbon
+ */
+#carbonads {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#carbonads {
+  display: flex;
+  max-width: 330px;
+  background-color: hsl(0, 0%, 98%);
+  box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, .1);
+}
+
+#carbonads a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#carbonads a:hover {
+  color: inherit;
+}
+
+#carbonads span {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+
+#carbonads .carbon-wrap {
+  display: flex;
+}
+
+.carbon-img {
+  display: block;
+  margin: 0;
+  line-height: 1;
+}
+
+.carbon-img img {
+  display: block;
+}
+
+.carbon-text {
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.carbon-poweredby {
+  display: block;
+  padding: 8px 10px;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 5px, hsla(0, 0%, 0%, .025) 5px, hsla(0, 0%, 0%, .025) 10px) hsla(203, 11%, 95%, .4);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-weight: 600;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.really {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+// SYNTAX
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}

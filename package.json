@@ -1,0 +1,24 @@
+{
+  "title": "GianArb home",
+  "name": "gianarb.github.com",
+  "version": "4.0.9",
+  "description": "Gianluca Arbezzano home page",
+  "keywords": [
+    "jekyll",
+    "github page"
+  ],
+  "homepage": "https://gianarb.it",
+  "license": "MIT",
+  "author": "Gianluca Arbezzano",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {
+    "sass": "^1.23.3"
+  },
+  "scripts": {
+    "scss": "./node_modules/.bin/sass ./scss/custom.scss ./css/style.css"
+  }
+}
