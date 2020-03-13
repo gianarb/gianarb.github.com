@@ -39,6 +39,6 @@ events.
 
 * The code you saw in the video lives here
   [wdalmut/k8s-informer-ytlive](https://github.com/wdalmut/k8s-informer-ytlive)
-* [Extend Kubernetes O'Reilly report](http://localhost:4000/blog/extending-kubernetes-oreilly)
+* [Extend Kubernetes O'Reilly report](https://get.oreilly.com/ind_extending-kubernetes.html)
 * [A deep dive into Kubernetes
   controllers](https://engineering.bitnami.com/articles/a-deep-dive-into-kubernetes-controllers.html)
