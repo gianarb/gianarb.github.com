@@ -37,7 +37,7 @@ Logs should be structured and in some way consistent across functions, http
 handlers, applications even languages to simplify their use. From algorithms and
 human operators.
 
-In Go [zap](go.uber.org/zap) is a popular logging library provided by Uber, I
+In Go [zap](https://github.com/uber-go/zap) is a popular logging library provided by Uber, I
 use it almost by default for all my applications.
 
 ```go
