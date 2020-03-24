@@ -15,3 +15,6 @@ build:
 	cp -r ./node_modules/bootstrap/dist/js/bootstrap.js ./js/bootstrap.js
 	cp ./node_modules/@fortawesome/fontawesome-free/js/all.js ./js/all.js
 	cp -r ./node_modules/@fortawesome/fontawesome-free/webfonts ./fonts
+
+sass:
+	scss scss/custom.scss css/style.css
