@@ -11,7 +11,7 @@ changefreq: daily
 ---
 
 <div class="embed-responsive embed-responsive-16by9">
-    <iframe class="embed-responsive-item" src="//speakerdeck.com/player/ff55e041659945bca5d31013bd999c28" allowfullscreen></iframe>
+    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/SzhQZQ6VGoY" allowfullscreen></iframe>
 </div>
 
 Microservices and Kubernetes help our architecture to scale and to be
@@ -36,3 +36,8 @@ A bunch of links for you:
 * [Kube Profefe on Github](https://github.com/profefe/kube-profefe)
 * [google/pprof](https://github.com/google/pprof) library on GitHub
 * [Work in progress documentation! help me out!](https://kubernetes.profefe.dev)
+
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="//speakerdeck.com/player/ff55e041659945bca5d31013bd999c28" allowfullscreen></iframe>
+</div>
+
