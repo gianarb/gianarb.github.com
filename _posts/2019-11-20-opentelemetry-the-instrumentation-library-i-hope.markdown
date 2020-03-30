@@ -4,7 +4,7 @@ layout: post
 title: "OpenTelemetry the instrumentation library, I hope"
 date: 2019-11-20 08:08:27
 categories: [post]
-tags: [o11y, tracing, observability, opentracing, opencensus, opentelemetry,
+tags: [codeinstrumentation, o11y, tracing, observability, opentracing, opencensus, opentelemetry,
 cncf]
 summary: "OpenTelemetry, OpenCensus, OpenTracing, Open your heart"
 changefreq: daily

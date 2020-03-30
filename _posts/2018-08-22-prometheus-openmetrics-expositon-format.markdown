@@ -3,7 +3,7 @@ layout: post
 title:  "OpenMetrics and the future of the prometheus exposition format"
 date:   2018-08-23 08:08:27
 categories: [post]
-tags: [go, open source, metrics, prometheus, influxdb, openmetrics, cncf, oss,
+tags: [codeinstrumentation, go, open source, metrics, prometheus, influxdb, openmetrics, cncf, oss,
 exposition format, snmp]
 summary: "This post explain my point of view around prometheus exposition format
 and it summarise the next step with OpenMetrics behing supported by CNCF and
