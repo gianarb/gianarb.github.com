@@ -22,6 +22,33 @@ layout: default
             </div>
         </div>
 
+        {% if page.twitch AND page.twitch != "" %}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe
+                        class="embed-responsive-item"
+                        src="https://player.twitch.tv/?{{ page.twitch }}&parent=localhost&parent=gianarb.it&muted=true"
+                        frameborder="0"
+                        scrolling="scrolling"
+                        allowfullscreen="allowfullscreen">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 text-center">
+                <p class="lead" style="color:#9147FF">
+                    <i class="fab fa-twitch"></i> The best way to get a notification when the stream will start is to <a href="https://www.twitch.tv/gianarb/followers" target="_blank">follow me on Twitch.</a>
+                </p>
+                {% if page.addeventID AND page.addeventID != "" %}
+                <a title="Add to Calendar" class="addeventatc" data-id="{{ page.addeventID }}" href="https://www.addevent.com/event/{{ page.addeventID }}" target="_blank" rel="nofollow">Add to Calendar</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.youtubeVideoID && page.youtubeVideoID != "" %}
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="embed-responsive embed-responsive-16by9">
@@ -29,6 +56,7 @@ layout: default
                 </div>
             </div>
         </div>
+        {% endif %}
 
         <div class="row mt-3">
             <div class="col-md-12">
@@ -49,3 +77,5 @@ layout: default
 
     </div>
 </div>
+
+<script type="text/javascript" src="https://addevent.com/libs/atc/1.6.1/atc.min.js" async defer></script>
