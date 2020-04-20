@@ -11,9 +11,7 @@ CorelyCloud SRL the company behind the CloudConf in Turin and Dan Engineer at
 Dynatrace Maintainer of OpenTelemetry JS. This during show we will talk about
 OpenTelemetry and NodeJS. Walter wrote a plugin for instrumenting mongoose with
 opentelemetry. We are gonna see how he did it, considerations from Dan and so on"
-twitch: channel=gianarb
-addeventID: lo4782947
-<!--youtubeVideoID: JrqAfRUeuQY-->
+youtubeVideoID: FV4mSApgY60
 changefreq: daily
 ---
 
