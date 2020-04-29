@@ -8,9 +8,7 @@ tags: ["show-me-your-code"]
 summary: "Informal chat with Carlos maintainer for GoReleaser, myself and Tibor
 from Docker about docker build image with buildx and buildkit to add support for
 multiple architecures image in GoReleaser."
-twitch: channel=gianarb
-addeventID: qT4782356
-<!--youtubeVideoID: JrqAfRUeuQY-->
+youtubeVideoID: xdehEUG1RFY
 changefreq: daily
 ---
 
