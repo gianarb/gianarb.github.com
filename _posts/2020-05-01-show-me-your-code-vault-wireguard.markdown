@@ -10,9 +10,7 @@ InfluxData and Scorsolini from Sighup. We will code a new Hashicorp Vault plugin
 to generate Wireguard configuration. Vault is a popular secret storage developed
 in open source. Wireguard is networking module and VPN part of the Linux kernel.
 Let's have some fun"
-twitch: channel=gianarb
-addeventID: Nl4815502
-<!--youtubeVideoID: FV4mSApgY60-->
+youtubeVideoID: LcAquk-mMxY
 changefreq: daily
 ---
 
@@ -20,18 +18,23 @@ When: Friday 1st May 10am GMT+2 (4am EDT)
 
 ## Let's write a Vault plugin for Wireguard
 
-Tomorrow will be 1st of May. We are on vacation, a perfect that to start a side
-project.
+1st of May. We are on vacation, the perfect day to start a side project.
 
-Giacomo and Philippe will start coding an integration between HashiCorp Vault
-and Wireguard. This is great by itself. Vault is cool, Wireguard is awesome,
-what do you need to know more?
+Giacomo and Philippe started coding an integration between [HashiCorp
+Vault](https://www.vaultproject.io/) and
+[Wireguard](https://www.wireguard.com/). This is great by itself. Vault is cool,
+Wireguard is awesome, what do you need more?
 
-The integration will be in form of a Vault plugin, we will meet online at 10am
-(in Italy) and we will stream the session on
-[Twitch](https://twitch.tv/gianarb). Are you an expert of the field? Do you want
-to spend an hour coding with us? Are you looking for something to do? Just join
-us and come to say hello!
+The integration is Vault plugin, and we decided to stream the session on
+[Twitch](https://twitch.tv/gianarb) because that's what cool kids do those days.
+
+We actually made it, as every side project it is not ready at all, but we got
+the boilerplate code required by a Vault Plugin to work and the project is
+available on GitHub
+[gitirabassi/vault-plugin-secrets-wireguard)](https://github.com/gitirabassi/vault-plugin-secrets-wireguard).
+
+After more than an hour of fun we had to stop but they promise we will have a
+follow up meeting as soon as they have an E2E workflow to show me!
 
 ## About Giacomo
 
@@ -48,6 +51,7 @@ user, open source lover and new technologies' explorer.
 
 ## Links
 
+* [GitHub repository for the project](https://github.com/gitirabassi/vault-plugin-secrets-wireguard)
 * [HashiCorp Vault](https://www.vaultproject.io/)
 * [Wireguard](https://www.wireguard.com/)
 * [Vault: Plugin System](https://www.vaultproject.io/docs/internals/plugins)

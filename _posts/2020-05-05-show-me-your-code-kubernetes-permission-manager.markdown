@@ -8,12 +8,9 @@ tags: ["show-me-your-code", "kubernetes"]
 summary: "Enrique will share tips and code around kubernetes permission manager
 a project that brings sanity to Kubernetes RBAC and Users management, Web UI
 FTW"
-twitch: channel=gianarb
-addeventID: Yh4790232
+youtubeVideoID: hzUZVge4JzQ
 changefreq: daily
 ---
-
-When: Saturday 16th May 10-11pm GMT+2
 
 Kubernetes when it comes to authentication and authorization is extremely
 complicated.
@@ -45,3 +42,4 @@ Links:
 * [Kubernetes
   Authentication](https://kubernetes.io/docs/reference/access-authn-authz/authentication/)
 * [Sighup webiste](https://sighup.io/)
+* [github.com/sighupio/permission-manager](https://github.com/sighupio/permission-manager)
