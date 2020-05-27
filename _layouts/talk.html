@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+<div class="container">
+    <div class="content">
+        <div class="row">
+            <div id="post-title" class="mt-3 col-md-12">
+                <h1>{{ page.title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+              <p class="meta">Event: <a href="{{ page.eventLink }}" target="_blank">{{ page.eventName }}</a></p>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+            {{ content }}
+            </div>
+        </div>
+
+        {% if page.embedSlide %}
+        <div class="row">
+            <div class="col-md-12" id="talk-content">
+                <h2>Slides</h2>
+                <script async class="speakerdeck-embed" data-id="{{ page.embedSlide }}" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+            </div>
+        </div>
+        {% endif %}
+
+
+    </div>
+</div>
