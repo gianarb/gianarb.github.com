@@ -15,7 +15,11 @@
             <tr>
               <td>{{ talk.date | date_to_string }}</td>
               <td><a href="{{ talk.eventLink }}">{{ talk.eventName }} {{ talk.city }}</a></td>
+              {% if include.url == "yes" %}
+              <td><a href="{{ talk.url }}">{{ talk.title }}</a></td>
+              {% else %}
               <td>{{ talk.title }}</td>
+              {% endif %}
               <td>
                 {% if talk.slide and talk.slide != ""  %}
                 <a href="{{ talk.slide }}" target="_blank">Slide</a>
