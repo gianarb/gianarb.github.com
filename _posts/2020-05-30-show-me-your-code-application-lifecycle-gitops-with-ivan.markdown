@@ -25,3 +25,12 @@ I don’t know how it works or how it should work but my friend Ivan Pedrazas
 
 The idea is to take a simple application and try to figure out how to apply
 GitOps to it. Let’s see how far we go.
+
+<blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">My plan is to show a
+simple app (frontend in vue.js and a flask API), how to build the different
+components, how to deploy them using GitOps. Finally, we will modify different
+parts of the app and build and deploy and rinse and repeat :)</p>&mdash; Ivan
+Pedrazas (@ipedrazas) <a
+href="https://twitter.com/ipedrazas/status/1266013907057065985?ref_src=twsrc%5Etfw">May
+28, 2020</a></blockquote> <script async
+src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
