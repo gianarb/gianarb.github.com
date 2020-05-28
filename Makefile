@@ -17,4 +17,4 @@ build:
 	cp -r ./node_modules/@fortawesome/fontawesome-free/webfonts ./fonts
 
 sass:
-	scss scss/custom.scss css/style.css
+	sass scss/custom.scss css/style.css
