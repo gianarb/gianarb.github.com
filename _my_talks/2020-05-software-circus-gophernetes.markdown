@@ -5,8 +5,9 @@ date: 2020-05-19T11:00:00Z
 slide: "https://speakerdeck.com/gianarb/how-to-become-a-gophernetes"
 embedSlide: "a858d5dc203c456cb52fac3c6b9a31f3"
 eventName: Software Circus
-eventLink: https://www.softwarecircus.io/
+eventLink: https://softwarecircus.io
 youtubeID: XPSapVJSy6E
+video: https://www.youtube.com/watch?v=XPSapVJSy6E
 city: ""
 links: {}
 
@@ -36,5 +37,6 @@ will share what I learned in terms of best practices, testing to write solid
 Kubernetes integrations.
 
 {:refdef: class="card-text small"}
-This Alice in Wonderland image comes from SoftwareCircus.com
+This Alice in Wonderland image comes from
+[SoftwareCircus.io](https://softwarecircus.io)
 {: refdef}

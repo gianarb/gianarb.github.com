@@ -8,15 +8,13 @@ tags: ["show-me-your-code", "gitops"]
 summary: "We are gonna have a chat with Ivan Pedrazas, we will we can go over a
 simple API how to build, how to deploy and the issues around it and how GitOps
 helps."
-<!--youtubeVideoID: hzUZVge4JzQ-->
-twitch: channel=gianarb
-addeventID: DF4870038
+youtubeVideoID: s_9OxmjbfP8
+<!--twitch: channel=gianarb-->
+<!--addeventID: DF4870038-->
 changefreq: daily
 ---
 
-See you Saturday 30th May at 10.30am (CEST/Rome/Berlin)
-
-Everything speaks about GitOps those days! Everyone in their own way. Some
+Everyone speaks about GitOps those days! Everyone in their own way. Some
 people think that GitOps means pulling git from inside a kubernetes cluster,
 other people think it has to be done in CI.
 
@@ -34,3 +32,8 @@ Pedrazas (@ipedrazas) <a
 href="https://twitter.com/ipedrazas/status/1266013907057065985?ref_src=twsrc%5Etfw">May
 28, 2020</a></blockquote> <script async
 src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+## Links
+
+* [Menta - Slack Channel](https://ismenta.slack.com/join/shared_invite/zt-ex04og6p-i9GsneKysUCHc3g6su7y1Q#/)
+* [https://gitops-community.github.io/kit/#gitops-days-2020-youtube-playlist](https://gitops-community.github.io/kit/#gitops-days-2020-youtube-playlist)
