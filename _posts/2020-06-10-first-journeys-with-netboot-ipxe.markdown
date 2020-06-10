@@ -1,10 +1,14 @@
 ---
 img: /img/me.jpg
 layout: post
-title: "Netboot and iPXE let's make our hands dirty installing Ubuntu"
+title: "First journeys with netboot and ipxe installing Ubuntu"
+date:   2020-06-10 09:08:27
 categories: [post]
-tags: ["ipxe", "netboot", "packet", "bare metal"]
-summary: ""
+tags: ["ipxe", "netboot", "packet", "bare metal", "preseed"]
+summary: "I have started to experiment with netbot, ipxe and OS automation
+recently to better understand how bare metal provisioning works. I got to a
+point where I am able to install Ubuntu automatically via iPXE and preseed. This
+is an article about how and a bit of why."
 changefreq: daily
 ---
 
