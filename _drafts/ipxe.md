@@ -136,9 +136,12 @@ interface `net0`.
 When the IP is set, iPXE reachs `ubuntu.com` to get the kernel and the initrd.
 Everything I need to boot an OS in RAM.
 
-## Try yourself
+## let's try
 
-I am using [Packet](https://packet.com) for my tests.
+I am using [Packet](https://packet.com) for my tests because it serves the low
+level capabilities I need, it supports the server creation without OS and with
+iPXE. You can register and do it yourself, `gophernetes` is a coupon that will
+give you 30$ credit.
 
 When you request a device (a server) on Packet you can select the operating
 system, we don't need to do it, so you can select `Custom iPXE` because we are
