@@ -9,6 +9,10 @@
     <link rel="canonical" href="{{ site.MY_URL }}{{ page.url | replace:'index.html',''}}">
     <link rel="icon" type="image/png" href="/img/favicon.png" />
 
+    <meta name='twitter:card' content='summary_large_image'>
+    <meta name='twitter:title' content="{{page.title}}">
+    <meta name='twitter:description' content="{{page.summary}}">
+
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:site_name" content="gianarb blog"/>
     <meta property="og:url" content="{{site.MY_URL}}{{page.url}}" />
@@ -17,9 +21,11 @@
     <meta property="og:locale" content="en_US" />
 {% if page.img != null %}
     <meta property="og:image" content="{{site.MY_URL}}{{ page.img }}" />
+    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.img }}">
 {% endif %}
 {% if page.heroimg != null %}
-    <meta property="og:image" content="{{site.MY_URL}}{{ page.heroimg }}" />
+    <meta property="og:image" content="" />
+    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.heroimg }}">
 {% endif %}
 
     <meta property="twitter:account_id" content="129952408" />
