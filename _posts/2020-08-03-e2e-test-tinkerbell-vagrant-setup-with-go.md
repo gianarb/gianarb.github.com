@@ -11,6 +11,19 @@ tips."
 changefreq: daily
 ---
 
+<blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">[NEW POST] I wrote an
+end to end test that checks the validity for a tutorial we wrote for <a
+href="https://twitter.com/hashtag/tinkerbell?src=hash&amp;ref_src=twsrc%5Etfw">#tinkerbell</a>.
+Kind of nice and you know how much I like <a
+href="https://twitter.com/hashtag/testing?src=hash&amp;ref_src=twsrc%5Etfw">#testing</a>!
+<a href="https://t.co/WGYLe8XfcA">https://t.co/WGYLe8XfcA</a> <a
+href="https://twitter.com/hashtag/golang?src=hash&amp;ref_src=twsrc%5Etfw">#golang</a>
+Tutorial are crucial to onboard new users having them tested sounds
+nice!</p>&mdash; gianarb (@GianArb) <a
+href="https://twitter.com/GianArb/status/1290283717987053569?ref_src=twsrc%5Etfw">August
+3, 2020</a></blockquote> <script async
+src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 [Tinkerbell](https://tinkerbell.org) is a tool open sourced recently by
 [Packet, an Equinix company](https://packet.com), the company I work for.
 
