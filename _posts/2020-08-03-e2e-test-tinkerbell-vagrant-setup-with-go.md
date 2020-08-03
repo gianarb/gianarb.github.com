@@ -1,14 +1,27 @@
-[Tinkerbell](https://tinkerbell.org) is a tool open sourced recently by
-[Packet](https://packet.com), the company I work for.
+---
+img: /img/me.jpg
+layout: post
+title: "E2E testing Tinkerbell Setup tutorial in Go"
+date:   2020-08-03 09:08:27
+categories: [post]
+tags: ["vagrant", "tinkerbell", "golang", "testing", "framework"]
+summary: "My takeaway from having a to write a end to end test for the
+Tinkerbell Vagrant setup tutorial. How I wrote it and why, lesson learned and
+tips."
+changefreq: daily
+---
 
-It is a provisioner for bare metal. It has an API that you can use to switch on
-and off servers via IPMI or to execute workflows and install operating systems
-on server that does not have one!!
+[Tinkerbell](https://tinkerbell.org) is a tool open sourced recently by
+[Packet, an Equinix company](https://packet.com), the company I work for.
+
+It is a provisioner for bare metal. You can switch servers on and off via API,
+executing workflows and install operating systems on a server that does not have
+one!
 
 Tinkerbell is in its early days as open source project but the concept is battle
 tested from 6 years of production use internally at Packet.
 
-I am excited to lean a lot of the cool technologies that are making datacenters
+I am excited to learn a lot of the cool technologies that are making datacenters
 working, but I am not here to write about it[^1].
 
 One of my recent tasks[^2] was about end to end testing the Vagrant Setup
@@ -19,7 +32,7 @@ the entry point for a lot of people and having a consistent way to test its
 accuracy is crucial.
 
 It is also a quick way to get a valuable end to end test running that covers the
-all project.
+entire project, at a high level.
 
 Tinkerbell is under development and it is easy to make mistakes and break
 things at this point, we have to know when it happens. Tinkerbell requires
@@ -48,7 +61,7 @@ will break future tests as it is today.
 ## How to write this test
 
 There are a million way to write end to end test the one I evaluated are bash
-and Go. 
+and Go.
 
 The project is in Go, Tinkerbell serves a gRPC server and a client, I thought it
 was a good idea to write everything in Go to try the client itself and because
@@ -244,7 +257,7 @@ There are a lot of process going on when creating or destroying a VM with
 Vagrant. There is VirtualBox for example, and we have an edge case for the
 worker machine because the `up` commands technically never ends, it is in
 pending until you `destroy` the machine. But you can't run multiple commands
-against the same machine because `up` hols a lock and if blocks `destroy` to
+against the same machine because `up` holds a lock and it blocks `destroy` to
 execute. `os/exec` helps here but you have to tune it a little bit:
 
 ```go
@@ -295,7 +308,13 @@ process starts. My idea was to remove the label straight away, but I am
 
 An alternative that we are evaluating is to run it as a cronjob[^5] as well.
 
-## Conclusion
+## Testing is the real power
+
+E2E testing are fun to write because they bring a lot of challenges in terms of
+coordination and stability. You have to write good code in order to make them
+stable. I hope you learned something from my experience and if you have any
+question let me know [here](https://twitter.com/gianarb). I am happy to go
+deeper on some of those topics based on your suggestions.
 
 [^1]: If you are curious ask me any question on Twitter @gianarb
 [^2]: https://github.com/tinkerbell/tink/pull/224
