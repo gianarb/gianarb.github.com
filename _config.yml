@@ -8,4 +8,7 @@ collections:
   my_talks:
     sort_by: lesson
     output: true
-  third_party_posts:
+exclude:
+  - bin
+  - node_modules
+  - scss
