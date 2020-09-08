@@ -57,12 +57,6 @@ the size of the image, the old one from alpine is 12M the new one is 5M.
 The scratch image is impossibile to use with all applications but if you have a
 binary you can remove a lot of unused overhead.
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 Another way to understand the status of your image is to scan it to detect
 security vulnerabilities or exposures. Docker Hub and Docker Cloud can do it
 for private images.  This is a great feature to have in your pipeline to scan

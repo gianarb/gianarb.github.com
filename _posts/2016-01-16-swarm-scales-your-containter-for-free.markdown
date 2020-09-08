@@ -60,12 +60,6 @@ container, err := dr.Docker.CreateContainer(docker.CreateContainerOptions{
 })
 {% endhighlight %}
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 This is a snippet that can be used to create a new container.
 With the container started I use the exec feature to
 extract your source and to run it.

@@ -42,12 +42,6 @@ We are overwhelmed by the problems
 Wikipedia helps me to resolve one problem (theory), container is **isolated
 Linux System**
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 ## Docker
 
 Docker borns as wrap of LXC container but now we use an own implementation

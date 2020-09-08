@@ -22,12 +22,6 @@ report a set of common mistakes like:
 * Your container runs 2 processes
 * and others
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 It’s a great idea to run it at some stage in each host to have an idea about
 the status of your environment. To do that you can just use this command when
 running a container

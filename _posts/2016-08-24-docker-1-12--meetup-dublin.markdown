@@ -20,12 +20,6 @@ in production with an orchestration framework included into the product.
 Docker provides a new set of commands to create a cluster of Docker
 deamon and manage a production enviroment.
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 It's something like Kubernetes, Mesos, Swarm but it is included and
 built-in Docker.
 

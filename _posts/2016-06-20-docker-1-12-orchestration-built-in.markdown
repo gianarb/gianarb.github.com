@@ -27,12 +27,6 @@ One of the news stories around the new version is the orchestration system built
 inside the engine, this feature allow us to use swarm
 without installing it separately from outside, it’s now a feature provided by Docker directly.
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 Now we have a new set of commands that allow us to orchestrate containers
 across a cluster.
 

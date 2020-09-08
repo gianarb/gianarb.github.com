@@ -42,12 +42,6 @@ communities that provide a good tools and increase the quality of my work, I
 spend much time accross different team like doctrine, InfluxDB and I am very
 happy to see as Docker make a big effort to involve and to use its community.
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 I wase member of the beautiful mentor team (we will share a "retro pic" next month
 because we forget to do it) and I am happy to see that we done a good work.
 

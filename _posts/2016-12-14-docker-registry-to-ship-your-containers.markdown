@@ -37,12 +37,6 @@ provides them are usually involved into the product development. A set of
 official images are: Nginx, Redis, MySql, PHP, Go and so on
 [https://hub.docker.com/explore](https://hub.docker.com/explore).
 
-<div class="post row">
-  <div class="col-md-12">
-      {% include book-adv-lb.html %}
-  </div>
-</div>
-
 Docker Hub offers different plan to store
 private images, all people has one for free but if you need more you can pay a
 plan and store more.
