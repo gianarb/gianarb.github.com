@@ -58,7 +58,7 @@ Notary, swarmkit are just a few examples but if you think about the update
 framework (TUF) and the whole set of things happening behind every `docker push` and `pull`
 command you suddenly see a great example on how to make complicated things really easy to use.
 
-I published an ebook that you can download for free [here](http://scaledocker.com).
+I published an ebook that you can download for free [here](/blog/scaledocker).
 It contains ~55 pages about Container and Docker Security. In this article I
 will share one of the concept expressed in that book, **Immutability**.
 
@@ -120,4 +120,4 @@ processes involved in deploy, packaging up to speed because all your production
 environment depends on these tools. But it's an important piece of the puzzle.
 To read more about tools like Cilium, CoreOS Clair, best practices about
 registry and images you can download the pdf [Play Safe with Docker and
-Container Security](http://scaledocker.com).
+Container Security](/blog/scaledocker).

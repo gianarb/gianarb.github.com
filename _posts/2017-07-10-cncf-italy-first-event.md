@@ -42,7 +42,7 @@ Beers, Pizza are offered by CNCF after the two sessions!
 Other links:
 
 * [CNCF.io](https://www.cncf.io/)
-* [Opentracing](http://opentracing.io/)
+* [Opentracing](https://opentracing.io/)
 * [OpenZipkin by twitter](https://github.com/openzipkin)
 * [Keynote: OpenTracing and Containers: Depth, Breadth, and the Future of
   Tracing - Ben Sigelman](https://www.youtube.com/watch?v=n8mUiLIXkto)

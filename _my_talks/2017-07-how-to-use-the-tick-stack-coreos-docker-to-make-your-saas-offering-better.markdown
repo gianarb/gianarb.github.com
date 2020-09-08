@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: DevOps.com  - Webinar
-eventLink: http://webinars.devops.com/how-to-use-the-tick-stack-coreos-docker-to-make-your-saas-offering-better
+eventLink: https://webinars.devops.com/how-to-use-the-tick-stack-coreos-docker-to-make-your-saas-offering-better
 city: ""
 links: {}
 

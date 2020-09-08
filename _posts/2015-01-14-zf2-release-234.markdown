@@ -20,7 +20,7 @@ is very long.
 * [#7087](https://github.com/zendframework/zf2/pull/7087) Happy new year by ZF!
 * [#6673](https://github.com/zendframework/zf2/issues/6673) `Zend\Http\Header` now support DateTime format for expire Cookie
 
-Zend Framework follow [semver](http://semver.org/) directives, `2.3.4` is a path
+Zend Framework follow [semver](https://semver.org/) directives, `2.3.4` is a path
 release in this version there are a log list of [bug
 fixes](https://github.com/zendframework/zf2/pulls?q=is%3Aclosed+is%3Apr+milestone%3A2.3.4+label%3Abug)
 

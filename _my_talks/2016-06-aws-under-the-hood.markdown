@@ -6,9 +6,9 @@ embedSlide: ""
 video: https://www.youtube.com/watch?v=F5kJg6YKD1E
 embedVideo: https://www.youtube.com/embed/F5kJg6YKD1E
 eventName: DevOpsCon - Berlin
-eventLink: http://devopsconference.de
+eventLink: https://devopsconference.de
 city: ""
 links:
-  Reveal: http://gianarb.it/aws-under-the-hood/#/
+  Reveal: https://gianarb.it/aws-under-the-hood/#/
 
 ---

@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: PugTo - Torino
-eventLink: http://torino.grusp.org/
+eventLink: https://torino.grusp.org/
 city: ""
 links: {}
 

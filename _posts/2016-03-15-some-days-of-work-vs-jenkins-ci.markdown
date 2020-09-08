@@ -128,7 +128,7 @@ fi
 {% endhighlight %}
 
 This is an example of `build.slimmer` with an IRC notification, it is a PoC and
-I prepared a little [presentation](http://gianarb.it/slimmer-poc-slide/#/) to
+I prepared a little [presentation](/slimmer-poc-slide/#/) to
 receive some feedback and I presented it during a Dublin Go Meetup
 
 <div class="row">

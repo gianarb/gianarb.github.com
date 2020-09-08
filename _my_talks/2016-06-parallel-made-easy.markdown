@@ -6,9 +6,9 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: PHPSouthCoast - Southampton
-eventLink: http://2016.phpsouthcoast.co.uk
+eventLink: https://2016.phpsouthcoast.co.uk
 city: ""
 links:
-  Reveal: http://gianarb.it/parallel-made-easy/#/
+  Reveal: /parallel-made-easy/#/
 
 ---

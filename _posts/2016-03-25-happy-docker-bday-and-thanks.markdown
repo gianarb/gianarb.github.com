@@ -62,4 +62,4 @@ href="https://twitter.com/Delpedro47/status/712745923848351744">March 23,
 charset="utf-8"></script>
 
 Today we seen that also che community appreciate it!
-Happy Birthday and [see you next month](http://www.meetup.com/Docker-Dublin/)!
+Happy Birthday and [see you next month](https://www.meetup.com/Docker-Dublin/)!

@@ -6,7 +6,7 @@ embedSlide: ""
 video: https://www.youtube.com/watch?v=HGGdSOu3fQY
 embedVideo: https://www.youtube.com/embed/HGGdSOu3fQY
 eventName: JAZOON Bern
-eventLink: http://jazoon.com/
+eventLink: https://jazoon.com/
 city: ""
 links: {}
 

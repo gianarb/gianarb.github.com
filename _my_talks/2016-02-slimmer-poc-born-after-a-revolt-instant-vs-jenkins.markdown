@@ -6,9 +6,9 @@ embedSlide: ""
 video: https://www.youtube.com/watch?v=CWCHT3GClMM
 embedVideo: https://www.youtube.com/embed/CWCHT3GClMM
 eventName: Dublin Go Meetup
-eventLink: http://www.meetup.com/Dublin-Go-Meetup/
+eventLink: https://www.meetup.com/Dublin-Go-Meetup/
 city: ""
 links:
-  Reveal: http://gianarb.it/slimmer-poc-slide/
+  Reveal: https://gianarb.it/slimmer-poc-slide/
 
 ---

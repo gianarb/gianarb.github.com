@@ -10,7 +10,7 @@ engineers that made that scale possible. Distributed system, microservices and
 data driven development."
 img: /img/sre-book.jpeg
 ---
-I bought [Site Reliability Engineering](http://amzn.to/2pfeHBU) a lot of months
+I bought [Site Reliability Engineering](https://amzn.to/2pfeHBU) a lot of months
 ago. I read the ebook first but I am the kind of people that buy also paper
 books when they are good, so if you are working on a distributed and scalable
 environment it's something that you should read.

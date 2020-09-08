@@ -8,7 +8,7 @@ summary: "Review Book Database Reliability Engineer. Author Laine Campbell and
 Chairty Major. Published by O'Reilly"
 img: /img/dbre-book.jpg
 ---
-The author of [Database Reliability Engineer](http://amzn.to/2FE5z4V) are Laine Campbell, Charity Majors.
+The author of [Database Reliability Engineer](https://amzn.to/2FE5z4V) are Laine Campbell, Charity Majors.
 It is published by O'Reilly. You can buy it on Amazon.
 
 You probably know the book [Site Reliability

@@ -37,6 +37,6 @@ changefreq: monthly
 {% endhighlight %}
 
 If you want to know more about the Sitemap Protocol read
-[this](http://www.sitemaps.org/protocol.html).
+[this](https://www.sitemaps.org/protocol.html).
 
 [Marco](https://github.com/MarcoDeBortoli) thanks for English! :)

@@ -349,7 +349,7 @@ The last log is the output of
 files.
 
 If you are on linux you can do the same command but by the default you are going
-to use [qemu](http://www.qemu-project.org/) an open source machine emulator.
+to use [qemu](https://www.qemu-project.org/) an open source machine emulator.
 
 ```bash
 sudo apt-get install qemu

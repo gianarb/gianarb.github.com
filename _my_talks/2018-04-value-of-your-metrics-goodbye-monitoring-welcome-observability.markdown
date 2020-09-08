@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: CloudConf Turin
-eventLink: http://2018.cloudconf.it/
+eventLink: https://2018.cloudconf.it/
 city: ""
 links: {}
 

@@ -6,7 +6,7 @@ embedSlide: ""
 video: https://www.youtube.com/watch?v=h7a7vhzjElo
 embedVideo: https://www.youtube.com/embed/h7a7vhzjElo
 eventName: Docker Meetup - Dublin
-eventLink: http://www.meetup.com/it-IT/Docker-Dublin/events/232168564/
+eventLink: https://www.meetup.com/it-IT/Docker-Dublin/events/232168564/
 city: ""
 links: {}
 

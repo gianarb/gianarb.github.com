@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: Software Circus - Amsterdam
-eventLink: http://cloudbusting.softwarecircus.io/bigtop
+eventLink: https://cloudbusting.softwarecircus.io/bigtop
 city: ""
 links: {}
 

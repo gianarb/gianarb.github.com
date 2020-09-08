@@ -6,9 +6,9 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: CurrencyFair Meetup - Dublin
-eventLink: http://www.meetup.com/CurrencyFair-Engineering/events/229817208/
+eventLink: https://www.meetup.com/CurrencyFair-Engineering/events/229817208/
 city: ""
 links:
-  Reveal: http://gianarb.it/listen-and-sleep/
+  Reveal: /listen-and-sleep/
 
 ---

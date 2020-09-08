@@ -6,9 +6,9 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: DevOpsCon - Berlin
-eventLink: http://devopsconference.de
+eventLink: https://devopsconference.de
 city: ""
 links:
-  Reveal: http://gianarb.it/listen-and-sleep/#/
+  Reveal: https://gianarb.it/listen-and-sleep/#/
 
 ---

@@ -74,7 +74,7 @@ Docker in production, how manage a cluster of Docker Engine with Swarm and what
 it means to manage a production environment today.
 
 Keep in touch to receive news about the book
-[scaledocker.com](http://scaledocker.com).  If you are looking for a Docker
+[scaledocker.com](/blog/scaledocker).  If you are looking for a Docker
 Getting Started you can also look on the first chapter that I released [Docker
 The
-Fundamentals](http://localhost:4000/blog/docker-the-fundamentals)
+Fundamentals](/blog/docker-the-fundamentals)

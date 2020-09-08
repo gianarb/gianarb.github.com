@@ -1,7 +1,7 @@
 ---
 title: Time series Database,PHP & Influx DB
 date: 2014-10-07T00:00:00Z
-slide: http://gianarb.it/influxdb-slide/
+slide: https://gianarb.it/influxdb-slide/
 embedSlide: ""
 video: ""
 embedVideo: ""

@@ -11,7 +11,7 @@ Framework components"
 priority: 0.6
 changefreq: weekly
 ---
-<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Blogpost about console-skeleton-app for your console application <a href="http://t.co/WuVq0GZlxE">http://t.co/WuVq0GZlxE</a> <a href="https://twitter.com/hashtag/PHP?src=hash">#PHP</a> <a href="https://twitter.com/hashtag/ZF?src=hash">#ZF</a> <a href="https://twitter.com/hashtag/console?src=hash">#console</a> <a href="https://twitter.com/hashtag/develop?src=hash">#develop</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/613292048708468736">June 23, 2015</a></blockquote>
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Blogpost about console-skeleton-app for your console application <a href="https://t.co/WuVq0GZlxE">https://t.co/WuVq0GZlxE</a> <a href="https://twitter.com/hashtag/PHP?src=hash">#PHP</a> <a href="https://twitter.com/hashtag/ZF?src=hash">#ZF</a> <a href="https://twitter.com/hashtag/console?src=hash">#console</a> <a href="https://twitter.com/hashtag/develop?src=hash">#develop</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/613292048708468736">June 23, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <div class="alert alert-success" role="alert"><strong>Github: </strong>Article written about <a target="_blank" href="https://github.com/gianarb/console-skeleton-app">console-skeleton-app</a> 1.0.0</div>
@@ -27,7 +27,7 @@ I have a todo list for the future but for the time being it's just a blog post a
 ## ZF\Console and other components
 
 * [ZF\Console](https://github.com/zfcampus/zf-console) is maintained by zfcampus and it is used by Apigility
-* [zendframework\zend-console](https://github.com/zendframework/zend-console) is maintained by zendframework, all the info are in the [documantation](http://framework.zend.com/manual/current/en/modules/zend.console.introduction.html)
+* [zendframework\zend-console](https://github.com/zendframework/zend-console) is maintained by zendframework, all the info are in the [documantation](https://framework.zend.com/manual/current/en/modules/zend.console.introduction.html)
 
 ## Tree
 
@@ -119,7 +119,7 @@ class Hello
 
 ## Troubleshooting and tricks
 * OSx return an error because zf-console use a function blocked into the mac os php installation. Have a look at  PR[#22](https://github.com/zfcampus/zf-console/pull/22)
-* See [this](http://www.sitepoint.com/packaging-your-apps-with-phar/) article to package your application in a phar archive..
+* See [this](https://www.sitepoint.com/packaging-your-apps-with-phar/) article to package your application in a phar archive..
 
 <br/>
 <br/>

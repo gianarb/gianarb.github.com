@@ -22,7 +22,7 @@ understand the concepts expressed into the book.
 <small>Docker in production</small></h2>
 
 The book is work in progress but you can find more information into the site
-<a href="http://scaledocker.com">scaledocker.com</a>.
+<a href="/blog/scaledocker">scaledocker.com</a>.
 
 To receive the first chapter free leave your email and if you like your twitter account:
 

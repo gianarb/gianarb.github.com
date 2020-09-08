@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: ApiConf - Turin
-eventLink: http://2017.apiconf.it/
+eventLink: https://2017.apiconf.it/
 city: ""
 links: {}
 

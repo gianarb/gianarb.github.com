@@ -10,7 +10,7 @@ parameter is true your action get a service by Dependence Injcation and use it!"
 priority: 0.6
 changefreq: weekly
 ---
-<blockquote align="center" class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Unit <a href="https://twitter.com/hashtag/test?src=hash">#test</a> for your <a href="https://twitter.com/hashtag/Controller?src=hash">#Controller</a> with <a href="https://twitter.com/hashtag/PhpUnit?src=hash">#PhpUnit</a> and <a href="https://twitter.com/hashtag/Symfony?src=hash">#Symfony</a>.. With a little use case of <a href="https://twitter.com/hashtag/DepedenceInjaction?src=hash">#DepedenceInjaction</a> test <a href="http://t.co/JNb39EyRly">http://t.co/JNb39EyRly</a> <a href="https://twitter.com/hashtag/php?src=hash">#php</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/601526550438215680">May 21, 2015</a></blockquote>
+<blockquote align="center" class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Unit <a href="https://twitter.com/hashtag/test?src=hash">#test</a> for your <a href="https://twitter.com/hashtag/Controller?src=hash">#Controller</a> with <a href="https://twitter.com/hashtag/PhpUnit?src=hash">#PhpUnit</a> and <a href="https://twitter.com/hashtag/Symfony?src=hash">#Symfony</a>.. With a little use case of <a href="https://twitter.com/hashtag/DepedenceInjaction?src=hash">#DepedenceInjaction</a> test <a href="https://t.co/JNb39EyRly">https://t.co/JNb39EyRly</a> <a href="https://twitter.com/hashtag/php?src=hash">#php</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/601526550438215680">May 21, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 In this article I would like share with you a little experience with:
@@ -47,12 +47,6 @@ class SomeStuffController extends FOSRestController
 
 `$this->container->getParameter("do_stuff")` is a boolean parameter that enable or disable a feature, How can I test this snippet?
 I can try to write a functional test but in my opinion is easier write a series of unit tests with PhpUnit to validate my expectations.
-
-<div class="post row">
-  <div class="col-md-12">
-      <a href="http://scaledocker.com?from=gianarb" target="_blank"><img src="http://scaledocker.com/adv/leaderboard.gif"></a>
-  </div>
-</div>
 
 ## Expectations
 * If `do_stuff` parameter is false function get by my container will be call zero times

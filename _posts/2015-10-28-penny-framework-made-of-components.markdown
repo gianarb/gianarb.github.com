@@ -44,7 +44,7 @@ but we are working to replace every part of penny with the libraries perfect
 for your use case.
 
 Are you curious to try this idea? We are writing a big documentation around penny.
-[docs.pennyphp.org/en/latest](http://docs.pennyphp.org/en/latest/)
+[docs.pennyphp.org/en/latest](https://docs.pennyphp.org/en/latest/)
 
 And we have a set of use cases:
 

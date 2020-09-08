@@ -6,7 +6,7 @@ embedSlide: ""
 video: "https://www.youtube.com/watch?v=oIzj2NI2BwM"
 embedVideo: "https://www.youtube.com/embed/oIzj2NI2BwM"
 eventName: DevOpsFest Kiev
-eventLink: http://devopsfest.com.ua/indexe.html
+eventLink: https://devopsfest.com.ua/indexe.html
 city: "Kiev, Ukraine"
 links: {}
 

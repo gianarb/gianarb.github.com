@@ -8,7 +8,7 @@ img: /img/k8s-up-and-running.jpg
 summary: "Kubernetes up and running review."
 changefreq: yearly
 ---
-I read ["Kubernetes up and running"](http://amzn.to/2zflChj) an O'Reilly book
+I read ["Kubernetes up and running"](https://amzn.to/2zflChj) an O'Reilly book
 written by Kelsey Hightower, Brendan Burns and Joe Beda.
 
 It looks like the instrumental manual, you look for it when you buy something.

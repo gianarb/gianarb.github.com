@@ -36,5 +36,5 @@ Lorenzo discover to have the Asus Universal Dock Station's ethernet port
 running.
 
 [Realtek ethernet
-driver](http://www.realtek.com/DOWNLOADS/downloadsView.aspx?Langid=1&PNid=13&PFid=5&Level=5&Conn=4&DownTypeID=3&GetDown=false).
+driver](https://www.realtek.com/DOWNLOADS/downloadsView.aspx?Langid=1&PNid=13&PFid=5&Level=5&Conn=4&DownTypeID=3&GetDown=false).
 It's super easy to install. Just compile it and it will work.

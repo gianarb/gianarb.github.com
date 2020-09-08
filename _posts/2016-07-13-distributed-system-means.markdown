@@ -24,7 +24,7 @@ connected through a network and distribution middleware, which enables
 computers to coordinate their activities and to share the resources of the
 system, so that users perceive the system as a single, integrated computing
 facility.
-<p><a href="http://www0.cs.ucl.ac.uk/staff/ucacwxe/lectures/ds98-99/dsee3.pdf" target="_blank">Wolfgang Emmerich, 1997</a></p>
+<p><a href="https://www0.cs.ucl.ac.uk/staff/ucacwxe/lectures/ds98-99/dsee3.pdf" target="_blank">Wolfgang Emmerich, 1997</a></p>
 </blockquote>
 
 

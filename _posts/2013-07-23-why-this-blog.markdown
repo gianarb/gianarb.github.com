@@ -16,7 +16,7 @@ Vagrant and Chef, than for manage this tool I'm learning Ruby.
 
 ### Why this blog?
 I'm opening this blog because my English is very terrible! I have an Italian
-[Blog](http://gianarb.it) in WordPress but I'd like to use Jekyll and this is a
+[Blog](/) in WordPress but I'd like to use Jekyll and this is a
 good opportunity.  Share my experience and my Job, to grow and improve my
 skills! Can you help me with my English? :P
 
@@ -31,7 +31,7 @@ DevOps, Chef, Vagrant, Composer, TDD....
 
 Community and Open Source are my passion! A community is a great way to
 challenge myself as a person and as a coder. You can find me on [Github
-Account](http://github.com/gianarb)!
+Account](https://github.com/gianarb)!
 
 ### This is my face!
 <div style="text-align:center;">

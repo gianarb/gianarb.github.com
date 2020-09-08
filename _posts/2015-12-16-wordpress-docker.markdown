@@ -168,14 +168,14 @@ wordpress installation.
 <p class='text-center'>
 <iframe src="//giphy.com/embed/l41lYCDgxP6OFBruE" width="480" height="268"
 frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a
-href="http://giphy.com/gifs/foxtv-win-ricky-gervais-emmys-2015-l41lYCDgxP6OFBruE">via
+href="https://giphy.com/gifs/foxtv-win-ricky-gervais-emmys-2015-l41lYCDgxP6OFBruE">via
 GIPHY</a></p>
 </p>
 
 ## In Cloud with AWS ECS
 We won a battle but the war is too long, we can not use our PC as server.  In
 this article I propose [AWS Elastic Container
-Service](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html)
+Service](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html)
 a new AWS service that helps us to manage containers, why this service? Because
 it is Docker and Docker Composer like, it's managed by AWS, maybe there are
 more flexible solutions, Swarm, Kubernetes but it is a good start point.
@@ -262,7 +262,7 @@ backend backend_wp1
 * Consul to increase the stability and the scalability of our endpoint
 
 <div class="alert alert-info" role="alert">
-This article is based on my presentation at <a href='http://gianarb.it/codemotion-2015/' target='_blank'>Codemotion 2015</a>
+This article is based on my presentation at <a href='https://gianarb.it/codemotion-2015/' target='_blank'>Codemotion 2015</a>
 </div>
 
 <div class="alert alert-success" role="alert">

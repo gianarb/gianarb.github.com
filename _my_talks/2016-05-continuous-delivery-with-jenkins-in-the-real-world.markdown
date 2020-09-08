@@ -6,9 +6,9 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: Jenkins Meetup - Dublin
-eventLink: http://www.meetup.com/Dublin-Jenkins-Meetup/events/229325046/
+eventLink: https://www.meetup.com/Dublin-Jenkins-Meetup/events/229325046/
 city: ""
 links:
-  Reveal: http://gianarb.it/jenkins-real-world/#/
+  Reveal: https://gianarb.it/jenkins-real-world/#/
 
 ---

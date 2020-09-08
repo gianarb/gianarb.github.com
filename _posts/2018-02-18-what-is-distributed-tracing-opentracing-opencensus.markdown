@@ -76,9 +76,9 @@ request from its start (mobile app, web app, cronjobs, other apps) so it's the .
 Registering how many applications it crosses to, for how long. Labeling these
 metrics you can event understand latency between services.
 
-<img src="http://www.hawkular.org/img/blog/2017/2017-04-19-jaeger-trace.png"
+<img src="https://www.hawkular.org/img/blog/2017/2017-04-19-jaeger-trace.png"
 class="img-fluid">
-<small>from http://www.hawkular.org/</small>
+<small>from https://www.hawkular.org/</small>
 
 Speaking in the right language, this image describes a trace. It's an HTTP to
 `fronted` service. It's a GET request on the `/dispatch` route. You can see how
@@ -117,7 +117,7 @@ The architecture looks like this:
  +-----------+  +-------------+  +-------------+  +-----------+
 ```
 <small>from <a
-href="http://opentracing.io/documentation/pages/instrumentation/common-use-cases.html"
+href="https://opentracing.io/documentation/pages/instrumentation/common-use-cases.html"
 target="_blank">opentracing.org</a><small>
 
 There are different instrumentation libraries across multiple languages and you
@@ -234,7 +234,7 @@ type Tracer interface {
 	// Create, start, and return a new Span with the given `operationName` and
 	// incorporate the given StartSpanOption `opts`. (Note that `opts` borrows
 	// from the "functional options" pattern, per
-	// http://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis)
+	// https://dave.cheney.net/2014/10/17/functional-options-for-friendly-apis)
 	//
 	// A Span with no SpanReference options (e.g., opentracing.ChildOf() or
 	// opentracing.FollowsFrom()) becomes the root of its own trace.

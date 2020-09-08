@@ -22,7 +22,7 @@ I am ready to write a small post about my current setup.
 ## Ikea Markus
 
 First things I bought an [Ikea
-Markus](http://www.ikea.com/gb/en/products/chairs-stools-benches/office-chairs/markus-swivel-chair-glose-black-art-20103101/).
+Markus](https://www.ikea.com/gb/en/products/chairs-stools-benches/office-chairs/markus-swivel-chair-glose-black-art-20103101/).
 It is comfortable and it has a competitive price. It's flexible and well designed.
 
 I don't have a lot to say about it. If you are not passionate about expensive
@@ -31,7 +31,7 @@ and weird chairs you can go for this one. It will work!
 ## Stand Mount
 
 My setup counts two boring Asus monitor, one horizontal and one vertical,
-Lorenzo suggested to me this [standmount support for two monitor](http://amzn.to/2yMe59C).
+Lorenzo suggested to me this [standmount support for two monitor](https://amzn.to/2yMe59C).
 
 Day by day I discover how bad I am using more than one monitor. Change focus so
 often is not for me but I like the vertical monitor when I am debugging some
@@ -39,11 +39,11 @@ weird application.
 
 ## Asus Zenbook 3
 
-I have an [Asus Zenbook 3](http://amzn.to/2AHAy9N) the only usb-c is kind of a
+I have an [Asus Zenbook 3](https://amzn.to/2AHAy9N) the only usb-c is kind of a
 pain. I am a traveler and a speaker. I don't enjoy its low weight (900gr) that
 often because I always need some adapter.
 
-For traveling the adapter [Asus Universal Dock](http://amzn.to/2CKIMPG) is good. It
+For traveling the adapter [Asus Universal Dock](https://amzn.to/2CKIMPG) is good. It
 is embedded with a charger it means that you need to have power supply to use
 it. I wrote an article about it and I was very disappointed about the product.
 But now that I am using it only for traveling purpose it's not too bad.
@@ -65,7 +65,7 @@ an acceptable quality you need to have an external webcam.
 I work from and when I have a meeting with colleagues and friends I would like
 to offer to them good experience.
 
-The [Logitech C922](http://amzn.to/2kEnJ9o) is not powerful enough to make me
+The [Logitech C922](https://amzn.to/2kEnJ9o) is not powerful enough to make me
 beautiful but it makes an amazing work and it's very good.
 
 If you record tutorials or workshop you should think about having one of this.
@@ -74,7 +74,7 @@ It comes with a small tripod to setup it where ever you like.
 ## USB-C adapter
 
 As I told you the world is not ready for the USB-C but I am!
-[Plugable](http://amzn.to/2zhPbSQ) makes my life very simple.
+[Plugable](https://amzn.to/2zhPbSQ) makes my life very simple.
 
 WebCam, two monitors, Ethernet cable are always attached to it and I just need
 to plug my laptop in via the USB-C and everything will happen.

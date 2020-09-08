@@ -47,7 +47,7 @@ lot of digging in the actual
 luckily for us it has a lot of examples and the library is designed to load a
 bunch of useful modules that are able to instrument the application by itself.
 The community is very helpful and you can chat via
-[Gitter](http://gitter.im/open-telemetry/opentelemetry-js).
+[Gitter](https://gitter.im/open-telemetry/opentelemetry-js).
 
 ## Getting Started
 

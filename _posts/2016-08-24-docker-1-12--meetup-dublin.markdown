@@ -30,7 +30,7 @@ It's something like Kubernetes, Mesos, Swarm but it is included and
 built-in Docker.
 
 I wrote an article about it few months ago ["Docker 1.12 orchestration
-built-in"](http://gianarb.it/blog/docker-1-12-orchestration-built-in).
+built-in"](/blog/docker-1-12-orchestration-built-in).
 
 
 In this demo I do an introduction of some new features like:

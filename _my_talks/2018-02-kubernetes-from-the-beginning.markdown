@@ -6,7 +6,7 @@ embedSlide: ""
 video: ""
 embedVideo: ""
 eventName: php meetup Turin
-eventLink: http://torino.grusp.org/
+eventLink: https://torino.grusp.org/
 city: ""
 links: {}
 

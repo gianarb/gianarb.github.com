@@ -6,7 +6,7 @@ embedSlide: ""
 video: https://vimeo.com/197124772
 embedVideo: ""
 eventName: PHPCon - Poland
-eventLink: http://www.phpcon.pl/2016/en/
+eventLink: https://www.phpcon.pl/2016/en/
 city: ""
 links: {}
 

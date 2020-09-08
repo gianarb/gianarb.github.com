@@ -69,4 +69,4 @@ by gianarb92@gmail.com
 {% endhighlight %}
 
 
-[@see Zend Event Manager Ref](http://framework.zend.com/manual/2.0/en/modules/zend.event-manager.event-manager.html)
+[@see Zend Event Manager Ref](https://framework.zend.com/manual/2.0/en/modules/zend.event-manager.event-manager.html)

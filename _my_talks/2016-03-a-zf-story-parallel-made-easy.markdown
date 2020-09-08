@@ -6,9 +6,9 @@ embedSlide: ""
 video: https://www.youtube.com/watch?v=WWlnp7peOJo
 embedVideo: https://www.youtube.com/embed/WWlnp7peOJo
 eventName: CloudConf - Turin
-eventLink: http://cloudconf.it
+eventLink: https://cloudconf.it
 city: ""
 links:
-  Reveal: http://gianarb.it/parallel-made-easy/
+  Reveal: /parallel-made-easy/
 
 ---

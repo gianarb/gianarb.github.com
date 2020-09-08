@@ -10,8 +10,8 @@ PHPKonf Istanbul Conference."
 priority: 0.6
 changefreq: weekly
 ---
-I wrote this note during the [PHPKonf](http://phpkonf.org/), I spoke about
-[Jenkins and Continuous Delivery](http://gianarb.it/jenkins-real-world/#/) but
+I wrote this note during the [PHPKonf](https://phpkonf.org/), I spoke about
+[Jenkins and Continuous Delivery](/jenkins-real-world/#/) but
 during the days I followed few interested talks and this is my list of notes.
 
 Is the code reusable? For a few people the response is yes, for other ones is

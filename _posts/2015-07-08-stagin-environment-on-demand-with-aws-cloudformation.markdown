@@ -17,7 +17,7 @@ priority: 0.6
 changefreq: daily
 ---
 
-<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Staging environment on demand. To Work on <a href="https://twitter.com/hashtag/AWS?src=hash">#AWS</a> low level with <a href="https://twitter.com/hashtag/cloudformation?src=hash">#cloudformation</a> <a href="http://t.co/VWBR129637">http://t.co/VWBR129637</a> <a href="https://twitter.com/hashtag/cloud?src=hash">#cloud</a> <a href="https://twitter.com/hashtag/devops?src=hash">#devops</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/621691855810494464">July 16, 2015</a></blockquote>
+<blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Staging environment on demand. To Work on <a href="https://twitter.com/hashtag/AWS?src=hash">#AWS</a> low level with <a href="https://twitter.com/hashtag/cloudformation?src=hash">#cloudformation</a> <a href="https://t.co/VWBR129637">https://t.co/VWBR129637</a> <a href="https://twitter.com/hashtag/cloud?src=hash">#cloud</a> <a href="https://twitter.com/hashtag/devops?src=hash">#devops</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/621691855810494464">July 16, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Staging Environment
