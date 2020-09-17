@@ -1,14 +1,14 @@
 ---
 layout: post
 title:  "Thinking in Systems written by Donella H. Meadows"
-date:   2018-03-15 10:08:27
+date:   2020-09-12 10:08:27
 categories: [post]
 tags: [book, thinking in systems, donella meadows]
-summary: ""
+summary: "Review of the book Thinking in Systems written by Donella Meadows"
 img: /img/thinking-in-systems-book.jpg
 ---
 
-["Thinking in Systems"]() acted on me as a **reinforcing loop**. The motivation I have to
+["Thinking in Systems"](https://amzn.to/3khu7k9) acted on me as a **reinforcing loop**. The motivation I have to
 explore the ability to think of Software as loops and systems show up reading
 those pages.
 
@@ -17,6 +17,10 @@ those pages.
 > runaway destruction. It is called a reinforcing feedback loop...
 >
 > Thinking in systems - Donella H. Meadows
+
+{:refdef:.text-center}
+![Thinking in Systems's book cover](/img/thinking-in-systems-book.jpg){:.img-fluid .mh-25}
+{:refdef}
 
 It is a great way to put words close to concepts I am exploring in practice. It
 is not a book written for developers, but you know, it works, and you can apply
