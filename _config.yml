@@ -8,3 +8,9 @@ collections:
   my_talks:
     sort_by: lesson
     output: true
+exclude:
+  - package.json
+  - package-lock.json
+  - gemset.nix
+  - default.nix
+  - Makefile
