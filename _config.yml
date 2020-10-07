@@ -14,5 +14,9 @@ exclude:
   - gemset.nix
   - default.nix
   - Makefile
+  - README.md
+  - node_modules
+  - Gemfile*
+  - vendor
 sass:
   sass_dir: _sass
