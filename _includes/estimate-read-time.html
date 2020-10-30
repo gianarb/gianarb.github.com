@@ -1,0 +1,26 @@
+<!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+{% assign readCalc = page.content | number_of_words | divided_by: 180 | round %}
+{% if readCalc == 0 %}
+ {% assign readTime = "Less than one" %}
+{% elsif readCalc == 1 %}
+ {% assign readTime = "One" %}
+{% elsif readCalc == 2 %}
+ {% assign readTime = "Two" %}
+{% elsif readCalc == 3 %}
+ {% assign readTime = "Three" %}
+{% elsif readCalc == 4 %}
+ {% assign readTime = "Four" %}
+{% elsif readCalc == 5 %}
+ {% assign readTime = "Five" %}
+{% elsif readCalc == 6 %}
+   {% assign readTime = "Six" %}
+{% elsif readCalc == 7 %}
+ {% assign readTime = "Seven" %}
+{% elsif readCalc == 8 %}
+ {% assign readTime = "Eight" %}
+{% elsif readCalc == 9 %}
+ {% assign readTime = "Nine" %}
+{% else %}
+ {% assign readTime = readCalc %}
+{% endif %}
+<span class="blog-read-time">{{ readTime }} minute read</span>

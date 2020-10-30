@@ -24,7 +24,7 @@ layout: default
 
         <div class="row">
             <div class="col-md-12">
-                <p class="meta">{{ page.date | date_to_string }} - Tags: {{page.tags | join: ', '}}</p>
+                <p class="meta">{{ page.date | date_to_string }} · {% include estimate-read-time.html %} · {{page.tags | join: ', '}}</p>
             </div>
         </div>
 
