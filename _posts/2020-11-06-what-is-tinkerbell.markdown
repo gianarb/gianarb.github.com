@@ -23,7 +23,6 @@ The project is a number of micro-services that provide various functionality to
 configure hardware and provision bother Operating System and additional software
 through it’s workflow engine.
 
-
 ## What the project provides
 
 *   The first micro-service is called
@@ -180,3 +179,14 @@ to manage your own hardware Tinkerbell and its community comes to rescue you.
 {:.alert.alert-info}
 A big thank you goes to [Dan](https://twitter.com/thebsdbox) for his review and
 support writing this article!
+
+## More, I want more!
+
+[Dan and Jeremy had a conversation](https://www.youtube.com/watch?v=Y04eCSKaQCc)
+about netbooting and bare metal provisioning.  It is available on YouTube, you
+should really have a look at it!
+
+[Alex Ellis and Mark Coleman recorded a
+video](https://www.youtube.com/watch?v=QxpKnMGywTU) setting up and using Tinkerbell.
+The video is a bit out of date and they did not use the new sandbox project
+because it was not available at that time. But still a good and valuable!
