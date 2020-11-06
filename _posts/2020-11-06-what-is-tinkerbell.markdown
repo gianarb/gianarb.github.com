@@ -123,7 +123,7 @@ can run it [locally with Vagrant
 ](https://tinkerbell.org/docs/setup/local-with-vagrant/)or on [Equinix
 Metal](https://tinkerbell.org/docs/setup/terraform/).
 
-Aaron's Ramblings wrote a blog post, ["Tinkerbell or iPXE boot on
+Aaron Ramblings wrote a blog post, ["Tinkerbell or iPXE boot on
 OVH"](https://geekgonecrazy.com/2020/09/07/tinkerbell-or-ipxe-boot-on-ovh/)
 using the sandbox to run Tinkerbell on OVH! I am still surprised when I read it
 because he experimented with the sandbox in a very early stage of the project,
@@ -167,10 +167,10 @@ caused by things like 5G, dedicated GPUs/FPGAs, HPC, constant and expected
 performance and security boundaries is only going to grow. A recent report by
 the [Mordor Intelligence
 company](https://www.mordorintelligence.com/industry-reports/bare-metal-cloud-market)
-reports _“The bare metal cloud market was valued at USD 1.75 billion in 2019 and
-expected to reach USD 10.56 billion by 2025” _ which clearly articulates that
-there will be a need new and modern platform for end-users to provision their
-bare-metal infrastructure.
+reports  “The bare metal cloud market was valued at USD 1.75 billion in 2019 and
+expected to reach USD 10.56 billion by 2025” which clearly shows that there is
+growing demand for a modern platform to provision their bare-metal
+infrastructure.
 
 Datacenter management is hard, and that's why the public cloud got so much
 traction. For companies and products, managing hardware is unnecessary and a
