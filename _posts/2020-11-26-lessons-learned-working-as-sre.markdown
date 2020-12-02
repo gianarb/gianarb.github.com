@@ -90,7 +90,7 @@ works reliably and well for us is gold.
 Like everything you read so far, it is always essential because, as I said, Site
 Reliability Engineer is just a role that has a subset of responsibilities and
 objectives, but we are not silos; everything matters a feature has to be usable;
-good lucking, functional. Code review for me become a lot more about: "is this
+good looking, functional. Code review for me become a lot more about: "is this
 code understandable in production?", "what do I want it to tell me when running
 at scale?", "how this trace looks like?" "is this log useful, and how does it
 impact the overall context?".
