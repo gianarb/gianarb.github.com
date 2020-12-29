@@ -205,7 +205,7 @@ $ tree -L 1
 ```
 
 I would like to define it as a monorepo, and it uses
-[lerne](https://github.com/lerna/lerna) to delivery multiple packages from the
+[lerna](https://github.com/lerna/lerna) to delivery multiple packages from the
 same repository.
 
 `examples` contains workable example of how to use the different `packages`.
