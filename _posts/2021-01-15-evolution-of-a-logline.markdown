@@ -26,7 +26,7 @@ particular line of code. The interpretation of the situation was up to humans.
 Every developer involved in the project participates in adding the logline in
 the codebase directly, developing the code, or indirectly when chatting about a
 particular feature over lunch or doing a code review.  Building a context from
-an unknown log line was an unrequired exercise because the lead was always there
+an unknown log line was a useless exercise because the lead was always there
 to help you figure out what that logline was supposed to tell.
 
 Even the stream's speed was a crucial metric to figure out the sanity of the
@@ -112,7 +112,7 @@ picture of an open book with an old clock.](/img/watch-4638673_1280.jpg){:class=
 
 ## Conclusion
 
-* Logline is the way your tech your application on how to communicate with the
+* Logline is the way you tech your application on how to communicate with the
   outside.
 * Communication is useful in many fields. It is an opportunity to learn
   something new or a way to communicate that we are in trouble. Same as logs,

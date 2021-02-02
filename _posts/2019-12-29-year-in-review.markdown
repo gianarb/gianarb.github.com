@@ -4,7 +4,7 @@ layout: post
 title: "Year in review"
 date: 2019-12-30 06:08:27
 categories: [post]
-tags: [2019]
+tags: ["2019"]
 summary: "Summary about 2019, a year in review. There is not much more to
 say other than that! Happy new year!"
 changefreq: daily
