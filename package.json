@@ -10,15 +10,8 @@
   "homepage": "https://gianarb.it",
   "license": "MIT",
   "author": "Gianluca Arbezzano",
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.13.0",
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.5.0"
-  },
   "devDependencies": {
-    "sass": "^1.23.3"
-  },
-  "scripts": {
-    "scss": "./node_modules/.bin/sass ./scss/custom.scss ./css/style.css"
+    "bootstrap": "^4.6.0",
+    "sass": "^1.32.7"
   }
 }
