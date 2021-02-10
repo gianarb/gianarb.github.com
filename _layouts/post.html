@@ -28,38 +28,11 @@ layout: default
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="addthis_sharing_toolbox"></div>
-            </div>
-        </div>
-
         <div class="row mt-3">
             <div class="col-md-12">
             {{ content }}
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <div id="disqus_thread"></div>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-            </div>
-        </div>
-
     </div>
 </div>
-
-<script>
-var disqus_config = function () {
-    this.page.url = '{{site.MY_URL}}{{page.url}}';
-    this.page.identifier = '{{site.MY_URL}}{{page.url}}';
-};
-
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://gianarbdeveloper.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
