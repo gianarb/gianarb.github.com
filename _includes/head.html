@@ -9,9 +9,12 @@
     <link rel="canonical" href="{{ site.MY_URL }}{{ page.url | replace:'index.html',''}}">
     <link rel="icon" type="image/png" href="/img/favicon.png" />
 
-    <meta name='twitter:card' content='summary_large_image'>
-    <meta name='twitter:title' content="{{page.title}}">
-    <meta name='twitter:description' content="{{page.summary}}">
+    <meta property="twitter:account_id" content="129952408" />
+    <meta name='twitter:title' content="{{page.title}}" />
+    <meta name='twitter:description' content="{{page.summary}}" />
+    <meta name="twitter:url" content="{{site.MY_URL}}{{page.url}}" />
+    <meta name="twitter:creator" content="@gianarb">
+    <meta name="twitter:domain" content="gianarb.it">
 
     <meta property="og:title" content="{{ page.title }}" />
     <meta property="og:site_name" content="gianarb blog"/>
@@ -19,25 +22,20 @@
     <meta property="og:description" content="{{ page.summary }}" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="en_US" />
-{% if page.img != null %}
-    <meta property="og:image" content="{{site.MY_URL}}{{ page.img }}" />
-    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.img }}">
-{% endif %}
-{% if page.heroimg != null %}
-    <meta property="og:image" content="" />
-    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.heroimg }}">
-{% endif %}
 
-    <meta property="twitter:account_id" content="129952408" />
+{% if page.heroimg != null %}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content="{{site.MY_URL}}{{ page.heroimg }}" />
+    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.heroimg }}" />
+{% elsif page.img != null %}
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="{{site.MY_URL}}{{ page.img }}" />
+    <meta name='twitter:image' content="{{site.MY_URL}}{{ page.img }}" />
+{% else %}
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@gianarb">
-    <meta name="twitter:creator" content="@gianarb">
-    <meta name="twitter:title" content="{{ page.title }}">
-    <meta name="twitter:description" content="{{ page.summary }}">
-    <meta name="twitter:image:src" content="{{site.MY_URL}}{{ page.img }}">
-    <meta name="twitter:image:width" content="500">
-    <meta name="twitter:image:height" content="500">
-    <meta name="twitter:domain" content="gianarb.it">
+    <meta property="og:image" content="{{site.MY_URL}}/img/gianarb.png" />
+    <meta name='twitter:image' content="{{site.MY_URL}}/img/gianarb.png" />
+{% endif %}
 
     <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
 
