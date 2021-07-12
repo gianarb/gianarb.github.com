@@ -9,18 +9,9 @@ date: 2020-10-29T11:00:00Z
 eventName: Raise.dev
 eventLink: https://raise.dev
 city: "Twitchland"
+youtubeID: 1wFlrYxNMmc
 
 ---
-
-<div class="embed-responsive embed-responsive-16by9 mb-3">
-    <iframe
-        class="embed-responsive-item"
-        src="https://player.twitch.tv/?video=v785377719&parent=gianarb.it&autoplay=false"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen="true">
-    </iframe>
-</div>
 
 [Joe](https://twitter.com/jna_sh) is a professional host. I didn't know about
 the raise.dev's mission until his introduction but I think it is a very cool
