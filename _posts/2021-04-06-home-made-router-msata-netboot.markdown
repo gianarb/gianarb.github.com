@@ -40,7 +40,9 @@ In practice, it is a program that helps you to serve what a piece of hardware ne
 
 ```bash
 sudo pixiecore boot ./vmlinuz-vanilla initramfs-vanilla \
-    --cmdline='console=ttyS0,115200n8 alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
+    --cmdline='console=ttyS0,115200n8 \
+    alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ \
+    modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
 ```
 
 The first two arguments of the command line are the Alpine init ramdisk and the kernel. I got them directly from the [Alpine repository](http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6).
@@ -50,7 +52,13 @@ The `--cmdline` option can be used to pass configuration to the operating system
 Now that I have set the PXE distribution tool, I powered on the APU4d board. By default, it tries to boot from a couple of different devices. The last one is PXE mode.
 
 ```console
-sudo pixiecore boot ./vmlinuz-vanilla initramfs-vanilla --cmdline='console=ttyS0,115200n8 ssh_key=https://github.com/gianarb.keys alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
+sudo pixiecore boot \
+    ./vmlinuz-vanilla initramfs-vanilla \
+    --cmdline='console=ttyS0,115200n8 \
+        ssh_key=https://github.com/gianarb.keys \
+        alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ \
+        modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
+
 Password:
 [DHCP] Offering to boot 00:0d:b9:5a:3e:10
 [DHCP] Offering to boot 00:0d:b9:5a:3e:10

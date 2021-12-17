@@ -1,7 +1,45 @@
 ---
 ---
 
-@charset 'UTF-8';
+/* SCSS HEX */
+$y-in-mn-blue: #355070ff;
+$chinese-violet: #6d597aff;
+$rose-dust: #b56576ff;
+$candy-pink: #e56b6fff;
+$tumbleweed: #eaac8bff;
 
-@import "init";
-@import "carbon";
+$theme-colors: (
+  "primary": $candy-pink,
+  "secondaty": $chinese-violet,
+  "dark": $y-in-mn-blue,
+  "success": $tumbleweed,
+);
+
+body {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+article {
+    margin: 0 auto;
+    max-width: 720px;
+    line-height: 1.3;
+}
+
+iframe, img {
+    max-width: 90%;
+    display: block!important;
+    margin: 0 auto!important;
+}
+
+pre {
+    background: #eee;
+    padding:1rem;
+    overflow-y:hidden;
+    overflow-x:auto;
+}
+
+small.footer {
+    float: right;
+}

@@ -1,38 +1,11 @@
 ---
 layout: default
 ---
+<h1>{{ page.title }}</h1>
 
-{% if page.heroimg != null %}
-<style>
-.bgimage {
-  background-image: url('{{ page.heroimg }}');
-}
-</style>
-<section class="bgimage">
-</section>
-{% endif %}
-
-<div class="container">
-
-    <div class="content">
-
-        <div class="row">
-            <div id="post-title" class="mt-5 col-md-12">
-                <h1>{{ page.title }}</h1>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <p class="meta">{{ page.date | date_to_string }} · {% include estimate-read-time.html %} · {{page.tags | join: ', '}}</p>
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-md-12">
-            {{ content }}
-            </div>
-        </div>
-
-    </div>
-</div>
+<main>
+    <p class="meta">{{ page.date | date_to_string }} · {% include estimate-read-time.html %} · on <a href="/blog">Gianluca's blog</a></p>
+    <article>
+    {{ content }}
+    </article>
+</main>
