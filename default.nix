@@ -9,5 +9,4 @@ in
 stdenv.mkDerivation rec {
   name = "jekyll_env";
   buildInputs = [ jekyll_env nodejs ];
-
 }
