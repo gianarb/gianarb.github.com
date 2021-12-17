@@ -10,7 +10,4 @@ stdenv.mkDerivation rec {
   name = "jekyll_env";
   buildInputs = [ jekyll_env nodejs ];
 
-  shellHook = ''
-    alias serve="${jekyll_env}/bin/jekyll serve -w --future --drafts"
-  '';
 }

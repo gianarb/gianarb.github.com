@@ -97,7 +97,7 @@ registry.
 # wget https://dl.k8s.io/v1.20.0-rc.0/kubernetes-server-linux-amd64.tar.gz
 # tar xzvf ./kubernetes-server-linux-amd64.tar.gz
 # ./kubernetes/server/bin/kubeadm version
-kubeadm version: &version.Info{Major:"1", Minor:"20+", GitVersion:"v1.20.0-rc.0", GitCommit:"3321f00ed14e07f774b84d3198ede545c1dee697", GitTreeState:"clean", BuildDate:"2020-12-01T10:36:46Z", GoVersion:"go1.15.5", Compiler:"gc", Platform:"linux/amd64"}
+kubeadm version: &version.Info{Major:"1", Minor:"20+", GitVersion:"v1.20.0-rc.0", GitCommit:"3321f00ed...
 ```
 
 I checked available upgrade plan from `kubeadm` with the flag
@@ -118,8 +118,8 @@ officially released, you won't need that flag.
 [upgrade/versions] Latest stable version: v1.19.4
 [upgrade/versions] Latest version in the v1.19 series: v1.19.4
 [upgrade/versions] Latest version in the v1.19 series: v1.19.4
-I1203 21:50:13.860850   59152 version.go:251] remote version is much newer: v1.21.0-alpha.0; falling back to: stable-1.20
-W1203 21:50:14.100325   59152 version.go:101] could not fetch a Kubernetes version from the internet: unable to fetch file. URL: "https://dl.k8s.io/release/stable-1.20.txt", status: 404 Not Found
+I1203 21:50:13.860850   59152 version.go:251] remote version is much newer: ....
+W1203 21:50:14.100325   59152 version.go:101] could not fetch a Kubernetes ....
 W1203 21:50:14.100362   59152 version.go:102] falling back to the local client version: v1.20.0-rc.0
 [upgrade/versions] Latest experimental version: v1.20.0-rc.0
 [upgrade/versions] Latest experimental version: v1.20.0-rc.0
@@ -178,18 +178,19 @@ to apply that plan and rollout the upgrade.
 Time to check kubelet with journalctl
 
 ```terminal
-#journalctl -xe -u kubeletDec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.648539  108749 server.go:416] Version: v1.20.0-rc.0
+#journalctl -xe -u kubelet
 
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.649168  108749 server.go:837] Client rotation is on, will bootstrap in background
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.651975  108749 certificate_store.go:130] Loading cert/key pair from "/var/lib/kubelet/pki/kubelet-client-current.pem".
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.653428  108749 dynamic_cafile_content.go:167] Starting client-ca-bundle::/etc/kubernetes/pki/ca.crt
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764200  108749 server.go:645] --cgroups-per-qos enabled, but --cgroup-root was not specified.  defaulting to /
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764717  108749 container_manager_linux.go:274] container manager verified user specified cgroup-root exists: []
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764743  108749 container_manager_linux.go:279] Creating Container Manager object based on Node Config: {RuntimeCgroupsName: SystemCgroupsName: KubeletCgroupsName: ContainerRuntime>
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764862  108749 topology_manager.go:120] [topologymanager] Creating topology manager with none policy per container scope
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764874  108749 container_manager_linux.go:310] [topologymanager] Initializing Topology Manager with none policy and container-level scope
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: I1203 21:58:49.764881  108749 container_manager_linux.go:315] Creating device plugin manager: true
-Dec 03 21:58:49 gianarb-k8s kubelet[108749]: W1203 21:58:49.765010  108749 kubelet.go:297] Using dockershim is deprecated, please consider using a full-fledged CRI implementation
+I1203 21:58:49.648539  108749 server.go:416] Version: v1.20.0-rc.0
+I1203 21:58:49.649168  108749 server.go:837] Client rotation is on, will bootstrap in background
+I1203 21:58:49.651975  108749 certificate_store.go:130] Loading cert/key pair from "/var/lib/kubelet/pki/kubelet-client-current.pem".
+I1203 21:58:49.653428  108749 dynamic_cafile_content.go:167] Starting client-ca-bundle::/etc/kubernetes/pki/ca.crt
+I1203 21:58:49.764200  108749 server.go:645] --cgroups-per-qos enabled, but --cgroup-root was not specified.  defaulting to /
+I1203 21:58:49.764717  108749 container_manager_linux.go:274] container manager verified user specified cgroup-root exists: []
+I1203 21:58:49.764743  108749 container_manager_linux.go:279] Creating Container Manager object based on Node Config: {Ru...
+I1203 21:58:49.764862  108749 topology_manager.go:120] [topologymanager] Creating topology manager with none policy per container scope
+I1203 21:58:49.764874  108749 container_manager_linux.go:310] [topologymanager] Initializing Topology Manager with none policy and container-level scope
+I1203 21:58:49.764881  108749 container_manager_linux.go:315] Creating device plugin manager: true
+W1203 21:58:49.765010  108749 kubelet.go:297] Using dockershim is deprecated, please consider using a full-fledged CRI implementation
 ```
 
 We finally got it `Using dockershim is deprecated, please consider using a
@@ -214,7 +215,7 @@ docker since forever almost.
 cat /etc/containerd/
 
 # cat /etc/containerd/config.toml
-... 
+...
 # comment this line because we need cri enable
 # disabled_plugins = ["cri"]
 ...
@@ -229,7 +230,8 @@ and we have to tell the kubelet that now it has to use `containerd`.
 # mkdir -p /etc/systemd/system/kubelet.service.d/
 cat << EOF | sudo tee  /etc/systemd/system/kubelet.service.d/0-containerd.conf
 [Service]
-Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote --runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock"
+Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote
+--runtime-request-timeout=15m --container-runtime-endpoint=unix:///run/containerd/containerd.sock"
 EOF
 ```
 

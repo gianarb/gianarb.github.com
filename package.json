@@ -1,7 +1,7 @@
 {
   "title": "GianArb home",
   "name": "gianarb.github.com",
-  "version": "4.0.9",
+  "version": "5.0.0",
   "description": "Gianluca Arbezzano home page",
   "keywords": [
     "jekyll",
@@ -11,7 +11,6 @@
   "license": "MIT",
   "author": "Gianluca Arbezzano",
   "devDependencies": {
-    "bootstrap": "^4.6.0",
     "sass": "^1.32.7"
   }
 }
