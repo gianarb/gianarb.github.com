@@ -1,6 +1,16 @@
 /**
  * Carbon
  */
+.carbon-banner {
+    float: right;
+}
+
+@media (max-width: 800px) {
+    .carbon-banner {
+        float:none;
+    }
+}
+
 #carbonads {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
   Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
