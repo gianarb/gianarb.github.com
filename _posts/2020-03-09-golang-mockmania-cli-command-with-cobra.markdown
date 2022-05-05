@@ -10,7 +10,7 @@ a big amount of code that is actually very close to the end user. I use Cobra,
 pflags and Viper and that's what I do when I write unit test for Cobra commands"
 changefreq: daily
 ---
-lmost everything is a CLI application when writing Go. At least for me. Even
+Almost everything is a CLI application when writing Go. At least for me. Even
 when I write an HTTP daemon I still have to design a UX for configuration
 injection, environment variables, flags and things like that.
 
