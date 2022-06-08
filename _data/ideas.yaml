@@ -1,0 +1,18 @@
+-
+  description: |
+    I would like to build a feed manager. Something like a server that fetches
+    articles from a set of feeds continously running as a daemon and serves an
+    API that can be used primarly via TUI. The server should be not mandatory
+    the TUI can do the same work from a snapshot in time.
+-
+  description: |
+    I like the idea to have this website running not as static site. Because it
+    sounds like an opportunity to try thrid party services like Honeycomb or
+    open source tools like prometheus.  It is a a way to experiment and to keep
+    my operantional experience up to date.  Just to be clearn, not enough
+    traffic or reasons currenty stops me from doing that.
+- description: |
+    My experience with e-calendar kind of sucks. Personal gmail account,
+    company gmail account. Offline events. Reconciliation and notification is
+    not a joy. I know, the right solution is to avoid e-meetings but I need an
+    alternative solution.
