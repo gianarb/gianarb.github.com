@@ -1,5 +1,6 @@
 ---
 layout: post
+img: /img/1280px-NixOS_logo.png
 title: "How I started with NixOS"
 date: 2021-10-01 10:08:27
 categories: [post]
