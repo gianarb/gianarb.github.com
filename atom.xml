@@ -2,7 +2,7 @@
 layout: null
 ---
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="https://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom">
     <title>Gianluca Arbezzano - GianArb</title>
     <link href="https://gianarb.github.io/atom.xml" rel="self"/>
     <link href="https://gianarb.github.io/"/>
@@ -20,7 +20,7 @@ layout: null
         <description>{{ post.summary | xml_escape }}</description>
         <image>https://gianarb.it{{ post.img | default: '/img/gianarb.png' }}</image>
         <updated>{{ post.date | date_to_xmlschema }}</updated>
-        <pubDate>{{ post.date | date_to_xmlschema }}</pubDate>
+        <published>{{ post.date | date_to_xmlschema }}</published>
         <id>https://gianarb.it{{ post.url }}</id>
         <content type="html">{{ post.content | xml_escape }}</content>
     </entry>
