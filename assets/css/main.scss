@@ -45,3 +45,19 @@ pre {
 small.footer {
     float: right;
 }
+
+/* Note box */
+
+p.note
+{
+     -moz-border-radius: 6px;
+     -webkit-border-radius: 6px;
+     background-color: #f0f7fb;
+     border: solid 1px #3498db;
+     border-radius: 6px;
+     line-height: 18px;
+     overflow: hidden;
+     padding: 1em;
+     margin-left: 3em;
+     margin-right: 3em;
+}

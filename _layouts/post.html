@@ -1,14 +1,20 @@
 ---
 layout: default
 ---
+
 <div class="carbon-banner">
-      <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>
+      <script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>
 </div>
 
 <h1>{{ page.title }}</h1>
-
 <main>
     <p class="meta">{{ page.date | date_to_string }} · {% include estimate-read-time.html %} · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
     <article>
     {{ content }}
     </article>
