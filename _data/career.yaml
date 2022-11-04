@@ -1,0 +1,157 @@
+-
+  company: LightStep
+  title: Software Engineer
+  description: |
+    Era Software is a startup based in Seattle. Era develops a database
+    specialized in log management. A drop in replacement for ElasticSearch at
+    Petabyte scale.  As a Software Engineer write Rust code at various level of
+    the stack. Query planning, data layout and data lifecycle.
+  techologies:
+    -rust
+  start_date: August 2021
+  end_date: now
+  link: https://lightstep.com/
+  logo: ""
+  display: true
+-
+  company: Equinix Metal
+  title: Principal Software Engineer
+  description: |
+    Equinix Metal previously known as PacketHost is bare metal Cloud Provider
+    now part of the Equinix portfolio. I am a software engineer part of the
+    Developer Relation team. My responsibility is to develop and maintain
+    developer friendly integrations with the Equinix Metal Platform. I am one
+    of the maintainers and contributors for the Tinkerbell open-source project.
+    A bare metal and datacenter automation tool based on containers
+    technologies and PXE.
+  techologies:
+    - golang
+    - docker
+    - kubernetes
+    - linux
+  start_date: May 2020
+  end_date: August 2021
+  link: https://metal.equinix.com/
+  display: true
+-
+  company: InfluxData
+  title: Site Reliability Engineer
+  description: |
+    InfluxData is a US startup based in San Francisco. It is developing open
+    source tools to manage time series data. InfluxDB is the database and it is
+    the first product delivered. It builds a full solution around monitor and
+    metrics: Kapacitor (downsampling and alerting), Telegraf (collector),
+    Chronograf (dashboards and UI) are the other parts of the stack. I work as a
+    Site Reliability Engineer mainly on the InfluxCloud product. I develop the
+    backend that manages EC2 services on AWS and containers to spin up and manage
+    clusters on our IaaS offering. Since early 2018 I helped designing and
+    implementing the new SaaS called InfluxCloud v2 that uses modern tools such
+    as Kubernetes. In September 2019 I started to work as part of the compute
+    team to develop an elastic and highly scalable task system to empower
+    InfluxCloud with long running process, bach jobs and data analysis
+  techologies:
+    - AWS
+    - golang
+    - docker
+    - kubernetes
+    - envoy
+    - wireguard
+  start_date: May 2017
+  end_date: April 2020
+  link: "https://www.influxdata.com/"
+  display: true
+-
+  company: CurrencyFair Ltd
+  title: Software Engineer
+  description: |
+    CurrencyFair is an Irish financial tech company, it moves each day money
+    around the world. I started as a Software Engineer in the Mobile and API
+    Team. We are currently building a REST API to support third-party
+    integrations and our mobile applications. Right now I am working more as
+    build engineer and Solution Architect to improve our delivery pipeline, our
+    level of automation and to design and maintain a flexible and safe
+    environment for all our applications. With tools like Jenkins, Chef, Docker
+    and as a service platform like AppDynamics, Logentries and so on.
+  techologies:
+    - AWS, chef, jenkins, java, php, oracledb
+  start_date: November 2015
+  end_date: April 2017
+  logo:
+  display: true
+  link: https://www.currencyfair.com/
+-
+  company: Corley S.r.l.
+  title: Software Engineer
+  description: |
+    Corley’s company has a great experience in web and mobile application
+    development and it offers a specialized consulting service to a company
+    interested in migrating to the cloud, to achieve high availability,
+    automation, and scalability. I worked as a Software Engineer to design and
+    implement scalable REST API in PHP but also single page applications and
+    hybrid mobile app with AngularJS and Cordova. I also worked as Solution
+    Architect to support our clients during them journeys in Cloud environments
+    as AWS and DigitalOcean and to realize successfully migrations to the
+    Cloud.
+  techologies:
+    - AWS
+    - mysql
+    - postgres
+    - redis
+    - mongodb
+    - php
+    - saltstack
+    - angularjs
+  start_date: April 2014
+  end_date: November 2015
+  logo: ""
+  display: true
+  link: https://corley.it/
+-
+  company: DigitalBees S.r.l
+  title: Software Engineer
+  description: |
+    DigitalBees is media company operating in music videos and adv. I Developed
+    and maintained an API, and a video marketplace to search and embed multimedia
+    contents into third party websites.
+  techologies:
+    - Zend Framework 2
+    - MongoDB
+    - Sphinx
+    - Chef
+    - Vagrant
+    - Google Closure
+    - mysql
+  start_date: May 2013
+  end_date: April 2014
+  logo: ""
+  display: true
+-
+  company: CONTUR S.r.l.
+  title: Software Engineer
+  description: |
+    CONTUR S.r.l. is a leading company specialized in developing an application
+    for tourism and travel field operators.
+  techologies:
+    - PHP
+    - Zend Framework
+  start_date: September 2012
+  end_date: April 2013
+  logo: ""
+  display: true
+  link: https://www.contur.it/
+-
+  company: LACE COREP
+  title: Developer
+  description: |
+    LACE is a scientific lab where electromagnetic compatibility is studied and
+    measured; as part of Polytechnic of Turin, it gave great importance to
+    research and a new trial on new technologies.
+    I spent most of my time writing and operating an application able to manage
+    the entire lifecycle of tools leaving and coming to the laboratory.
+  techologies:
+    - PHP
+    - PostgreSQL
+  start_date: April 2012
+  end_date: July 2012
+  logo: ""
+  display: true

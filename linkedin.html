@@ -1,0 +1,51 @@
+---
+layout: page
+title: My history as speaker and evangelist at tech conferences and events.
+summary: ""
+tags: []
+---
+<div class="row">
+    <h1>Linkedin</h1>
+</div>
+
+<div class="row">
+    <p>Or at least how Linkedin should be. Informative and easy to read.<p>
+
+    <p>Name and Surname: Gianluca Arbezzano</p>
+    <p>Currently located in Italy</p>
+    <p>Place and date of birth: Turin (Italy) - 05 July 1992</p>
+    <p>High school: Istituto di Istruzione Superiore "Giuseppe Peano" in IT<p>
+
+    <ul>
+        <li><a href="#career">Career</a></li>
+        <li><a href="#certification">Certification</a></li>
+    <ul>
+</div>
+
+<div class="row">
+    <h2><a href="career">Career</a></h2>
+</div>
+
+{% for job in site.data.career %}
+<div class="row">
+    <h3>{% if job.link  %}
+    {{ job.title }} at <a href="" alt="company webiste for {{ job.company }}" target="_blank" href="{{ job.link }}">{{ job.company }}</a>
+    {% else %}
+    {{ job.title }} at {{ job.company }}
+    {% endif %}</h3>
+    <p>From {{ job.start_date }} to {{ job.end_date }}</p>
+    <p>{{ job.description }}<p>
+</div>
+{% endfor %}
+
+<div class="row">
+    <h2><a href="certification">Certification</a></h2>
+</div>
+
+<div class="row">
+    <ul>
+        {% for cert in site.data.certifications %}
+        <li>From {{ cert.title }} in {{ cert.year }}</li>
+        {% endfor %}
+    </ul>
+</div>

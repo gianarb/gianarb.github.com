@@ -1,0 +1,26 @@
+-
+  title: CNCF Ambassador
+  description: |
+    CNCF Ambassador is a program to group together community maintainer and a
+    leader able to drive and share useful content around cloud computing,
+    scalability and the projects owned by the open source foundation like
+    containerd, Prometheus, kubernetes, opentracing
+  start_date: June 2017
+  link: https://www.cncf.io/people/ambassadors/
+- title: Docker Curator/Maintainer
+  description: |
+    To support the big community around Docker and the fastest growing I
+    started to work as curator into the Docker open source organization. What I
+    am doing is to be in touch with issues and bugs reported by the user in our
+    issue tracker. Address them to the better solution, understand priority,
+    areas to allow maintainers and contributors to work faster.
+  start_date: January 2017
+- title: Docker Captain
+  description: |
+    Docker Captains are Docker experts and leaders in their communities who
+    demonstrate a commitment to sharing their Docker knowledge with others.
+    Docker Captains were nominated as candidates for the program by the Docker
+    team based on their exemplary contributions to an outstanding engagement
+    with the Docker community.
+  start_date: June 2016
+  link: https://www.docker.com/community/captains/
