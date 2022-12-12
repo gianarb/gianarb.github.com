@@ -29,7 +29,7 @@ tags: []
 {% for job in site.data.career %}
 <div class="row">
     <h3>{% if job.site  %}
-    {{ job.title }} at <a href="" alt="company webiste for {{ job.company }}" target="_blank" href="{{ job.site }}">{{ job.company }}</a>
+    {{ job.title }} at <a alt="company webiste for {{ job.company }}" target="_blank" href="{{ job.site }}">{{ job.company }}</a>
     {% else %}
     {{ job.title }} at {{ job.company }}
     {% endif %}</h3>
