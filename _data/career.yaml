@@ -1,16 +1,33 @@
 -
-  company: LightStep
+  company: RockFish AI
+  title: Software Engineer
+  description: |
+    RockFish AI is a startup based in San Francisco. RockFish develops machine
+    learning algorithms to generate syntetic data useful to train artifical
+    neural networks.
+  techologies:
+    - golang
+    - python
+    - machine learning
+  start_date: December 2022
+  end_date: now
+  site: https://lightstep.com/
+  logo: ""
+  display: true
+-
+  company: Era Software (acquired by ServiceNow)
   title: Software Engineer
   description: |
     Era Software is a startup based in Seattle. Era develops a database
     specialized in log management. A drop in replacement for ElasticSearch at
     Petabyte scale.  As a Software Engineer write Rust code at various level of
-    the stack. Query planning, data layout and data lifecycle.
+    the stack. Query planning, data layout and data lifecycle. Era Software got
+    acquired by ServiceNow and it now operates under LightStep.
   techologies:
     -rust
   start_date: August 2021
-  end_date: now
-  link: https://lightstep.com/
+  end_date: December 2022
+  site: https://lightstep.com/
   logo: ""
   display: true
 -
@@ -31,7 +48,7 @@
     - linux
   start_date: May 2020
   end_date: August 2021
-  link: https://metal.equinix.com/
+  site: https://metal.equinix.com/
   display: true
 -
   company: InfluxData
@@ -58,7 +75,7 @@
     - wireguard
   start_date: May 2017
   end_date: April 2020
-  link: "https://www.influxdata.com/"
+  site: "https://www.influxdata.com/"
   display: true
 -
   company: CurrencyFair Ltd
@@ -78,7 +95,7 @@
   end_date: April 2017
   logo:
   display: true
-  link: https://www.currencyfair.com/
+  site: https://www.currencyfair.com/
 -
   company: Corley S.r.l.
   title: Software Engineer
@@ -105,7 +122,7 @@
   end_date: November 2015
   logo: ""
   display: true
-  link: https://corley.it/
+  site: https://corley.it/
 -
   company: DigitalBees S.r.l
   title: Software Engineer
@@ -138,7 +155,7 @@
   end_date: April 2013
   logo: ""
   display: true
-  link: https://www.contur.it/
+  site: https://www.contur.it/
 -
   company: LACE COREP
   title: Developer
