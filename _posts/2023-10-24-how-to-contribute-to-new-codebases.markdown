@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How I discover new codebases"
-date: 2023-10-24 09:10:10
+date: 2023-10-24 06:10:10
 categories: [post]
 tags: [codebase]
 summary: "Strategies I use when I want to contribute to new codebases"
