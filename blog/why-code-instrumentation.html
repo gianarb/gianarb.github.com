@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Why code instrumentation?</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I decided to finally create a category about code instrumentation. Because I am a develop. And I think it matters. It is important to write better code and more reliability application that we can learn from.">
+    <meta name="keywords" content="golang, codeinstrumentation, o11y, opentelemetry, opentracing, prometheus, sre">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/why-code-instrumentation">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Why code instrumentation?</h1>
+<main>
+    <p class="meta">29 Mar 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am writing this blog post as a common introduction for a new category I would
+like to write about consistently on my blog. If this is the first time you land
+here this is my blog, and I write about everything that catches my attention but
+sometime earlier sometime later on I realize I can group my posts in categories,
+and that’s what I am doing now.</p>
+
+<p>Some of them are: <a href="/planet/assemble-kubernetes.html">Assemble Kubernetes</a>,
+<a href="/planet/docker.html">Docker</a>, <a href="/planet/mockmania.html">MockMania</a>. This one
+will be called <code>Code Instrumentation</code>.</p>
+
+<p>There are a lot of people writing about observability, monitoring and I did it
+for the last 3 years as well. I learned a lot along the way but what I think is
+crucial is that developers has to write code that is
+understandable and easy to debug where it is more valuable, in production. And
+if an application or a system is hard to figure out we as a developer play a
+mojor role on it.</p>
+
+<p>That’s why Site Reliability Engineering (SRE) is not related to ops, servers,
+Kubernetes but it is something that plays its match in your code.</p>
+
+<p>What’s why I think SRE and DevOps are different, not at all connected.</p>
+
+<p>The technologies that are leading the landscape are:</p>
+
+<ol>
+  <li>Prometheus but not the time series database, their client libraries and the
+exposition format, now branded from the community and the Cloud Native
+Computing Foundation (CNCF) as OpenMetrics</li>
+  <li>OpenTracing, OpenCensus and OpenTelemetry. They are part of the same bullet
+points because I think about them as the consequence of each other since what
+I hope is “THE LAST ONE”, OpenTelemetry. They are instrumentation libraries
+and specification to increase interoperability and to avoid vendor lock-in
+for what concerns distributed tracing and metrics. I hope logs will jump
+onboard at some point</li>
+</ol>
+
+<h2 id="prometheus-and-openmetrics">Prometheus and OpenMetrics</h2>
+
+<p>I wrote about this topic previously, so have a look there if you do not know
+what I am speaking about.</p>
+
+<p>I think they are worth to mention here because that’s how I learned the effect
+of good or bad code instrumentation, and the fact that it has to happen in your
+code, when you develop it.</p>
+
+<p>It has the same weight has writing a good data structure, writing solid unit
+tests, or picking the right design pattern.</p>
+
+<h2 id="opentelemetry-otel">OpenTelemetry (otel)</h2>
+
+<p>As I said I will refer to otel when I can, not because I think OpenTracing or
+OpenCensus is bad, but because I do not see this as a religion, but for me it is
+a technical problem, they is well spread and it has to find a good answer.</p>
+
+<p>Those communities decided to merge to otel in the way they are doing, good or
+bad? We can get a beer at some point and I will tell you. It is out of scope.</p>
+
+<h2 id="what-i-am-gonna-talk-about">What I am gonna talk about</h2>
+
+<p>This is a long new category introduction blog post probably but that’s it. Over
+the last two years I tried to share what I experienced around this topic with a
+workshop called: “Application Monitoring”. A lot of the articles that I will
+write comes from there, and it is an attempt to share what I think worked or
+failed.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="/planet/code-instrumentation.html">All about Code Instrumentation</a> from my blog</li>
+  <li><a href="https://github.com/gianarb/shopmany">ShopMany</a> is the application I developed for the workshop</li>
+  <li><a href="https://github.com/gianarb/workshop-observability">Workshop notes</a> contains notes, exercises and solutions for the lessons I
+proposed in the workshop itself</li>
+  <li><a href="https://www.honeycomb.io/blog/">honeycomb</a> because when you speak about o11y you have to quote them!</li>
+  <li><a href="/tinyletter.html">My newsletter</a> is probably the best way to stay in touch with the content I
+create</li>
+  <li><a href="https://twitter.com/gianarb">Twitter</a> is the best way to stay in touch with me</li>
+</ul>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

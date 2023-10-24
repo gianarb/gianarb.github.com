@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Cloud Native Intranet with Kubernetes, CoreDNS and OpenVPN</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Designing an architecture the network should be a top priority because it is very hard to change moving forward. Even in a cloud environment running on Kubernetes the situation doesn't change. Security and networking are hard pattern hard to inject in old projects. In this talk I will share a practical idea about how to start in the best way with OpenVPN and private DNS in a Kubernetes cluster in order to build your own intranet.">
+    <meta name="keywords" content="devops, kubernetes, security, network, intranet, dns, vpn, openvpn, coredns">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/cloud-native-intranet">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Cloud Native Intranet with Kubernetes, CoreDNS and OpenVPN</h1>
+<main>
+    <p class="meta">29 May 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This article has a marketing and buzzword oriented title. I know.</p>
+
+<p>Let me introduce you to what I am going to speak with you here with better
+worlds: VPN, private, DNS, kubernetes, security.</p>
+
+<p>I hope we all agree that VPN should be a must-have when you set up an
+infrastructure. It doesn’t matter what you are doing, how many people are
+working with you.</p>
+
+<p>When you design a new system usually you need to expose to the public only some
+service over HTTP and HTTPS all the rest: Jenkins, monitoring tools,
+dashboards, log management should be locked-down and accessible just in a
+private network. An intranet.</p>
+
+<blockquote>
+  <p>An intranet is a private network accessible only to an organization’s staff.
+Often, a wide range of information and services are available on an
+organization’s internal intranet that is unavailable to the public, unlike the
+Internet.</p>
+</blockquote>
+
+<p>All these concepts apply to “Cloud Native” ecosystem as well.</p>
+
+<p>Kubernetes has a powerful dashboard and CTL that you can use to interact with
+the API. That API doesn’t need to be publicly exposed, and to use the CLI from
+your laptop, you should set up a VPN.</p>
+
+<h2 id="openvpn">OpenVPN</h2>
+<p>Usually, I configure an OpenVPN using the image
+<a href="https://hub.docker.com/r/kylemanna/openvpn/">kylemanna/openvpn</a> available on
+Docker Hub. It is straightforward to apply, and it offers a set of utilities
+around user creation and certification management.</p>
+
+<pre><code class="language-yml">apiVersion: v1
+kind: Service
+metadata:
+  name: openvpn
+  namespace: openvpn
+  labels:
+    app: openvpn
+spec:
+  ports:
+  - name: openvpn
+    nodePort: 1194
+    port: 1194
+    protocol: UDP
+    targetPort: 1194
+  selector:
+    app: openvpn
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvpn
+  namespace: "openvpn"
+  labels:
+    app: openvpn
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: openvpn
+  template:
+    metadata:
+      labels:
+        app: openvpn
+    spec:
+      nodeSelector:
+        role: vpn
+      containers:
+        - name: openvpn
+          image: docker.io/kylemanna/openvpn
+          command: ["/etc/openvpn/setup/configure.sh"]
+          env:
+            - name: VPN_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: vpn-hostname
+                  key: hostname
+            - name: VPN_DNS
+              valueFrom:
+                configMapKeyRef:
+                  name: vpn-hostname
+                  key: dns
+          ports:
+            - containerPort: 1194
+              name: openvpn
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - mountPath: /etc/openvpn/setup
+              name: openvpn
+              readOnly: false
+            - mountPath: /etc/openvpn/certs
+              name: certs
+              readOnly: false
+      volumes:
+        - name: openvpn
+          configMap:
+            name: openvpn
+            defaultMode: 0755
+        - name: certs
+          persistentVolumeClaim:
+            claimName: openvpncerts
+</code></pre>
+<p>I put the persistentVolumeClaim to remember you to store in a persisted and
+safe place (and you should backup them too) the certificates used and generated
+by the VPN <code>/etc/openvpn/certs</code>.</p>
+
+<p>I won’t write more about this topic; we are all excellent yaml developers!</p>
+
+<p>How to create users, configuration and so on is a well knows topic that you can
+easily <a href="https://openvpn.net/index.php/open-source/documentation.html">find in the OpenVPN’s
+documentation</a>.</p>
+
+<p>I don’t know if you realized that, but this VPN runs inside a Kubernetes
+Cluster, so well configurated allow us to reach pods via a private network and
+a bonus point also via kubedns to ping services, pods and all the other
+resources registered to it.</p>
+
+<p>To do that OpenVPN server can be configured to push kubedns to the client:</p>
+<pre><code>dhcp-option DNS &lt;kube-dns-ip&gt;
+</code></pre>
+<p>Something with learned is that if you are using Linux the
+NetworkManager-OpenVPN plugin pushes the DNS correctly, but the OpenVPN cli
+tool doesn’t if you are using the last one you need to set it up in another
+way.</p>
+
+<p>Tips: You can take the <code>&lt;kube-dns-ip&gt;</code> doing <code>cat /etc/resolv.conf</code> from inside a pod.</p>
+
+<h2 id="dns">DNS</h2>
+<p>Push the KubeDNS or the DNS used by kubernetes is not enough to have a complete
+intranet. You should be able to set up a custom domain to have friendly or
+short URL.</p>
+
+<p>You can take two different directions. KubeDNS can have static
+record configured, but some person is not happy to touch or customize too much
+the KubeDNS because Kubernetes itself use it and if you mess it up all it can
+be a problem.</p>
+
+<p>A possible solution is to deploy another DNS like CoreDNS and
+configures it to resolve KubeDNS as a fallback. In this way, you will be free
+to register custom LTDs and records. Kubernetes is going to use KubeDNS as
+usual, and if you mess up CoreDNS, only a fraction of your system will blow
+out.</p>
+
+<p>Naturally to resolve your custom domains from the VPN you need to push
+the CoreDNS ip and not the one used by Kubernetes.</p>
+
+<p>If two DNSs are too much take the option one or from Kubernetes 1.10 you can
+use CoreDNS as kubernetes DNS so it is a bit more flexible and you can use only
+that one if you are brave enough.</p>
+
+<p>I suggested CoreDNS because it supports records configuration via
+<a href="https://github.com/coredns/coredns/tree/master/plugin/etcd">etcd</a>. Here an
+example of Corefile:</p>
+
+<pre><code>. {
+      errors
+      etcd *.myinternal {
+          stubzones
+          path /skydns
+          entrypoint  http://etcd-1:2379,http://etcd-2:2379,http://etcd-3:2379
+          upstream /etc/resolv.conf
+      }
+      proxy . /etc/resolv.conf
+}
+</code></pre>
+<p>Running this configuration inside a pod automatically fallback to kubedns (that
+automatically fallback to the one configured to reach internet). Because of
+<code>upstream</code> point to <code>resolv.conf</code> that inside a pod contains kubedns.</p>
+
+<h2 id="benefits">Benefits</h2>
+<p>Resolve Kubernetes DNS record from your local environment is very comfortable
+to build a shared or dynamic development environment for you and your
+colleagues.</p>
+
+<p>You can set up per-developer namespaces that they can use to
+deploy services reachable from the program that they are writing. Or you can
+deploy your application, and another person connected to the VPN will be able
+to use it.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

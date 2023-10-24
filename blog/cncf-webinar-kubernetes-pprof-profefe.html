@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>CNCF Webinar: Continuous Profiling Go Application Running in Kubernetes</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Slides, videos and links from a webinar I have with the CNCF about kubrenetes, profefe, golang and pprof.">
+    <meta name="keywords" content="golang, pprof, kubernetes">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/cncf-webinar-kubernetes-pprof-profefe">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>CNCF Webinar: Continuous Profiling Go Application Running in Kubernetes</h1>
+<main>
+    <p class="meta">27 Mar 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/SzhQZQ6VGoY" allowfullscreen=""></iframe>
+</div>
+
+<p>Microservices and Kubernetes help our architecture to scale and to be
+independent at the price of running many more applications. Golang provides a
+powerful profiling tool called pprof, it is useful to collect information from a
+running binary for future investigation. The problem is that you are not always
+there to take a profile when needed, sometimes you do not even know when you
+need to one, that’s how a continuous profiling strategy helps. Profefe is an
+open-source project that collect and organizes profiles. Gianluca wrote a
+project called kube-profefe to integrate Kubernetes with Profefe. Kube-profefe
+contains a kubectl plugin to capture locally or on profefe profiles from running
+pods in Kubernetes. It also provides an operator to discover and continuously
+profile applications running inside Pods.</p>
+
+<p>A bunch of links for you:</p>
+
+<ul>
+  <li>Video coming soon</li>
+  <li><a href="/blog/go-continuous-profiling-profefe">My article: Continuous profiling in Go with Profefe</a></li>
+  <li><a href="/blog/continuous-profiling-go-apps-in-kubernetes">My article: Continuous Profiling Go applications running in Kubernetes</a></li>
+  <li><a href="https://research.google/pubs/pub36575/">Google-Wide Profiling: A Continuous Profiling Infrastructure for Data Centers</a></li>
+  <li><a href="https://github.com/profefe/profefe">Profefe on Github</a></li>
+  <li><a href="https://github.com/profefe/kube-profefe">Kube Profefe on Github</a></li>
+  <li><a href="https://github.com/google/pprof">google/pprof</a> library on GitHub</li>
+  <li><a href="https://kubernetes.profefe.dev">Work in progress documentation! help me out!</a></li>
+</ul>
+
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="//speakerdeck.com/player/ff55e041659945bca5d31013bd999c28" allowfullscreen=""></iframe>
+</div>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

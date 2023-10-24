@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How bare metal provisioning works in theory</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="What I learned about how bare metal provisioning works developing tinkerbell.">
+    <meta name="keywords" content="bare metal, tinkerbell, opensource">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/how-bare-metal-works-in-theory">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How bare metal provisioning works in theory</h1>
+<main>
+    <p class="meta">08 Oct 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am sure you heard about bare metal. Clouds are made of bare metal, for example.</p>
+
+<p>The art of bringing to life an unanimated piece of metal like a server to something useful is something I am learning since I joined <a href="https://metal.equinix.com">Equinix Metal</a> in May.</p>
+
+<p>Let me make a comparison with something you are probably familiar with. Do you know why Kubernetes is hard? Because there is not one Kubernetes. It is a glue of an unknown number of pieces working together to help you deploy your application.</p>
+
+<p>Bare Metal is almost the same, hundreds of different providers, server size, architectures, chips that in some way you have to bring to life.</p>
+
+<p>We have to work with some common concepts we have. When a server boots, it runs a BIOS that looks in different places for something to run:</p>
+
+<ol>
+  <li>It looks for a hard drive</li>
+  <li>It looks for external storage like a USB stick or a CD-Rom</li>
+  <li>It looks for help from your network (netbooting)</li>
+</ol>
+
+<p>Options one and two are not realistic if the end goal is to get to a handsfree, reliable solution. I am sure cloud providers do not have people running around with a USB stick containing operating systems and firmware.</p>
+
+<h2 id="netbooting">Netbooting</h2>
+
+<p>I spoke about <a href="https://gianarb.it/blog/first-journeys-with-netboot-ipxe">my first experience netbooting Ubuntu</a> on my blog. That article is efficient with reproducible code. Here the theory.</p>
+
+<p>When it comes to netbooting, you have to know what PXE means. Preboot Execution Environment is a standardized client/server environment that boots when no operating system is found, and it helps an administrator boot an operating system remotely. Don’t think about this OS as the one you have in your laptop, I mean, technically it is, but the one your run there or in a server is persisted, that’s why you can have files that survive a reboot.</p>
+
+<p>The one you start with PXE runs in memory, and from there, you have to figure out how to get the persisted OS you will run in your machine.</p>
+
+<p>When the in-memory operation system is up and running, you can do everything you are capable of with Ubuntu, Alpine, CentOS, or Debian. In practice, what people tend to do is to run applications and scripts to format a disk with the right partition and to install the end operation system.</p>
+
+<p>Pretty cool. PXE is kind of old, and for that reason, it is burned into a lot of different NICs. You will hear a lot more about iPXE, a “new” PXE implementation. What is cool about those is the <code>chain</code> function. From one PXE/iPXE environment, you can chain another PXE/iPXE environment. That’s how you get from PXE (that usually runs by default in a lot of hardware (if you have a NUC you run it)) to iPXE.</p>
+
+<pre><code>chain --autofree https://boot.netboot.xyz/ipxe/netboot.xyz.lkrn
+</code></pre>
+
+<p>iPXE supports a lot more protocols usable to download OS from such as TFTP, FTP, HTTP/S, NFC…</p>
+
+<p>This is an example of iPXE script:</p>
+
+<pre><code>#!ipxe
+dhcp net0
+
+set base-url http://archive.ubuntu.com/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/
+kernel ${base-url}/linux console=ttyS1,115200n8
+initrd ${base-url}/initrd.gz
+boot
+</code></pre>
+
+<p>The first command, <code>dhcp net0</code>, gets an IP for your hardware from the DHCP. <code>kernel</code> and <code>initrd</code> set the kernel and the initial ramdisk to run in memory.</p>
+
+<p><code>boot</code> starts the <code>kernel</code> and the <code>initrd</code> you just set.</p>
+
+<p>There is more; this is what I find myself using more often.</p>
+
+<h3 id="infrastructure">Infrastructure</h3>
+
+<p>To netboot successfully, you need to distribute a couple of things:</p>
+
+<ol>
+  <li>An iPXE script</li>
+  <li>The operating system you want to run (kernel and initrd)</li>
+</ol>
+
+<h3 id="workflow">Workflow</h3>
+
+<ol>
+  <li>Server starts</li>
+  <li>There is nothing to boot in the HD</li>
+  <li>Starts netbooting</li>
+  <li>It makes a DHCP request to get network configuration, and  the DHCP returns the TFTP address with the location of the iPXE binary</li>
+  <li>iPXE starts and makes another DHCP request; the response contains the URL of the iPXE scripts with the commands you saw above</li>
+  <li>At this point, iPXE runs the script, downloads the kernel, and the initrd with the protocol you specified, and it runs the in-memory operating system.</li>
+</ol>
+
+<p>Pretty cool!</p>
+
+<h2 id="the-in-memory-operating-system">The in-memory operating system</h2>
+
+<p>The in-memory operating system can be as smart as you like; you can build your one, for example, starting from Ubuntu or Alpine. Size counts here because it has to fit in memory.</p>
+
+<p>When the operating system starts, it runs as PID 1, what is called <code>init.</code> It is an executable located in the ramdisk called <code>/init.</code> That script can be as complicated as you like. It can be a problematic binary that downloads from a centralized location commands to execute, or it can be bash scripts that format the local disk and installs the final operating system.</p>
+
+<p>What I am trying to say is that you have to make the in-memory operating system useful for your purpose. If you use native Alpine or Ubuntu, the init script will start a bash shell, not that useful.</p>
+
+<h2 id="dhcp">DHCP</h2>
+
+<p>As you saw, the DHCP plays an important role. It is the first point of contact between unanimated hardware and the world. If you can control what the DHCP can do, you can, for example, register and monitor the healthiness of a server.</p>
+
+<p>Imagine you are at your laptop, and you are expecting a hundred new servers in one of your datacenters, monitoring the DHCP requests. You will know when they are plugged into the network.</p>
+
+<h2 id="containers-what">Containers what?</h2>
+
+<p>Containers are a comfortable way to distribute and run applications without having to know how to run them. Think about this scenario. Your in-memory operating system at boot runs Docker. The <code>init</code> script at this point can pull and run a Docker container with your logic for partitioning the disk and installing an operating system, or it runs some workload and exit leaving space for the next boot (a bit like serverless, but with servers, way cooler).</p>
+
+<p>Or the Docker Container can run a more complex application that reaches a centralized server that dispatches a list of actions to execute via a REST or gRPC API. Those actions can be declared and stored from you.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The chain of tools and interactions to get from a piece of metal to something that runs some workload is not that long. Controlling all the steps and the tools along the way gives provides the ability to provisioning cold servers from zero to something that developers know better how to use.</p>
+
+<p>Ok, I lied to you. This is not just theory. This is how <a href="https://tinkerbell.org">Tinkerbell</a> works.</p>
+
+<p class="small">This post was originally posted on <a href="https://dev.to/gianarb/how-bare-metal-provisioning-works-in-theory-1e4e">dev.to</a>.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

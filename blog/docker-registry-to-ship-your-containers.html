@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Docker registry to ship and manage your containers.</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Build and Run containers is important but ship them out of your laptop is the best part! A Registry is used to store and manage your images and all your layers. You can use a storage to upload and download them across your servers and to share them with your colleagues.">
+    <meta name="keywords" content="docker, scaledocker, docker captain, security, book, ebook, learn">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/docker-registry-to-ship-your-containers">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Docker registry to ship and manage your containers.</h1>
+<main>
+    <p class="meta">14 Dec 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Build and Run containers is important but ship them out of your laptop is the
+best part! The Registry is a very important tool that requires a bit more
+attention. A Registry is used to store and manage your images and all your
+layers. You can use a storage to upload and download them across your servers
+and to share them with your colleagues.</p>
+
+<p>The most popular one is hub.docker.com
+it contains different kind of images: public, official and private.  You can
+create an account and push your images or build them for example from a github
+or bitbucket repository. The integration with GitHub and Bitbucket is called
+“Automated Builds”. it allows you to create a continuous integration
+environment for your images, when you select “Create” and “Automated Builds”
+you can specify a repository and a path of your Dockerfile. You can specify
+more that one path from the same repository to build more that one image tag.
+In this way you can centralize and build your images every time that a new
+change is pushed into the repository. It also supports organizations to split
+your images in different groups and manage visibility of them in case of
+private images.</p>
+
+<p>By default any developer can push their image to registry and
+they’ll be public and free for other developers to use.  Official images are
+those public images selected and maintained from specific organization or
+member of the communities, the idea is that they have a better quality or who
+provides them are usually involved into the product development. A set of
+official images are: Nginx, Redis, MySql, PHP, Go and so on
+<a href="https://hub.docker.com/explore">https://hub.docker.com/explore</a>.</p>
+
+<p>Docker Hub offers different plan to store
+private images, all people has one for free but if you need more you can pay a
+plan and store more.</p>
+
+<p>Registry is not just  a tool but it’s a specification, it
+describe how expose capabilities has pull, push, search and so on. This
+solution allowed the ecosystem to implement these rules in other projects and
+save the compatibility with the Docker Client and with the other runtime engine
+that use this capability. It’s for this reason that other providers as
+Kubernetes, Cloud Foundry supports download from Docker Hub. This specification
+has 2 version, v1 and v2 the most famous registries implement both standard and
+they fallback from v2 to v1 for  features that are not supported yet. For
+example Search is not supported at the moment into the v2 but only in v1.</p>
+
+<p>If you are looking for an In-House solution you have different tools available
+online. The first one is distribution. It is provided by Docker, it’s open
+source and offers a very tiny registry that you can start and store in your
+server. It also supports different storage like the local filesystem and S3.
+This feature is very interesting because usually the size of the images and the
+number of layers increase very fast and you also need to keep them safe with
+backup and redundancy policies for high availability. This is very important if
+your environment is based on containers it means that your register is a core
+part of your company. Let’s start a Docker Distribution:</p>
+
+<pre><code class="language-bash">$ docker run -d -p 5000:5000 --name registry registry:2
+</code></pre>
+
+<p>In docker the default registry is hub.docker.com it means that when we push or
+pull an image we are reaching this registry:</p>
+
+<pre><code class="language-bash">$ docker pull alpine
+</code></pre>
+
+<p>To push our images in another registry we need to tag them:</p>
+
+<pre><code class="language-bash">$ docker tag alpine 127.0.0.1:5000/alpine
+</code></pre>
+
+<p>With this command you tagged the alpine to a registry 127.0.0.1:5000 because as
+we said in previous chapters the name of the image contains a lot of
+information:</p>
+
+<pre><code>REGISTRY/NAME:VERSION
+</code></pre>
+
+<p>The default registry is hub.docker.com a name could be simple as alpine or with
+a username matt/alpine and you can pin a specific build with a version you can
+use semver or for example the sha of the commit the default VERSION is latest.</p>
+
+<p>Now that we have a new tag we can push and pull it in from our registry:</p>
+
+<pre><code class="language-bash">$ docker push 127.0.0.1:5000/alpine
+$ docker pull 127.0.0.1:5000/alpine
+</code></pre>
+
+<p>A very important information to remember when you start a customer registry is
+that every layers, every build is stored and it’s very easy to have a big
+registry, you need to monitor the instance to be sure that your server has
+enough disks space and also take care about high availability. In a real
+environment the registry it the core of your infrastructure, developers use it
+to pull and push build and also to put a version in production. Take care of
+your registry.</p>
+
+<p>Other that Docker provided registry there are few alternatives. <a href="https://www.sonatype.com/nexus-repository-sonatype">Nexus</a> is a registry manager that
+support a lot of languages and packages if you are a Java developer you know
+it. Nexus supports Docker Registry API v1 and v2. The Docker registry
+specification is young but it has 2 version already.</p>
+
+<p>We can use the image provided by Sonatype and start our Nexus repository:</p>
+
+<pre><code class="language-bash">$ docker run -d -p 8082:8082 -p 8081:8081 \
+    -v /tmp/sonata:/sonatype-work --name nexus sonatype/nexus3
+$ docker logs -f nexus
+</code></pre>
+
+<p>When our log tells us that Nexus is ready we can reach the ui from our browser
+http://localhost:8081/ or with the IP of your Docker Machine if you are using
+Docker for Mac/Windows or Docker in Linux. The default credentials are username
+admin and password admin123.</p>
+
+<p><img class="img-fluid" src="/img/docker-registry/nexus-image-loaded.png" /></p>
+
+<p>First of all we need to create a new Hosted Repository for Docker, we need to
+press the Settings Icon top left of the page, Repositories and Create
+Repository. I called mine mydocker and you need to specify an HTTP port for
+that repository, we shared port 8082 during the run and for this reason I chose
+8082.</p>
+
+<p><img class="img-fluid" src="/img/docker-registry/nexus-create-repo.png" /></p>
+
+<p>Nexus has different kind of repositories Host means that it’s self hosted but
+you can also create a Proxy Repository to proxy for example the official Docker
+Hub.
+Now we need to login to out docker registry:</p>
+
+<pre><code class="language-bash">$ docker login 127.0.0.1:8082
+</code></pre>
+
+<p>Now we can tag an alpine and push the tag into the repository</p>
+
+<pre><code class="language-bash">$ docker tag alpine 127.0.0.1:8082/alpine
+$ docker push 127.0.0.1:8082/alpine
+</code></pre>
+
+<p>You can go in Assets click on mydocker repository and see that your image is
+correctly stored.</p>
+
+<p><a href="https://about.gitlab.com/">GitLab</a> has also a container registry. GitLab uses
+it to manage build and it’s available for you from version 8.8 if you are
+already using this tool.</p>
+
+<p class="text-muted">Thanks <a href="https://twitter.com/kishoreyekkanti" target="_blank">Kishore
+Yekkanti</a>, <a href="https://twitter.com/liuggio" target="_blank">Giulio De
+Donato</a> for your review.</p>
+
+<div class="post row">
+  <div class="col-md-12">
+      <div class="bs-callout bs-callout-info row">
+	<div class="row">
+		<div class="col-md-12">
+			<h2><a href="//gianarb.it/blog/docker-the-fundamentals" target="_blank">get "Docker the Fundamentals"</a> <small>by. Drive your boat as a Captain</small></h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<a href="//gianarb.it/blog/docker-the-fundamentals" target="_blank"><img src="/img/the-fundamentals.jpg" class="img-fluid" /></a>
+		</div>
+		<div class="col-md-9">
+			<p>
+			You can get the Chapter 2 of the book <a href="/blog/scaledocker" target="_blank">"Drive your boat as a Captain"</a> just leave click on the
+			cover and leave your email to receive a free copy.</p>
+			<p>This chapter is getting started with Docker Engine and the basic
+			concept around registry, pull, push and so on. It's a good way to start from
+			zero with Docker.</p>
+		</div>
+	</div>
+</div>
+
+  </div>
+</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

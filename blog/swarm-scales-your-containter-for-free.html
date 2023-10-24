@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Swarm scales docker for free</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Docker is an awesome tool to manage your container. Swarm helps you to scale your containers on more servers.">
+    <meta name="keywords" content="devops, docker">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/swarm-scales-your-containter-for-free">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Swarm scales docker for free</h1>
+<main>
+    <p class="meta">14 Dec 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">An ocean of containers! With docker and swarm.. <a href="https://t.co/1dXoZYS3ZA">https://t.co/1dXoZYS3ZA</a> <a href="https://twitter.com/hashtag/docker?src=hash">#docker</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/696620821931036672">February 8, 2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p><a href="https://github.com/gianarb/gourmet">Gourmet</a> is a work in progress application
+that allow you to execute little applications on an isolated environment, it
+dowloads your manifest and runs it in a container.
+I start this application to improve my go knowledge and to work with the Docker API
+I am happy to share my idea and my tests with Swam an easy way to scale this type of application.</p>
+
+<p>Gourmet exposes an HTTP API available at the <code>/project</code> endpoint that accept a JSON request body like:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"img"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gourmet/php"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://ramdom-your-source.net/gourmet.zip"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"AWS_KEY=EXAMPLE"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AWS_SECRET="</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AWS_QUEUE=https://sqs.eu-west-1.amazonaws.com/test"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li><code>img</code> is the started point docker image</li>
+  <li><code>source</code> is your script</li>
+  <li><code>env</code> is a list of environment variables that you can use on your script</li>
+</ul>
+
+<p>During my test I use this <a href="https://github.com/gianarb/gourmet-php-example">php script</a> that send a message on SQS.</p>
+
+<p>Your script has a console entrypoint executables in this path <code>/bin/console</code> and
+gourmet uses it to run your program.</p>
+
+<p>To integrate it with Docker I used <code>fsouza/go-dockerclient</code> an open source
+library written in go.</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="n">container</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">dr</span><span class="o">.</span><span class="n">Docker</span><span class="o">.</span><span class="n">CreateContainer</span><span class="p">(</span><span class="n">docker</span><span class="o">.</span><span class="n">CreateContainerOptions</span><span class="p">{</span>
+    <span class="s">""</span><span class="p">,</span>
+    <span class="o">&amp;</span><span class="n">docker</span><span class="o">.</span><span class="n">Config</span><span class="p">{</span>
+        <span class="n">Image</span><span class="o">:</span>        <span class="n">img</span><span class="p">,</span>
+        <span class="n">Cmd</span><span class="o">:</span>          <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">"sleep"</span><span class="p">,</span> <span class="s">"1000"</span><span class="p">},</span>
+        <span class="n">WorkingDir</span><span class="o">:</span>   <span class="s">"/tmp"</span><span class="p">,</span>
+        <span class="n">AttachStdout</span><span class="o">:</span> <span class="no">false</span><span class="p">,</span>
+        <span class="n">AttachStderr</span><span class="o">:</span> <span class="no">false</span><span class="p">,</span>
+        <span class="n">Env</span><span class="o">:</span>          <span class="n">envVars</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="no">nil</span><span class="p">,</span>
+<span class="p">})</span></code></pre></figure>
+
+<p>This is a snippet that can be used to create a new container.
+With the container started I use the exec feature to
+extract your source and to run it.</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="n">exec</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">dr</span><span class="o">.</span><span class="n">Docker</span><span class="o">.</span><span class="n">CreateExec</span><span class="p">(</span><span class="n">docker</span><span class="o">.</span><span class="n">CreateExecOptions</span><span class="p">{</span>
+    <span class="n">Container</span><span class="o">:</span>    <span class="n">containerId</span><span class="p">,</span>
+    <span class="n">AttachStdin</span><span class="o">:</span>  <span class="no">true</span><span class="p">,</span>
+    <span class="n">AttachStdout</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span>
+    <span class="n">AttachStderr</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span>
+    <span class="n">Tty</span><span class="o">:</span>          <span class="no">false</span><span class="p">,</span>
+    <span class="n">Cmd</span><span class="o">:</span>          <span class="n">command</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">err</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">Docker</span><span class="o">.</span><span class="n">StartExec</span><span class="p">(</span><span class="n">exec</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="n">docker</span><span class="o">.</span><span class="n">StartExecOptions</span><span class="p">{</span>
+    <span class="n">Detach</span><span class="o">:</span>      <span class="no">false</span><span class="p">,</span>
+    <span class="n">Tty</span><span class="o">:</span>         <span class="no">false</span><span class="p">,</span>
+    <span class="n">RawTerminal</span><span class="o">:</span> <span class="no">true</span><span class="p">,</span>
+    <span class="n">OutputStream</span><span class="o">:</span> <span class="n">dr</span><span class="o">.</span><span class="n">Stream</span><span class="p">,</span>
+    <span class="n">ErrorStream</span><span class="o">:</span>  <span class="n">dr</span><span class="o">.</span><span class="n">Stream</span><span class="p">,</span>
+<span class="p">})</span></code></pre></figure>
+
+<p>After each build Gourmet cleans all and destroies the environment.</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="n">err</span> <span class="o">:=</span> <span class="n">dr</span><span class="o">.</span><span class="n">Docker</span><span class="o">.</span><span class="n">KillContainer</span><span class="p">(</span><span class="n">docker</span><span class="o">.</span><span class="n">KillContainerOptions</span><span class="p">{</span><span class="n">ID</span><span class="o">:</span> <span class="n">containerId</span><span class="p">})</span>
+<span class="n">err</span> <span class="o">=</span> <span class="n">dr</span><span class="o">.</span><span class="n">Docker</span><span class="o">.</span><span class="n">RemoveContainer</span><span class="p">(</span><span class="n">docker</span><span class="o">.</span><span class="n">RemoveContainerOptions</span><span class="p">{</span><span class="n">ID</span><span class="o">:</span> <span class="n">containerId</span><span class="p">,</span> <span class="n">RemoveVolumes</span><span class="o">:</span> <span class="no">true</span><span class="p">})</span>
+<span class="k">if</span><span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">return</span> <span class="no">nil</span></code></pre></figure>
+
+<p>At the moment it is gourmet, It could be different hypothetical use cases:</p>
+
+<ul>
+  <li>high separated task</li>
+  <li>run a testsuite</li>
+  <li>dispatch specific functions</li>
+</ul>
+
+<p>A microservice to work with docker container easily.</p>
+
+<p>I thought about an easy way to scale this application and I found
+<a href="https://docs.docker.com/swarm/">Swarm</a>, it is a native cluster for docker and
+it seems awesome in first because  it is compatibile with the docker api.</p>
+
+<h2 id="swarm">Swarm</h2>
+<p>A Docker Swarm’s cluster is very easy to setup, I worked on this project
+<a href="https://github.com/gianarb/vagrant-swarm">vagrant-swarm</a> to create a local
+environment but <a href="https://docs.docker.com/swarm/install-manual/">the official
+documentation</a> is easy to follow.</p>
+
+<p>Swarm’s cluster has two actors:</p>
+<ul>
+  <li>A master is the entrypoint of your requests, it provide an HTTP
+api compatible with docker.</li>
+  <li>A series of nodes that communicate with the master.</li>
+</ul>
+
+<p>During this example we will work with 1 master and 2 nodes.
+Build this machine with virtualbox , with another tool, or in cloud is not a
+problem and <a href="https://docs.docker.com/engine/installation/">install docker</a>.</p>
+
+<p>Into the master pull swarm and create a cluster identifier.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker pull swarm
+docker run <span class="nt">--rm</span> swarm create
+docker run <span class="nt">--name</span> swarm_master <span class="nt">-d</span> <span class="nt">-p</span> &lt;manager_port&gt;:2375 swarm manage token://&lt;cluster_id&gt;</code></pre></figure>
+
+<p><code>swarm create</code> returns a cluster_id use them to start the manager and the
+<code>manager_ip</code> is the ip of your master server.</p>
+
+<p>Now go into the node, because we must do few things.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker daemon <span class="nt">-H</span> tcp://0.0.0.0:2375 <span class="nt">-H</span> unix:///var/run/docker.sock
+docker run <span class="nt">-d</span> swarm <span class="nb">join</span> <span class="nt">--addr</span><span class="o">=</span>&lt;node_ip:2375&gt; token://&lt;cluster_id&gt;</code></pre></figure>
+
+<p>When <code>cluster_id</code> is the id created in the previous step and the <code>node_id</code> is the ip
+of  your current node.
+Enter into the master and restart your manager container</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker restart swarm_master</code></pre></figure>
+
+<p>Now we are ready to test if all it’s up.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker <span class="nt">-H</span> tcp://0.0.0.0:2375 info</code></pre></figure>
+
+<p>Replace <code>0.0.0.0.0</code> with your master ip if you are in the same server.
+You’ll wait this type of response</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$.</span> <span class="nb">sudo </span>docker <span class="nt">-H</span> tcp://192.168.13.1:2375 info
+Containers: 1
+Images: 1
+Role: primary
+Strategy: spread
+Filters: health, port, dependency, affinity, constraint
+Nodes: 2
+ vagrant-ubuntu-vivid-64: 192.168.13.101:2375
+  └ Status: Healthy
+  └ Containers: 1
+  └ Reserved CPUs: 0 / 1
+  └ Reserved Memory: 0 B / 513.5 MiB
+  └ Labels: <span class="nv">executiondriver</span><span class="o">=</span>native-0.2, <span class="nv">kernelversion</span><span class="o">=</span>3.19.0-43-generic, <span class="nv">operatingsystem</span><span class="o">=</span>Ubuntu 15.04, <span class="nv">storagedriver</span><span class="o">=</span>aufs
+ vagrant-ubuntu-vivid-64: 192.168.13.102:2375
+  └ Status: Healthy
+  └ Containers: 0
+  └ Reserved CPUs: 0 / 1
+  └ Reserved Memory: 0 B / 513.5 MiB
+  └ Labels: <span class="nv">executiondriver</span><span class="o">=</span>native-0.2, <span class="nv">kernelversion</span><span class="o">=</span>3.19.0-43-generic, <span class="nv">operatingsystem</span><span class="o">=</span>Ubuntu 15.04, <span class="nv">storagedriver</span><span class="o">=</span>aufs
+CPUs: 1
+Total Memory: 513.5 MiB
+Name: f5e23167339e</code></pre></figure>
+
+<p>Gourmet is a set of environment variables to create a connection with docker
+api, in particular this function
+<a href="https://godoc.org/github.com/fsouza/go-dockerclient#NewClientFromEnv">NewClientFromEnv</a>
+and the <code>DOCKER_HOST</code> parameter.</p>
+
+<p>Docker Swarm supports the same Docker API in this way gourmet uses more nodes.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ DOCKER_HOST</span><span class="o">=</span><span class="s2">"tcp://192.168.13.1:2333"</span> ./gourmet api</code></pre></figure>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A voice from the cloud all about: monitoring, containers, distributed system.</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gianluca Arbezzano is Senior Staff Software Engineer at Equinx Metal. He is a big Open Source contributor for several projects including and not limited to Zend Framework, Docker, and InfluxDB. He is also a Docker Captain and a member of the Doctrine ORM developers team. He is passionate about developing best practices for developers worldwide and has recently been focused on building scalable infrastructures on top of AWS, DigitalOcean and OpenStack. He is familiar with several programming languages, such as Javascript and Golang and is an active speaker at conferences throughout Europe, sharing his experiences and knowledge on projects that he is leading. This is my blog.">
+    <meta name="keywords" content="home, developer, gianarb, blog, kubernetes, cncf, doker captain, golang, cloud, automation, blog">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <div class="container">
+    <h1>Blog</h1>
+
+<main>
+    <div class="post">
+        <div>
+          
+          <div class="row">
+      <p><small>24 Oct 2023 </small><a href="/blog/how-to-contribute-to-new-codebases">How I discover new codebases</a></p>
+      <p>Strategies I use when I want to contribute to new codebases</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>02 Aug 2023 </small><a href="/blog/kubernetes-is-finally-just-an-utility">Kubernetes is finally just an utility</a></p>
+      <p>Kubernetes is a tool, not a religion. It can tech you a lot about about scalability, resiliency but if your buisness is not driven by this specific tool you should not overlook it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>24 Nov 2022 </small><a href="/blog/avoid-meetup-com">You should avoid Meetup.com</a></p>
+      <p>Please avoid Meetup.com. You can do better on your own</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>24 Nov 2022 </small><a href="/blog/from-ubuntu-to-nixos-history-of-a-mastodon-migration">From Ubuntu to NixOS the story of a mastodon migration</a></p>
+      <p>Twitter is not at its best. Developers are looking for an alternative as many others. Mastodon with its decentralized and feel of ownership is raising in popularity. I started with a hands crafted self hosted Ubuntu server because I felt the pressure about joining as early as possible but the end goal was to use NixOS for that. This is the story of how I moved my Mastodon instance to NixOS</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>12 Sep 2022 </small><a href="/blog/my-workflow-with-nixos">My workflow with NixOS. How do I work with it</a></p>
+      <p>In the last two years I pick up NixOS as I tool I want to use. The learning curve is steep but I think I have a workflow that I like</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>17 Dec 2021 </small><a href="/blog/redesign-goodbye-bootstrap">Website redesign and goodbye Bootstrap</a></p>
+      <p>I managed to remove Bootstrap from my website! You should not read this post</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>01 Oct 2021 </small><a href="/blog/how-i-started-with-nixos">How I started with NixOS</a></p>
+      <p>I played with NixOS for the last couple of months. This is a story about how I picked it up, or how I should have done it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>06 Apr 2021 </small><a href="/blog/home-made-router-msata-netboot">How I tricked the cable mafia with PXE. Install OpenWRT on APU4d</a></p>
+      <p>No matter how many cables or dongle do you have they are never enough. The best you can do is to trick the system. I tried Pixiecore to PXE boot Alpine on my APU4d installing OpenWRT to it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Mar 2021 </small><a href="/blog/homelab-diy-bmc-intel-nuc">DIY Board management control for an Intel NUC: power control</a></p>
+      <p>This is my first experimentation with reading and understanding a schematic. I hooked up an Intel NUC to a Raspberry PI to get control over its power lifecycle. I see it as a very simple board management control (BMC)</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Jan 2021 </small><a href="/blog/nix-for-developers-sneaking-in-my-toolchain">Nix for developers</a></p>
+      <p>Nix is slowly sneaking in my toolchain as a developer bringing back the joy of provisioning. Not as an exercise of translation between technologies and environment but as the art of building your own environment. </p>
+</div>
+
+          
+          <div class="row">
+      <p><small>15 Jan 2021 </small><a href="/blog/evolution-of-a-logline">Evolution of a logline</a></p>
+      <p>This is a story that represent the evolution I had in thinking and writing logs for an application. It highlights why they are important as a communication mechanism from your application and the outside. Explaining what I think are the responsibility we have as a developer when writing logs.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>03 Dec 2020 </small><a href="/blog/kubernetes-1-20-dockershim-in-practice">Kubenetes v1.20 the docker deprecation dilemma in practice</a></p>
+      <p>there are many discussions going on Twitter about why Kubernetes v1.20 deprecated Docker and dockershim as default runtime. But it was a well thought an planned effort. Nothing to really worry about and here I will go over the process of updating Kubenetes from 1.19 to 1.20</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>26 Nov 2020 </small><a href="/blog/lessons-learned-working-as-sre">Lessons learned working as site reliability engineer</a></p>
+      <p>I want to share a few lessons I learned working three years as site reliability engineer. I kept the focus on the one I think are reusable, and that made me a better developer because reliability just as everything is an everybody business</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>13 Nov 2020 </small><a href="/blog/go-mod-vanity-url">Vanity URL for Go mod with zero infrastructure</a></p>
+      <p>A lot of Go modules today are hosted on GitHub. But you can setup vanity URL using a custom domain. This is good to decouple your library from GitHub. The best part is that it does not require any infrastructure, if you don't want to.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>06 Nov 2020 </small><a href="/blog/what-is-tinkerbell">What is Tinkerbell?</a></p>
+      <p>I want to share with you what is Tinkerbell. An open source project I help maintaining, developed by Equinix Metal. Tinkerbell helps you to manage your hardware and datacenter programmatically via an API.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>26 Oct 2020 </small><a href="/blog/reactive-plan-golang-example">Reactive planing in Golang. Reach a desired number adding and subtracting random numbers</a></p>
+      <p>An example about how to write reactive planning in Go. Code and step by step solution for an exercise I developed to learn planner</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Oct 2020 </small><a href="/blog/release-workflow-as-code">Your release workflow is code, it is just about time</a></p>
+      <p>I think code is some way has to win against specification languages or DSL or even from languages that are not easy to move around like bash. The Kubernetes sig-release is migrating a bunch of scripts from bash to Go and I think it is the right way to go. You will do the same, it is just about time.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>08 Oct 2020 </small><a href="/blog/how-bare-metal-works-in-theory">How bare metal provisioning works in theory</a></p>
+      <p>What I learned about how bare metal provisioning works developing tinkerbell.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>12 Sep 2020 </small><a href="/blog/thinking-in-systems-donella-meadows-review">Thinking in Systems written by Donella H. Meadows</a></p>
+      <p>Review of the book Thinking in Systems written by Donella Meadows</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>20 Aug 2020 </small><a href="/blog/maintainer-life-be-enabler">Maintainer life, be an enabler</a></p>
+      <p>Be an enabler is important in my daily job. It is a skill I learned as open source maintainer.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>20 Aug 2020 </small><a href="/blog/interface-segreation-in-action-with-go">Interface segregation in action with Go</a></p>
+      <p>It takes a couple of hours to get an hello world up and running in a new language but it takes ages to learn it deeply. Even if Go has a learning curve that is affordable some concepts take time to stick in mind. Interface are everywhere and this flexibility makes them crucial to write maintainable Go code.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>03 Aug 2020 </small><a href="/blog/e2e-test-tinkerbell-vagrant-setup-with-go">E2E testing Tinkerbell Setup tutorial in Go</a></p>
+      <p>My takeaway from having a to write a end to end test for the Tinkerbell Vagrant setup tutorial. How I wrote it and why, lesson learned and tips.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>29 Jul 2020 </small><a href="/blog/terraform-what-with-rawkode">Show Me Your Code with David McKay (rawkode): Terraform what?</a></p>
+      <p>I would like to layout a GitHub repository using Terraform that helps me to manage GitHub organization via code in a collaborative way. I am not that good with Terraform, even less when it comes to Terraform 0.12 and all the sweet things it does. My friend David McKay aka @rawkode is way better than myself and he will teach me a bunch of things live on Twitch</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>10 Jun 2020 </small><a href="/blog/first-journeys-with-netboot-ipxe">First journeys with netboot and ipxe installing Ubuntu</a></p>
+      <p>I have started to experiment with netbot, ipxe and OS automation recently to better understand how bare metal provisioning works. I got to a point where I am able to install Ubuntu automatically via iPXE and preseed. This is an article about how and a bit of why.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 May 2020 </small><a href="/blog/show-me-your-code-application-lifecycle-gitops-with-ivan">Show Me Your Code with Ivan Pedrazas: Application Lifecycle and GitOps</a></p>
+      <p>We are gonna have a chat with Ivan Pedrazas, we will we can go over a simple API how to build, how to deploy and the issues around it and how GitOps helps.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 May 2020 </small><a href="/blog/show-me-your-code-kubernetes-permission-manager">Show Me Your Code with Enrique Paredes: Kubernetes Permission Manager</a></p>
+      <p>Enrique will share tips and code around kubernetes permission manager a project that brings sanity to Kubernetes RBAC and Users management, Web UI FTW</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>30 Apr 2020 </small><a href="/blog/show-me-your-code-vault-wireguard">Show Me Your Code with Philippe and Giacomo: Vault plugin for Wireguard</a></p>
+      <p>Show me your code has two special guest Giacomo Tirabassi from InfluxData and Scorsolini from Sighup. We will code a new Hashicorp Vault plugin to generate Wireguard configuration. Vault is a popular secret storage developed in open source. Wireguard is networking module and VPN part of the Linux kernel. Let's have some fun</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Apr 2020 </small><a href="/blog/how-to-write-documentation-efficiently">How to write documentation efficiently</a></p>
+      <p>A bunch of experiences and considerations about how to write documentation efficiently. Without wasting too much time or even more important, without getting too bored or stressed out.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>11 Apr 2020 </small><a href="/blog/show-me-your-code-otel-nodejs">Show Me Your Code with Dan and Walter: How to contribute to OpenTelemetry JS</a></p>
+      <p>Show me your code has two special guest Walter CTO for CorelyCloud SRL the company behind the CloudConf in Turin and Dan Engineer at Dynatrace Maintainer of OpenTelemetry JS. This during show we will talk about OpenTelemetry and NodeJS. Walter wrote a plugin for instrumenting mongoose with opentelemetry. We are gonna see how he did it, considerations from Dan and so on</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>08 Apr 2020 </small><a href="/blog/show-me-your-code-goreleaser-buildkit-multi-arch">Show Me Your Code with Carlos and Tibor: Chat about GoReleaser and multiarch support</a></p>
+      <p>Informal chat with Carlos maintainer for GoReleaser, myself and Tibor from Docker about docker build image with buildx and buildkit to add support for multiple architecures image in GoReleaser.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>07 Apr 2020 </small><a href="/blog/how-to-start-with-opentelemetry-in-nodejs">How to start tracing with OpenTelemetry in NodeJS?</a></p>
+      <p>I developed an eight hours workshop about application monitoring and code instrumentation two years ago. This year I updated it to use OpenTelemetry and that's what I learned to instrument a NodeJS application.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>02 Apr 2020 </small><a href="/blog/new-project-checklist">Checklist for a new project</a></p>
+      <p>A person list I developed along those years that I try to implement across projects I start or contribute to</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>29 Mar 2020 </small><a href="/blog/why-code-instrumentation">Why code instrumentation?</a></p>
+      <p>I decided to finally create a category about code instrumentation. Because I am a develop. And I think it matters. It is important to write better code and more reliability application that we can learn from.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>27 Mar 2020 </small><a href="/blog/cncf-webinar-kubernetes-pprof-profefe">CNCF Webinar: Continuous Profiling Go Application Running in Kubernetes</a></p>
+      <p>Slides, videos and links from a webinar I have with the CNCF about kubrenetes, profefe, golang and pprof.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>24 Mar 2020 </small><a href="/blog/golang-mockmania-zap-logger">How to do testing with zap a popular logging library for Golang</a></p>
+      <p>How you can use logging to build assertions when testing. What the popular Golang logging library provided by Uber gives you around unit tests.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>13 Mar 2020 </small><a href="/blog/show-me-your-code-walter-dal-mut-kubernetes-nodejs-informers">Show Me Your Code with Walter Dal Mut: Extend Kubernetes in NodeJS</a></p>
+      <p>Let's try to get virtual! This is the first attempt as CNCF Meetup from Turin to do something online! The series is called Show me your code. Walter dal Mut from Corley will be the guinea pig to test this new format. Live show on YouTube about Kubernetes and how to use shared informer to extend its capabilities in Node.js.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Mar 2020 </small><a href="/blog/golang-mockmania-cli-command-with-cobra">How to test CLI commands made with Go and Cobra</a></p>
+      <p>CLI commands are common in Go. Testing them is an effective way to run a big amount of code that is actually very close to the end user. I use Cobra, pflags and Viper and that's what I do when I write unit test for Cobra commands</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>04 Mar 2020 </small><a href="/blog/smart-working-does-not-need-to-be-remote">Smart working does not need to be remote</a></p>
+      <p>There is a different between remote work and smart work. You can have both, or just one. It is on you. I prefer both at the moment!</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Feb 2020 </small><a href="/blog/golang-mockmania-httptest">The awesomeness of the httptest package in Go</a></p>
+      <p>One of the reasons why testing in Go is friendly is driven by the fact that the core team already provides useful testing package as part of the stdlib that you can use, as they do to test packages that depend on them. This article explains how to use the httptest package to mock HTTP servers and to test sdks that use the http.Client.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Feb 2020 </small><a href="/blog/golang-mockmania-influxdb-v2-client">Golang MockMania InfluxDB Client v2</a></p>
+      <p></p>
+</div>
+
+          
+          <div class="row">
+      <p><small>04 Feb 2020 </small><a href="/blog/continuous-profiling-go-apps-in-kubernetes">Continuous Profiling Go applications running in Kubernetes</a></p>
+      <p>Kube-Profefe is an open source project that acts like a bridge between Kubernetes and Profefe. It helps you to implement continuous profiling for Go applications running in Kubernetes.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>23 Jan 2020 </small><a href="/blog/make-boring-task-enjotable-with-go-colly">Make boring tasks enjoyable with go and colly</a></p>
+      <p>Recently I had the idea to update the conference page on my website with the end goal to make it a bit more structured. Where structured means a bit more reusable compared with the static HTML table I used to have. I mixed a bit of hacky Go, colly for scraping and that's who I did it</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>16 Jan 2020 </small><a href="/blog/my-experiene-with-krew-to-manage-kubectl-plugins">My experience with Krew to manage kubectl plugins</a></p>
+      <p>Kubectl plugins are extremely useful to provide a set of friendly utilities to interact with kubernetes in your environment. Krew is a project that helps you managing the plugin lifecycle. I have to add profefe to it and this is what I learned.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>10 Jan 2020 </small><a href="/blog/unit-testing-kubernetes-client-in-go">Unit test kubernetes client in Go</a></p>
+      <p>A flexible an easy to use testing framework makes all the difference. Kubernetes provides a fake client in Go that works like a charm.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>03 Jan 2020 </small><a href="/blog/go-continuous-profiling-profefe">Continuous profiling in Go with Profefe</a></p>
+      <p>Taking a snapshot at the right time is nearly impossible. A very easy way to fix this issue is to have a continuous profiling infrastructure that gives you enough confidence of having a profile at the time you need it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>30 Dec 2019 </small><a href="/blog/year-in-review">Year in review</a></p>
+      <p>Summary about 2019, a year in review. There is not much more to say other than that! Happy new year!</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Dec 2019 </small><a href="/blog/scaledocker">Free PDFs about Docker from a Captain</a></p>
+      <p>This article contains the ebooks listed in scaledocker.com. That link won't be available forever and I decided to move it here. If you are a beginner and you are happy to read about docker I got you covered. Security? There are 22 pages available for you as well. Enjoy.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 Dec 2019 </small><a href="/blog/programmatically-kube-port-forward-in-go">Programmatically Kubernetes port forward in Go</a></p>
+      <p>Depending on your networking configuration port forwarding will may be the unique way for you to reach pods or services running in Kubernetes. When you develop a CLI integration that has to interact with pods running inside the cluster you can programmatically do a port forwarding in golang.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>20 Nov 2019 </small><a href="/blog/opentelemetry-the-instrumentation-library-i-hope">OpenTelemetry the instrumentation library, I hope</a></p>
+      <p>OpenTelemetry, OpenCensus, OpenTracing, Open your heart</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Nov 2019 </small><a href="/blog/o11yguru-introduction">o11y.guru introduction and first set of iterations</a></p>
+      <p>Part of the o11y.guru series this post is an introduction for this side project and it describes the first architecture designed for the website.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>07 Nov 2019 </small><a href="/blog/o11yguru-history-first-bug">o11y.guru the history of the first bug</a></p>
+      <p>Part of the o11y.guru series this is about the first bug I discovered with the help of honeycomb and how I had to fix it twice in order to make it to work.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>07 Oct 2019 </small><a href="/blog/extending-kubernetes-oreilly">O'Reilly Report Extending Kubernetes</a></p>
+      <p>I wrote a report with O'Reilly called: Extending Kubernetes.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>07 Oct 2019 </small><a href="/blog/kubectl-flags-in-your-plugin">kubectl flags in your plugin</a></p>
+      <p>Develop cure custom kubectl plugins with friendly flags from the kubectl</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Sep 2019 </small><a href="/blog/as-a-developer-i-dont-care-about-kubernetes">Kubernetes is not for operations</a></p>
+      <p>Kubernetes it not for operations. It democratize resources and workloads. It can be the solution to bring developers closer to ops. But YAML is not the answer.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>13 Sep 2019 </small><a href="/blog/reactive-planning-and-reconciliation-in-go">Reactive planning and reconciliation in Go</a></p>
+      <p></p>
+</div>
+
+          
+          <div class="row">
+      <p><small>04 Sep 2019 </small><a href="/blog/control-theory-is-dope">Control Theory is dope</a></p>
+      <p>This is an introductive article about control theory applied to microservices and cloud computing. It is a very high level overview about control theory driven by what I loved most about it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>26 Aug 2019 </small><a href="/blog/hack-your-google-calendar-gcalcli">Hack your Google Calendar with gcalcli</a></p>
+      <p>Everybody uses google calendar in a way or another and if you are a Linux with a light desktop manager such as i3 you lack on some commodities like reminders and notifications for your events. I find gcalcli a very good solution for my pain.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>30 Jul 2019 </small><a href="/blog/i-am-in-love-with-language-servers">I am in love with language servers</a></p>
+      <p>Language Servers are a nice way to reuse common features required by editors such as auto complete, formatting, go to definition. This article is a an open letter to share my love for this project with everybody</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 Jul 2019 </small><a href="/blog/when-do-you-need-a-site-reliability-engineer">When do you need a Site Reliability Engineer?</a></p>
+      <p>I read everyday more job description looking for SRE. In the meantime I hear and live the frustration about who does not understand what SRE means and hires somebody that won't fit.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>27 May 2019 </small><a href="/blog/test-in-production-behind-slogans">Test in production behind slogans</a></p>
+      <p>How fast we are capable of instrumenting an application decrease the out of time requires to understand and fix a bug.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>27 May 2019 </small><a href="/blog/instrumentation-code-is-a-first-citizen-in-a-codebase">Instrumentation code is a first citizen in a codebase</a></p>
+      <p>How fast we are capable of instrumenting an application decrease the out of time requires to understand and fix a bug.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>23 May 2019 </small><a href="/blog/two-years-at-influxdata">After two years at InfluxData</a></p>
+      <p>Two years at InfluxData. Feeling, sensations, pain point, what I have learned.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>19 Apr 2019 </small><a href="/blog/workshop-design">Workshop Design</a></p>
+      <p>I recently developed a workshop about application instrumentation. I ran it at the CloudConf in Turin. I developed it in open source and I thought it was a nice idea to share more about why I did it and how.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>28 Feb 2019 </small><a href="/blog/go-observability-is-for-troubleshooting">Observability is for troubleshooting</a></p>
+      <p>The difference between monitoring and observability is the fact that observability is for troubleshooting. And you troubleshoot in any environment not only in production. This article contains how I do observability in one of my application in Go.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Feb 2019 </small><a href="/blog/go-parallelization-trick">From sequential to parallel with Go</a></p>
+      <p>From a sequence of action to parallelization in Go. Using channels and wait groups from the sync package.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Feb 2019 </small><a href="/blog/infra-as-code-short-long-ttl-resource">Short TTL vs Long TTL infrastructure resource</a></p>
+      <p>I called this framework "short vs long ttl". GitOps, Infrastructure as code are an hot topic today where the infrastructure is more dynamic and YAML doesn't look like a great solution anymore. In this article I explain a framework I am trying to use to understand when a resource is good to be managed in the old way or not.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>07 Feb 2019 </small><a href="/blog/kubernetes-shared-informer">Extend Kubernetes via a Shared Informer</a></p>
+      <p>Kubernetes is designed to be extended. There a lot of way to do it via Custom Resource Definition for example. Kubernetes is an event-based architecture and you can use a primitive called Shared Informer to listen on the events triggered by k8s itself.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>22 Jan 2019 </small><a href="/blog/serverless-means-extendibility">Serverless means extendibility</a></p>
+      <p>Looking at the GitHub Actions design and connecting the docs I think I got why serverless is useful. It is a great mechanism to extend platform and SaaS.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>22 Jan 2019 </small><a href="/blog/kubernetes-github-action">GitHub actions to deliver on kubernetes</a></p>
+      <p>GitHub recently released a new feature called GitHub Actions. They are a serverless approach to allow developers to run their own code based on what happens to a particular repository. They are amazing for continuous integration and delivery. I used them to deploy and validate kubernetes code.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>15 Jan 2019 </small><a href="/blog/why-I-speak-at-conferences">Why I speak at conferences</a></p>
+      <p>I am over 50 talks! To celebrate this small, personal achievement I decided to write a post about why I speak at conferences even if I am not an evangelist or a proper DevRel.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>08 Jan 2019 </small><a href="/blog/testcontainers-go">testcontainer library to programmatically provision integration tests in Go with containers</a></p>
+      <p>Provisioning the environment for integration tests is not easy. You need a flexible strategy to build isolated environment per test and to inject the data you need to verify your assertions. I have ported a popular library from Java to Golang called testcontainers. It wraps the Docker API in order to provide a simple test friendly library that you can use to run containers in test cases.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>31 Dec 2018 </small><a href="/blog/infrastructure-as-real-code">Infrastructure as (real) code</a></p>
+      <p>Infrastructure as code today is wrong. Tools like Chef, Helm, Salt, Ansible uses a template engine to make YAML or JSON way to smarter, but comparing this solution with a proper coding language you always miss something. GitOps forces you to stick your infrastructure code in a git repository this is good. But infrastructure as code is way more.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>28 Nov 2018 </small><a href="/blog/high-cardinality-database">You need an high cardinality database</a></p>
+      <p>Monitoring and observability in a dynamic environment on Cloud or Kubernetes is a new challange we are facing and I think the tool that plays a big role is an high cardinality database.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>28 Nov 2018 </small><a href="/blog/reactive-planning-is-a-cloud-native-pattern">Reactive planning is a cloud native pattern</a></p>
+      <p>I discovered how a reactive plan works recently during a major refactoring for a custom orchestrator that we write at InfluxData to serve our SaaS offer. In this article I will explain why I think reactive planning is perfect to build cloud native application like container orchestrators and provisioning tools.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>10 Nov 2018 </small><a href="/blog/price-of-poor-software-design">You will pay the price of a poor design</a></p>
+      <p>I read the book Philosophy Software Design from John Ousterhout. It opens my eyes giving me more confidence about how to explain and apply solid design concept in software.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>23 Aug 2018 </small><a href="/blog/chaos-engineer">Chaos Engineering</a></p>
+      <p>I took part at a panel at the Jazoon conference in Switzerland called Chaos Engineering. Where I had a change to learn about techniques and practices around this topic that even if I new about it I never had the chance to put my head on it. In this article I am summarizing my ideas and what I get mainly around the definition of Chaos Enginnering.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>23 Aug 2018 </small><a href="/blog/prometheus-openmetrics-expositon-format">OpenMetrics and the future of the prometheus exposition format</a></p>
+      <p>This post explain my point of view around prometheus exposition format and it summarise the next step with OpenMetrics behing supported by CNCF and other big companies.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>11 Aug 2018 </small><a href="/blog/nomad-working-apps">Apps I used during my nomad working</a></p>
+      <p>When I travel for conferences or now that I work in remote and I am a bit more like a nomad I discovered and learned some good apps that helps me to plan and to combine better work and travel. Some of them are WorkFrom, oBike, Yep, Adobe Scan. let me know yours.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>06 Jul 2018 </small><a href="/blog/faq-distributed-tracing">FAQ: Distributed tracing</a></p>
+      <p>Tracing is a well known concept in programming but distributed tracing is a revisitation to adapt the concept for a distributed system. This article is an FAQ where I answer common questions I received or I saw around the net about monitoring and distributed tracing.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Jun 2018 </small><a href="/blog/logs-metrics-traces-aggregation">Logs, metrics and traces are equally useless</a></p>
+      <p>The key monitoring a distributed system is not logs, metrics or traces but how you are able to aggregate them. You can not observe and monitor a complex system looking at single signals.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>29 May 2018 </small><a href="/blog/cloud-native-intranet">Cloud Native Intranet with Kubernetes, CoreDNS and OpenVPN</a></p>
+      <p>Designing an architecture the network should be a top priority because it is very hard to change moving forward. Even in a cloud environment running on Kubernetes the situation doesn't change. Security and networking are hard pattern hard to inject in old projects. In this talk I will share a practical idea about how to start in the best way with OpenVPN and private DNS in a Kubernetes cluster in order to build your own intranet.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 May 2018 </small><a href="/blog/server-time-vs-response-time">Server time vs Response time</a></p>
+      <p>How do you dimension an infrastructure? How can you calculate container limits or how many nodes your application requires to support a specific load? Response time and server time are two key measurements to monitor saturation.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Apr 2018 </small><a href="/blog/go-http-cleanup-http-connection-terminated">Go how to cleanup HTTP request terminated.</a></p>
+      <p>Cleaning up HTTP request, the most expensive one can be a huge performance improvement for your application. This short article shows how to handle HTTP request termination in Go.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>17 Apr 2018 </small><a href="/blog/go-testing-tricks">Go testing tricks</a></p>
+      <p>This post contains some feedback about how to write tests in Go.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Apr 2018 </small><a href="/blog/go-awesomeness">The Go awesomeness</a></p>
+      <p>After 1 year writing go every day at work this is why I like to work with it.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>04 Apr 2018 </small><a href="/blog/observability">Observability according to me</a></p>
+      <p>Prometheus, InfluxDB, TimescaleDB, Cassandra and all the time series databases that show up every week is a clear sign that now we need more than just a way to store metrics. I think is now clear that collecting more metrics is the point. More data is not directly related to a deeper understanding of our system.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>29 Mar 2018 </small><a href="/blog/testing-shit">I don't give a shit about testing</a></p>
+      <p>This is all about how I approach testing in development. TDD, DDD, unit test, integration test. It should make my development faster and my code easy to maintain. We have a lot of different techniques because we need to be good on picking the right one.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>27 Mar 2018 </small><a href="/blog/database-reliability-engineer-review">Review book Database Reliability Engineer</a></p>
+      <p>Review Book Database Reliability Engineer. Author Laine Campbell and Chairty Major. Published by O'Reilly</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Mar 2018 </small><a href="/blog/golang-forwarding-proxy">How to use a Forwarding Proxy with golang</a></p>
+      <p>Cloud, Docker, Kubernetes make your environment extremely dynamic, it has a lot of advantages but it adds another layer of complexity. This article is about forward proxy and golang. How to configure your http Client to use an http, https forward proxy for your golang application to increase security, scalability and to have a set of public ips for outbound traffic.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>17 Mar 2018 </small><a href="/blog/the-abstract-manifesto">The abstract manifesto</a></p>
+      <p>Often looking at the code I spot a lot of places where it looks too complicated. Disappointment is the feeling that I get reading classes with weird names or chain of abstractions or interfaces used only one time. Abstraction is often the reason for all my sadness.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>15 Mar 2018 </small><a href="/blog/site-reliability-engineering-review">Review book Site Reliability Engineering</a></p>
+      <p>A review about Site Reliability Engineering a book published by O'Reilly about Google and it's massive scale from the point of view of the engineers that made that scale possible. Distributed system, microservices and data driven development.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Feb 2018 </small><a href="/blog/what-is-distributed-tracing-opentracing-opencensus">What is distributed tracing. Zoom on opencensus and opentracing</a></p>
+      <p>Distributed tracing is a fast growing concept. We increased the distributions for our applications and the consequence is a different complexity to monitor and understand what is going on across regions and applications (microservices). With this article I share something about what tracing is and my experience with opentracing and opencensus.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Feb 2018 </small><a href="/blog/the-development-balance">The right balance</a></p>
+      <p>My daily job as a developer is to find the right balance about everything. I would like to share what I think about this topic because the decisions that you take writing a system are the result of the software itself. So you should care about them.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>19 Dec 2017 </small><a href="/blog/kubernetes-up-and-running">Kubernetes up and running</a></p>
+      <p>Kubernetes up and running review.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>17 Dec 2017 </small><a href="/blog/desk-setup">Desk setup</a></p>
+      <p>It is not a couple of months after i left CurrencyFair to start working at InfluxData. A lot of new things but working from home for a US based company is very hard. Dealing with a such big timezone requires a big effort. But I am very excited about how I am feeling working from home. That's why I decided to share my current office setup. Desktop, Zendbook and a lot of Ikea's things!</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>20 Oct 2017 </small><a href="/blog/from-docker-to-moby">From Docker to Moby</a></p>
+      <p>Docker announced during DockerCon a new project called Moby. Moby will be the new home for Docker and all the other open source projects like containerd, linuxkit, vpnkit and so on. Moby is the glue for all that open source code. It will look as an entire platform to ship, build and run containers at scale.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>10 Oct 2017 </small><a href="/blog/git-git-git-but-better">Git git git, but better</a></p>
+      <p>Doesn't matter for how much time you are using git or any version control system, you always have something to learn abut them. Not about the actual interface but about the right mindset.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Aug 2017 </small><a href="/blog/orbiter-the-swarm-autoscaler-moves">Orbiter the Docker Swarm autoscaler on the road to BETA-1</a></p>
+      <p>Orbiter is a project written in go. It is an autoscaler for Docker containers. In particular it works with Docker Swarm. It provides autoscaling capabilities for your services.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>03 Aug 2017 </small><a href="/blog/asus-universal-dock-driver">Asus universal dock station driver</a></p>
+      <p>Every developer loves to speak about its setup. I am here to share my trouble with my new laptop. Asus Zenbook 3.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 Jun 2017 </small><a href="/blog/cncf-italy-first-event">CNCF Italy, first event about opentracing</a></p>
+      <p>CNCF is a branch of The Linux Foundation focused on Cloud Computing and modern scalable architectures. it's supporting tools like Kubernetes, Prometheus, containerd and so on. If you are using one of them or you are looking to know more about them, this is your meetup. Join us! hashtag CNCFItaly on twitter.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>05 Jun 2017 </small><a href="/blog/container-security-immutability">Container security and immutability</a></p>
+      <p>Docker, container and immutability. Have an immutable system has advantages not only from deploy, release and scalability point of view but also from security side. Deploy and build a new release quickly and high frequency improve the way you trust your provisioning system. Have the old environment still running and ready to be rolled back is another good point.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>22 Apr 2017 </small><a href="/blog/orbiter-docker-swarm-autoscaler">Orbiter an OSS Docker Swarm Autoscaler</a></p>
+      <p>Orbiter is an open source project design to become a cross provider autoscaler. At the moment it works like Zero Configuration Autoscaler for Docker Swarm. It also has a basic implementation to autoscale Digitalocean. This project is designed with InfluxData a company that provides OSS solution like InfluxDB, Kapacitor and Telegraf. We are going to use all this tools to create an autoscaling policy  for your Docker Swarm services.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Apr 2017 </small><a href="/blog/linuxkit-operating-system-build-for-containers">LinuxKit operating system built for container</a></p>
+      <p>LinuxKit is a new tool presented during the DockerCon 2017 built by Docker to manage cross architecture and cross kernel testing. LinuxKit is a secure, portable and lean operating system built for containers. It supports different hypervisor as MacOS hyper or QEMU to run testsuite on different architectures. In this article I am showing you some basic concept above this tool. How it works and why it can be useful.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>12 Mar 2017 </small><a href="/blog/containers-why-we-are-here">Containers why we are here</a></p>
+      <p>Cloud computing, containers, devops, everything is moving so fast that sometime for big companies or CTO is very hard keep track of everything. What it's just a new trend and what I really need. This post contains my options and a bit of history about docker, cloud computing, aws and containers.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>28 Dec 2016 </small><a href="/blog/about-your-images-security-tips">About your images, security tips</a></p>
+      <p>Everything unnecessary in your system could be a very stupid vulnerability. We already spoke about this idea in the capability chapter and  the same rule exists when we build an image. Having  tiny images with only what our application needs to run is not just a goal in terms of distribution but also in terms of cost of maintenance and security.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Dec 2016 </small><a href="/blog/docker-registry-to-ship-your-containers">Docker registry to ship and manage your containers.</a></p>
+      <p>Build and Run containers is important but ship them out of your laptop is the best part! A Registry is used to store and manage your images and all your layers. You can use a storage to upload and download them across your servers and to share them with your colleagues.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Nov 2016 </small><a href="/blog/continuous-integration-and-silent-checks">Continuous Integration and silent checks. You are looking in the wrong place</a></p>
+      <p>Bad and good practice when you setup a continuous integration job. Silent checks are not a good practice but analyze your code is the perfect way to understand how your codebase is evolving.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>15 Nov 2016 </small><a href="/blog/Docker-Security-Benchmark">Docker Bench Security</a></p>
+      <p>Container security is a hot topic because today containers are everywhere also in production. It means that we need to trust this technology and start to think about best practices and tools to make our container environment safe.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>10 Nov 2016 </small><a href="/blog/chef-server-startup-notes">Chef Server startup notes</a></p>
+      <p>This tutorial explain how to setup a chef server on digitalocean from zero. It also shows how to use it to make a provisioning of one Chef Client. Chef is one of the most used provisioning tool. DevOps tool to apply infrastructure as code.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Aug 2016 </small><a href="/blog/docker-the-fundamentals">Docker The fundamentals</a></p>
+      <p>Docker The fundamental is the second chapter of my book Scale Docker. Drive your boat like a captain. I decided to share free the second chapter of the book. It covers getting started with Docker. It's a good tutorial for people that are no idea about how container means and how docker works.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Aug 2016 </small><a href="/blog/be-start-like-your-healthcheck">Be smart like your healthcheck</a></p>
+      <p>In a distributed system environment has a simple way to know the status of your server help you do understand if it's ready to go in production. HealthCheck is simple and common but design a good one can help you do avoid strange behaviors. Docker 1.12 supports healthcheck and we in this blog I share an example of implementation.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Aug 2016 </small><a href="/blog/build-opinions-to-become-wise">Build opinions to become wise</a></p>
+      <p>As a Software Engineer you need to build your own opinions about different topics like: linux or window? Editor or IDE? Containers or VM? There are different developers just for this reason. Make, share and change your opinions is the best way to grow. Not only like developer but also like human.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>24 Aug 2016 </small><a href="/blog/docker-1-12-meetup-dublin">Watch demo about Docker 1.12 made during Docker Meetup</a></p>
+      <p>Docker 1.12 contains a lot of news about orchestration and production. During August Docker Meetup in Dublin I presented with a demo a set of new features around this new release.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Aug 2016 </small><a href="/blog/services-and-common-parts">“Microservices and common parts"</a></p>
+      <p>When you think about microservices and distributed system there are a lot of parts that usually all your services require. Logging, monitoring, testing, distribution. Manage them in the best way it's one of the reason of success for your distributed system. In this article I shared few of this parts with some feedback to design them in a good way.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>12 Jul 2016 </small><a href="/blog/distributed-system-means">What Distributed System means</a></p>
+      <p>I will speak about service discovery, micro services, container, virtual machines, schedulers, cloud, scalability and latency I hope to have, at the end of this experience a good number of posts in order to share what I know and how I work and approach this kind of challenges.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>02 Jul 2016 </small><a href="/blog/symfony-and-influxdb-to-monitor-php-applications">Symfony and InfluxDB to monitor PHP application</a></p>
+      <p>How monitoring your Symfony and PHP applications with InfluxDB.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>20 Jun 2016 </small><a href="/blog/docker-1-12-orchestration-built-in">Docker 1.12 orchestration built-in</a></p>
+      <p>Docker 1.12 adds different new features around orchestration, scaling and deployment, in this article I am happy to share some tests I did with this version</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>24 Apr 2016 </small><a href="/blog/a-little-bit-of-refactoring">A little bit of refactoring</a></p>
+      <p>Strategy to refactoring your code. Tricks about performance from PHPKonf Istanbul Conference.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>01 Apr 2016 </small><a href="/blog/docker-inside-docker-and-jenkins-2">Docker inside docker and overview about Jenkins 2</a></p>
+      <p>A little overview about Jenkins 2 but the main topic of the article is about how run docker inside docker to start a continuous integration system inside a container</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>25 Mar 2016 </small><a href="/blog/happy-docker-bday-and-thanks">Happy docker's birthday and thanks</a></p>
+      <p>Just a post to say thanks docker for your awesome community and happy birthday!</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Feb 2016 </small><a href="/blog/some-days-of-work-vs-jenkins-ci">Some days of work vs Jenkins CI</a></p>
+      <p>I love Jenkins CI is a beautiful and stable project to run job and manage continuous integration and deploy pipeline, few days ago I worked to improve the delivery pipeline in CurrencyFair and I started to do some thought about this topic, here my internal battle vs Jenkins CI</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Feb 2016 </small><a href="/blog/chatops-create-your-own-irc-bot-in-go">ChatOps create your IRC bot in Go</a></p>
+      <p>ChatOps is a strong topic it is growing day by day because now with the IaaS are allowed a new way to manage your infrastacture provide for you an API layer. You can implement it to create your automation layer. A pretty bot is a good assistence</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>18 Feb 2016 </small><a href="/blog/influxdb-php-release-1-3-0">InfluxDB PHP 1.3.0 is ready to go</a></p>
+      <p>InfluxDB is a time series database, it helps us to manage matrics, point and offert a stack of tools to collect and see this type of data. I am a maintainer of InfluxDB PHP integration. In this past I describe the news provided by new relesae 1.3.0</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Dec 2015 </small><a href="/blog/swarm-scales-your-containter-for-free">Swarm scales docker for free</a></p>
+      <p>Docker is an awesome tool to manage your container. Swarm helps you to scale your containers on more servers.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Dec 2015 </small><a href="/blog/wordpress-docker">Docker and wordpress for a better world</a></p>
+      <p>Docker and wordpress to guarantee scalability, flexibilty and isolation. A lot of webagencies install all wordpress in the same server but how can they manage a disaster? AWS with Elastic Container Service could be a more professional solution.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>01 Nov 2015 </small><a href="/blog/fast-event-manager-only-an-event-manager">FastEventManager, only an event manager</a></p>
+      <p>FastEventManager is a PHP library designed to be a smart and light event manager. You can use it in your applications or as a base component for your framework. It adds capabilities around events as attach and triggering of events.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>27 Oct 2015 </small><a href="/blog/penny-framework-made-of-components">Penny PHP framework made of components</a></p>
+      <p>Penny a PHP framework made of components, write your microframework made of symfony, zend framework and other components.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>15 Sep 2015 </small><a href="/blog/php-and-vim-composer-release-0-3-0">vim composer 0.3.0 is ready</a></p>
+      <p>vim-composer is a plugin to manage integration between composer and vim</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>08 Jul 2015 </small><a href="/blog/stagin-environment-on-demand-with-aws-cloudformation">Staging environment on demand with AWS Cloudformation</a></p>
+      <p>Environment are ephemeral. They come and go really quickly based on needs. AWS delivers a service called CloudFormation that allows you to easy describe via JSON or YALM specification a lot of AWS resources like EC2, Route53 hosted zone and domains, RDS, VPC, subnet and almost everything you normally do via console. This is infrastructure as code applied to AWS resource allows you to version and push on git entire AWS environment. You can replicate it over and over.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 May 2015 </small><a href="/blog/zendframework-console-app">Build your Zend Framework Console Application</a></p>
+      <p>ZF Console is a component written by zf-campus and Apigility organization that help you to build console application using different Zend Framework components</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 May 2015 </small><a href="/blog/symfony-unit-test-controller-with-phpunit">Test your Symfony Controller and your service with PhpUnit</a></p>
+      <p>Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it!</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Feb 2015 </small><a href="/blog/the-price-of-modularity">The price of modularity</a></p>
+      <p>Modularity is not only a beautiful word, It has roles and it is a methodology that helps you to keep your project easy to understand. Modularity is a key principle to have an easy on board of new developer in your application because it will look separated and simpler to approach. As a developer you should think about how your scaffolding and your code looks from the outside because in reality you read much more code compared with how code you write.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Jan 2015 </small><a href="/blog/zf2-release-234">Zend Framework release 2.3.4</a></p>
+      <p>Zend Framework release 2.3.4</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>06 Jan 2015 </small><a href="/blog/InfluxDB-and-PHP">Influx DB and PHP implementation</a></p>
+      <p>InfluxDB is a popular and open source time series database capable to store millions of points keeping a fast lookup. It supports SQL as query language and it exposes an HTTP API to interact with it. In Corley we wrote a PHP SDK and we released it open source to integrate InfluxDB in your PHP application.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Nov 2013 </small><a href="/blog/Zf2-Event-base-use">Zf2 Event, base use</a></p>
+      <p>Integrate in your application an event system is a good way to decouple and extend your application keeping it clean and clear. An event manager allow you to trigger and catch event based on what your application do. You can for example send different kind of notifications like email, slack message and so on from the same event like 'user registration'. Zend Framework a popular and open source PHP framework has a component called EventManager that helps you do integrate such flow.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>21 Nov 2013 </small><a href="/blog/Git-globa-gitignore">Git global gitignore</a></p>
+      <p>Git is the most popular code version control. It helps you to manage and share your code, writing a history about the evolution of it over time. It also allow teams to work together managing conflicts and large codebases. Based on languages, projects or operating system there are files that you should never commit such as .DS_Store on mac. You can setup a user level gitignore file to keep them out.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>14 Sep 2013 </small><a href="/blog/vagrant-up-talk-milano">Vagrant Up, slide and first talk</a></p>
+      <p>This is my first public talk delivered at the PHP User Group Milan. It is about how to setup a local environment using Vagrant as automation tool. A well setup local environment is a must have to quick develop your application. With Vagrant you make infrastructure as a code to provision your environment. You can push your code inside a version control system such as GIT to share it with your collagues.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>22 Aug 2013 </small><a href="/blog/zf2-console-usage-speed-help">Zend Framework 2 - Console usage a speed help</a></p>
+      <p>CLI tools are an easy way to interact with an application because you can drive users or even other developers in a well know direction. It is a very good way to decrease possible mistakes. Zend Framework 2 a PHP open source framework has a Console package that helps you to address common issue like argument management, command parsing and to format a colored and nice output.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>09 Aug 2013 </small><a href="/blog/Generate-jekyll-sitemap-without-plugin">Generale Jekyll sitemap without plugin</a></p>
+      <p>Every site should have its sitemap to tell search engine like Google about news and updates from your site. With a static site generator such as Jekyll you need to generate statically the sitemap too. This article explains how to write a template that generate a sitemap.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>26 Jul 2013 </small><a href="/blog/how-do-you-implement-log-service">Zend Framework 2 - How do you implement log service?</a></p>
+      <p>Logging is a requirement for every application. In PHP and in every other language. It is the way your application has to tell you what its doing. This article is about how to implement a logger in a Zend Framework 2 application in PHP. This solution achieve simplicity and usability.</p>
+</div>
+
+          
+          <div class="row">
+      <p><small>22 Jul 2013 </small><a href="/blog/why-this-blog">Why this blog?</a></p>
+      <p>This is my first article on Jekyll. A new static site generator that I have selected as engine for my site to replace wordpress.</p>
+</div>
+
+          
+        </div>
+    </div>
+<main>
+
+</div>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

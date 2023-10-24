@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>The price of modularity</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Modularity is not only a beautiful word, It has roles and it is a methodology that helps you to keep your project easy to understand. Modularity is a key principle to have an easy on board of new developer in your application because it will look separated and simpler to approach. As a developer you should think about how your scaffolding and your code looks from the outside because in reality you read much more code compared with how code you write.">
+    <meta name="keywords" content="zf2, developer, open source, module, MVC, code segregation, SOLID">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/the-price-of-modularity">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>The price of modularity</h1>
+<main>
+    <p class="meta">21 Feb 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Today all frameworks are <strong>modulable</strong> but it isn’t just a beautiful word, behind it there are a lot of concepts and ideas:</p>
+
+<ul>
+  <li>The modularity helps you to reuse parts of code in different projects</li>
+  <li>Every component is indipendent so you work on single part of code</li>
+  <li>Every <strong>component</strong> solves a specific problem… it’s a beautiful concept that helps you with maintainance!</li>
+  <li>other stuffs..</li>
+</ul>
+
+<p>As you can imagine there is a drawback, all this requires a big effort.
+Ideally every component requires personal circle of release, repository, commits, pull requests, travis conf, documentation etc. etc.</p>
+
+<p>Anyway several shorcuts are available. For instance, <em>git subtree</em> could help you in this war but the key is this: you need an agreement to win.</p>
+
+<p>Zend Framwork Community choose another street, <code>Zend\Mvc</code> in this moment required:</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zendframework/zend-mvc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"target-dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend/Mvc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"php"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&gt;=5.3.23"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-eventmanager"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-servicemanager"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-form"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-stdlib"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"require-dev"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"zendframework/zend-authentication"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-di"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-filter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-http"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-i18n"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-inputfilter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-json"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-log"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-modulemanager"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-session"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-serializer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-validator"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-view"</span><span class="p">:</span><span class="w"> </span><span class="s2">"self.version"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"suggest"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"zendframework/zend-authentication"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend</span><span class="se">\\</span><span class="s2">Authentication component for Identity plugin"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-config"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend</span><span class="se">\\</span><span class="s2">Config component"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend</span><span class="se">\\</span><span class="s2">Console component"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-di"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend</span><span class="se">\\</span><span class="s2">Di component"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"zendframework/zend-filter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zend</span><span class="se">\\</span><span class="s2">Filter component"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>A few <code>require-dev</code> dependencies are used into the component to run some features, why? This force me to think <em>“Dependencies of this feature are included or not?”</em>!!
+Composer was born to solve it! In my opinion the cost of the question is highest than download a few unused classes.
+There are a lot of unused classes? Maybe too much?</p>
+
+<p>Even if the right answer donsn’t exist I think thant some indicators may help you to understand when is the moment to split the component:</p>
+
+<ul>
+  <li>List of dependencies</li>
+  <li>Complexity of component</li>
+  <li>Features</li>
+  <li>..</li>
+</ul>
+
+<p>No shortcuts.</p>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

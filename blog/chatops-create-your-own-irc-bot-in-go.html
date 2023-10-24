@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>ChatOps create your IRC bot in Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ChatOps is a strong topic it is growing day by day because now with the IaaS are allowed a new way to manage your infrastacture provide for you an API layer. You can implement it to create your automation layer. A pretty bot is a good assistence">
+    <meta name="keywords" content="devops, chatops, hubot, github, automation, chat, javascript, open source">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/chatops-create-your-own-irc-bot-in-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>ChatOps create your IRC bot in Go</h1>
+<main>
+    <p class="meta">21 Feb 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>The infrastructure as a service (IaaS) opened new ways to manage your
+infrastructure.
+Use an API to create, destroy and update your virtual machine
+is one of the biggest revolutions of our sector.</p>
+
+<p>A lot of companies and a lot of DevOps started to create own assistence to
+increase the automation or to check the status of them infrastructure, in top of
+all GitHub provided a series of awesome blogpost and tools to describe this
+approach that it has a name: ChatOps.</p>
+
+<ul>
+  <li><a href="https://hubot.github.com/">HuBot</a> is a beautiful tools written in node.js to provide smart bot.</li>
+  <li><a href="https://www.pagerduty.com/blog/what-is-chatops/">So, What is ChatOps? And How do I Get Started?</a> by PagerDuty</li>
+  <li><a href="https://github.com/blog/968-say-hello-to-hubot">Say Hello to Hubot</a> by GitHub</li>
+</ul>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/IhzxnY7FIvg" frameborder="0" allowfullscreen=""></iframe>
+    </div>
+</div>
+
+<p>IRC is an application layer protocol that facilitates communication. One of the
+most famouse open IRC server is freenode all most important open source projects
+use it to chat.</p>
+
+<p>This concept is already applyed it because most projects are your personal bot,
+for example Zend use Zend\Bot a good assistence written by DASPRiD.</p>
+
+<p>The ChatOps is an assistence oriented to decrease the distance between your
+infrastacture and your communication channels.</p>
+
+<p>I wrote a low level library to communicate on IRC protocol, we can try to use it to
+write our dummy bot.</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"log"</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"regexp"</span>
+    <span class="s">"bufio"</span>
+    <span class="s">"net/textproto"</span>
+    <span class="s">"github.com/gianarb/go-irc"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">(){</span>
+    <span class="n">secretary</span> <span class="o">:=</span> <span class="n">NewBot</span><span class="p">(</span>
+        <span class="s">"irc.freenode.net"</span><span class="p">,</span>
+        <span class="s">"6667"</span><span class="p">,</span>
+        <span class="s">"SybilBot"</span><span class="p">,</span>
+        <span class="s">"SybilBot"</span><span class="p">,</span>
+        <span class="s">"#channel-name"</span><span class="p">,</span>
+        <span class="s">""</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">conn</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">secretary</span><span class="o">.</span><span class="n">Connect</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="n">conn</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+    <span class="n">reader</span> <span class="o">:=</span> <span class="n">bufio</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">bot</span><span class="o">.</span><span class="n">conn</span><span class="p">)</span>
+    <span class="n">tp</span> <span class="o">:=</span> <span class="n">textproto</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="n">line</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">tp</span><span class="o">.</span><span class="n">ReadLine</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">Fatal</span><span class="p">(</span><span class="s">"unable to connect to IRC server "</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">isPing</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">MatchString</span><span class="p">(</span><span class="s">"PING"</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">isPing</span>  <span class="o">==</span> <span class="no">true</span> <span class="p">{</span>
+            <span class="n">bot</span><span class="o">.</span><span class="n">Send</span><span class="p">(</span><span class="s">"PONG"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>With this code you have a bot, in this case her name is SybilBot and at the
+moment it suppot only the PING PONG flow, without this helth system your bot go
+down after few time.</p>
+
+<p>You can use the same log to add other actions</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="n">yourAction</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">regexp</span><span class="o">.</span><span class="n">MatchString</span><span class="p">(</span><span class="s">"CheckSomething"</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">yourAction</span>  <span class="o">==</span> <span class="no">true</span> <span class="p">{</span>
+    <span class="c">// Do Something</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><a href="https://github.com/gianarb/go-irc">go-irc</a> allow you to communicate over IRC protocol, our but is very stupid I
+like the idea! If you are working on this topic, in go or in other language
+please ping me! I am very happy to know your bot!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

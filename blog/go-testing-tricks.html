@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Go testing tricks</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This post contains some feedback about how to write tests in Go.">
+    <meta name="keywords" content="golang, test, unit test, automation, fixture, trick, go">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/go-testing-tricks">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Go testing tricks</h1>
+<main>
+    <p class="meta">17 Apr 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I recently wrote a blog post with my <a href="/blog/testing-shit">point of view about
+testing</a>. I used Go as the language to concretize it. I had
+good feedback about that article, and this is all about how I write tests in
+Go.</p>
+
+<h2 id="fixtures">Fixtures</h2>
+<p>I wrote that I don’t like them, but I think they are useful. You can use them
+to verify the same function checking the same assertion with different input.
+So let’s say you are testing a function that returns the multiplication of two
+numbers if the first is even, it returns the division if not.</p>
+
+<p>I will write two tests, one to test events number and one to test the other
+case, and I will set up two fixtures one for every test. I won’t write just one
+test with elaborate fixtures because they are hard to read and the name of the
+test function will help a lot to understand the assertion. Small example good
+for blogging purpose. But I hope you got the idea.</p>
+
+<pre><code class="language-golang">package test
+
+import "testing"
+
+func MagicFunction(f int, s int) int {
+    if f%2 == 0 {
+        return f * s
+    }
+    return f / s
+}
+
+func TestEventInputsShouldReturnMoltiplication(t *testing.T) {
+    table := []struct {
+        first  int
+        second int
+        result int
+    }{
+        {2, 1, 2},
+        {4, 10, 40},
+    }
+    for _, s := range table {
+        if r := MagicFunction(s.first, s.second); r != s.result {
+            t.Errorf("Got %d, expected %d. They should be the same.", r, s.result)
+        }
+    }
+}
+
+func TestOddInputsShouldReturnDivision(t *testing.T) {
+    table := []struct {
+        first  int
+        second int
+        result int
+    }{
+        {15, 3, 5},
+        {21, 7, 3},
+    }
+    for _, s := range table {
+        if r := MagicFunction(s.first, s.second); r != s.result {
+            t.Errorf("Got %d, expected %d. They should be the same.", r, s.result)
+        }
+    }
+}
+</code></pre>
+
+<h2 id="sub-test">sub-test</h2>
+
+<p>To make the fixtures a bit better I use the <code>t.Run</code> function a lot. It is a
+feature introduced in Go 1.9 as part of the <code>testing</code> package.</p>
+
+<pre><code class="language-go">package test
+
+import (
+    "fmt"
+    "testing"
+)
+
+func MagicFunction(f int, s int) int {
+    if f%2 == 0 {
+        return f * s
+    }
+    return f / s
+}
+
+func TestEventInputsShouldReturnMoltiplication(t *testing.T) {
+    table := []struct {
+        first  int
+        second int
+        result int
+    }{
+        {2, 1, 2},
+        {4, 10, 40},
+    }
+    for _, s := range table {
+        t.Run(fmt.Sprintf("%d * %d", s.first, s.second), func(t *testing.T) {
+            if r := MagicFunction(s.first, s.second); r != s.result {
+                t.Errorf("Got %d, expected %d. They should be the same.", r, s.result)
+            }
+        })
+    }
+}
+</code></pre>
+
+<p><code>vim-go</code> has an option <code>let g:go_test_show_name=1</code> to allow the name of the
+test as part of the output for :GoTest or :GoTestFunc. This helps a lot to
+enjoy this feature.</p>
+
+<h2 id="golden-files">Golden files</h2>
+
+<p>Golden files are something used in different packages in the Go standard
+library, and Michael Hashimoto spoke about it during his brilliant talk about
+testing at the <a href="https://www.youtube.com/watch?v=8hQG7QlcLBk">GopherCon 2017</a>.
+In case of complex output, you can verify the result of the tests with the
+content of a file. It improves order and readability.  When you declare a
+global flag in your test, it becomes available inside <code>go test</code> so if you use
+the update flags all the tests will pass, but you will update all the golden
+files. So this is very useful if you need to compare a lot of bytes.</p>
+
+<pre><code class="language-go">update := flag.Bool("update-golden-files", false, "Update golden files.")
+</code></pre>
+
+<pre><code class="language-sh">go test -update-golden-files
+</code></pre>
+<p>I was using this trick a lot when I was writing PHP code, and I was testing HTTP responses.</p>
+
+<h2 id="test-helper-and-return-function">Test helper and return function</h2>
+<p>When you have repeatable code across tests, you can create a helper function,
+and you can use it in your tests. There are two general rules about this
+approach:</p>
+
+<ol>
+  <li>The helper function should have access to *t testing.T variable.</li>
+  <li>Your helper never returns an error; it marks the test as failed. That’s why
+it needs access to <code>*t. testing.T</code>.</li>
+</ol>
+
+<p>Another good trick is to return a function from the helper to clean up what you
+did in the helper. So let’s say that your helper starts an HTTP server. You can
+return the HTTP Close function as a callback.</p>
+
+<pre><code class="language-go">func () testHelperStartHTTPServer(t *testing.T) func() {
+    ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // long and complex mock maybe with a golden file and so on
+    }))
+    return func() { ts.Close() }
+}
+
+func TestYourTest(t *testing.T) {
+    hclose := testhelperStartHTTPServer()
+    // All your logic and checks
+    defer hclose()
+}
+</code></pre>
+<p>I used the same practice when I was writing integration tests using bash and
+<a href="https://github.com/sstephenson/bats">bats</a>. It is a very clean and easy to
+read approach.</p>
+
+<h2 id="parallel">parallel</h2>
+<p>You can use the function <code>t.Parallel()</code> to notify at the test runner that your
+case can run in parallel with other tests marked as parallel.  When you write
+unit tests, you can almost always run them in parallel because they should be
+completely isolated.</p>
+
+<h2 id="short-and-verbose">Short and verbose</h2>
+<p><code>-short</code> and <code>-v</code> are two flags available when you run <code>go test</code>. You can use
+them in your tests:</p>
+
+<pre><code>import "testing"
+
+func TestVeryLongAndExpensiveCapability(t *testing.T) {
+  if testing.Short() {
+    t.Skip("skipping this testsVeryLongAndExpensive is too expensive")
+  }
+  // ... other code
+}
+</code></pre>
+<p><code>-short</code> describes itself pretty well, you can skip tests that are too long and expensive.</p>
+
+<p><code>-v</code> allows you to print more:</p>
+<pre><code>import "testing"
+func TestVeryLongAndExpensiveCapability(t *testing.T) {
+  if testing.Verbose() {
+  }
+  // ... other code
+}
+</code></pre>
+
+<h2 id="testingquick">testing/quick</h2>
+<p><a href="https://golang.org/pkg/testing/quick/">testing/quick</a> is a nice package that
+offers a set of utilities to write test quick. Go has not an assertion library
+inside the stdlib but this can help if you are like me and you are happy to not
+vendor assertion libraries because <code>if { }</code> with some sugar is what I need.</p>
+
+<p>So that’s it, have fun and write tests!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

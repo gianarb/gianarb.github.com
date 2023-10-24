@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>I am in love with language servers</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Language Servers are a nice way to reuse common features required by editors such as auto complete, formatting, go to definition. This article is a an open letter to share my love for this project with everybody">
+    <meta name="keywords" content="oss, language server, lsp, vim, go">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/i-am-in-love-with-language-servers">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>I am in love with language servers</h1>
+<main>
+    <p class="meta">30 Jul 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Hello everybody! I am writing this article because I had a chat with a friend of
+mine <a href="https://twitter.com/walterdalmut">@wdalmut</a>. He is a busy businessman and
+vimmer like me.</p>
+
+<p>This article is a quick and practical way to understand why language servers are
+fantastic! Because they are!</p>
+
+<p>When I started to use vim, I was developing almost all the time with PHP. PHP is
+a tricky language, and back in the day, YouCompleteMe was the way to go to have
+some autocomplete. However, as I said, PHP was not an excellent language for
+that because the number of files is enormous, and to load all of them to suggest
+functions and methods is tricky. Probably it is still like that.</p>
+
+<p>Compared with a couple of years ago, we have more IDE and editors: Atom, VSCode,
+Sublime, and many more. All of them to be successful requires the same features:</p>
+
+<ul>
+  <li>Syntax highlight</li>
+  <li>autocomplete</li>
+  <li>Formatting</li>
+</ul>
+
+<p>You can see the language serves as a protocol to abstract and reuse those
+features, and many more such as go to definition, find all references, show
+documentation.  Vim is almost like WordPress; there is a plugin for everything;
+for example, there is an excellent vim-go plugin to make vim to work smart with
+golang. The problem is works for vim and as I said, almost all the editors
+need the set of shared features just listed to be usable on a daily base.</p>
+
+<p>The community that builds a language has a lexer a parser, and it can traverse
+the AST for the language that it develops. It has the knowledge and all the
+building blocks to provide a tool usable by different clients. The way for them
+to build something reusable is a language server. The clients are different
+editors.</p>
+
+<p>This story is real, and the Golang community develops
+<a href="https://github.com/golang/go/wiki/gopls">gopls</a> (it stays for go please), the
+Golang language server. I use it with vim, and as a client, I use
+<a href="https://github.com/neoclide/coc.nvim">vim-coc</a></p>
+
+<p>vim-go &gt;1.20 works with gopls as well, you need to set it explicitly:</p>
+
+<pre><code>let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+</code></pre>
+
+<p>This article expresses my love for language server, not for Go or vim-go or vim!
+Even if I love all of them!</p>
+
+<p>We spent a good amount of time to achieve developer happiness and to boost our
+productivity.</p>
+
+<p>There are more tools and developers around here. The killer feature for LSP is
+its ability to create communities and to give us the ability to share reusable
+code.</p>
+
+<p>Other than the gopls I also use
+<a href="https://github.com/sourcegraph/javascript-typescript-langserver">sourcegraph/javascript-typescript-langserver</a>
+for JavaScript and TypeScript and <a href="https://github.com/rust-lang/rls-vscode">rust-lang/rls-vscode</a> for rust.</p>
+
+<p>As you can see, rls-vscode looks from the name a VSCode project, but only
+because also VSCode supports the language server protocol!</p>
+
+<p>Thanks sourcegraph, microsoft and everybody behind the LSP effort!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

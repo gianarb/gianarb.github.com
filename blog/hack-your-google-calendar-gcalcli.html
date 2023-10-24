@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Hack your Google Calendar with gcalcli</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everybody uses google calendar in a way or another and if you are a Linux with a light desktop manager such as i3 you lack on some commodities like reminders and notifications for your events. I find gcalcli a very good solution for my pain.">
+    <meta name="keywords" content="oss, gcalcli, calendar, google, linux">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/hack-your-google-calendar-gcalcli">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Hack your Google Calendar with gcalcli</h1>
+<main>
+    <p class="meta">26 Aug 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am pretty bad with meetings. I forget about them for a lot of different
+reasons, sometime I do not show up even if few minutes earlier my mind briefly
+remembered it.</p>
+
+<p>Meetings are not my daily job, and I do not have them with a lot of different
+people: IPM with my team, one-to-one with my manager, various stand up. I can
+remember the recurrent one pretty well but it is still an annoying a useless
+exercise.</p>
+
+<p>When they are not recurrent they are usually out of my small circle of friends
+and it gets even worst because I do not like to be late or to miss it! I swear I
+am not like that in real life! I am on time and I prefer to be there earlier.</p>
+
+<p>Anyway! Ryan Betts VP Engineer at InfluxData shared a very nice CLI tools called
+<a href="https://github.com/insanum/gcalcli">gcalcli</a>. I love CLI tools as much as I
+love API! Probably a bit more because they are the perfect glue between server
+side and the best UX ever (also known as <strong>my terminal</strong>).</p>
+
+<p><img src="/img/gintonic.jpg" alt="A good gin tonic is great as close as my terminal" /></p>
+
+<p><strong>gcalcli</strong> is a lovely CLI tool that uses the Google Calendar API to help you
+to manage your Google Calendar.</p>
+
+<p>You can do a lot of things: list, search, edit, add events and even more.
+The <a href="https://github.com/insanum/gcalcli#login-information">authentication is well
+documented</a> you need to
+create a project on Google Development Platform with Calendar API access. After
+that you get your credential and you follow the link I just posted! Super easy.</p>
+
+<p>When you are logged I wrote this system unit and a timer in order to check every
+10 minutes if there are upcoming events:</p>
+
+<pre><code>[Service]
+SyslogIdentifier=gcalcli-notification
+ExecStart=/usr/bin/gcalcli remind
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<pre><code>[Unit]
+Description="Send notification for every meetings set for xxxxx@gmail.com"
+
+[Timer]
+OnBootSec=0min
+OnCalendar=*:0/10
+
+[Install]
+WantedBy=timers.target
+</code></pre>
+
+<p>The timer runs every 10 minutes this command <code>/usr/bin/gcalcli remind</code>.
+<code>remind</code> uses <code>notify-send</code> to show a lovely notification.</p>
+
+<p>I set it up for my working calendar and let me tell you it works great!
+For that reason I was looking for a way to support multiple Google account,
+because I would like to use it for my personal Google Calendar as well.</p>
+
+<p>There is a global flag for <code>gcalcli</code> called <code>--config-folder</code>, by default it set
+te none it creates a config file with credentials and preferences in your home
+directory.  If you run <code>gcalcli</code> with that parameter set with a different
+location:</p>
+
+<pre><code class="language-bash">$ gcalcli --config-folder ~/.gcalclirc-anotheraccount list
+</code></pre>
+
+<p>The CLI won’t find the configuration file and it will proceed with a brand-new
+authentication and it will create a new file located where specified. Sweet! I
+did that trick in order to have the second Google Account configured and I have
+created a new unit and timer with the right flags and now I get notification
+from everywhere! So far so good!</p>
+
+<p>Ryan allowed me to share a script he hacked called <code>next</code>, I have it in my
+<code>bashrc</code></p>
+
+<pre><code class="language-bash">next() {
+    datetime=$(date "+%Y-%m-%dT%H:%M")
+    whatwhere=$(gcalcli --calendar name-your-calendar agenda --tsv --details location $datetime 8pm | head -n 1 | awk 'BEGIN {FS = "\t+"} ; {print $5 " " $6}')
+
+    re="([[:digit:]]+)"
+    if [[ $whatwhere =~ $re ]]; then
+       room="zoommtg://zoom.us/join?confno=${BASH_REMATCH[1]}"
+    fi
+
+    echo "What: '$whatwhere'"
+    echo "xdg-open $room"
+    echo "xdg-open $room" | clipc
+}
+</code></pre>
+
+<p>I use Linux, he uses MacOS, so I changed the script a bit.</p>
+
+<p><code>xdg-open</code> to make it to work with <code>X</code>, <code>next</code> gets the next closer meeting you have in one
+particular calendar (<code>name-your-calendar</code> in my case) and it stores on my
+clipboard (via <code>clicp</code>) the command to join a zoom channel. It is super when you
+are in a hurry, you will join zoom meetings in a second.</p>
+
+<p>If you use <code>gcalcli</code> and you have other tricks let me know via twitter
+<a href="https://twitter.com/gianarb">@gianarb</a> because I would like to try them as well!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

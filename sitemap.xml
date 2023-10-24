@@ -1,0 +1,1837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-to-contribute-to-new-codebases</loc>
+			<lastmod>2023-10-24T06:10:10+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubernetes-is-finally-just-an-utility</loc>
+			<lastmod>2023-08-02T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/avoid-meetup-com</loc>
+			<lastmod>2022-11-24T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/from-ubuntu-to-nixos-history-of-a-mastodon-migration</loc>
+			<lastmod>2022-11-24T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/my-workflow-with-nixos</loc>
+			<lastmod>2022-09-12T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/redesign-goodbye-bootstrap</loc>
+			<lastmod>2021-12-17T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-i-started-with-nixos</loc>
+			<lastmod>2021-10-01T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/home-made-router-msata-netboot</loc>
+			<lastmod>2021-04-06T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/homelab-diy-bmc-intel-nuc</loc>
+			<lastmod>2021-03-14T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/nix-for-developers-sneaking-in-my-toolchain</loc>
+			<lastmod>2021-01-25T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/evolution-of-a-logline</loc>
+			<lastmod>2021-01-15T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubernetes-1-20-dockershim-in-practice</loc>
+			<lastmod>2020-12-03T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/lessons-learned-working-as-sre</loc>
+			<lastmod>2020-11-26T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-mod-vanity-url</loc>
+			<lastmod>2020-11-13T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/what-is-tinkerbell</loc>
+			<lastmod>2020-11-06T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/reactive-plan-golang-example</loc>
+			<lastmod>2020-10-26T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/release-workflow-as-code</loc>
+			<lastmod>2020-10-21T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-bare-metal-works-in-theory</loc>
+			<lastmod>2020-10-08T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/thinking-in-systems-donella-meadows-review</loc>
+			<lastmod>2020-09-12T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/maintainer-life-be-enabler</loc>
+			<lastmod>2020-08-20T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/interface-segreation-in-action-with-go</loc>
+			<lastmod>2020-08-20T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/e2e-test-tinkerbell-vagrant-setup-with-go</loc>
+			<lastmod>2020-08-03T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/terraform-what-with-rawkode</loc>
+			<lastmod>2020-07-29T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/first-journeys-with-netboot-ipxe</loc>
+			<lastmod>2020-06-10T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-application-lifecycle-gitops-with-ivan</loc>
+			<lastmod>2020-05-05T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-kubernetes-permission-manager</loc>
+			<lastmod>2020-05-05T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-vault-wireguard</loc>
+			<lastmod>2020-04-30T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-to-write-documentation-efficiently</loc>
+			<lastmod>2020-04-18T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-otel-nodejs</loc>
+			<lastmod>2020-04-11T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-goreleaser-buildkit-multi-arch</loc>
+			<lastmod>2020-04-08T09:00:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-to-start-with-opentelemetry-in-nodejs</loc>
+			<lastmod>2020-04-07T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/new-project-checklist</loc>
+			<lastmod>2020-04-02T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/why-code-instrumentation</loc>
+			<lastmod>2020-03-29T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/cncf-webinar-kubernetes-pprof-profefe</loc>
+			<lastmod>2020-03-27T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/golang-mockmania-zap-logger</loc>
+			<lastmod>2020-03-24T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/show-me-your-code-walter-dal-mut-kubernetes-nodejs-informers</loc>
+			<lastmod>2020-03-13T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/golang-mockmania-cli-command-with-cobra</loc>
+			<lastmod>2020-03-09T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/smart-working-does-not-need-to-be-remote</loc>
+			<lastmod>2020-03-04T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/golang-mockmania-httptest</loc>
+			<lastmod>2020-02-25T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/golang-mockmania-influxdb-v2-client</loc>
+			<lastmod>2020-02-09T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/continuous-profiling-go-apps-in-kubernetes</loc>
+			<lastmod>2020-02-04T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/make-boring-task-enjotable-with-go-colly</loc>
+			<lastmod>2020-01-23T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/my-experiene-with-krew-to-manage-kubectl-plugins</loc>
+			<lastmod>2020-01-16T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/unit-testing-kubernetes-client-in-go</loc>
+			<lastmod>2020-01-10T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-continuous-profiling-profefe</loc>
+			<lastmod>2020-01-03T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/year-in-review</loc>
+			<lastmod>2019-12-30T06:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/scaledocker</loc>
+			<lastmod>2019-12-18T06:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/programmatically-kube-port-forward-in-go</loc>
+			<lastmod>2019-12-05T06:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/opentelemetry-the-instrumentation-library-i-hope</loc>
+			<lastmod>2019-11-20T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/o11yguru-introduction</loc>
+			<lastmod>2019-11-09T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/o11yguru-history-first-bug</loc>
+			<lastmod>2019-11-07T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/extending-kubernetes-oreilly</loc>
+			<lastmod>2019-10-07T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubectl-flags-in-your-plugin</loc>
+			<lastmod>2019-10-07T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/as-a-developer-i-dont-care-about-kubernetes</loc>
+			<lastmod>2019-09-18T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/reactive-planning-and-reconciliation-in-go</loc>
+			<lastmod>2019-09-13T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/control-theory-is-dope</loc>
+			<lastmod>2019-09-04T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/hack-your-google-calendar-gcalcli</loc>
+			<lastmod>2019-08-26T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/i-am-in-love-with-language-servers</loc>
+			<lastmod>2019-07-30T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/when-do-you-need-a-site-reliability-engineer</loc>
+			<lastmod>2019-07-05T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/test-in-production-behind-slogans</loc>
+			<lastmod>2019-05-27T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/instrumentation-code-is-a-first-citizen-in-a-codebase</loc>
+			<lastmod>2019-05-27T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/two-years-at-influxdata</loc>
+			<lastmod>2019-05-23T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/workshop-design</loc>
+			<lastmod>2019-04-19T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-observability-is-for-troubleshooting</loc>
+			<lastmod>2019-02-28T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-parallelization-trick</loc>
+			<lastmod>2019-02-21T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/infra-as-code-short-long-ttl-resource</loc>
+			<lastmod>2019-02-14T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubernetes-shared-informer</loc>
+			<lastmod>2019-02-07T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/serverless-means-extendibility</loc>
+			<lastmod>2019-01-22T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubernetes-github-action</loc>
+			<lastmod>2019-01-22T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/why-I-speak-at-conferences</loc>
+			<lastmod>2019-01-15T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/testcontainers-go</loc>
+			<lastmod>2019-01-08T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/infrastructure-as-real-code</loc>
+			<lastmod>2018-12-31T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/high-cardinality-database</loc>
+			<lastmod>2018-11-28T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/reactive-planning-is-a-cloud-native-pattern</loc>
+			<lastmod>2018-11-28T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/price-of-poor-software-design</loc>
+			<lastmod>2018-11-10T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/chaos-engineer</loc>
+			<lastmod>2018-08-23T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/prometheus-openmetrics-expositon-format</loc>
+			<lastmod>2018-08-23T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/nomad-working-apps</loc>
+			<lastmod>2018-08-11T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/faq-distributed-tracing</loc>
+			<lastmod>2018-07-06T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/logs-metrics-traces-aggregation</loc>
+			<lastmod>2018-06-18T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/cloud-native-intranet</loc>
+			<lastmod>2018-05-29T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/server-time-vs-response-time</loc>
+			<lastmod>2018-05-18T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-http-cleanup-http-connection-terminated</loc>
+			<lastmod>2018-04-25T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-testing-tricks</loc>
+			<lastmod>2018-04-17T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/go-awesomeness</loc>
+			<lastmod>2018-04-09T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/observability</loc>
+			<lastmod>2018-04-04T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/testing-shit</loc>
+			<lastmod>2018-03-29T10:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/database-reliability-engineer-review</loc>
+			<lastmod>2018-03-27T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/golang-forwarding-proxy</loc>
+			<lastmod>2018-03-21T09:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/the-abstract-manifesto</loc>
+			<lastmod>2018-03-17T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>monthly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/site-reliability-engineering-review</loc>
+			<lastmod>2018-03-15T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/what-is-distributed-tracing-opentracing-opencensus</loc>
+			<lastmod>2018-02-18T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/the-development-balance</loc>
+			<lastmod>2018-02-09T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>monthly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/kubernetes-up-and-running</loc>
+			<lastmod>2017-12-19T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/desk-setup</loc>
+			<lastmod>2017-12-17T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/from-docker-to-moby</loc>
+			<lastmod>2017-10-20T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/git-git-git-but-better</loc>
+			<lastmod>2017-10-10T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/orbiter-the-swarm-autoscaler-moves</loc>
+			<lastmod>2017-08-09T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/asus-universal-dock-driver</loc>
+			<lastmod>2017-08-03T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/cncf-italy-first-event</loc>
+			<lastmod>2017-06-05T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/container-security-immutability</loc>
+			<lastmod>2017-06-05T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/orbiter-docker-swarm-autoscaler</loc>
+			<lastmod>2017-04-22T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/linuxkit-operating-system-build-for-containers</loc>
+			<lastmod>2017-04-18T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/containers-why-we-are-here</loc>
+			<lastmod>2017-03-12T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/about-your-images-security-tips</loc>
+			<lastmod>2016-12-28T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/docker-registry-to-ship-your-containers</loc>
+			<lastmod>2016-12-14T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/continuous-integration-and-silent-checks</loc>
+			<lastmod>2016-11-18T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/Docker-Security-Benchmark</loc>
+			<lastmod>2016-11-15T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/chef-server-startup-notes</loc>
+			<lastmod>2016-11-10T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/docker-the-fundamentals</loc>
+			<lastmod>2016-08-25T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/be-start-like-your-healthcheck</loc>
+			<lastmod>2016-08-25T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/build-opinions-to-become-wise</loc>
+			<lastmod>2016-08-25T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/docker-1-12-meetup-dublin</loc>
+			<lastmod>2016-08-24T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/services-and-common-parts</loc>
+			<lastmod>2016-08-14T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>yearly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/distributed-system-means</loc>
+			<lastmod>2016-07-12T16:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/symfony-and-influxdb-to-monitor-php-applications</loc>
+			<lastmod>2016-07-02T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/docker-1-12-orchestration-built-in</loc>
+			<lastmod>2016-06-20T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/a-little-bit-of-refactoring</loc>
+			<lastmod>2016-04-24T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/docker-inside-docker-and-jenkins-2</loc>
+			<lastmod>2016-04-01T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/happy-docker-bday-and-thanks</loc>
+			<lastmod>2016-03-25T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/some-days-of-work-vs-jenkins-ci</loc>
+			<lastmod>2016-02-21T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/chatops-create-your-own-irc-bot-in-go</loc>
+			<lastmod>2016-02-21T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/influxdb-php-release-1-3-0</loc>
+			<lastmod>2016-02-18T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/swarm-scales-your-containter-for-free</loc>
+			<lastmod>2015-12-14T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/wordpress-docker</loc>
+			<lastmod>2015-12-14T10:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/fast-event-manager-only-an-event-manager</loc>
+			<lastmod>2015-11-01T00:00:00+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/penny-framework-made-of-components</loc>
+			<lastmod>2015-10-27T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/php-and-vim-composer-release-0-3-0</loc>
+			<lastmod>2015-09-15T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/stagin-environment-on-demand-with-aws-cloudformation</loc>
+			<lastmod>2015-07-08T09:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/zendframework-console-app</loc>
+			<lastmod>2015-05-21T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/symfony-unit-test-controller-with-phpunit</loc>
+			<lastmod>2015-05-21T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/the-price-of-modularity</loc>
+			<lastmod>2015-02-21T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/zf2-release-234</loc>
+			<lastmod>2015-01-14T00:00:00+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/InfluxDB-and-PHP</loc>
+			<lastmod>2015-01-06T00:00:00+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/Zf2-Event-base-use</loc>
+			<lastmod>2013-11-21T12:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/Git-globa-gitignore</loc>
+			<lastmod>2013-11-21T12:38:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/vagrant-up-talk-milano</loc>
+			<lastmod>2013-09-14T12:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/zf2-console-usage-speed-help</loc>
+			<lastmod>2013-08-22T08:08:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/Generate-jekyll-sitemap-without-plugin</loc>
+			<lastmod>2013-08-09T09:38:27+00:00</lastmod>
+
+			
+				<changefreq>weekly</changefreq>
+			
+
+			
+				<priority>1</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/how-do-you-implement-log-service</loc>
+			<lastmod>2013-07-26T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.6</priority>
+			
+		</url>
+	
+		<url>
+			<loc>https://gianarb.it/blog/why-this-blog</loc>
+			<lastmod>2013-07-22T23:08:27+00:00</lastmod>
+
+			
+				<changefreq>daily</changefreq>
+			
+
+			
+				<priority>0.8</priority>
+			
+		</url>
+	
+</urlset>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Lessons learned working as site reliability engineer</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I want to share a few lessons I learned working three years as site reliability engineer. I kept the focus on the one I think are reusable, and that made me a better developer because reliability just as everything is an everybody business">
+    <meta name="keywords" content="golang">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/lessons-learned-working-as-sre">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Lessons learned working as site reliability engineer</h1>
+<main>
+    <p class="meta">26 Nov 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I worked for three years at InfluxData as Site Reliability Engineer. When
+onboarding a new role in this jungle called “career” in information technology,
+you should be ready to learn what that role means.</p>
+
+<p>Along the way, I developed new skills and mastered a few that I already had, but
+they were not widely used elsewhere.</p>
+
+<p>My title is not Site Reliability Engineer anymore, but the IT career is like a
+roulette, and everything you learn will get back at some point. So I want to
+share skills I think are essential when working as a Site Reliability Engineer
+and that I feel they are useful to keep in your toolchain even when your title
+changes.</p>
+
+<h3 id="ability-to-develop-a-friendly-environment-for-yourself">Ability to develop a friendly environment for yourself</h3>
+
+<p>One of my goals as a Site Reliability Engineer is to quickly support developers
+having trouble with their code at scale.</p>
+
+<p>Another one is to figure out criticalities when it comes to on-call.</p>
+
+<p>I am far from my local environment in both cases, usually interacting with an
+environment much more complicated. Having something you can call familiar help.
+It can be whatever:</p>
+
+<ul>
+  <li>A few bash scripts that wrap other commands with a UX hard to remember</li>
+  <li>A CLI tool you wrote with your team</li>
+  <li>A directory where you can quickly go and write notes about what is going on
+for future use</li>
+  <li>A set of bullet points or a runbook you know is rock solid and can drive you
+where you want to go.</li>
+</ul>
+
+<p>Those are just a few tricks I use. If you have yours and you want to share them
+as a comment, please do it!</p>
+
+<p>This is an essential skill that everyone has to master, but as an SRE, when you
+have to act quickly, I really learned it, and now I do my best to develop my
+workflows and a working environment I like. Those days I am giving a try with
+Nix and, in particular, nix-shell because it helps me customize my environment
+without the overhead of a Docker container.</p>
+
+<p>This may sound time-consuming. Many projects have a README describing tools and
+requirements to contribute or build the project. Why I need my way? Well, I am
+not saying you should start from zero, but when I glue it with the flavor I
+like, I code better and am happier. So for me, it is a big YES!</p>
+
+<h3 id="troubleshoot-like-a-ninja">Troubleshoot like a ninja</h3>
+
+<p>Starting from the same purpose as before, a Site Reliability Engineer looks at
+the code when it runs in production, and production is a scary and dangerous
+place. As a developer, if you are lucky and smart, you try to focus on one
+application at a time, yes it probably has many dependencies, but still, code
+moves one line at a time.</p>
+
+<p>In production with concurrency and thousands of requests happening almost
+simultaneously, things get pretty messy. Having the ability and the right tools
+to slice and dice from different points of view and prospectives, from an entire
+region to a specific application requires operational experience and training.</p>
+
+<p>A good exercise is to have the desire to troubleshoot everything. Does a
+teammate have a question about a system in production? Go and help him. Visit
+logs, traces, and dashboards even when everything looks quiet if you are so
+lucky to have a definition of it.</p>
+
+<p>Another thing I do, but more in general, is to follow the best. There is a lot
+about the topic in the forms of books, talks, and similar. Read them but even
+more importantly, follow who master these topics every day:
+<a href="https://twitter.com/rakyll">@rakyll</a>,
+<a href="https://twitter.com/brendangregg">@brendangregg</a>,
+<a href="https://twitter.com/relix42">@relix42</a>,
+<a href="https://twitter.com/lizthegrey">@lizthegrey</a>,
+<a href="https://twitter.com/lauralifts">@lauralifts</a>. Please do not follow them on
+Twitter only, but look at their GitHub as well; sometimes, a small project that
+works reliably and well for us is gold.</p>
+
+<h3 id="think-about-code-debuggability-in-production">Think about code debuggability in production</h3>
+
+<p>Like everything you read so far, it is always essential because, as I said, Site
+Reliability Engineer is just a role that has a subset of responsibilities and
+objectives, but we are not silos; everything matters a feature has to be usable;
+good looking, functional. Code review for me become a lot more about: “is this
+code understandable in production?”, “what do I want it to tell me when running
+at scale?”, “how this trace looks like?” “is this log useful, and how does it
+impact the overall context?”.</p>
+
+<p>Those questions strongly show my mind when working as an SRE, but they made me a
+better developer. I still try to answer them when coding or when doing code
+reviews.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>Titles are just titles; reading them will help to know a set of skills you
+leveraged most, but that’s it, and it is not always true. You are not married to
+your title, and if you are curious about various aspects of our work, you will
+change many of them. The right balance of all those skills will make you unique.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Workshop Design</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I recently developed a workshop about application instrumentation. I ran it at the CloudConf in Turin. I developed it in open source and I thought it was a nice idea to share more about why I did it and how.">
+    <meta name="keywords" content="go, monitoring, observability, workshop, development, conference, tracing, jaeger">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/workshop-design">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Workshop Design</h1>
+<main>
+    <p class="meta">19 Apr 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Hello sweet internet! At this point, you should know that I am far to be a
+lovely happy code. I like to share what I learn and to have a chat about what
+you are doing. That’s as it is! Feel free to follow my wheeze on
+<a href="https://twitter.com/gianarb">twitter/gianarb</a>.</p>
+
+<p>If you don’t know what I am gonna speak about, I can tell you this is another
+way to enjoy coding!</p>
+
+<p>Recently a friend of mine that organizes the <a href="https://cloudconf.it">CloudConf</a>
+in Turin, Italy asked me if I was able to deliver a workshop. Let me say THE
+workshop, 8 hours of chatting with exercises and questions.
+I did something like that years ago about AngularJS but hey, this sounds like a
+challenge, and I love challenges! So I took it.
+<img src="/img/got-your-back.jpg" alt="" />
+If you read my recent posts you know I have a passion nowadays:</p>
+
+<ul>
+  <li><a href="/blog/go-observability-is-for-troubleshooting">Observability is for troubleshooting</a></li>
+  <li><a href="/blog/high-cardinality-database">You need an high cardinality database</a></li>
+  <li><a href="/blog/logs-metrics-traces-aggregation">Logs, metrics and traces are equally useless</a></li>
+</ul>
+
+<p>The topic was clear, I have called it “Application instrumentation”. Lovely!</p>
+
+<p>I am driven by passion and purpose. My passion for troubleshooting and the
+purpose of figuring out what the f happen in production. I was ready to work on
+it!</p>
+
+<p><img src="/img/passion-fruit.jpg" alt="" /></p>
+
+<h2 id="workshop">Workshop?</h2>
+
+<p>This article is about how I prepared the workshop and I hope it can help
+somebody to avoid the same mistake and also to use some of the material I
+developed.</p>
+
+<p>I made everything in open source. There are two new repositories on my GitHub one with fake
+e-commerce I made using 4 different programming languages:</p>
+
+<ul>
+  <li>Golang as frontend proxy with a UI in HTTP/JQuery.</li>
+  <li>Java to do the most secure part of the e-commerce obviously the payment
+service.</li>
+  <li>NodeJS to get discounts for the items.</li>
+  <li>PHP to get the list of items currently available.</li>
+</ul>
+
+<p>You can find the code on
+<a href="https://github.com/gianarb/shopmany">github.com/gianarb/shopmany</a>.</p>
+
+<p>I decided to develop a minimum version of the application in order to have it
+reusable for another purpose. It can be used to build a use case for Kubernetes
+deployment for example or a CI lesson.</p>
+
+<p>The branch <code>master</code> contains the minimum set of features that I need to have an
+application that has some sense. But for example, the services are without logs,
+metrics and tracing because they will be added as exercises from the attendees.</p>
+
+<p>If you check out the workshop you will be able to see in the history a commit for
+every exercise and applications.</p>
+
+<p>The lessons are available on
+<a href="https://github.com/gianarb/workshop-observability">github.com/gianarb/workshop-observability</a>,
+every directory is a lesson. The readme contains a couple of information about
+what where we are, why we should care and one or more exercise to do in practice
+in order to familiarize with the concepts.</p>
+
+<p>The lessons I developed for the purpose of the CloudConf workshop are:</p>
+
+<ol>
+  <li>lesson1 designing a health check endpoint. Adding a single endpoint is a good
+way to familiarize with a new application and there is so much to learn about
+how to design a good health check endpoint!</li>
+  <li>lesson2 is about logging and <a href="https://charity.wtf/2019/02/05/logs-vs-structured-events/">structure
+logging</a>. I tried
+to pick the most popular logging libraries for the languages. Logging using
+JSON format to open the door for future serialization as an event.</li>
+  <li>lesson3 is about InfluxDB v1 and the TICK stack. The goal was to serve a
+monitoring stack that can work with a different structure such as events and
+traces.</li>
+  <li>lesson4 is about tracing. Using Jaeger we instrumented and build a trace for
+the application.</li>
+</ol>
+
+<p>I have also reported an idea of a possible timeline (the one I used at the
+CloudConf):</p>
+
+<p>09.00 Registration and presentation
+09.30 - 13.00 Theory</p>
+
+<ul>
+  <li>Observability vs monitoring</li>
+  <li>Logs, events, and traces</li>
+  <li>How a monitoring infrastructure looks like: InfluxDB, Prometheus, Jaeger,
+Zipkin, Kapacitor, Telegraf…</li>
+  <li>Deep dive on InfluxDB and the TICK Stack</li>
+  <li>Deep dive on Distributed Tracing</li>
+</ul>
+
+<p>13.00 - 14.00 Launch
+14.00 - 17.00 Let’s make our hands dirty
+17.30 - 18.00 Recap, questions and so on</p>
+
+<h2 id="learning-during-the-development">Learning during the development</h2>
+
+<p>I like to prepare slides, posts, and workshop because I learn a lot along the
+way about concepts that I usually develop during a long set and frustrating
+attempts. Or reading a lot of blog posts, books, code. Writing about it helps me
+to put together what I learned developing easy to understand materials.</p>
+
+<p>This workshop was not a special case. It is not clear for me that even if there
+is a lot going on with OpenCensus, OpenTracing, and other instrumentation
+libraries there is still room for improvement.</p>
+
+<p>Instrumenting an application is not anymore just a matter of adding <code>printf</code>
+around the execution of the code. But it is the way we have to write an
+application capable of behind debugged and that speaks with the outside in an
+understandable way.</p>
+
+<p>The course has two different sections: theory and practice.</p>
+
+<p>The theory went well. I do not have a lot to say about it and for me, it is where
+I am most comfortable with because it looks like a long talk.</p>
+
+<p>The practical part was for sure a bit too long and I didn’t have time to walk
+all the people over it but the fact that there are all the solutions, the
+purpose written down helped them to feel less lonely and everyone can follow the
+resolution is it can do the exercise in practice.</p>
+
+<p>This usually happens because of different skills set or for trouble configuring
+the environment.</p>
+
+<p><code>git</code> helped me a lot, every commit has a diff that I used to explain the
+solution of the lessons. People that were not confidently writing the solution in a
+particular language had to just <code>cherry-pick</code> the commit in the language they
+didn’t know.</p>
+
+<h2 id="collaboration">Collaboration</h2>
+
+<p>The practical part was designed to be a collaboration between people. IMHO it
+helps to feel less “at school” but more as a team that it is something we should
+feel more comfortable with at work.</p>
+
+<p>I think it worked but not that well. People were supporting and helping each
+other. But I probably need to cut the lessons in a different way. I think I will
+remove the <code>influxdb</code> lessons injecting the learning process of only what
+matters for the course along the other lessons.  Next time and I will develop a
+new lesson about how to parse the logs and push them to InfluxDB for example.
+(let me know if you would like to help me!)</p>
+
+<h2 id="feedback">Feedback</h2>
+
+<p>I asked them to do a survey before the end of the course in order to help me
+get their feeling. There is a lot to do and some of their feedback is part
+of this article. But in general, I am happy because I have all the material in
+order and this for me was just a first iteration. I hope to make it better, to
+grant more feedback from the open source and to run it again! So let me know if
+you would like to have me on board!</p>
+
+<h2 id="next">Next</h2>
+
+<p>As I said instrumentation is hard and I still hoping to get an easier solution
+across languages. I tried OpenCensus but I didn’t manage to have it running at I
+was in the rush so I used Jaeger.</p>
+
+<p>I will develop something about structured logging as I said for sure.</p>
+
+<p>I hope to get a lesson from some as a service provider like HoneyComb for
+example.</p>
+
+<h2 id="fun-fact">Fun Fact</h2>
+<p>The youngest person in the room was a student in high school! Wow!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

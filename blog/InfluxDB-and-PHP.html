@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Influx DB and PHP implementation</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="InfluxDB is a popular and open source time series database capable to store millions of points keeping a fast lookup. It supports SQL as query language and it exposes an HTTP API to interact with it. In Corley we wrote a PHP SDK and we released it open source to integrate InfluxDB in your PHP application.">
+    <meta name="keywords" content="php, influxdb, monitoring, corley, monitoring, open source">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/InfluxDB-and-PHP">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Influx DB and PHP implementation</h1>
+<main>
+    <p class="meta">06 Jan 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Influx DB is <a href="http://en.wikipedia.org/wiki/Time_series_database">time series
+database</a> written in Go.</p>
+
+<p>It supports SQL like queries and it has different entry points, REST API (tcp
+protocol) and UDP.</p>
+
+<div class="row">
+<div class="col-md-4 col-md-offset-3"><img class="img-fluid" src="/img/influxdb.png" /></div>
+</div>
+
+<p>We wrote a <a href="https://github.com/corley/influxdb-php-sdk">sdk</a> to manage
+integration between Influx and PHP.</p>
+
+<p>It supports Guzzle Adapter but if you use Zend\Client you can write your
+implementation.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$guzzle</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="nf">GuzzleHttp\Client</span><span class="p">();</span>
+
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Options</span><span class="p">();</span>
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">GuzzleAdapter</span><span class="p">(</span><span class="nv">$guzzle</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">();</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">setAdapter</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">);</span></code></pre></figure>
+
+<p>In this case we are using a Guzzle Client, we communicate with Influx in TPC, but we can speak with it in UDP</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$options</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Options</span><span class="p">();</span>
+<span class="nv">$adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UdpAdapter</span><span class="p">(</span><span class="nv">$options</span><span class="p">);</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Client</span><span class="p">();</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">setAdapter</span><span class="p">(</span><span class="nv">$adapter</span><span class="p">);</span></code></pre></figure>
+
+<p>Both of them have the same usage</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">mark</span><span class="p">(</span><span class="s2">"app.search"</span><span class="p">,</span> <span class="nv">$points</span><span class="p">,</span> <span class="s2">"s"</span><span class="p">);</span></code></pre></figure>
+
+<p>The first different between udp and tcp is known, TPC after request expects a
+response, UDP does not expect anything and in this case does not exist any
+delivery guarantee.  If you can accept this stuff this is the benchmark:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Corley<span class="se">\B</span>enchmarks<span class="se">\I</span>nflux DB<span class="se">\A</span>dapterEvent
+    Method Name                Iterations    Average Time      Ops/second
+    <span class="nt">------------------------</span>  <span class="nt">------------</span>  <span class="nt">--------------</span>    <span class="nt">-------------</span>
+    sendDataUsingHttpAdapter: <span class="o">[</span>1,000     <span class="o">]</span> <span class="o">[</span>0.0026700308323] <span class="o">[</span>374.52751]
+    sendDataUsingUdpAdapter : <span class="o">[</span>1,000     <span class="o">]</span> <span class="o">[</span>0.0000436344147] <span class="o">[</span>22,917.69026]</code></pre></figure>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

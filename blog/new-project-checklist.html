@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Checklist for a new project</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A person list I developed along those years that I try to implement across projects I start or contribute to">
+    <meta name="keywords" content="developer, checklist, ci, cd, logging">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/new-project-checklist">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Checklist for a new project</h1>
+<main>
+    <p class="meta">02 Apr 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Back in the day I used to start a lot of projects. From zero on GitHub, some of
+them are still there, unused probably.</p>
+
+<p>Recently I started to take part of other people projects like
+<a href="https://github.com/testcontainers">testcontainers</a> or
+<a href="https://github.com/profefe">profefe</a>. I wrote about why I do it during the
+<a href="/blog/year-in-review">“2019 year in review”</a> post.</p>
+
+<p>In both cases, so even when joining a new existing project or when I start a new
+one I try to follow a checklist.</p>
+
+<p>I developed this checklist along the years, moving parts and extending the
+number of checks. The main goal for that is to validate that the project has
+good answers for a couple of questions, not related at what it does, but to how
+it does it.</p>
+
+<ol>
+  <li>is it easy to onboard as a user?</li>
+  <li>as a new contributor is the project easy to understand?</li>
+  <li>as a maintainer do I have everything I can under control in order to waste as
+less time as possible?</li>
+</ol>
+
+<p>I follow the checklist when working on opensource but also in close source
+project and what I like about it is that you can propose a change by youself,
+you can try to apply those feedback as a solo-developer, hoping to make
+contributors, maintainers and colleagues to buy them spreading joy.</p>
+
+<p>But let’s make to the list now.</p>
+
+<h3 id="have-a-place-where-you-can-write">Have a place where you can write</h3>
+
+<p>When I start a new project, but also during the onboard of an existing one in my
+tool chain I look for a written format of it.</p>
+
+<p>I look for a readme, an installation process, a getting started guide, a
+contribution document. It does not need to be pretty one, a copy/paste of a few
+bash scripts that the maintainer does to set itself up is enough.</p>
+
+<p>Having a place during the early days of a project where I can write what I
+think, how I would like to get things done is important in order to design
+something usable and to spot sooner misleading assumption.</p>
+
+<p>If you can build the place for all those information it will take you one
+second to save them forever, it is just a matter of copy/pasting the command you
+run in your terminal to spin up dependencies, build the project and so on.</p>
+
+<p>I like to use the README.md, CONTRIBUTOR.md and a <code>./docs</code> folder to save
+everything I am thinking about or everything I do that I hope will make my life
+easy in a month where I will be back on that piece of code without even knowing
+it was there. The feeling you get is the same a new person has when it looks at
+your project for the first time.</p>
+
+<p>There is no way you can get it right since the beginning, because there is not a
+definition of right. First day everything you write is mainly for yourself, in a
+month and some editing it will become the first version of the documentation for
+your project.</p>
+
+<h3 id="logging-and-instrumentation-library">Logging and instrumentation library</h3>
+
+<p>As I said at the beginning of the article all the checks do not depend on the
+business logic of your application or library. All of them has to speak with the
+outside world sharing their internal state in a way that is reusable,
+comprehensive, configurable.</p>
+
+<p>There are a lot of people that speaks about observability, logging, tracing,
+monitoring. Everybody has its own opinion, but form a technical point of your
+what you write has to be easy to troubleshoot.</p>
+
+<p>You do it using the right telemetry libraries. For logging I do not have any
+doubt. In Go I use <a href="https://github.com/uber-go/zap">zap</a>.</p>
+
+<p>During a workshop about observability I built where I had to instrument 4
+applications on different languages I selected:</p>
+
+<ul>
+  <li><a href="https://github.com/pinojs/pino">pino</a> for NodeJS</li>
+  <li><a href="https://github.com/Seldaek/monolog">monolog</a> for PHP</li>
+  <li><a href="https://logging.apache.org/log4j/2.x/">log4j</a> for JAVA</li>
+</ul>
+
+<p>In general I look for libraries that allow me to do structured logging, so for
+the one that enables me to attach key value pairs to log line. I also look for
+logging libraries that has the concept of exporters and format. Nothing unusual.</p>
+
+<p>For tracing and events I do not have a favourite one but I would like to see
+<a href="https://opentelemetry.io">Opentelemetry</a> to become the way to go.</p>
+
+<h3 id="continuous-integration">Continuous integration</h3>
+
+<p>A project without CI can not be called in that way. Nowadays there are a lot of
+free services that you can use, so no excuse. When I am on GitHub I go for
+Actions now because they are free and embedded in the VCS itself.</p>
+
+<p>If you didn’t write any test at least set the process up and running. Just run
+tests, usually they do not fails if empty. And there are static checker, linters
+and things like that for every language, set them up!</p>
+
+<h3 id="continuous-delivery">Continuous delivery</h3>
+
+<p>You made the CI part, you are half way done. Release is important and we have
+the tools to get it right since day one. It is a pain to do a release, there are
+a lot of potential manual state to get it right:</p>
+
+<ol>
+  <li>Bump version</li>
+  <li>Changelog</li>
+  <li>Compile and push binaries if it is an application</li>
+  <li>…</li>
+</ol>
+
+<p>There are tools that helps you to do that in automation. For my apps I use
+<a href="https://github.com/goreleaser/goreleaser">goreleaser</a>, for the libraries I use
+<a href="https://github.com/marketplace/actions/release-drafter">Releaser drafter</a>.</p>
+
+<h3 id="testing-framework">Testing framework</h3>
+
+<p>Write tests, and when you see repeated code extract it in a testing package.
+<code>zap</code> has <code>zaptest</code>, your project should have <code>yourprojecttest</code> as well.</p>
+
+<p>It is useful for yourself, because it will make the job to write more test
+effortless, and if you well document your testing package contributors will be
+able to use it when opening a PR because you will make writing tests easier for
+everybody. As a bonus who ever uses your libraries can use the testing package
+to write their own tests for their application.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This is the list I use, and I will keep it up to date now that I wrote it down,
+adding or editing it, so be sure to stay around!</p>
+
+<p>I hope this checklist is general enough and useful to be reusable for you in
+some of its part.</p>
+
+<p>What I like about it is that I do not need to be a CTO, a maintainer or
+something like that to drive the adoption of those point that I think are
+crucial, I drove the adoption of some of them even as a solo contributor.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

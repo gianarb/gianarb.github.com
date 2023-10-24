@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Reactive planing in Golang. Reach a desired number adding and subtracting random numbers</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="An example about how to write reactive planning in Go. Code and step by step solution for an exercise I developed to learn planner">
+    <meta name="keywords" content="software design, golang, go, reconciliation loop, reactive planning">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/reactive-plan-golang-example">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Reactive planing in Golang. Reach a desired number adding and subtracting random numbers</h1>
+<main>
+    <p class="meta">26 Oct 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Ciao! A few months ago, probably a year, I wrote a small library called
+<a href="https://github.com/gianarb/planner">planner</a>. It comes from my experience using
+reactive planning and Kubernetes. I am really in love with this way of writing
+code because it sounds very reliable to me.</p>
+
+<p>Over the last couple of days, I decided to write documentation for it! So now it
+is presentable; I streamed that with <a href="https://twitch.tv/gianarb">Twitch</a> if you
+like to watch people coding!</p>
+
+<p>As part of the library’s readme, I wrote a small program, and I left a couple of
+exercises to the reader. With this article, I want to solve them.</p>
+
+<p>You can follow this article and try it yourself, starting from
+<a href="https://play.golang.com/p/0LuIoMtp10f">play.golang.com</a>.</p>
+
+<pre><code class="language-golang">package main
+
+import (
+	"context"
+	"time"
+
+	"github.com/gianarb/planner"
+	"go.uber.org/zap"
+)
+
+func main() {
+	ctx, done := context.WithTimeout(context.Background(), 10*time.Second)
+	defer done()
+
+	countPlan := &amp;CountPlan{
+		Target: 20,
+	}
+	scheduler := planner.NewScheduler()
+	scheduler.WithLogger(initLogger())
+
+	scheduler.Execute(ctx, countPlan)
+}
+
+type CountPlan struct {
+	Target  int
+	current int
+}
+
+func (p *CountPlan) Create(ctx context.Context) ([]planner.Procedure, error) {
+	if p.current &lt; p.Target {
+		return []planner.Procedure{&amp;AddNumber{plan: p}}, nil
+	}
+	return nil, nil
+}
+
+func (p *CountPlan) Name() string {
+	return "count_plan"
+}
+
+type AddNumber struct {
+	plan *CountPlan
+}
+
+func (a *AddNumber) Name() string {
+	return "add_number"
+}
+
+func (a *AddNumber) Do(ctx context.Context) ([]planner.Procedure, error) {
+	a.plan.current = a.plan.current + 1
+	return nil, nil
+}
+
+func initLogger() *zap.Logger {
+	cfg := zap.NewProductionConfig()
+	cfg.Encoding = "console"
+	l, _ := cfg.Build()
+	return l
+}
+</code></pre>
+
+<p>This program tries to reach the <code>Target</code> (20 in this case) adding numbers to the
+current state. If you execute this program as it is you will get the following
+logs:</p>
+
+<pre><code class="language-console">1.257894e+09	info	planner@v0.0.1/scheduer.go:41	Started execution plan count_plan	{"execution_id": "98d28eed-9b3b-4ad8-bfbd-1b5338d1a649"}
+1.257894e+09	info	planner@v0.0.1/scheduer.go:59	Plan executed without errors.	{"execution_id": "98d28eed-9b3b-4ad8-bfbd-1b5338d1a649", "execution_time": "0s", "step_executed": 20}
+</code></pre>
+
+<p>As you can see, the scheduler executed the plan <code>count_plan</code> successfully, and
+it took 20 steps to get there (<code>step_executed: 20</code>).</p>
+
+<p>Reasonable because, as you can see, the <code>CounterPlan.Create</code> function returns an
+<code>AddNumber</code> procedure and that procedure only adds 1 to the current state. It is
+just a counter; let’s make it a bit more fun. I want to add or substract random
+number until the target is reached. The program adds when the current state is above the
+target, when above it subtracts. If it’s equal we are done. This is a simple way
+to simulate something that has to adapt, too simple to sound cool but still
+something understandable.</p>
+
+<h3 id="change-the-addnumber-to-use-a-randomly-generated-number">Change the AddNumber to use a randomly generated number.</h3>
+
+<p>We need to change the AddNumber in order to add not 1 but a random number. Let’s
+do it:</p>
+
+<pre><code class="language-go">var random *rand.Rand
+func initRandom() {
+    s1 := rand.NewSource(time.Now().UnixNano())
+    random = rand.New(s1)
+}
+</code></pre>
+
+<p>At this point, we can use <code>random</code> as part of the <code>AddNumber.Do</code> function.</p>
+
+<pre><code class="language-go">type AddNumber struct {
+	plan *CountPlan
+}
+
+func (a *AddNumber) Name() string {
+	return "add_number"
+}
+
+func (a *AddNumber) Do(ctx context.Context) ([]planner.Procedure, error) {
+	a.plan.current = a.plan.current + random.Intn(10)
+	return nil, nil
+}
+</code></pre>
+
+<p>For simplicity, I am taking a random number between 0 and 10. What happens now?
+The problem now is that we can go above the target, so we have to make our
+<code>CounterPlan.Create</code> function and our logic a bit more complicated.</p>
+
+<h2 id="evolve-the-create-function-to-subtract-numbers-from-the-current-state">Evolve the Create function to subtract numbers from the current state</h2>
+
+<pre><code class="language-go">func (p *CountPlan) Create(ctx context.Context) ([]planner.Procedure, error) {
+	if p.current &lt; p.Target {
+		return []planner.Procedure{&amp;AddNumber{plan: p}}, nil
+	} else if p.current &gt; p.Target {
+		return []planner.Procedure{&amp;SubtractNumber{plan: p}}, nil
+	}
+	return nil, nil
+}
+</code></pre>
+
+<p>When we go above the target, the Plan subtracts a random number, and it keeps
+going until we get to it. <code>SubtractNumber</code> does the opposite of what
+<code>AddNumber</code> does, it subtracts a random number between 0 an 10.</p>
+
+<pre><code class="language-go">type SubtractNumber struct {
+	plan *CountPlan
+}
+
+func (a *SubtractNumber) Name() string {
+	return "subtract_number"
+}
+
+func (a *SubtractNumber) Do(ctx context.Context) ([]planner.Procedure, error) {
+	a.plan.current = a.plan.current - random.Intn(10)
+	return nil, nil
+}
+</code></pre>
+
+<p>You can run the result <a href="https://play.golang.com/p/JDuizzUI86M">here</a>, and you
+will see that based on the random numbers, it adds or subtracts the number of
+executed steps changes.</p>
+
+<p>NOTE: the golang playground always starts from the same time; in my example, I
+use time as Seed; for this reason, to see a variation in the number of steps,
+you will have to run the code locally.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This is probably a too straightforward example, but let’s imagine that
+your Target is not fixed and varies based on external factors. Your house’s
+temperature and this program is a thermostat that has to keep your room at the
+desired temperature. Or the number of instances running in your cloud provider,
+and you have to keep them balanced. This last use case is the exact problem I
+solved writing <a href="https://github.com/gianarb/keepit">keepit</a> a replica set for
+<a href="https://metal.equinix.com">Equinix Metal</a> servers. I used planner, so check it out.</p>
+
+<p>I didn’t highlight this example because this pattern gives you an excellent way
+to measure how reliable your program is. Think about it in this way; you can
+programmatically handle errors returning a procedure or more than one that can
+mitigate the error itself. It can be a “sleep for 5 minutes and retry”, or you
+can do something more complicated, and until the Plan keeps returning work to
+do, you will have the opportunity to succeed. I extracted an highlight from the
+<a href="https://www.twitch.tv/videos/780401570">Twitch stream</a> rambling about this.</p>
+
+<p>Have a nice week!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Test your Symfony Controller and your service with PhpUnit</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Test your Symfony Controller with PhpUnit. You expect that if one parameter is true your action get a service by Dependence Injcation and use it!">
+    <meta name="keywords" content="php, symfony, opensource, phpunit, controller, dependency injection">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/symfony-unit-test-controller-with-phpunit">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Test your Symfony Controller and your service with PhpUnit</h1>
+<main>
+    <p class="meta">21 May 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote align="center" class="twitter-tweet" lang="en"><p lang="en" dir="ltr">Unit <a href="https://twitter.com/hashtag/test?src=hash">#test</a> for your <a href="https://twitter.com/hashtag/Controller?src=hash">#Controller</a> with <a href="https://twitter.com/hashtag/PhpUnit?src=hash">#PhpUnit</a> and <a href="https://twitter.com/hashtag/Symfony?src=hash">#Symfony</a>.. With a little use case of <a href="https://twitter.com/hashtag/DepedenceInjaction?src=hash">#DepedenceInjaction</a> test <a href="https://t.co/JNb39EyRly">https://t.co/JNb39EyRly</a> <a href="https://twitter.com/hashtag/php?src=hash">#php</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/601526550438215680">May 21, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>In this article I would like share with you a little experience with:</p>
+
+<ul>
+  <li>Symfony MVC</li>
+  <li>PhpUnit</li>
+  <li>Symfony Dependence Injaction</li>
+</ul>
+
+<p>This is an example of very easy controller.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">AppBundle\Controller</span><span class="p">;</span>
+
+<span class="kn">use</span> <span class="nc">Sensio\Bundle\FrameworkExtraBundle\Configuration\Route</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">SomeStuffController</span> <span class="kd">extends</span> <span class="nc">FOSRestController</span>
+<span class="p">{</span>
+    <span class="cd">/**
+     * @Rest\Post("/go")
+     * @return array
+     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">goAction</span><span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">container</span><span class="o">-&gt;</span><span class="nf">getParameter</span><span class="p">(</span><span class="s2">"do_stuff"</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$body</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">container</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"stuff.service"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">splash</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">getContent</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="p">[];</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p><code>$this-&gt;container-&gt;getParameter("do_stuff")</code> is a boolean parameter that enable or disable a feature, How can I test this snippet?
+I can try to write a functional test but in my opinion is easier write a series of unit tests with PhpUnit to validate my expectations.</p>
+
+<h2 id="expectations">Expectations</h2>
+<ul>
+  <li>If <code>do_stuff</code> parameter is false function get by my container will be call zero times</li>
+  <li>If <code>do_stuff</code> parameter is true function get by my container will be call one times</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+
+<span class="kn">namespace</span> <span class="nn">AppBundle\Tests\Controller</span><span class="p">;</span>
+
+<span class="kn">use</span> <span class="nc">Liip\FunctionalTestBundle\Test\WebTestCase</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">AppBundle\Controller\SomeStuffController</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">SomeStuffControllerTest</span> <span class="kd">extends</span> <span class="nc">WebTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">testDoStuffIsTrue</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$request</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\HttpFoundation\Request"</span><span class="p">);</span>
+        <span class="nv">$container</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\DependencyInjection\ContainerInterface"</span><span class="p">);</span>
+        <span class="nv">$service</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMockBuilder</span><span class="p">(</span><span class="s2">"Some\Stuff"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">disableOriginalConstructor</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">();</span>
+        <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="nf">method</span><span class="p">(</span><span class="s2">"getParameter"</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">equalTo</span><span class="p">(</span><span class="s1">'do_stuff'</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="nf">will</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">returnValue</span><span class="p">(</span><span class="kc">true</span><span class="p">));</span>
+
+        <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">once</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="nf">method</span><span class="p">(</span><span class="s2">"get"</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="nf">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">equalTo</span><span class="p">(</span><span class="s1">'stuff.service'</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="nf">will</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">returnValue</span><span class="p">(</span><span class="nv">$service</span><span class="p">));</span>
+
+        <span class="nv">$controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SameStuffController</span><span class="p">();</span>
+        <span class="nv">$controller</span><span class="o">-&gt;</span><span class="nf">setContainer</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+
+        <span class="nv">$controller</span><span class="o">-&gt;</span><span class="nf">goAction</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>This is my first expetection “If <code>do_stuff</code> param is true I call <code>stuff.service</code>”.
+In this controller I use a few objects, Http\Request, Container and <code>stuff.service</code> in this example is a <code>Some\Stuff</code> class.
+In the first step I have created one mock for each object.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\HttpFoundation\Request"</span><span class="p">);</span>
+<span class="nv">$container</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\DependencyInjection\ContainerInterface"</span><span class="p">);</span>
+<span class="nv">$service</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMockBuilder</span><span class="p">(</span><span class="s2">"Some\Stuff"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">disableOriginalConstructor</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">();</span></code></pre></figure>
+
+<p>In the second step I have written my first expetctation, “Call only one time function <code>getParameter</code> from <code>$container</code> with argument do_stuff and it returns true”.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">once</span><span class="p">())</span>
+    <span class="o">-&gt;</span><span class="nf">method</span><span class="p">(</span><span class="s2">"getParameter"</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="nf">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">equalTo</span><span class="p">(</span><span class="s1">'do_stuff'</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="nf">will</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">returnValue</span><span class="p">(</span><span class="kc">true</span><span class="p">));</span></code></pre></figure>
+
+<p>Thanks at this definitions I know that there will be another effect, my action will call only one time <code>$container-&gt;get("stuff.service")</code> and it will be return an Some\Stuff object.</p>
+
+<p>The second test that we can write is “if <code>do_stuff</code> is false <code>$contaner-&gt;get("stuff.service")</code> it will not be called.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">public</span> <span class="k">function</span> <span class="n">testDoStuffIsFalse</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$request</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\HttpFoundation\Request"</span><span class="p">);</span>
+    <span class="nv">$container</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">(</span><span class="s2">"Symfony\Component\DependencyInjection\ContainerInterface"</span><span class="p">);</span>
+    <span class="nv">$service</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getMockBuilder</span><span class="p">(</span><span class="s2">"Some\Stuff"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">disableOriginalConstructor</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">getMock</span><span class="p">();</span>
+    <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">once</span><span class="p">())</span>
+        <span class="o">-&gt;</span><span class="nf">method</span><span class="p">(</span><span class="s2">"getParameter"</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="nf">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">equalTo</span><span class="p">(</span><span class="s1">'do_stuff'</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="nf">will</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">returnValue</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span>
+
+    <span class="nv">$container</span><span class="o">-&gt;</span><span class="nf">expects</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">never</span><span class="p">())</span>
+        <span class="o">-&gt;</span><span class="nf">method</span><span class="p">(</span><span class="s2">"get"</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="nf">with</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">equalTo</span><span class="p">(</span><span class="s1">'stuff.service'</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="nf">will</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">returnValue</span><span class="p">(</span><span class="nv">$service</span><span class="p">));</span>
+
+    <span class="nv">$controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SameStuffController</span><span class="p">();</span>
+    <span class="nv">$controller</span><span class="o">-&gt;</span><span class="nf">setContainer</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+    <span class="nv">$controller</span><span class="o">-&gt;</span><span class="nf">goAction</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

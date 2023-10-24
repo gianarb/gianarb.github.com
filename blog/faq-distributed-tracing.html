@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>FAQ: Distributed tracing</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Tracing is a well known concept in programming but distributed tracing is a revisitation to adapt the concept for a distributed system. This article is an FAQ where I answer common questions I received or I saw around the net about monitoring and distributed tracing.">
+    <meta name="keywords" content="devops, observability, opentracing, tracing, distributed system, monitoring, cloud, tracing">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/faq-distributed-tracing">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>FAQ: Distributed tracing</h1>
+<main>
+    <p class="meta">06 Jul 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This article is a write up of a talk that I will give at the
+<a href="https://osmc.de">osmc</a> in Germany in November about Distributed tracing.
+It is a sequence of questions I got about distributed systems and distributed
+monitoring.</p>
+
+<h2 id="why-do-i-need-distributed-tracing">Why do I need distributed tracing?</h2>
+<p>It always depends, I find distributed tracing useful in a microservices
+environment or more in general when there is a request that flies in a system
+crossing different applications, queues or processes.
+If you have a problem understanding where a request fails, you need to
+<em>follow it</em> in some way and tracing does just that.</p>
+
+<h2 id="how-do-you-follow-a-request">how do you follow a request?</h2>
+<p>First of all, we should probably change the name <em>request</em>, it looks too HTTP
+oriented, and it is not really what we look for now. In modern application, you
+are interested in <em>events</em>.  You need to monitor an event:</p>
+
+<ul>
+  <li>user registration</li>
+  <li>payment</li>
+  <li>a bank transaction</li>
+  <li>send an email</li>
+  <li>generate an invoice</li>
+</ul>
+
+<p>These are all events, and probably in your system, they are distributed not via
+HTTP but maybe they go in a queue, or they are broadcasted using Kafka or Redis.
+Distributed tracing is all about tracking events. The way to go is to create an
+id. Usually, it is called <code>request_id</code> or <code>trace_id</code> and you need a way to
+propagate it in your system.</p>
+
+<p>For example, in a queue, you can put the <code>trace_id</code> as part of the payload. Via
+HTTP or gRPC you can use Headers.</p>
+
+<p>Your application can take that id, and it can create the span to trace a
+particular section.</p>
+
+<h2 id="how-a-trace-looks-like">how a trace looks like?</h2>
+
+<p><img src="/img/trace.jpg" alt="How I image a trace for a distributed tracing app" class="img-fluid" /></p>
+
+<p>In my mind, this is a picture for one trace. Every segment is a span.
+So, every span has a trace id, and every span has its own <code>span_id</code>.
+You can attach information to every span as key value store. Let’s suppose a
+span represent a query in mysql you can put the query as metadata in the span
+itslef. In this way you will have a bit more context.</p>
+
+<h2 id="do-we-need-a-standard-for-tracing">do we need a standard for tracing?</h2>
+
+<p>I can’t convince you that interoperability is essential if you already analyzed
+the problem and you answered “No” to yourself.
+To build a trace you need to agree on something over languages and
+applications.
+That’s why I think a standard is something you can not avoid, at the end you
+will end up having one just for your company.</p>
+
+<h2 id="how-a-tracing-infrastructure-looks">how a tracing infrastructure looks?</h2>
+
+<p><img src="/img/tracing_infra.png" style="width:70%" alt="Sketch of tracing infrastructure." class="img-fluid" /></p>
+
+<p>The applications that are writing traces is not important. Traces is cross
+platform and languages. Usually, you
+point an app to a tracer. It can be Zipkin, Jaeger or others.</p>
+
+<p>The tracer takes all the traces, and it stores them in a storage. The databases are
+usually ElasticSearch, Cassandra, InfluxDB. It depends on which tracer you are
+using. They support different databases.</p>
+
+<p>In general traces are high cardinality oriented data, and you can write a lot
+of them in a short amount of time. So it is a write-intensive
+application.</p>
+
+<p>There are a couple of other pieces that you can add in your tracing
+infrastructure:</p>
+
+<ul>
+  <li>You can add a <em>downsampler</em> to select what to store. If an API request generate
+too many traces probably you are interested in storing only a % of them to
+decrease pressure on your database. So you can use a simple distributed hash
+algorithm on the trace_id to declare what to save or not. A <code>mod</code> on the
+<code>trace_id</code> is enough for example.</li>
+  <li>You can add a <em>collector</em> in front of the tracer. Zipkin support Kafka For
+example. In InfluxDB we use telegraf. A collector is usually  a stateless
+application, it gets all the traces from the applications. It bulks them and
+sends them to the tracer. A collector decreases the pressure on the tracer
+itself because usually, they work better with a bulk of data. In second if a
+tracer go down or you need to update it, the collector is a layer that can
+keep the traces for a little bit to give you time to restore the tracer.</li>
+</ul>
+
+<h2 id="why-did-i-pick-opentracing">why did I pick opentracing?</h2>
+
+<p>I am an interoperability oriented developer; I think it is essential to avoid
+vendor lock-in and embracing a big community like the opentracing one you get
+a lot of tools and services already instrumented with this protocol.  It makes
+my life easy.</p>
+
+<h2 id="can-i-have-a-tracing-infrastructure-on-prem">can I have a tracing infrastructure on-prem?</h2>
+
+<p>You can; there are a couple of tracers open source.</p>
+
+<ul>
+  <li><a href="https://zipkin.io/">Zipkin</a> is an open source
+project in Java started by Twitter.</li>
+  <li><a href="https://github.com/jaegertracing/jaeger">Jaeger</a> looks a lot like a porting of
+it in Golang and Uber makes it.</li>
+</ul>
+
+<p>Both of them are open source, and they support different backends like
+ElasticSaerch, Cassandra and so on.</p>
+
+<h2 id="there-are-as-a-service-tracing-infrastructure">there are as a service tracing infrastructure?</h2>
+
+<p>There are, NewRelic has an opentracing compatible API, or
+<a href="https://lightstep.com/">Lightstep</a> for example.  A lot of cloud providers offer
+a tracing service. AWS X-RAY or Google Stackdriver.</p>
+
+<h2 id="can-i-store-traces-everywhere">can I store traces everywhere?</h2>
+
+<p>You can, but they are a high cardinality data. The <code>trace_id</code> is usually the
+lookup parameter for your queries. It means that it should be indexed, but it
+changes for every request. The consequence is a big index.
+You need to keep it in mind.</p>
+
+<h2 id="once-you-do-the-tracethen-what">Once you do the trace…then what?</h2>
+
+<p>I left this question as the last one because I read it in the opentracing
+mailing list and I think it is a hilarious question.</p>
+
+<p>First of all, you don’t buy a pan and after the fact you start asking yourself
+why you have it.</p>
+
+<p>Probably you need to write something, and for that reason, you
+buy a pen.</p>
+
+<p>Anyway, I trace my applications because it helps me to understand my environment
+over the “distribution complexity.” I can detect what is taking too long and a
+trace helps me to understand what to optimize.</p>
+
+<p>Opentracing has a set of standard annotation very useful to detect network
+latency between services. You can mark a span as “client send” request for
+example. And when the server gets the request, you can mark another span as
+“server received.” This two information is useful to know how much time your
+request spends going from client to the server and you can optimize them time
+usually working on the proximity between these two applications.</p>
+
+<p>More in general you can parse a trace to get what ever you need as normal logs
+or events the powerful things is downsampling and analysis.
+If you are tracing a queue system you can get the average time for a worker to
+process a message.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Let me know if you have more questions on twitter
+<a href="https://twitter.com/gianarb">@gianarb</a>. I am happy to answer them here.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Test in production behind slogans</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How fast we are capable of instrumenting an application decrease the out of time requires to understand and fix a bug.">
+    <meta name="keywords" content="code instrumentation, library, opentracing, opencensus, opentelemetry, influxdb, prometheus, opensource, honeycomb">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/test-in-production-behind-slogans">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Test in production behind slogans</h1>
+<main>
+    <p class="meta">27 May 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="tw-align-center twitter-tweet"><p lang="en" dir="ltr">What do we test before
+prod? We do our known unknowns -- does it work? (unit tests). does it fail in
+ways I can predict?<br /><br />We need to test our unknown unknowns in production
+with ✨observability✨. and experiment upon them with chaos engineering! <a href="https://twitter.com/hashtag/VelocityConf?src=hash&amp;ref_src=twsrc%5Etfw">#VelocityConf</a></p>&mdash;
+Liz Fong-Jones (方禮真) (@lizthegrey) <a href="https://twitter.com/lizthegrey/status/1139273082412027904?ref_src=twsrc%5Etfw">June
+13, 2019</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I got inspired by Liz’s tweet recently, and I am writing this post as a reminder
+for everybody. “Test in prod” is a slogan, a trademark. It doesn’t explain all
+the concepts behind a sentence as “things bo getter with Coke” hides why or
+how. Slogans are great as a quick reminder for more articulated ideas. They
+are useful because in one sentence you can recall to more profound contents
+inside your brain.</p>
+
+<p><img class="img-fluid" src="/img/coke-slogan.jpg" /></p>
+
+<p>“You” do not test unknown unknowns in production, mainly because you do not know
+your unknowns. In production, you as a developer <strong>validate</strong> three kinds of
+things:</p>
+
+<ul>
+  <li>Complicated parts of your system that are not well covered by tests are
+working.</li>
+  <li>Something you are working on and you would like to be sure that it is working
+fine, even if it has a unit test, integration tests and so on.</li>
+  <li>Crucial part of the system that needs to work or your boss will kick your ass,
+and you are afraid that you test them even if you just changed a line of CSS.</li>
+</ul>
+
+<p>What “test in prod” means is the fact that somebody, a random customer human or
+not randomly will trigger an unknown action that will cause an issue. It doesn’t
+even be to be triggered, it can be an environmental issue. For example, what
+Twitch call <a href="https://blog.twitch.tv/go-memory-ballast-how-i-learnt-to-stop-worrying-and-love-the-heap-26c2462549a2">“the refresh
+storm”</a>
+is an excellent example of an environmental issue. When a broadcaster has a
+connectivity issue, all the watcher starts to refresh the page multiple times
+thinking to solve the problem. As a side effect, the Twitch infrastructure can
+suffer about a high number of requests. This is a no-Twitch problem that becomes
+a Twitch problem.</p>
+
+<p>We need to learn and onboard tools and mindset that will help us to improve how
+fast we can track, record, fix, and learn from an issue. All the question that
+matters happens in production, and by consequence, we need to stay focused on
+it.  I think a lot of people test in prod in some way.</p>
+
+<p>When your laptop starts, but it restarts by itself after some point you have a
+problem. You look around, and you notice that your fan doesn’t run anymore. It
+is a pretty simple issue to solve and detect. You hear that the fan doesn’t make
+any noise, so you replace it.</p>
+
+<p>I am sorry! Everybody got distracted by distributed system, containers, cloud.
+90% of our failures if you know how to design a fault tolerance application are
+a partial failure! They are a disaster to figure out, understand, and fix! Only
+a subset of our system may break, for a subset of customers, but the same part
+works correctly for another subgroup, and you need to figure out why! You should
+also be able to message that subgroup of customers to say “I am sorry! Shit
+happens, we are working on it”, proactively!</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>“test in prod” means all the things I wrote and probably way more! It is
+reasonable to say that nobody can do anything to avoid “test in prod” to happen,
+so have fun!</p>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Maintainer life, be an enabler</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Be an enabler is important in my daily job. It is a skill I learned as open source maintainer.">
+    <meta name="keywords" content="opensource, oss, maintainer">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/maintainer-life-be-enabler">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Maintainer life, be an enabler</h1>
+<main>
+    <p class="meta">20 Aug 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This is not something important only in open source, or as maintainer. But it is
+a skill I have personally learned as one.</p>
+
+<p>When I have to build a sustainable open source project, but it applies with
+teams as well developing the right code or new feature is often not that useful
+in the long term. I think you get quickly to something better when people
+collaborate together in an effective way.</p>
+
+<p>The maintainer’s role is to enable other people to contribute successfully.</p>
+
+<p>You have to switch from “let’s write documentation” to “how do I create a
+workflow that enables contributors to write documentation.” I started with doc
+because I think it is crucial. It is easier to write documentation when you are
+writing code or a new feature. And we know a developer prefers to write code; as
+a maintainer, you need to create a workflow that allows the contributor to write
+documentation quickly when writing code. In practice, mark a PR with a label
+<code>needs-doc</code> and make it a requirement for the PR to be merged. The
+maintainer has to design a rock-solid structure for the documentation. In this
+way, the contributor won’t spend two days trying to figure out where to add the
+documentation for its feature.</p>
+
+<p>You can’t ask a contributor to create an entire test suite or to write
+documentation if you don’t have one. But from a solid foundation is reasonable
+to ask a contributor to keep at least the same quality level.</p>
+
+<p>You don’t write all the tests; you create and maintain the continuous delivery
+pipeline required to help contributors to stay compliant. Is your project suffering
+from low test coverage? Do not waste time writing all the tests yourself;
+codebase is significant, and pull requests are flowing continuously. You have to
+stay focused on developing a system that brings and keeps you where you want:
+good coverage in this case.</p>
+
+<p>In practice, you can create another label <code>needs-tests</code> to notify the
+contributor that its work won’t be merged until tests will be added (the plural
+is crucial, tests!). You can use something like <a href="https://codecov.io/">codecov</a>
+in your CI to evaluate with numbers the situation. Invest time being sure that
+tests are easy to write; write a doc in the contributor file highlighting how to
+write a good test. If a package is too hard to test, you can write a few tests
+that other people can use as a starting point or a reusable set of utility
+functions.</p>
+
+<p>Being a facilitator or an enabler is a lot of work. If you feel less
+effective because you wrote 90% of the codebase at this point and you can write
+documentation and tests by yourself in a couple of days you are wrong. Or at
+least from my experience you can do it but the outcome will be worst in quality
+compared with the one you can build from a solid foundation in a collaborative
+environment.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

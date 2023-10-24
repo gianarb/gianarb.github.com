@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>What is Tinkerbell?</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I want to share with you what is Tinkerbell. An open source project I help maintaining, developed by Equinix Metal. Tinkerbell helps you to manage your hardware and datacenter programmatically via an API.">
+    <meta name="keywords" content="tinkerbell, bare metal">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/what-is-tinkerbell">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>What is Tinkerbell?</h1>
+<main>
+    <p class="meta">06 Nov 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>First things first, Tinkerbell is an open-source project mainly written in Go
+that comes from PacketHost, now Equinix Metal. Equinix Metal is a cloud provider
+that serves bare metal servers. No virtual machines, no high-level services, I
+said bare metal! Imagine a colocation that you can rent per hour.</p>
+
+<p>Tinkerbell is the software Equinix Metal dreamed about as an internal
+provisioner for datacenter automation. They took their internal provisioner and
+removed any PacketHost references of business specific code, and pushed it to
+GitHub for the community to enjoy the same technologies.</p>
+
+<p>The project is a number of micro-services that provide various functionality to
+configure hardware and provision bother Operating System and additional software
+through it’s workflow engine.</p>
+
+<h2 id="what-the-project-provides">What the project provides</h2>
+
+<ul>
+  <li>The first micro-service is called
+<a href="https://github.com/tinkerbell/boots">boots</a>. This Tinkerbell service
+provides a DHCP and a TFTP server to tell a piece of hardware (server) what
+to do when netbooting, it provides this information through the iPXE
+project.</li>
+  <li>Tinkerbell serves a CLI that you can use to interact with a control plane
+that serves HTTP and gRPC API. The service which does all those things is in
+the <a href="https://github.com/tinkerbell/tink">tink</a> repository, and it provides
+three binaries: tink-server (the control plane), tink-CLI, the command line
+interface, and tink-worker.</li>
+  <li>Tinkerbell provides an operating system that runs in memory, it is based on
+Alpine, and it is called <a href="https://github.com/tinkerbell/osie">Osie</a>. This
+in-memory operating system runs directly on the hardware you want to
+provision, and it runs the tink-worker.</li>
+  <li>Once the in-memory Osie has started it begins the tink-worker which in turn
+communicates with the control plane (tink-server), asking for any work that
+has to be done on that server. This unit of work is called a workflow.</li>
+  <li><a href="https://github.com/tinkebell/hegel">Hegel</a> is a metadata server, comparable
+to the AWS EC2 metadata or the Equinix Metal one; the majority of cloud
+vendors provide this type of service , so you should have it as well! It is
+crucial when running scripts in a particular server because you can get
+concrete variables from it, such as the operating system it runs, its IPs,
+location, and so on.</li>
+</ul>
+
+<h2 id="the-end-goal">The end goal</h2>
+
+<p>The Tinkerbell end work is to bring to life a piece of hardware.</p>
+
+<h2 id="workflow-and-template">Workflow and template</h2>
+
+<p>A template is a specification file that describes what we want to execute. A
+workflow starts from a template, and it has a particular target. Templates are
+reusable; workflows are a single execution and can’t be reused. The single unit
+of work in a template is called action. You can get as many actions you want in
+a template, and each action runs in its own Docker container.</p>
+
+<h2 id="action">Action</h2>
+
+<p>As mentioned above, actions are Docker containers and that means that you can
+build each action in isolation in the language you want. It can use python,
+bash, Golang, Rust, or whatever you can run in a container.</p>
+
+<p>You may think that Docker would sound like an overhead, however we took a
+natural decision based on how we could use the container concept in operations.
+The concept of build, pull, and push has become commonplace within development
+environments, and we think it could also work well in operational environments
+too. Building containers to contain operational tasks in isolation and enhancing
+that with testing and simplified execution of a container is a clear benefit. It
+is an effective way to move code around in a reusable way without having to
+reinvent the distribution model. Some of the actions you will see very often in
+a Tinkerbell workflow may be:</p>
+
+<ul>
+  <li>Disk related actions: mounting a disk, wiping it, or setting up a partition
+table to boot an operating system</li>
+  <li>Downloading an Operating System like Ubuntu, Debian, NixOS, CentOS</li>
+  <li>Copy an operating system in a partition</li>
+</ul>
+
+<p>But you will be able to write actions related to your business:</p>
+
+<ul>
+  <li>notify a particular API when provisioning fails</li>
+  <li>Attempt a recovery</li>
+  <li>Observe and mark the status of your provisioning</li>
+  <li>Who knows! There are no limitations here.</li>
+</ul>
+
+<h2 id="how-a-template-and-a-workflow-looks-like">How a template and a workflow looks like</h2>
+
+<p>Unfortunately, there are not many examples, but as maintainers, the next three
+months will be all about public workflows and reusable actions.</p>
+
+<p>Kinvolk wrote a blog post about <a href="https://kinvolk.io/blog/2020/10/provisioning-flatcar-container-linux-with-tinkerbell/">how to provision
+Flatcar</a>
+on bare metal with Tinkerbell.</p>
+
+<p>The Tinkerbell documentation <a href="https://tinkerbell.org/examples/hello-world/">has an
+example</a> of a “hello world.”
+template.</p>
+
+<p><a href="https://www.fransvanberckel.nl/">Frans van Berckel</a> wrote a workflow for
+<a href="https://github.com/fransvanberckel/debian-workflow">CentOS</a> and
+<a href="https://github.com/fransvanberckel/debian-workflow">Debian</a>.</p>
+
+<p>One of my next projects will be to write a workflow that won’t install an
+operating system. It will start something like k3s or k8s directly on Osie for
+my ephemeral homelab! I am not sure it has a sense or will ever work, but I
+think it is an excellent example: “it is not all about having a persisted and
+traditional operating system those days.”</p>
+
+<h2 id="how-to-get-started">How to get started</h2>
+
+<p>We put a fair amount of effort into a
+<a href="https://github.com/tinkerbell/sandbox">sandbox</a> project and setup guide. You
+can run it <a href="https://tinkerbell.org/docs/setup/local-with-vagrant/">locally with Vagrant
+</a>or on <a href="https://tinkerbell.org/docs/setup/terraform/">Equinix
+Metal</a>.</p>
+
+<p>Aaron Ramblings wrote a blog post, <a href="https://geekgonecrazy.com/2020/09/07/tinkerbell-or-ipxe-boot-on-ovh/">“Tinkerbell or iPXE boot on
+OVH”</a>
+using the sandbox to run Tinkerbell on OVH! I am still surprised when I read it
+because he experimented with the sandbox in a very early stage of the project,
+and in the same way, he was able to run sandbox on OVH; it can run almost
+wherever else (at least for the control plane part).</p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>With the help of our community we recently improved our continuous integration
+pipeline to build all the projects for various architecture: <code>linux/386</code>,
+<code>linux/amd64</code>,<code> linux/arm/v6</code>, <code>linux/arm/v7</code>, <code>linux/arm64</code> levering Docker
+buildx, Qemu, and GitHub Actions. My goal was to be able to run the provisioner
+in a Raspberry Pi. Because as I wrote before, my homelab tends to go away, get
+moved, disconnected, and I think I can keep running reliably only a Raspberry PI
+as it is today. So I want to run the control plane on a RaspberryPI. I presume
+there are smarter things to do with multi-arch, but let’s be honest; we all have
+a RaspberryPI leftover somewhere.</p>
+
+<p>We use the sandbox project as a way to release Tinkerbell’s version as an all
+project. We are pinning all the various dependencies such as Boots, Hegel,
+Tink-Server, CLI, Osie, and when they all pass the integration tests, we tag a
+new release. The generated artifacts are containers for now. We want to get
+binaries in this way. You can run Tinkerbell as you like, even without
+containers. At some point, we will tag and manage each component independently,
+but for now, it is a lot of effort.</p>
+
+<p>Releasing new workflows is something we are working on already. So stay tuned!</p>
+
+<p>Another project is available in the Tinkerbell GitHub organization that I didn’t
+mention because it is not hooked yet as part of the stack. After all, we are
+working at its version two. <a href="https://github.com/tinkerbell/pbnj">PBNJ</a> provides
+a standard API to interact with various BMCs and IPMIs (Intelligent Platform
+Management Interface). Having this kind of ability in a datacenter is essential
+because we want to pilot things like reboot, restart, switch off for each server
+programmatically, and even as part of a workflow.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>There already exists huge demand for bare-metal usage, which with the growth
+caused by things like 5G, dedicated GPUs/FPGAs, HPC, constant and expected
+performance and security boundaries is only going to grow. A recent report by
+the <a href="https://www.mordorintelligence.com/industry-reports/bare-metal-cloud-market">Mordor Intelligence
+company</a>
+reports  “The bare metal cloud market was valued at USD 1.75 billion in 2019 and
+expected to reach USD 10.56 billion by 2025” which clearly shows that there is
+growing demand for a modern platform to provision their bare-metal
+infrastructure.</p>
+
+<p>Datacenter management is hard, and that’s why the public cloud got so much
+traction. For companies and products, managing hardware is unnecessary and a
+distraction, but when it becomes a requirement or when you think it is strategic
+to manage your own hardware Tinkerbell and its community comes to rescue you.</p>
+
+<p class="alert alert-info">A big thank you goes to <a href="https://twitter.com/thebsdbox">Dan</a> for his review and
+support writing this article!</p>
+
+<h2 id="more-i-want-more">More, I want more!</h2>
+
+<p><a href="https://www.youtube.com/watch?v=Y04eCSKaQCc">Dan and Jeremy had a conversation</a>
+about netbooting and bare metal provisioning.  It is available on YouTube, you
+should really have a look at it!</p>
+
+<p><a href="https://www.youtube.com/watch?v=QxpKnMGywTU">Alex Ellis and Mark Coleman recorded a
+video</a> setting up and using Tinkerbell.
+The video is a bit out of date and they did not use the new sandbox project
+because it was not available at that time. But still a good and valuable!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

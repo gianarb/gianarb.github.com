@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Your release workflow is code, it is just about time</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I think code is some way has to win against specification languages or DSL or even from languages that are not easy to move around like bash. The Kubernetes sig-release is migrating a bunch of scripts from bash to Go and I think it is the right way to go. You will do the same, it is just about time.">
+    <meta name="keywords" content="kubernetes, release, code">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/release-workflow-as-code">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Your release workflow is code, it is just about time</h1>
+<main>
+    <p class="meta">21 Oct 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>20th October 2020 is the day I released Kubernetes for the first time. To be
+precise, I piloted with the help of sig-release Kubernetes <code>v1.20.0alpha3</code>. One of
+the reasons I am happy to work with the sig-release is to learn and see how such
+a significant process gets released reliably and continuously by a group of
+people coming from different backgrounds, jobs, and locations.</p>
+
+<p>The first lesson learned you would notice as soon as you join the SIG meeting
+more frequently or as soon as you start contributing is the general effort in
+converting what used to be bash scripts to Go.</p>
+
+<p>Now, don’t fight against the languages by themself, but I think the story is
+reasonable. You start small, and when it comes to releasing code, a lot happens
+in somebody’s terminal. That’s why many of the release workflows I saw in my
+life are a mix of Makefile and bash script.</p>
+
+<p>I don’t think it scales because it is hard to get error handling, retry logic,
+and testing made right in bash. Maybe I am just not good enough with BASH, and I
+know there are testing libraries for it like
+<a href="https://github.com/sstephenson/bats">bats</a>, for example.</p>
+
+<p>Anyway, I have to admit, I feel good enough with BASH, but I code way better in
+Go, PHP, and probably even JavaScript. Also, I am sure this is a feeling a share
+with many people, and more in general, the Kubernetes development community is
+very fluent with Golang.</p>
+
+<p>Anyway, let’s treat the code that empowers the release lifecycle as application
+code, just as the Sig Release is doing with Kubernetes. Documentation, testing,
+user experience, and so on. Develop useful libraries that can be encapsulated in
+command-line tools, or API, or bots.</p>
+
+<p>There is a BASH script that takes snapshots from
+<a href="http://testgrid.k8s.io/">Testgrid</a> called
+<a href="https://github.com/kubernetes/release/blob/master/testgridshot">testgridshot</a>,
+uploads them to Google Cloud, and outputs a markdown that can be copy-pasted as
+a comment in <a href="https://github.com/kubernetes/sig-release/issues/1296">the issue we use to track every
+release</a>. We run it to
+take a snapshot of the various testing pipeline status at the time of a release.</p>
+
+<p>testgridshot is the unique one in BASH I had to interact with for now, and it
+didn’t work because of some environmental issues with my laptop. Coincidence? It
+can be solved by running it as a container and having a binary with statically
+compiled with all the needed dependencies.</p>
+
+<p><a href="https://twitter.com/comedordexis">Carlos</a> is currently working on rewriting
+testgridshot in Golang; it will use as a command-line interface, and I think it
+will be even better to encapsulate it as prow capability.</p>
+
+<p><a href="https://github.com/kubernetes/test-infra/tree/master/prow">Prow</a> is the
+Kubernetes CI/CD system. It can trigger jobs for particular actions, and almost
+everything you see happening in GitHub when using <code>/</code> commands like <code>/open</code> <code>/assign</code>
+and so on is a Prow responsibility.</p>
+
+<p>Testgridshot is useful during a release cut. The cut starts from a GitHub issue;
+as we saw, it sounds very comfortable to have a command available like
+/testgridshot and leaving Prow the responsibility to comment.</p>
+
+<p>Now the takeaway hidden by the word <strong>encapsulates</strong>, it is great to have both a
+CLI and a Prew command. Go becomes your baseline where the operational
+experience live. All the rest is a UX, and you can have as many of them.</p>
+
+<p>I am not writing this because you should stop and move all your BASH to
+something else, but I experienced by myself. I see this little story with the
+Kubernetes SIG release to confirm that it’s easy to block ourselves as release
+engineering because there is a BASH script that we don’t want to rewrite. After
+all, it is like that since forever. The project is not the same since day one,
+the team grew or changed, and it is reasonable for a workflow to follow this
+evolution.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

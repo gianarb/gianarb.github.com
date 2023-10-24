@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>FastEventManager, only an event manager</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="FastEventManager is a PHP library designed to be a smart and light event manager. You can use it in your applications or as a base component for your framework. It adds capabilities around events as attach and triggering of events.">
+    <meta name="keywords" content="php eventmanager, framework, open source, oss">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/fast-event-manager-only-an-event-manager">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>FastEventManager, only an event manager</h1>
+<main>
+    <p class="meta">01 Nov 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote>
+  <p>The Event-Driven Messaging is a design pattern, applied within the
+service-orientation design paradigm in order to enable the service consumers,
+which are interested in events that occur within the periphery of a service
+provider, to get notifications about these events as and when they occur
+without resorting to the traditional inefficientpolling based mechanism.
+by. <a href="https://en.wikipedia.org/wiki/Event-Driven_Messaging">wiki</a></p>
+</blockquote>
+
+<p>In PHP there are different implementation of this pattern, but <a href="https://github.com/gianarb/fast-event-manager">I tried to write
+my idea</a>.
+An easy to understand and to extends event manager based on regex.</p>
+
+<p>Why? Because it is a good way to match strings, it is flexible and powerful.
+As it is smart and little and it can be used as basis for custom implementation.
+it resolves a regex and triggers events It supports a priority to order
+triggered listeners.</p>
+
+<h2 id="install">Install</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">composer require gianarb/fast-event-manager</code></pre></figure>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="k">__DIR__</span><span class="mf">.</span><span class="s2">"/vendor/autoload.php"</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">GianArb\FastEventManager</span><span class="p">;</span>
+<span class="nv">$eventManager</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FastEventManager</span><span class="p">();</span>
+<span class="nv">$eventManager</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s2">"user_saved"</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$event</span><span class="p">)</span> <span class="p">{</span>
+<span class="p">});</span>
+<span class="nv">$user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Entity\User</span><span class="p">();</span>
+<span class="nv">$eventManager</span><span class="o">-&gt;</span><span class="nf">trigger</span><span class="p">(</span><span class="s2">"/user_saved/"</span><span class="p">,</span> <span class="nv">$event</span><span class="p">);</span></code></pre></figure>
+
+<p>Each listener has a priority (default = 0), it describe the order of execution</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="nv">$eventManager</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s2">"wellcome"</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">" dev!"</span><span class="p">;</span>
+<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+<span class="nv">$eventManager</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s2">"wellcome"</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="s2">"Hello"</span><span class="p">;</span>
+<span class="p">},</span> <span class="mi">345</span><span class="p">);</span>
+<span class="nv">$eventManager</span><span class="o">-&gt;</span><span class="nf">trigger</span><span class="p">(</span><span class="s2">"/wellcome/"</span><span class="p">);</span>
+<span class="c1">//output "Hello dev!"</span></code></pre></figure>
+
+<p>I wrote this library because there are a lot of solutions that implement this
+pattern but they are verbose, this is only an event manager if you search other
+features you can extends it or you can use differents implementations.
+On top of this library you can write your library to build an event manager ready
+to use with your team in your applications.</p>
+
+<p>This is a good solution because it is easy, ~31 line of code to trigger events
+without fear to inherit many line of codes and unused features to maintain.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

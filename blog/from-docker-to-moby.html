@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>From Docker to Moby</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Docker announced during DockerCon a new project called Moby. Moby will be the new home for Docker and all the other open source projects like containerd, linuxkit, vpnkit and so on. Moby is the glue for all that open source code. It will look as an entire platform to ship, build and run containers at scale.">
+    <meta name="keywords" content="docker, moby, docker captain, automation, cncf, ambassador">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/from-docker-to-moby">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>From Docker to Moby</h1>
+<main>
+    <p class="meta">20 Oct 2017 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>At DockerCon 2017 Austin
+<a href="https://blog.docker.com/2017/04/introducing-the-moby-project/">Moby</a> was the
+big announcement.</p>
+
+<p>It created confusion and some communities are still trying to understand what is
+going on. I think it’s time to step back and see what we have after seven months
+after the announcement.</p>
+
+<ol>
+  <li><code>containerd</code> is living a new life, the first stable release will happen soon.
+It has been donated to CNCF.</li>
+  <li><code>notary</code> is the project behind <code>docker trust</code>. I wrote a full e-book about
+<a href="https://scaledocker.com">Docker Security</a> if you need to know more. This
+also has been donated to the CNCF.</li>
+  <li>github.com/docker/docker doesn’t exist anymore there is a new repository
+called github.com/moby/moby .</li>
+  <li><a href="https://github.com/docker/cli">CLI</a> has a separate home.</li>
+  <li>docker-ce is the first example of moby assembling. It is made my Docker Inc.</li>
+</ol>
+
+<p>Containers are not a first class citizen in Linux.</p>
+
+<p><img class="img-fluid" src="/img/container-is-not-real.jpeg" /></p>
+
+<p>They are a combination of cgroups, namespaces and other kernel features. They are
+also there from a lot of year. LXD is one of the first project that mentioned
+container but the API wasn’t really friendly and only few people are using it.</p>
+
+<p>Docker created a clean and usable api that human beings are happy to use. It
+created an ecosystem with an amazing and complete UX. Distribution, Dockerfile,
+<code>docker run</code>, <code>docker image</code> and so on.</p>
+
+<p>That’s what Docker is, in my opinion. Other than a great community and a fast
+growing company.</p>
+
+<p>What Docker is doing with Moby is to give the ability to competitors, startups, new
+projects to join the ecosystem that we built in all these 4 years.</p>
+
+<p>Moby in other hands is giving the ability at Docker to take ownership of the
+clean and usable experience. The <code>Docker CLI</code> that we know and use every day
+will stay open source, but not the moby project’s part. It will be owned by
+Docker. As I wrote above, the code is already moved out.</p>
+
+<p>Moby allows other companies and organisations to build their
+user interface based on what they need. Or to build their product on top of a
+open source project designed to be modular.</p>
+
+<p>Cloud and container moves fast Amazon with ECS, RedHat with OpenShift,
+Pivotal with Cloud Foundry, Mesos with Mesosphere, Microsoft with Azure
+Container Service, Docker with Docker, they are all pushing hard to build
+projects around containers to sell them at big and small corporations to make
+legacy projects less bored.</p>
+
+<blockquote>
+  <p>Legacy is the new buzzword</p>
+</blockquote>
+
+<p>Docker will continue to assemble and ship docker as we know it. The project is
+called <code>docker-ce</code>:</p>
+
+<pre><code>apt-get install docker-ce
+docker run -p 80:80 nginx:latest
+</code></pre>
+
+<p>Everything happens down the street, in the open source ecosystem. Moby won’t
+contain the CLI that we know.</p>
+
+<p>Moby won’t have the swarmkit integration as we know it. It was something that
+Docker as company was looking to have. Mainly to inject an orchestrator in
+million of laptops. Other companies and projects that are not using swarm don’t
+need it and they will be able to remove it in some way.</p>
+
+<p>Companies like Pivotal, AWS are working on
+<code>containerd</code> because other the runtime behind Docker it’s what matters for a lot
+of projects that are just looking to run containers without all the layers on
+top of it to make it friendly. ECS, Cloud Foundry are the actual layers on top
+of “what runs a container”.</p>
+
+<p>Container orchestrator doesn’t really care about how or who spins up a container,
+they just need to know that there is something able to do that.</p>
+
+<p>It is what Kubernetes does with CRI. They don’t care about Docker, CRI-O,
+containerd. It’s out of scope they just need a common interface. In this case is
+a gRPC interface that every runtime should implement. Here a list of them:</p>
+
+<ul>
+  <li><a href="https://github.com/kubernetes-incubator/cri-o">cri-o</a></li>
+  <li><a href="https://github.com/kubernetes-incubator/cri-containerd">cri-containerd</a></li>
+  <li><a href="https://github.com/kubernetes-incubator/rktlet">rktlet</a></li>
+</ul>
+
+<p>That’s a subset of reasons about why everything is happening:</p>
+
+<ul>
+  <li>Docker Inc. will be free to iterate on their business services and projects
+without breaking every application in the world. And they will have more
+flexibility on what they can do as company.</li>
+  <li>The transaction between Docker to Moby is the perfect chance to split the
+project to different repositories we already spoke about docker-cli, containerd
+and so on.</li>
+  <li>Separation of concern is popular design pattern. Split
+projects on smallest libraries allow us to be focused on one specific scope of the
+project at the time.
+<a href="https://github.com/moby/buildkit">buildkit</a> is the perfect example. It’s the
+evolution of the <code>docker build</code> command. We had a demo at the MobySummit and
+it looks amazing!</li>
+</ul>
+
+<p>That’s almost it. Let’s summarise:</p>
+
+<p><strong>Are you a company in the container movement?</strong>
+You are competing with Docker building container things and you was complaining
+about them breaking compatibility or things like that now you should blame the
+Moby community.</p>
+
+<p><strong>Are you using docker run?</strong>
+You are fine! You will be able to do what you was doing before.</p>
+
+<p><strong>Are you a OpenSource guru?</strong>
+Maybe you will be a bit disappointed if you worked hard on docker-cli and now
+Docker will bring your code out but you signed a CLA, the CLI will stay open
+source. Blame yourself.</p>
+
+<p>That’s it! Or at least that’s what I understood.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

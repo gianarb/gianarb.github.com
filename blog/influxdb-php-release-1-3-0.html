@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>InfluxDB PHP 1.3.0 is ready to go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="InfluxDB is a time series database, it helps us to manage matrics, point and offert a stack of tools to collect and see this type of data. I am a maintainer of InfluxDB PHP integration. In this past I describe the news provided by new relesae 1.3.0">
+    <meta name="keywords" content="devops, influxdb, php, oss, open source, metrics, monitoring, observability">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/influxdb-php-release-1-3-0">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>InfluxDB PHP 1.3.0 is ready to go</h1>
+<main>
+    <p class="meta">18 Feb 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">Shout out to <a href="https://twitter.com/GianArb">@GianArb</a> for shipping a new release of the InfluxDB-PHP library! Here&#39;s what&#39;s new: <a href="https://t.co/tJQIu9OCbL">https://t.co/tJQIu9OCbL</a></p>&mdash; InfluxData (@InfluxDB) <a href="https://twitter.com/InfluxDB/status/704403294592970752">February 29, 2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>We are happy to annuonce a new minor release, <a href="https://github.com/influxdata/influxdb-php">Influxdb-php library</a> 1.3.0.</p>
+
+<p>This is a list of PRs merged in 1.3.0 since 1.2.2:</p>
+
+<ul>
+  <li><a href="https://github.com/influxdata/influxdb-php/pull/36">#36</a> Added quoting of dbname in queries</li>
+  <li><a href="https://github.com/influxdata/influxdb-php/pull/35">#35</a> Added orderBy to query builder</li>
+  <li><a href="https://github.com/influxdata/influxdb-php/pull/37">#37</a> Fixed wrong orderby tests</li>
+  <li><a href="https://github.com/influxdata/influxdb-php/pull/38">#38</a> Travis container-infra and php 7</li>
+</ul>
+
+<p>The <code>QueryBuilder</code> now support the orderBy function to order our data, InfluxDB supports it from version 0.9.4.</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">cpu</span> <span class="k">order</span> <span class="k">by</span> <span class="n">value</span> <span class="k">desc</span></code></pre></figure>
+
+<p>Now you can do it in PHP</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span><span class="o">-&gt;</span><span class="nf">getQueryBuilder</span><span class="p">()</span>
+  <span class="o">-&gt;</span><span class="nf">from</span><span class="p">(</span><span class="s1">'cpu'</span><span class="p">)</span>
+  <span class="o">-&gt;</span><span class="nf">orderBy</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="s1">'DESC'</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">getQuery</span><span class="p">();</span></code></pre></figure>
+
+<p>We are increase our Continuous Integration system in order to check our code with PHP7, it’s perfect!</p>
+
+<p>We escape our query to support reserved keyword like <code>database</code>, <code>servers</code> personally I prefer avoid this type of word but you are free to use them.</p>
+
+<p>Please we are very happy to understand as the PHP community use this library and InfluxDB, please share your experience and your problem into the repository, on IRC (join influxdb on freenode) and we wait you on <a href="https://twitter.com/influxdata">Twitter</a>.</p>
+
+<p>Remeber to update your <code>composer.json</code>!</p>
+
+<p>```json</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+    </span><span class="nl">"require"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"influxdb/influxdb-php"</span><span class="p">:</span><span class="w"> </span><span class="s2">"~1.3"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>A big thanks at all our contributors!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

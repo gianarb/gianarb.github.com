@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>You need an high cardinality database</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Monitoring and observability in a dynamic environment on Cloud or Kubernetes is a new challange we are facing and I think the tool that plays a big role is an high cardinality database.">
+    <meta name="keywords" content="observability, monitoring, data analysis, tracing, logs, metrics, events">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/high-cardinality-database">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>You need an high cardinality database</h1>
+<main>
+    <p class="meta">28 Nov 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>In order to understand how an application performs you need data. Logs, events,
+metrics, traces.</p>
+
+<p>Observability and monitoring are expensive because you need to retrieve all this
+data across your system. An architeture these days is not a static rock where
+nothing happens and everything stays the same. You don’t have your 10 VPC, with
+always the same hostname that you can filter for.</p>
+
+<p>Today you are on cloud, your instances are going up and down based on your load
+and it is easier for you to replace an EC2 that troubleshooting a failure.</p>
+
+<p>Containers wrap your application and they makes it easy to deploy, as side
+effect you release more often, it means more data.</p>
+
+<p>But the data are useless if you can not get anything good out from them, so they
+can be your silver buffet or a big pain, the difference is all made by your
+ability to use them to answer your questions or in the ability for your team
+aggregate them together in order to build automation with them.</p>
+
+<p>To do all off this you need to manage high cardinality, this is word that sales
+team in tech are scary off because nobody will never sell an infinite high
+cardinality database, everything has a limit, and the unique solution is not a
+product itself but it is more like a mindset developers should have.</p>
+
+<ul>
+  <li>You need to store the raw data for just the right time, forever is not an
+option.</li>
+  <li>You need to give access to these data across the company in order to build
+better aggregation. Build Engineers will probably need data not just from the
+CI pipeline but also from your VCS. SRE to understand how a code change behave
+in prod they need metrics from servers but also from the CI. Spread the
+knowledge</li>
+</ul>
+
+<p>The technologies that gives you the ability to interact with a big set of
+unstructured data should support an high wrtie troughpoot and smart indexes that
+will allow your query engine to lookup for what you need fast enough!</p>
+
+<p>So that’s what I have in my mind when I think about a database that can support
+monitoring data.</p>
+
+<p>I am not selling anything mainly because I think a final solution doesn’t exist
+yet, I can not really tell you what to buy but you should look around for other
+companies at your same scale because everyone has this problem:</p>
+
+<ul>
+  <li>Facebook has scuba</li>
+  <li>A lot of people use Cassandra and they looks happy at least for its writing
+capabilities.</li>
+  <li>There are new time series databases releases in a daily based</li>
+  <li>At InfluxData we obviously use InfluxDB for this purpose</li>
+</ul>
+
+<p>The general idea here is that the goal should be to group
+data that now are in different sources: NewRelic, InfluxDB, ElasticSearch,
+Papertrail in the same place, because it is rare to get
+the answer for your question just looking at logs, or metrics, you need an
+aggregation or a sample of different data.</p>
+
+<p>This will bring the debugging and troubleshooting capabilities of your team to
+the next level, and listen to me, if you are working with a microservices
+architecture or with a highly distributed environment you need help from
+everything!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

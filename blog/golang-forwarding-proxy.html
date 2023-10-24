@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How to use a Forwarding Proxy with golang</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cloud, Docker, Kubernetes make your environment extremely dynamic, it has a lot of advantages but it adds another layer of complexity. This article is about forward proxy and golang. How to configure your http Client to use an http, https forward proxy for your golang application to increase security, scalability and to have a set of public ips for outbound traffic.">
+    <meta name="keywords" content="golang, network, go, proxy, forwarding, privoxy, docker, kubernetes">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/golang-forwarding-proxy">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How to use a Forwarding Proxy with golang</h1>
+<main>
+    <p class="meta">21 Mar 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>A forwarding proxy is a proxy configuration that handle requests from a set of
+internal clients that are trying to create a connection to the outside.</p>
+
+<p>In practice is a man in the middle between your application and the server that you are
+trying to connect. It works over the HTTP(S) protocol and it is implemented at the
+edge of your infrastructure.</p>
+
+<p>Usually, you can find it in large organizations or universities and it is used as
+additional control mechanism for authorization and security.</p>
+
+<p>I find it useful when you work with containers or in a dynamic cloud environment
+because you will have a set of servers for all the outbound network
+communication.</p>
+
+<p>If you work in a dynamic environment as AWS, Azure and so on you will end up
+having a variable number of servers and also a dynamic number of public IPs.
+Same if your application runs on a Kubernetes cluster. Your container can be
+everywhere.</p>
+
+<p>Now let’s suppose that a customer asks you to provide a range of public IPs
+because he needs to set up a firewall… How can
+you provide this feature?  In some environments can be very simple, in others
+very complicated.</p>
+
+<p>1st December 2015 a users asked this question on the <a href="https://discuss.circleci.com/t/circleci-source-ip/1202">CircleCI
+forum</a> this request is
+still open. This is just an example, CircleCi is great. I am not complaining
+about them.</p>
+
+<p>One of the possible ways to fix this problem is via the forwarding proxy. You can
+spin up a set of nodes with a static ip and you can offer the list to the
+customer.</p>
+
+<p>Almost all cloud providers have a way to do that, floating ip
+on DigitalOcean or Elastic IP on AWS.</p>
+
+<p>You can configure your applications to forward the requests to that pool and
+the end services will get the ip from the forward proxy nodes and not from the
+internal one.</p>
+
+<p>This can be another security layer for your infrastructure because you will be
+able to control and scan packages that are going outside from your network in a
+really simple way and in a centralized place.</p>
+
+<p>This is not a single point of failure because you can spin up more than one
+forward proxies and they scale really well.</p>
+
+<p>Under the hood, a forward proxy is the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/CONNECT">HTTP method
+<code>CONNECT</code></a>.</p>
+
+<blockquote>
+  <p>The CONNECT method converts the request connection to a transparent TCP/IP
+tunnel, usually to facilitate SSL-encrypted communication (HTTPS) through an
+unencrypted HTTP proxy.</p>
+</blockquote>
+
+<p>A lot of HTTP Client across languages already support this in a very
+transparent way. I built a very small example using golang and
+<a href="https://www.privoxy.org/">privoxy</a> to show you how simple it is.</p>
+
+<p>First of all, let’s build an application called <code>whoyare</code>. It is an HTTP server
+that returns your remote address:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	"encoding/json"
+	"net/http"
+)
+
+func main() {
+	http.HandleFunc("/whoyare", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		body, _ := json.Marshal(map[string]string{
+			"addr": r.RemoteAddr,
+		})
+		w.Write(body)
+	})
+	http.ListenAndServe(":8080", nil)
+}
+</code></pre>
+
+<p>You can call the <code>GET</code> the route <code>/whoyare</code> and you will receive a JSON like
+<code>{"addr": "34.35.23.54"}</code> where <code>34.35.23.54</code> is your public address. Running
+<code>whoyare</code> from your laptop if you make a request on your terminal you should get
+<code>localhost</code> as remote address. You can use curl to try it:</p>
+
+<pre><code class="language-bash">18:36 $ curl -v http://localhost:8080/whoyare
+* TCP_NODELAY set
+&gt; GET /whoyare HTTP/1.1
+&gt; User-Agent: curl/7.58.0
+&gt; Accept: */*
+&gt;
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+&lt; Date: Sun, 18 Mar 2018 17:36:40 GMT
+&lt; Content-Length: 31
+&lt;
+* Connection #0 to host localhost left intact
+{"addr":"localhost:38606"}
+</code></pre>
+
+<p>I wrote another application, it uses <code>http.Client</code> to print the response on
+stdout. If you have the server running you can run it:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+)
+
+type whoiam struct {
+	Addr string
+}
+
+func main() {
+	url := "http://localhost:8080"
+	if "" != os.Getenv("URL") {
+		url = os.Getenv("URL")
+	}
+	log.Printf("Target %s.", url)
+	resp, err := http.Get(url + "/whoyare")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	println("You are " + string(body))
+}
+</code></pre>
+
+<p>So, this is a very simple example, but you can apply this example to more
+complex environments.</p>
+
+<p>To make this example a bit more clear I created two virtual machines on
+DigitalOcean, one will run privoxy the other one will run <code>whoyare</code>.</p>
+
+<ul>
+  <li><strong>whoyare</strong>: public ip 188.166.17.88</li>
+  <li><strong>privoxy</strong>: public ip 167.99.41.79</li>
+</ul>
+
+<p>Privoxy is a very simple to setup forward proxy, nginx, haproxy doesn’t fit very
+well for this use case because they do not support the CONNECT method.</p>
+
+<p>I built a docker image
+<a href="https://hub.docker.com/r/gianarb/privoxy/"><code>gianarb/privoxy</code></a>, it’s on Docker
+Hub. You can run and by default, it runs on port 8118.</p>
+
+<pre><code class="language-bash">core@coreos-s-1vcpu-1gb-ams3-01 ~ $ docker run -it --rm -p 8118:8118
+gianarb/privoxy:latest
+2018-03-18 17:28:05.589 7fbbf41dab88 Info: Privoxy version 3.0.26
+2018-03-18 17:28:05.589 7fbbf41dab88 Info: Program name: privoxy
+2018-03-18 17:28:05.591 7fbbf41dab88 Info: Loading filter file:
+/etc/privoxy/default.filter
+2018-03-18 17:28:05.599 7fbbf41dab88 Info: Loading filter file:
+/etc/privoxy/user.filter
+2018-03-18 17:28:05.599 7fbbf41dab88 Info: Loading actions file:
+/etc/privoxy/match-all.action
+2018-03-18 17:28:05.600 7fbbf41dab88 Info: Loading actions file:
+/etc/privoxy/default.action
+2018-03-18 17:28:05.607 7fbbf41dab88 Info: Loading actions file:
+/etc/privoxy/user.action
+2018-03-18 17:28:05.611 7fbbf41dab88 Info: Listening on port 8118 on IP address
+0.0.0.0
+</code></pre>
+
+<p>The second step is to build and scp <code>whoyare</code> in your server. You can
+build it using the command:</p>
+
+<pre><code>$ CGO_ENABLED=0 GOOS=linux go build -o bin/server_linux -a ./whoyare
+</code></pre>
+<p>Now that we have the application up and running we can try via cURL to query it
+directly and via privoxy.</p>
+
+<p>Let’s try directly as we did previously:</p>
+
+<pre><code>$ curl -v http://your-ip:8080/whoyare
+</code></pre>
+
+<p><code>cURL</code> uses an environment variable <code>http_proxy</code> to forward the requests through
+the proxy:</p>
+
+<pre><code>$ http_proxy=http://167.99.41.79:8118 curl -v http://188.166.17.88:8080/whoyare
+*   Trying 167.99.41.79...
+* TCP_NODELAY set
+* Connected to 167.99.41.79 (167.99.41.79) port 8118 (#0)
+&gt; GET http://188.166.17.88:8080/whoyare HTTP/1.1
+&gt; Host: 188.166.17.88:8080
+&gt; User-Agent: curl/7.58.0
+&gt; Accept: */*
+&gt; Proxy-Connection: Keep-Alive
+&gt;
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+&lt; Date: Sun, 18 Mar 2018 17:37:02 GMT
+&lt; Content-Length: 29
+&lt; Proxy-Connection: keep-alive
+&lt;
+* Connection #0 to host 167.99.41.79 left intact
+{"addr":"167.99.41.79:58920"}
+</code></pre>
+<p>As you can see I have set <code>http_proxy=http://167.99.41.79:8118</code> and the response
+doesn’t contain my public ip but the proxy one.</p>
+
+<p><img src="/img/frankenstain-jr.jpg" alt="" /></p>
+
+<p>These are the logs that you should expect from privoxy for the requests crossing it:</p>
+
+<pre><code>2018-03-18 17:28:22.886 7fbbf41d5ae8 Request: 188.166.17.88:8080/whoyare
+2018-03-18 17:32:29.495 7fbbf41d5ae8 Request: 188.166.17.88:8080/whoyare
+</code></pre>
+
+<p>The client that you run it previously by default it connects to <code>localhost:8080</code>
+but you can override the target URL via env var <code>URL=http://188.166.17.88:8080</code>.
+Running the following command I reached directly <code>whoyare</code>.</p>
+
+<pre><code>$ URL=http://188.166.17.88:8080 ./bin/client_linux
+2018/03/18 18:37:59 Target http://188.166.17.88:8080.
+You are {"addr":"95.248.202.252:38620"}
+</code></pre>
+
+<p>The golang <code>HTTP.Client</code> supports a set of environment
+variables to configure the proxy, it makes everything very flexible because
+passing
+these variables to any service already running it will just work.</p>
+
+<pre><code>export HTTP_PROXY=http://http_proxy:port/
+export HTTPS_PROXY=http://https_proxy:port/
+export NO_PROXY=127.0.0.1, localhost
+</code></pre>
+<p>The first two are very simple, one is the proxy for the HTTP requests, the
+second for HTTPS. <code>NO_PROXY</code> excludes a set of hostname, the hostname listed
+there won’t cross the proxy.  In my case localhost and 127.0.0.1.</p>
+
+<pre><code>HTT_PROXY=http://forwardproxy:8118
+     +--------------+           +----------------+         +----------------+
+     |              |           |                |         |                |
+     |   client     +----------^+ forward proxy  +--------^+    whoyare     |
+     |              |           |                |         |                |
+     +--------------+           +----------------+         +----^-----------+
+                                                                |
+                                                                |
+    +---------------+                                           |
+    |               |                                           |
+    |   client      +-------------------------------------------+
+    |               |
+    +---------------+
+   HTTP_PROXY not configured
+</code></pre>
+<p>The client with the environment variables configured will cross the forward
+proxy. Other client will reach it directly.</p>
+
+<p>This granularity is very important. It’s very flexible because other than a
+“per-process” you can also select what request to forward and what to exclude.</p>
+
+<pre><code>$ HTTP_PROXY=http://167.99.41.79:8118 URL=http://188.166.17.88:8080
+./bin/client_linux
+2018/03/18 18:39:18 Target http://188.166.17.88:8080.
+You are {"addr":"167.99.41.79:58922"}
+</code></pre>
+<p>As you can see we just reached <code>whoyare</code> via proxy and the <code>addr</code> in response is
+now ours but the proxy one.</p>
+
+<p>The last command is a bit weird but it is just to show how the <code>NO_PROXY</code> works.
+We are calling the proxy excluding the <code>whoyare</code> URL, and as expected it doesn’t
+cross the proxy:</p>
+
+<pre><code>$ HTTP_PROXY=http://167.99.41.79:8118 URL=http://188.166.17.88:8080 NO_PROXY=188.166.17.88 ./bin/client_linux
+2018/03/18 18:42:03 Target http://188.166.17.88:8080.
+You are {"addr":"95.248.202.252:38712"}
+</code></pre>
+<p>Let’s read this article as a practical introduction to golang, forward proxy. You can
+subscribe to my <a href="/atom.xml">rss feed</a> or you can follow me on
+<a href="https://twitter.com/gianarb">@twitter</a>. Probably I will write about how to
+replace <code>privoxy</code> with golang and about how to setup and deploy this solution on
+Kubernetes. So let me know what to write first!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

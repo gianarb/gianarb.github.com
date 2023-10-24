@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>The awesomeness of the httptest package in Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="One of the reasons why testing in Go is friendly is driven by the fact that the core team already provides useful testing package as part of the stdlib that you can use, as they do to test packages that depend on them. This article explains how to use the httptest package to mock HTTP servers and to test sdks that use the http.Client.">
+    <meta name="keywords" content="golang, mockmania, http, httptest">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/golang-mockmania-httptest">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>The awesomeness of the httptest package in Go</h1>
+<main>
+    <p class="meta">25 Feb 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Go has a nice http package. I am able to say that because I am not aware of any
+other implementation of it in Go other than the one provided by the standard
+library. This is for me a good sign.</p>
+
+<pre><code class="language-go">resp, err := http.Get("http://example.com/")
+if err != nil {
+	// handle error
+}
+defer resp.Body.Close()
+body, err := ioutil.ReadAll(resp.Body)
+</code></pre>
+
+<p>This example comes from the <a href="https://golang.org/pkg/net/http/">documentation</a>
+itself.</p>
+
+<p>We are here to read about testing, so who cares about the http package itself!
+What matters is the <a href="https://golang.org/pkg/net/http/httptest/">httptest</a>
+package! Way cooler.</p>
+
+<p>This article is not the first one for the MockMania series, I wrote about titled
+<a href="https://gianarb.it/blog/golang-mockmania-influxdb-v2-client">“InfluxDB Client
+v2”</a>, it uses the
+httptest service already! But hey it deserves its own blog post.</p>
+
+<h2 id="server-side">Server Side</h2>
+
+<p>The http package provides a client and a server. The server is made of handlers.
+The handler takes a request and based on that it returns a response. This is its
+interface:</p>
+
+<pre><code class="language-go">type Handler interface {
+    ServeHTTP(ResponseWriter, *Request)
+}
+</code></pre>
+
+<p>As you can see if gets a ResponseWriter to compose a response based on the
+Request it gets. This process can be as complicated as you like, it can reaches
+databases, third party services but in the end, it writes a response.</p>
+
+<p>It means that mocking all the dependencies to get the right scenario we use the
+ResponseWriter to figure out if the handler made what we want.</p>
+
+<p>The httptest package provides a replacement for the ResponseWriter called
+ResponseRecorder. We can pass it to the handler and check how it looks like
+after its execution:</p>
+
+<pre><code class="language-go">handler := func(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "ping")
+}
+
+req := httptest.NewRequest("GET", "http://example.com/foo", nil)
+w := httptest.NewRecorder()
+handler(w, req)
+
+resp := w.Result()
+body, _ := ioutil.ReadAll(resp.Body)
+
+fmt.Println(resp.StatusCode)
+fmt.Println(string(body))
+</code></pre>
+
+<p>This handler is very simple, it just manipulates the response body. If your
+handler is more complicated and it has dependencies you have to be sure to
+replace them as well, injecting the appropriate one.</p>
+
+<h2 id="client-side">Client-Side</h2>
+
+<p>Handlers are useful if you can’t use them. The Go http package provides an http
+client as well that you can use to interact with an http server. An http client
+by itself is useless, but it is the entry point for all the manipulation and
+transformation you do on the information you get via HTTP. With the
+proliferation of microservices, it is a very common situation.</p>
+
+<p>The workflow is well understood, you have an HTTP backend to interact with, you
+fetch data from there are you manipulate them with your business logic. When
+testing what you can do is to mock the http backend in order to return what you
+want, testing that your business logic does what it is supposed to do based on
+the input you get from the HTTP server.</p>
+
+<p>During our first example, the handler was the subject of our testing, this is
+not the case anymore, we are testing the consumer this time, so we have to mimic
+and handler in order to get what we expect to return</p>
+
+<pre><code class="language-go">ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "I am a super server")
+}))
+defer ts.Close()
+</code></pre>
+
+<p>As you can see we are creating a new HTTP server via the httptest. It accepts a
+handler. The goal for this handler returns what we would like to gest our code
+on. In theory, it should just use the ResponseWriter to compose the response we
+expect.</p>
+
+<p>The server has a bunch of methods, the one you are looking for is the URL one.
+Because we can pass it to an http.Client, the one we will use as a mock for our
+function</p>
+
+<pre><code class="language-go">res, err := http.Get(ts.URL)
+if err != nil {
+	log.Fatal(err)
+}
+bb, err := ioutil.ReadAll(res.Body)
+res.Body.Close()
+</code></pre>
+
+<p>That’s it, as you can see <code>ts.URL</code> points the http.Client to the mock server we
+created.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I use the httptest package a lot even when writing SDKs for services that do not
+have integration with Go because I can follow their documentation mocking their
+server and I do not need to reach them until I am confident with the code I
+wrote.</p>
+
+<p>My suggestion is to test your client code for edge cases as well because of the
+httptest.Server gives you the flexibility to write any response you can think
+about. You can mimic an authorized response to seeing how your code with handle
+it, or an empty body or a rate limit. The only limit is our laziness.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

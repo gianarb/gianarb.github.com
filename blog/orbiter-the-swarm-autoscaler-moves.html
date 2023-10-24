@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Orbiter the Docker Swarm autoscaler on the road to BETA-1</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Orbiter is a project written in go. It is an autoscaler for Docker containers. In particular it works with Docker Swarm. It provides autoscaling capabilities for your services.">
+    <meta name="keywords" content="docker, docker captain, swarm, orbiter, automation, devops, monitoring">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/orbiter-the-swarm-autoscaler-moves">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Orbiter the Docker Swarm autoscaler on the road to BETA-1</h1>
+<main>
+    <p class="meta">09 Aug 2017 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Orbiter is an open source project written in go hosted on
+<a href="https://github.com/gianarb/orbiter">GitHub</a>. It provides autoscaling
+capabilities in your Docker Swarm Cluster.</p>
+
+<p>As you probably know at the moment autoscaling is not a feature supported
+natively by Docker Swarm but this is not a problem at all.</p>
+
+<p>Docker Swarm provides a useful API that helps you improving its capabilities.</p>
+
+<p>I created Orbiter months ago as use case with InfluxDB and to allow services to
+scale automatically based on signal <code>up</code> or <code>down</code>. You can follow the webinar
+that I made with InfluDB
+<a href="https://www.influxdata.com/resources/influxdata-helps-docker-auto-scale-monitoring/?ao_campid=70137000000Jgw7">here</a>.</p>
+
+<p>This article is not about “How it works”. You can <a href="https://gianarb.it/blog/orbiter-docker-swarm-autoscaler">read more here about how it
+works</a> and you can
+watch the embedded video that I made in the Docker HQ in San Francisco.</p>
+
+<p>Yesterday we made some very good improvements and we are moving forward to tag
+the first beta release. I need to say a big thanks to <a href="https://github.com/mbovo">Manuel
+Bovo</a>. He coded pretty much all the features listed
+here.</p>
+
+<ol>
+  <li>
+    <p><a href="https://github.com/gianarb/orbiter/pull/26">PR #26</a> e2e working example. <a href="https://github.com/gianarb/orbiter/tree/master/contrib/swarm">Please try
+it</a>.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/gianarb/orbiter/pull/27">PR #27</a> Now Orbiter has
+background job that listen on the Docker Swarm event API and register and
+de-register new services <a href="https://github.com/gianarb/orbiter#autodetect">deployed with right
+labels</a>. You don’t need to
+restart orbiter anymore. It detect new services automatically.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/gianarb/orbiter/pull/29">PR #29</a> Fixed the up/down range.
+Now we can not scale under 1 tasks but we can scale up services with 0 tasks.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/gianarb/orbiter/pull/31">PR #31</a> We have a cooldown
+period configurable via label <code>orbiter.cooldown</code>. This fix avoid multiple
+scaling in a short amount of time.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/gianarb/orbiter/pull/32">PR #32</a> We are migrating our API
+base root. Now all the API are <code>/v1/orbiter/.....</code>. At the moment we are
+supporting old and new routes. <strong>In October I will remove the old one. Please
+migrate to <code>/v1/orbiter/....</code> now!</strong>.</p>
+  </li>
+</ol>
+
+<h2 id="now">Now?</h2>
+
+<p>That’s a good question, but I have part of the answer. In October the plan is to
+release a BETA and finally the first stable version but what we need to do to go
+there?</p>
+
+<ul>
+  <li>Offer a proper auth method. Manuel started this
+<a href="https://github.com/gianarb/orbiter/pull/33">PR</a>. I have some concerns but
+we are on the right path.</li>
+  <li>Make orbiter “Only-Swarm”. The project started with the vision to become a
+general purpose autoscaler. But this is not in line with the idea of single
+responsibility and we designed a very clean API for Docker Swarm, make it
+usable in other context is not going to work. We tried it with DigitalOcean
+but the api and the project looks too complex and I love simplicity.</li>
+  <li>Get other feedback from the community to merge valuable features before the
+stable release.</li>
+</ul>
+
+<p>That’s it! Share it and give it a try! For any question I am available on
+twitter (@gianarb) or open an issue.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

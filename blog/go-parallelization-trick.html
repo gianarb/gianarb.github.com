@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>From sequential to parallel with Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="From a sequence of action to parallelization in Go. Using channels and wait groups from the sync package.">
+    <meta name="keywords" content="go, golang, parallelization, trick, code">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/go-parallelization-trick">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>From sequential to parallel with Go</h1>
+<main>
+    <p class="meta">21 Feb 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Everything starts as a sequence of events. You have a bunch of things to do and
+you are not sure how long or hard to manage they will be.</p>
+
+<p>As a pragmatic developer, you go over the list of things, and you make them one
+by one. The script runs, it works, and everyone is happy.</p>
+
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "log"
+    "time"
+)
+
+func main() {
+    list := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "l"}
+    for _, v := range list {
+        v, err := do(v)
+        if err != nil {
+            log.Printf("nop")
+        }
+        fmt.Println(v)
+    }
+
+}
+
+func do(s string) (string,error) {
+    time.Sleep(1*time.Second)
+    return fmt.Sprintf("%s-%d", s, time.Now().UnixNano()),nil
+}
+</code></pre>
+
+<p>Let’s execute it:</p>
+
+<pre><code>$ time go run c.go
+a-1550742371537033061
+b-1550742372537419148
+c-1550742373537846015
+d-1550742374538086031
+e-1550742375538488129
+f-1550742376538746707
+g-1550742377539047837
+h-1550742378539540979
+i-1550742379539938404
+l-1550742380540339887
+
+real    0m10.174s
+user    0m0.149s
+sys     0m0.074s
+</code></pre>
+
+<p>Until something changes from the outside, the outside world is a terrible place.</p>
+
+<p><img src="https://media.giphy.com/media/124pc9nFq7ZScU/giphy.gif" alt="" /></p>
+
+<p>The list of things to do grows too much, and your program runs too slow to be
+competitive, so you start to think about parallelization.</p>
+
+<p>Luckily for you, every action doesn’t depend on anything else, so you don’t need
+to stop if one of them fails or even worst you don’t need to do nothing weird,
+you skip that, and you log the failure.</p>
+
+<p>There is an easy way to migrate the code about with something that safely runs
+in parallel just using some built-in functions in Go like channels and
+WaitGroups.</p>
+
+<pre><code class="language-go">package main
+
+import (
+    "fmt"
+    "log"
+    "sync"
+    "time"
+)
+
+func main() {
+    fmt.Println("Start")
+    parallelization := 2
+    list := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "l"}
+    c := make(chan string)
+
+    var wg sync.WaitGroup
+    wg.Add(parallelization)
+    for ii := 0; ii &lt; parallelization; ii++ {
+        go func(c chan string) {
+            for {
+                v, more := &lt;-c
+                if more == false {
+                    wg.Done()
+                    return
+                }
+
+                v, err := do(v)
+                if err != nil {
+                    log.Printf("nop")
+                }
+                fmt.Println(v)
+            }
+        }(c)
+    }
+    for _, a := range list {
+        c &lt;- a
+    }
+    close(c)
+    wg.Wait()
+    fmt.Println("End")
+}
+
+func do(s string) (string, error) {
+    time.Sleep(1 * time.Second)
+    return fmt.Sprintf("%s-%d", s, time.Now().UnixNano()), nil
+}
+</code></pre>
+
+<p><code>parallelization</code> should be an external parameter that you can change to
+parallelize more or less. With a parallelization factor of 2 the benchmark looks
+like:</p>
+
+<pre><code class="language-bash">$ time go run c.go
+Start
+a-1550742531701829912
+b-1550742531701820924
+d-1550742532702088077
+c-1550742532702180981
+e-1550742533702473002
+f-1550742533703389899
+g-1550742534702714251
+h-1550742534703981070
+i-1550742535702992582
+l-1550742535704308486
+End
+
+real    0m5.269s
+user    0m0.249s
+sys     0m0.078s
+</code></pre>
+
+<p>Almost half of the time. Let’s try with 5.</p>
+
+<pre><code class="language-bash">$ time go run c.go
+Start
+e-1550742633337320607
+b-1550742633337280491
+c-1550742633337474112
+d-1550742633337280481
+a-1550742633337298154
+h-1550742634338002235
+i-1550742634338073772
+f-1550742634338033897
+g-1550742634338019639
+l-1550742634338231670
+End
+
+real    0m2.145s
+user    0m0.144s
+sys     0m0.058s
+</code></pre>
+
+<p>I wrote this article because I like how easy it was for this use case to run in
+parallel. Based on how complicated your <code>do</code> function is you need to be more
+careful.</p>
+
+<p>If your <code>do</code> function calls an external service it can fail, or it can rate
+limit you because you are parallelizing too much. But these are all problem that
+you can solve increasing the number of safeguards in your code.</p>
+
+<p>Something I learned using this and calling AWS intensively to take snapshots is
+the fact that EC2 snapshots happen in the background on AWS, so if you have
+thousands of nodes and you call AWS it will rate limit you or you won’t have a
+good experience of what happens on the AWS side in reality.</p>
+
+<p>A basic trick is to place a <code>batch delay</code> parameter that sleeps before every
+execution</p>
+
+<pre><code class="language-go">v, more := &lt;-c
+if more == false {
+    wg.Done()
+    return
+}
+
+// Sleep here!
+
+v, err := do(v)
+if err != nil {
+    log.Printf("nop")
+}
+fmt.Println(v)
+</code></pre>
+
+<p>This is a very crafty fix but if you catch this problem like me when everything
+is failing this is a safe bullet you should try.</p>
+
+<p>Parallelization is fun, but in reality, it increases complexity. Go servers
+primitives that are solid foundations but it is not you to instrument your code
+well enough to be confident about how it works.</p>
+
+<p>I will write the next chapter about this where I will use opencensus or
+opentracing to trace what is going on here!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

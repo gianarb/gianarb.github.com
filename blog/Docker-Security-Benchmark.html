@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Docker Bench Security</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Container security is a hot topic because today containers are everywhere also in production. It means that we need to trust this technology and start to think about best practices and tools to make our container environment safe.">
+    <meta name="keywords" content="docker, scaledocker, security, automation, devops, open source, docker captain">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/Docker-Security-Benchmark">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Docker Bench Security</h1>
+<main>
+    <p class="meta">15 Nov 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Frequently, best practices help you to have a safe environment,
+<a href="https://github.com/docker/docker-bench-security">docker-bench-security</a> is an
+open source project that runs in a container and scans your environment to
+report a set of common mistakes like:</p>
+
+<ul>
+  <li>Your kernel is too old</li>
+  <li>Your docker is not up to date</li>
+  <li>Some Docker daemon configurations are not good enough to run a production environment</li>
+  <li>Your container runs 2 processes</li>
+  <li>and others</li>
+</ul>
+
+<p>It’s a great idea to run it at some stage in each host to have an idea about
+the status of your environment. To do that you can just use this command when
+running a container</p>
+
+<pre><code class="language-bash">$ docker run -it --net host --pid host --cap-add audit_control \
+    -v /var/lib:/var/lib \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /usr/lib/systemd:/usr/lib/systemd \
+    -v /etc:/etc --label docker_bench_security \
+    docker/docker-bench-security
+</code></pre>
+
+<p>A good way to start is your run  it in your local environment. Run the command
+and check what you can do to make your local environment safe.  This tool is
+open source on GitHub and it’s also a great example of collaboration and how a
+community can share experiences to help other members to improve an
+environment.  This is a partial output:</p>
+
+<pre><code class="language-bash">Initializing Thu Nov 24 21:35:24 GMT 2016
+
+[INFO] 1 - Host Configuration
+[WARN] 1.1  - Create a separate partition for containers
+[PASS] 1.2  - Use an updated Linux Kernel
+[PASS] 1.4  - Remove all non-essential services from the host - Network
+[PASS] 1.5  - Keep Docker up to date
+[INFO]       * Using 1.13.01 which is current as of 2016-10-26
+[INFO]       * Check with your operating system vendor for support and security maintenance for docker
+[INFO] 1.6  - Only allow trusted users to control Docker daemon
+[INFO]      * docker:x:999:gianarb
+[WARN] 1.7  - Failed to inspect: auditctl command not found.
+[WARN] 1.8  - Failed to inspect: auditctl command not found.
+[WARN] 1.9  - Failed to inspect: auditctl command not found.
+[INFO] 1.10 - Audit Docker files and directories - docker.service
+[INFO]      * File not found
+[INFO] 1.11 - Audit Docker files and directories - docker.socket
+[INFO]      * File not found
+</code></pre>
+<p>Sometime to have a good result you just need to run a single command.</p>
+
+<p>This article is part of “Drive your boat like a Captain”. It’s a book about
+Docker in production, how manage a cluster of Docker Engine with Swarm and what
+it means to manage a production environment today.</p>
+
+<p>Keep in touch to receive news about the book
+<a href="/blog/scaledocker">scaledocker.com</a>.  If you are looking for a Docker
+Getting Started you can also look on the first chapter that I released <a href="/blog/docker-the-fundamentals">Docker
+The
+Fundamentals</a></p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

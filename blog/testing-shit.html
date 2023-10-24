@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>I don't give a shit about testing</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is all about how I approach testing in development. TDD, DDD, unit test, integration test. It should make my development faster and my code easy to maintain. We have a lot of different techniques because we need to be good on picking the right one.">
+    <meta name="keywords" content="testing, development, golang, container">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/testing-shit">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>I don't give a shit about testing</h1>
+<main>
+    <p class="meta">29 Mar 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>That’s what I learned during my experience as a developer. Doesn’t matter
+which languages you end up working if you are making HTTP API or things like
+that you don’t have an excuse. Write tests make your development faster, and it will
+drastically improve maintainability of your project.</p>
+
+<p>In this post, I would like to tell you how I approach testing particularly in
+Go obviously.</p>
+
+<p>First of all, when you create a new file, you should write its <code>_test.go</code> child.
+It’s hard to tell you who should be the child of who. Sometimes I start
+to write everything inside a test function, just because run the actual test is faster
+compared with compile, run the binary, trigger the right entry point and so on.
+When I am satisfied, I move the
+code to a function, and I leave the assertions I wrote as a new test. <strong>Pretty good</strong>.</p>
+
+<blockquote>
+  <p>I don’t give a shit about automated testing. I write tests.</p>
+</blockquote>
+
+<p>I use <a href="https://github.com/fatih/vim-go"><code>vim-go</code></a> and <code>:GoTestFunc</code> is probably
+the most used shortcut during my day to day job.</p>
+
+<p>When I can choose I don’t use assertion libraries, the <code>testing</code> package is
+enough for me and dependency management in go is a pain, so fewer things I vendor
+better I feel about myself.</p>
+
+<p><img src="/img/laziness.jpg" class="img-fluid" /></p>
+
+<p>I use fixtures, but I don’t like them. I prefer to write more small tests than complicated fixtures.</p>
+
+<p>A single test for me is more descriptive, and I don’t mind to write redundant code, I can always refactor it later or move it some helper function. A complicated fixture will be hard to maintain.
+The name of the function is an excellent way to describe what you are covering in your test and the function itself
+creates a beautiful block that improves readability.</p>
+
+<pre><code class="language-go">func TestCarComposition(t *testing.T) {
+    fixtures := []car.Composition{
+        {"blue", "europe", 1, nil, "2011-12-05", "ford"},
+        {"", "", 35, bool, nil, "ford"},
+        {"red", "usa", 0, bool, nil, "fiat"},
+        {"white", "", 35, bool, nil, "kia"},
+        {"orange", "", 1, bool, "2010-05-12", nil},
+        {"", "", 0, bool, nil, "ford"},
+    }
+}
+</code></pre>
+
+<p>Bonus point, as you can see fixtures are sad to read!</p>
+
+<p>Even unit vs. integration vs. function is a very annoying discussion. Don’t tell me
+about TDD, BDD, CCC, DDD things. I don’t care they are all amazing as
+soon as they can make my development simple.</p>
+
+<p>So, CDD is probably my best test methodology: <strong>Comfort driven development</strong>.</p>
+
+<p>Usually when I am writing a computing function when it elaborates maps, strings,
+files without using too many external resources I start from unit test, because
+it makes iteration faster as I told before. And it won’t require too many mocks.
+I don’t like mocks.</p>
+
+<h2 id="lets-discuss-mocks">Let’s discuss mocks</h2>
+<p>Mocks are a pain; you end up to be bored when you write mocks, they won’t fail when it’s useful for you to see an error and they will fail when you don’t care.
+So comfort looks very far from mocks!</p>
+
+<p>When mocks becomes too complicated, and I can write another kind of tests I go with that solution. Maybe integration or I will try to write the simple mock
+possible, sometimes even the entire web server can be a valuable solution:</p>
+
+<pre><code class="language-go">func TestInfluxDBSdkGetTheRightValues(ti *testing.T) {
+    ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        data := influxdb.Response{
+            Results: []influxdb.Result{
+                {
+                    Series: []influxdbModels.Row{},
+                },
+            },
+        }
+        w.Header().Add("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        _ = json.NewEncoder(w).Encode(data)
+    }))
+    defer ts.Close()
+
+    config := influxdb.HTTPConfig{Addr: ts.URL}
+    client, _ := influxdb.NewHTTPClient(config)
+    defer client.Close()
+
+    // Whatever you need to check
+}
+</code></pre>
+<p>You need to play carefully; these tests are slower and more expensive in
+resources.
+But I like the idea to take the faster solution when I am developing; you can
+come back on your tests later when the feature is more stable and better
+designed. Write tests should not slow me down too much, I am looking for a way
+to write the implementation and the test fasts to iterate on both of them other than waste time making everything perfect. Nothing will be forever; nothing will be complete in programming, so design your environment to be easy to change.</p>
+
+<h2 id="integration-tests">Integration tests</h2>
+<p>I am a CLI kind of person, so I often send HTTP requests via cURL.
+Docker is very easy from day one to start and stop your application,
+cleaning databases and so on.</p>
+
+<p><a href="https://github.com/sstephenson/bats"><code>bats</code></a> combines these two sentences. It is an automation test framework for
+bash. It is very simple to setup, and it allows me to copy paste some cURL, and
+with jq, you can make the checks you need over your JSON response.</p>
+
+<p>An integration test suite made with bats looks like that:</p>
+
+<ol>
+  <li>An “init” file in bash where you can run setup and teardown function before and after every test. Usually, you can you that functions to spin up and down the
+containers that you need to tests, this is the one that I wrote for this
+example</li>
+</ol>
+
+<pre><code class="language-bash">#!/bin/bash
+
+function setup() {
+  teardownCallback=$(init)
+}
+
+function teardown() {
+  eval $teardownCallback
+}
+
+function getHost() {
+  echo "http://localhost"
+}
+
+function init {
+  executionID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 7 | head -n 1)
+  containerLabels="exec=${executionID}"
+  $(docker run -d -l $containerLabels -p 80:80 nginx)
+  echo "docker ps -aq -f 'label=${containerLabels}' | xargs docker rm -f"
+}
+</code></pre>
+<ol>
+  <li>You have a set of <code>.bats</code> files with the various scenarios, I wrote one to
+check if the status code 200 for the nginx home</li>
+</ol>
+
+<pre><code class="language-bash">#!/usr/bin/env bats
+
+load utils
+
+@test "Nginx home return 200" {
+      statusCode=$(curl -I -X GET "$(getHost)" 2&gt;/dev/null | head -n 1 | cut
+      -d$' ' -f2)
+        [ $statusCode -eq 200 ]
+}
+</code></pre>
+
+<p>What you are running is a <code>bats</code> test to check that <code>nginx:latest</code> is serving the right page.
+Your use case will be ten times more complicated.</p>
+
+<p>Another reason to take this approach is about bash itself. If you are not a bash
+expert, you will probably end up to write straightforward tests, cURL, grep,
+regex and some pipes. Nothing more.</p>
+
+<p>And you won’t use any code that runs your application. It’s important to avoid
+weird buggy tests.</p>
+
+<h2 id="developer-happiness">developer happiness</h2>
+<p>Tests are a methodology to decrease the cost of maintenance and to improve your
+ability to write code.</p>
+
+<p>It should not be a fashion way to show how good you are as a developer. You will
+be a good developer as a side effect.</p>
+
+<p>I look at all the different way to tests my code as a tool set, AI is becoming
+very smart. So we need to be less “server” and more human been. 100% coverage
+for unit tests looks a lot like something that a server can do. Pick the right
+method based on your feeling.</p>
+
+<script>
+$(document).ready(function() {
+	$('body').css("background", "#F5F3E6");
+});
+</script>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

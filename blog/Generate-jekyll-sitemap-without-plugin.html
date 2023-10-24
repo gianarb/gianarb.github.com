@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Generale Jekyll sitemap without plugin</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Every site should have its sitemap to tell search engine like Google about news and updates from your site. With a static site generator such as Jekyll you need to generate statically the sitemap too. This article explains how to write a template that generate a sitemap.">
+    <meta name="keywords" content="jekyll, sitemap, seo, search engine, static site, ruby">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/Generate-jekyll-sitemap-without-plugin">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Generale Jekyll sitemap without plugin</h1>
+<main>
+    <p class="meta">09 Aug 2013 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Less than one minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This blog is a static blog and uses GitHub pages, GitHub pages are generally
+deployed using Jekyll.</p>
+
+<h3 id="how-can-you-generate-a-sitemap-without-jekyll-plugin">How can you generate a sitemap without Jekyll plugin?</h3>
+<p>This <a href="https://gist.github.com/GianArb/6172377">gist</a> answers your question.</p>
+
+<p>I use some post values: changefreq, date and priority, if you don’t set any
+specific values for them default values are used that are, 0.8 for priority and
+month for frequency.</p>
+
+<p>In a single post you add this params for use correct params!</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="o">---</span>
+<span class="n">layout</span><span class="o">:</span> <span class="n">post</span>
+<span class="n">title</span><span class="o">:</span>  <span class="s2">"Why this blog?"</span>
+<span class="n">date</span><span class="o">:</span>   <span class="mi">2013</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">22</span> <span class="mi">23</span><span class="o">:</span><span class="mi">08</span><span class="o">:</span><span class="mi">27</span>
+<span class="n">categories</span><span class="o">:</span> <span class="n">me</span>
+<span class="n">tags</span><span class="o">:</span> <span class="n">me</span><span class="p">,</span> <span class="n">developer</span><span class="p">,</span> <span class="n">presentation</span><span class="p">,</span> <span class="n">gianarb</span>
+<span class="n">summary</span><span class="o">:</span> <span class="nc">Gianluca</span> <span class="nc">Arbezzano</span><span class="p">,</span> <span class="n">developer</span><span class="p">,</span> <span class="nc">Italian</span><span class="p">,</span> <span class="n">why</span> <span class="n">open</span> <span class="n">this</span> <span class="n">blog</span><span class="o">?</span>
+<span class="n">changefreq</span><span class="o">:</span> <span class="n">monthly</span>
+<span class="o">---</span></code></pre></figure>
+
+<p>If you want to know more about the Sitemap Protocol read
+<a href="https://www.sitemaps.org/protocol.html">this</a>.</p>
+
+<p><a href="https://github.com/MarcoDeBortoli">Marco</a> thanks for English! :)</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

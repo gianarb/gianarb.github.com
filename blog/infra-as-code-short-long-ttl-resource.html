@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Short TTL vs Long TTL infrastructure resource</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I called this framework "short vs long ttl". GitOps, Infrastructure as code are an hot topic today where the infrastructure is more dynamic and YAML doesn't look like a great solution anymore. In this article I explain a framework I am trying to use to understand when a resource is good to be managed in the old way or not.">
+    <meta name="keywords" content="gitops, infrastructure as code, kubernetes, aws, long ttl, short ttl, resource">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/infra-as-code-short-long-ttl-resource">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Short TTL vs Long TTL infrastructure resource</h1>
+<main>
+    <p class="meta">14 Feb 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="tw-align-center twitter-tweet"><p lang="en" dir="ltr">I am excited to listen
+to a lot of ideas and pains about infra as code and yaml. Everyone is more or
+less walking in the same direction. This is what I have in my mind atm. More
+will come. Short TTL vs Long TTL resources <a href="https://t.co/XRCOgbB3Rg">https://t.co/XRCOgbB3Rg</a></p>&mdash;
+pilesOfAbstractions (@GianArb) <a href="https://twitter.com/GianArb/status/1095960644195680257?ref_src=twsrc%5Etfw">February
+14, 2019</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Recently I gave a talk at the ConfigManagementCamp about “Infrastructure as
+code”
+<a href="https://speakerdeck.com/gianarb/cfgmgmtcamp-infrastructure-as-code-should-contain-code">(slides)</a>
+and I wrote an article about <a href="/blog/infrastructure-as-real-code">infrastructure as {real}
+code</a>.</p>
+
+<p>This post is a follow-up focused on how I identify YAML-friendly resources vs.
+something else.</p>
+
+<p>I don’t hate YAML; I think it is a functional specification language, well
+supported by a lot of different languages. It works I use it when I need to
+write parsable and human-friendly files.</p>
+
+<p><img src="https://media.giphy.com/media/1Mng0gXC5Tpcs/giphy.gif" alt="" /></p>
+
+<p>In infrastructure as code resources mean, almost everything: a subnet, an ec2, a
+virtual machine, a DNS record, or a pod.</p>
+
+<p>I reference a single unit you can describe as a <strong>resource</strong>. The name probably
+comes from too much CloudFormation specification that I wrote over these years.</p>
+
+<p><strong>Short TTL vs. Long TTL</strong> are two different categories that I use to identify
+them. The resources during the evolution of your infrastructure can move between
+groups.</p>
+
+<p><strong>Long TTL</strong> resources are the one that doesn’t change much. For example, an AWS
+VPC currently doesn’t change. It gets deleted or replaced, but you can not
+change the cidr. A Route53 Hosted Zone doesn’t change that often. I am more
+confident about using specification languages and traditional tools like
+Terraform, CloudFormation or kubectl and YAML for these resources.</p>
+
+<p><strong>Short TTL</strong> resources changes often. Kubernetes deployment and statefulset.
+Route53 DNS record in my case or Autoscaling Groups.  Manage the lifecycle of
+these kinds of resources via YAML requires a lot of automation and file
+manipulation that I don’t think it is safe to do. I like a lot more to interact
+with the API of my provider, ex. AWS or Kubernetes for them. To avoid programs
+that parse and modify YAML or JSON to deploy a slightly different version of a
+template I prefer to manipulate actual code. It is what I do every day. I have
+testing frameworks, libraries and a lot more patterns to use</p>
+
+<p><img src="/img/shortlongttl.png" alt="" class="img-fluid" /></p>
+
+<p>The location of a resource is dynamic; it can jump from a category to another
+based on architectural decisions. One example I have is with AWS AutoScaling
+Groups.  I like to use them to manage Kubernetes Nodes (workers). At the
+beginning when you need a k8s cluster to play with I usually create one
+autoscaling group with n replicas of the node. The node as the last command
+joins the cluster via kubeadm. Easy like it sounds. In this case, the
+autoscaling group is one. It doesn’t change that often.  When your use case
+becomes more realistic, you need a more complicated topoligies. You need pods to
+go on different nodes with more RAM or more CPU or at least you need to labels
+or add taints to your cluster to have pods far or closer to others.  This means
+that you end up having more AutoScaling Group with different configuration and
+usually, they go away and get replaced very often with varying versions of
+Kubernetes and so on.  This dynamicity brought as side effect the request of a
+more friendly UX for ops, in our case integrated with the kubectl for example.
+That’s when we promoted AutoScaling Groups from a long TTL to a short TTL
+resource.  We developed a K8S CRD to create autoscaling groups and so on.</p>
+
+<p>The missing part is the <strong>reconciliation</strong> between long TTL and short TTL. As
+you can see you end up having YAML or JSON in a repository for the long TTL one
+and API requests for the short TTL. It means that you can not tell what’s the
+situation for your short TTL resources looking at your repository.  You can see
+what you run via the kubernetes API, but that’s not what I am looking for. I
+think GitOps can fix the issue, but I will write more after more tests.</p>
+
+<p>I tried to make these concepts as clear as possible but let me know what you
+think via twitter <a href="https://twitter.com/gianarb">@gianarb</a></p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

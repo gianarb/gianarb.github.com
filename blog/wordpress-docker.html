@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Docker and wordpress for a better world</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Docker and wordpress to guarantee scalability, flexibilty and isolation. A lot of webagencies install all wordpress in the same server but how can they manage a disaster? AWS with Elastic Container Service could be a more professional solution.">
+    <meta name="keywords" content="devops, docker">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/wordpress-docker">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Docker and wordpress for a better world</h1>
+<main>
+    <p class="meta">14 Dec 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/docker?src=hash">#docker</a> and <a href="https://twitter.com/hashtag/wordpress?src=hash">#wordpress</a> for a better world.. <a href="https://t.co/o9c6YXvsl3">https://t.co/o9c6YXvsl3</a> Blogpost after my talk <a href="https://twitter.com/CodemotionIT">@CodemotionIT</a> How and Why? <a href="https://twitter.com/awscloud">@awscloud</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/679241680797700096">December 22, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>I am trying to represent a typical wordpress infrastructure</p>
+
+<p><img src="/img/posts/2015-12-16/wp-infra.png" alt="Wordpress typical infrastructure" /></p>
+
+<p><strong>Isolation</strong>: every single wordpress share all with the others, filesystem,
+memory, database.</p>
+
+<p>This lack of isolation causes different problems:</p>
+
+<ul>
+  <li>The monitoring of each installation is harder.</li>
+  <li>We share security problems</li>
+  <li>We don’t have the freedom to work without the fear or blocking 100 customers</li>
+</ul>
+
+<p>We are overwhelmed by the problems</p>
+
+<p><img src="/img/posts/2015-12-16/problem.png" alt="Problem" /></p>
+
+<h2 id="lxc-container">LXC Container</h2>
+
+<blockquote>
+  <p>it is an operating-system-level virtualization environment for running multiple
+isolated Linux systems (containers) on a single Linux control host.</p>
+
+  <p>by wikipedia</p>
+</blockquote>
+
+<p>Wikipedia helps me to resolve one problem (theory), container is <strong>isolated
+Linux System</strong></p>
+
+<h2 id="docker">Docker</h2>
+
+<p>Docker borns as wrap of LXC container but now we use an own implementation
+<a href="https://github.com/opencontainers/runc">runc</a> to serve your application ready
+to go in an isolate environment, with own filesystem and dependencies.</p>
+
+<p>Worpdress in this implemetation has two containers, one to provide apache and
+php and one for mysql database.  This is an example of Dockerfile, it describes
+how a docker container works it is very simple to understand, from this example
+there are different keywords</p>
+
+<ul>
+  <li><code>FROM</code> describes the image that we use as start point.</li>
+  <li><code>RUN</code> run a command.</li>
+  <li><code>EXPOSE</code> describes ports to open during a link, in this case MySql runs on
+the default port 3306.</li>
+  <li><code>CMD</code> is the default command used during the run console command.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">FROM ubuntu
+RUN dpkg-divert <span class="nt">--local</span> <span class="nt">--rename</span> <span class="nt">--add</span> /sbin/initctl
+RUN <span class="nb">ln</span> <span class="nt">-s</span> /bin/true /sbin/initctl
+RUN <span class="nb">echo</span> <span class="s2">"deb http://archive.ubuntu.com/ubuntu precise main universe"</span> <span class="o">&gt;</span> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get <span class="nt">-y</span> <span class="nb">install </span>mysql-server
+EXPOSE 3306
+CMD <span class="o">[</span><span class="s2">"/usr/bin/mysqld_safe"</span><span class="o">]</span></code></pre></figure>
+
+<p>Very easy to read, it is a list of commands!
+We are only write a container definition, now we can build it!</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker build <span class="nt">-t</span> gianarb/mysql .</code></pre></figure>
+
+<p>In order to increase the value of this article and to use stable images I will
+use the official <a href="https://hub.docker.com/_/mysql/">mysql</a> and
+<a href="https://hub.docker.com/_/wordpress/">wordpress</a> images.</p>
+
+<p>Download this images</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker pull wordpress
+docker pull mysql</code></pre></figure>
+
+<p>We are ready to run all! Dockerfile is only a way to describe each single
+container, and the pull command downloads online container ready to work, it is
+a good way to reuse your or other containers.</p>
+
+<p>We downloaded mysql and wordpress, with the run command we start them and we
+define our connections</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker run <span class="se">\</span>
+    <span class="nt">--name</span> mysql <span class="se">\</span>
+    <span class="nt">-p</span> 3306:3306 <span class="se">\</span>
+    <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>passwd  mysql
+
+docker run <span class="nt">-e</span> <span class="nv">WORDPRESS_DB_HOST</span><span class="o">=</span>wp1.database.prod <span class="se">\</span>
+    <span class="nt">-e</span> <span class="nv">WORDPRESS_DB_USER</span><span class="o">=</span>root <span class="se">\</span>
+    <span class="nt">-e</span> <span class="nv">WORDPRESS_DB_PASSWORD</span><span class="o">=</span>help_me <span class="se">\</span>
+    <span class="nt">-p</span> 8080:80 <span class="se">\</span>
+    <span class="nt">-d</span> <span class="nt">--name</span> wp1 <span class="se">\</span>
+    <span class="nt">--link</span> wp.database.prod:mysql wordpress</code></pre></figure>
+
+<p>I can try to explain this commands, it run two containers:</p>
+
+<ul>
+  <li>The name of the first container is mysql and it uses the <code>mysql</code> image, we
+use -p flag to expose mysql port now you can use phpmyadmin or other client
+to fetch the data but remember that is not a good practice.</li>
+  <li>The second container called wp1 uses the image <code>gianarb/wordpress</code> forward
+the container port 80 (apache) on host 8080, that in this case it is the way
+to see the site.  –link flag is the correct way to consume mysql outside the
+main container, in this particular case we could use wp.database.prod how url
+to connect at mysql from our worpdress container, awesome!</li>
+  <li>Docker image supports environment variable <code>ENV</code> for example we can use them
+to configure our services, in this case to set root password in mysql and to
+configure worpdress’s database connection</li>
+</ul>
+
+<p>We are ready! Now you have a worpdress ready to go on port 8080.</p>
+
+<h2 id="docker-compose">Docker Compose</h2>
+<p>To save time and to increase reusability we can use
+<a href="https://docs.docker.com/compose/">docker-compose</a> tool
+that helps us to manage multi-container infrastructures, in this case one for
+mysql and one for wordpress.
+In practice we can describe all work did above in a <code>docker-compose.yml</code> file:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">wp</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">wordpress</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">8081:80</span>
+  <span class="na">environment</span><span class="pi">:</span>
+      <span class="na">WORDPRESS_DB_HOST</span><span class="pi">:</span> <span class="s">wp1.database.prod</span>
+      <span class="na">WORDPRESS_DB_USER</span><span class="pi">:</span> <span class="s">root</span>
+      <span class="na">WORDPRESS_DB_PASSWORD</span><span class="pi">:</span> <span class="s">help_me</span>
+  <span class="na">links</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">wp1.database.prod:mysql</span>
+<span class="na">mysql</span><span class="pi">:</span>
+  <span class="na">image</span><span class="pi">:</span> <span class="s">mysql:5.7</span>
+  <span class="na">environment</span><span class="pi">:</span>
+    <span class="na">MYSQL_ROOT_PASSWORD</span><span class="pi">:</span> <span class="s">help_me</span></code></pre></figure>
+
+<p>Now we can run</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">docker-compose build <span class="nb">.</span>
+docker-compose up</code></pre></figure>
+
+<p>To prepare and start our infrastructure. Now we have one wordpress with own
+mysql that run on port 8081. We can change wordpress port to start new isolate
+wordpress installation.</p>
+
+<p class="text-center">
+<iframe src="//giphy.com/embed/l41lYCDgxP6OFBruE" width="480" height="268" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe><p><a href="https://giphy.com/gifs/foxtv-win-ricky-gervais-emmys-2015-l41lYCDgxP6OFBruE">via
+GIPHY</a></p>
+</p>
+
+<h2 id="in-cloud-with-aws-ecs">In Cloud with AWS ECS</h2>
+<p>We won a battle but the war is too long, we can not use our PC as server.  In
+this article I propose <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html">AWS Elastic Container
+Service</a>
+a new AWS service that helps us to manage containers, why this service? Because
+it is Docker and Docker Composer like, it’s managed by AWS, maybe there are
+more flexible solutions, Swarm, Kubernetes but it is a good start point.</p>
+
+<p><img src="/img/posts/2015-12-16/ecs.png" alt="AWS Elastic Container Service" /></p>
+
+<p>A services of keywords to understand how it works:</p>
+
+<ul>
+  <li><strong>Container instance</strong>: An Amazon EC2 that is running the Amazon ECS Agent. It has been registered into the ECS.</li>
+  <li><strong>Cluster</strong>: It is a pool of Container instances</li>
+  <li><strong>Task definition</strong>: A description of an application that contains one or more container definitions</li>
+  <li>Each Task definition running is a <strong>Task</strong></li>
+</ul>
+
+<h3 id="in-practice">In practice</h3>
+
+<ol>
+  <li>Create a cluster</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ecs-cli configure <span class="se">\</span>
+    <span class="nt">--region</span> eu-west-1 <span class="se">\</span>
+    <span class="nt">--cluster</span> wps <span class="se">\</span>
+    <span class="nt">--access-key</span> apikey <span class="se">\</span>
+    <span class="nt">--secret-key</span> secreyKey</code></pre></figure>
+
+<ol>
+  <li>Up nodes (one in this case)</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ecs-cli up <span class="nt">--keypair</span> key-ecs <span class="se">\</span>
+    <span class="nt">--capability-iam</span> <span class="se">\</span>
+    <span class="nt">--size</span> 1 <span class="se">\</span>
+    <span class="nt">--instance-type</span> t2.medium</code></pre></figure>
+
+<ol>
+  <li>Push your first task!</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ecs-cli compose <span class="nt">--file</span> docker-compose.yml  <span class="se">\</span>
+    <span class="nt">--project-name</span> wp1 up</code></pre></figure>
+
+<ol>
+  <li>Follow the status of your tasks</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ecs-cli ps</code></pre></figure>
+
+<p>You can use another docker-compose.yml with a different wordpress port to build
+another task with another worpdress!</p>
+
+<h2 id="now-is-only-a-problem-of-url">Now is only a problem of URL</h2>
+<p>We are different isolated worpdress online, but they are an ip and different
+ports, maybe our customers would use a domain name for example.
+I don’t know if this solution is ready to run in production and it is good to
+run more and more wordpress but a good service to turn and proxy requests is
+HaProxy. This is an example of configuration for our use case:</p>
+
+<p>wp1.gianarb.it and wp1.gianarb.it are two our customers and 54.229.190.73:8080,
+54.229.190.73:8081 are our wordpress.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">...
+frontend wp_mananger
+        <span class="nb">bind</span> :80
+        acl host_wp1 hdr<span class="o">(</span>host<span class="o">)</span> <span class="nt">-i</span> wp1.gianarb.it
+        acl host_wp2 hdr<span class="o">(</span>host<span class="o">)</span> <span class="nt">-i</span> wp2.gianarb.it
+        use_backend backend_wp1 <span class="k">if </span>host_wp1
+        use_backend backend_wp2 <span class="k">if </span>host_wp2
+backend backend_wp1
+        server server1 54.229.190.73:8080 check
+backend backend_wp2
+        server server2 54.229.190.73:8081 check</code></pre></figure>
+
+<p>Note: This configuration increase the scalability of our system, because we can
+add other service in order to support more traffic.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">backend backend_wp1
+        server server1 54.229.190.73:8080 check
+        server server1 54.229.190.12:8085 check
+        server server1 54.229.190.15:80 check</code></pre></figure>
+
+<h3 id="there-are-other-solutions">There are other solutions</h3>
+<ul>
+  <li>Nginx</li>
+  <li>Consul to increase the stability and the scalability of our endpoint</li>
+</ul>
+
+<div class="alert alert-info" role="alert">
+This article is based on my presentation at <a href="https://gianarb.it/codemotion-2015/" target="_blank">Codemotion 2015</a>
+</div>
+
+<div class="alert alert-success" role="alert">
+Thanks for review <a href="https://twitter.com/fntlnz" target="_blank">Lorenzo</a>! I'm in Ireland from 3 weeks but I am not ready to
+write an article without your english review!
+</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

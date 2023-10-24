@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Unit test kubernetes client in Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A flexible an easy to use testing framework makes all the difference. Kubernetes provides a fake client in Go that works like a charm.">
+    <meta name="keywords" content="golang, kubernetes, mockmania">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/unit-testing-kubernetes-client-in-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Unit test kubernetes client in Go</h1>
+<main>
+    <p class="meta">10 Jan 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I write a lot of operations and integrations with Kubernetes those days. You can
+follow my journey in its dedicated section on this blog <a href="/planet/assemble-kubernetes.html">“Building
+Kubernetes”</a>.</p>
+
+<p>I had to write a function recently capable of filtering pods based on assigned
+annotations.</p>
+
+<pre><code class="language-go">
+const (
+	ProfefeEnabledAnnotation = "profefe.com/enable"
+)
+
+// GetSelectedPods returns all the pods with the profefe annotation enabled
+// filtered by the selected labels
+func GetSelectedPods(clientset kubernetes.Interface,
+	namespace string,
+	listOpt metav1.ListOptions) ([]v1.Pod, error) {
+
+	target := []v1.Pod{}
+	pods, err := clientset.CoreV1().Pods(namespace).List(listOpt)
+	if err != nil {
+		return target, err
+	}
+	for _, pod := range pods.Items {
+		enabled, ok := pod.Annotations[ProfefeEnabledAnnotation]
+		if ok &amp;&amp; enabled == "true" &amp;&amp; pod.Status.Phase == v1.PodRunning {
+			target = append(target, pod)
+		}
+	}
+	return target, nil
+}
+</code></pre>
+<p>This function is pretty easy, but it has a good amount of assertions that we can
+check. Even more when we have a so well scoped functions writing tests should be
+almost mandatory.</p>
+
+<ul>
+  <li>The returned list of pods should only contains pods with the
+<code>ProfefeEnabledAnnotation</code> set</li>
+  <li>The returned list of pods should only returns pods from the specified
+<code>namespace</code></li>
+  <li>The returned list of pods should observe the filtering and label selection
+criteria specified by <code>metav1.ListOptions</code></li>
+</ul>
+
+<p>Covering those use cases will give us a solid foundation to avoid regression
+when this function will get more complicated (usually that’s the evolution for
+successful piece of code).</p>
+
+<h2 id="kubernetes-client-mock">Kubernetes Client Mock</h2>
+
+<p>Kubernetes offers a simple and powerful <code>fake</code> client that has a very efficient
+mechanism to simulate the desired output from a specific request, in our case
+<code>clientset.CoreV1().Pods(namespace).List(listOpt)</code>. You have to pass the slice
+of <code>runtime.Object</code> you desire when you create a new fake client. Awesome and
+easy.</p>
+
+<pre><code class="language-go">clientset: fake.NewSimpleClientset(&amp;v1.Pod{
+    ObjectMeta: metav1.ObjectMeta{
+        Name:        "influxdb-v2",
+        Namespace:   "default",
+        Annotations: map[string]string{},
+    },
+}, &amp;v1.Pod{
+    ObjectMeta: metav1.ObjectMeta{
+        Name:        "chronograf",
+        Namespace:   "default",
+        Annotations: map[string]string{},
+    },
+}),
+</code></pre>
+<p>For example this <code>clientset</code> will return two pods, one called <code>influxdb-v2</code> and
+one called <code>chronograf</code>, but you can return what ever you need: Services,
+Deployments, Ingress, Custom Resource Definition or even a mix of everything.</p>
+
+<h2 id="in-practice">In practice</h2>
+
+<p>I wrote a bunch of tests for
+<a href="https://github.com/profefe/kube-profefe/blob/master/pkg/kubeutil/kube_test.go">kube-profefe</a>
+that are using a fake client. You can get inspiration over there.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p><code>fake</code> client is easy to use, so easy that since I added it in my tool chain for
+some functions like the one I described here I efficiently do <code>TDD</code> because it
+makes the iteration over my code way faster.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

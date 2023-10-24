@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Make boring tasks enjoyable with go and colly</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Recently I had the idea to update the conference page on my website with the end goal to make it a bit more structured. Where structured means a bit more reusable compared with the static HTML table I used to have. I mixed a bit of hacky Go, colly for scraping and that's who I did it">
+    <meta name="keywords" content="golang, colly, jekyll">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/make-boring-task-enjotable-with-go-colly">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Make boring tasks enjoyable with go and colly</h1>
+<main>
+    <p class="meta">23 Jan 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Recently I had the idea to update the <a href="/conferences.html">conference</a> page on my website with the end
+goal to make it a bit more structured. Where structured means a bit more
+reusable compared with the static HTML table I used to have.</p>
+
+<p>In the beginning, I decided to do an HTML table every year listing all the
+conferences as a single row. It worked but I think at this point I can do
+something even cooler with a single page for every conference talk with YouTube
+and slides embedded, the abstract and few links to deep dive on the topic.</p>
+
+<p>Jekyll has a cool feature called
+<a href="https://jekyllrb.com/docs/collections/">collections</a>: “Collections are a great
+way to group related content like members of a team or talks at a conference.” I
+decided to do a “my_talks” collection.</p>
+
+<p>I first added the right configuration in the <code>_config.yaml</code> and I added my first
+conference in 2020, DevOps Pro in Vilnius (see you there!!).</p>
+
+<pre><code>collections:
+  my_talks:
+    output: true
+</code></pre>
+
+<p>I have created my first talk as a markdown file, just as I do for my posts:</p>
+
+<pre><code>---
+title: Continuous Profiling Go Application Running in Kubernetes
+date: 2020-03-24
+slide:
+embedSlide:
+video:
+embedVideo:
+eventName: DevOps Pro Europe
+eventLink: https://devopspro.lt/
+city: Vilnius, Lithuania
+---
+Microservices and Kubernetes help our architecture to scale and to be
+independent at the price of running many more applications. Golang provides a
+powerful profiling tool called pprof, it is useful to collect information from a
+running binary for future investigation. The problem is that you are not always
+there to take a profile when needed, sometimes you do not even know when you
+need to one, that's how a continuous profiling strategy helps. Profefe is an
+open-source project that collects and organizes profiles. Gianluca wrote a
+project called kube-profefe to integrate Kubernetes with Profefe. Kube-profefe
+contains a kubectl plugin to capture locally or on profefe profiles from running
+pods in Kubernetes. It also provides an operator to discover and continuously
+profile applications running inside Pods.
+</code></pre>
+
+<p>As you can see I decided to set a bunch of variables that I will hope to re-use
+where I will do the “single page” for each talk.</p>
+
+<p>That’s it. All done: 2020 looks awesome and I added a for loop in the conference
+page to print out the row as before:</p>
+
+<pre><code>&lt;div class="row"&gt;
+    &lt;h3&gt;&lt;/h3&gt;
+    &lt;div class="col-md-12"&gt;
+        &lt;table class="table table-hover" id=""&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th&gt;Date&lt;/th&gt;
+              &lt;th&gt;Event&lt;/th&gt;
+              &lt;th&gt;Talk&lt;/th&gt;
+              &lt;th&gt;Slide&lt;/th&gt;
+            &lt;/tr&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            
+          &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>In order to make everything a bit more reusable and organized this piece of code
+is what Jekyll call <a href="https://jekyllrb.com/docs/includes/">include</a>. The way I
+use it inside the conference page looks like:</p>
+
+<pre><code>{ assign talks2020 = site.my_talks | where:'date', "2020" }
+{ include talks_per_year.html year="2020" talks=talks2020 }
+</code></pre>
+
+<p>Everything is working fine, and I am pretty happy but I have over 6 years of
+talks to convert in this new format, it means over 50 conferences to convert one
+by one in the new format made of files and YAML.</p>
+
+<p class="text-center"><img src="https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif" alt="https://media.giphy.com/media/KFz5cubdh5eskezQ6d/giphy.gif" class="img-fluid" /></p>
+
+<h2 id="scraping-is-my-superpower">Scraping is my superpower</h2>
+
+<p>I am not a fan of scraping things around and I never did that before, but hey!
+This solution looks less boring that me doing it manually. I deep dive looking
+for scraping libraries in new languages (yes you always have to learn new
+languages when doing a new side project), but at the end I discovered
+<a href="https://github.com/gocolly/colly">colly</a>: “Elegant Scraper and Crawler
+Framework for Golang”. I decided to be elegant and effective.</p>
+
+<h2 id="a-bit-about-colly">A bit about Colly</h2>
+
+<p>I have to say that it took me less than 2 hours to hack a script in Go using
+Colly that converted all my tables year by year from HTML to files with the
+format you saw above. I also added some sweet sugar like:</p>
+
+<ul>
+  <li>Be able to convert YouTube links when detected to their embeddable version</li>
+  <li>I converted and standardized the end/start date for the talks because it
+changed year by year (I am lazy and unconsistent! Don’t tell anybody)</li>
+</ul>
+
+<p>It was soo easy that I didn’t write any test… yep, that’s it. The file name is a
+bit weird but at the end it works, so who cares!</p>
+
+<pre><code>$ tree ./_my_talks/
+./_my_talks/
+├── 2013-09-12-what-is-vagrant.markdown
+├── 2014-02-c'è-un-modulo-zf2-per-tutto!---there-is-a-module-for-all.markdown
+├── 2014-03-zend-queue.markdown
+├── 2014-05-getting-start-chromecast-developer.markdown
+├── 2014-05-vagrant,-riutilizzo-dell'infrastruttura---vagrant,-reuse-architecture.markdown
+├── 2014-10-sviluppo-di-api-rest-con-zf2-&amp;-mongodb.markdown
+├── 2014-10-time-series-database,php-&amp;-influx-db.markdown
+├── 2015-01-angularjs-advanced-startup.markdown
+├── 2015-06-delorean-made-in-home---reaspberry,-gobot-and-mqtt.markdown
+├── 2015-07-joomla-and-scalability-with-aws-beanstalk.markdown
+├── 2015-09-penny-php-middleware-framework.markdown
+├── 2015-10-angularjs-in-cloud.markdown
+├── 2015-10-doctrine-orm-cache-layer---it-is-not-a-boomerang.markdown
+├── 2015-11-wordpress-and-scalability-with-docker.markdown
+├── 2016-02-slimmer---poc-born-after-a-revolt-instant-vs-jenkins.markdown
+├── 2016-03-a-zf-story:-parallel-made-easy.markdown
+├── 2016-04-listen-your-infrastructure-and-please-sleep.markdown
+├── 2016-05-continuous-delivery-with-jenkins-in-the-real-world.markdown
+├── 2016-06-aws-under-the-hood.markdown
+├── 2016-06-listen-your-infrastructure-and-please-sleep.markdown
+├── 2016-06-parallel-made-easy.markdown
+├── 2016-07-docker-1.12-and-orchestration-built-in.markdown
+</code></pre>
+
+<p class="text-center"><img src="https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg" alt="https://i.kym-cdn.com/photos/images/newsfeed/000/345/534/4a2.jpg" class="img-fluid" /></p>
+
+<p>Anyway, let’s get to some snippets!</p>
+
+<pre><code>type Talk struct {
+	Title      string            `yaml:"title"`
+	Date       time.Time         `yaml:"date"`
+	Slide      string            `yaml:"slide"`
+	EmbedSlide string            `yaml:"embedSlide"`
+	Video      string            `yaml:"video"`
+	EmbedVideo string            `yaml:"embedVideo"`
+	EventName  string            `yaml:"eventName"`
+	EventLink  string            `yaml:"eventLink"`
+	City       string            `yaml:"city"`
+	Links      map[string]string `yaml:"links"`
+}
+
+var dateLayout = "_2 Jan 2006"
+var year = "2020"
+var outputDir = "/tmp"
+
+var errorsToCheck = map[string]string{}
+</code></pre>
+
+<p>Those are the variables and struct I set. The Talk represent every single talk,
+the dataLayout converts the way the end/start date is written into a time.Time
+object. <code>year</code> is a parameter that tells which table to scrape, <code>outputDir</code>
+tells where to place the files. Those 3 variables can be changed with cli flags:</p>
+
+<pre><code>flag.StringVar(&amp;year, "year", "2020", "The year used to identify the table to parse")
+flag.StringVar(&amp;dateLayout, "date-layout", "_2 Jan 2006", "The golang format layour to parse the event date column")
+flag.StringVar(&amp;outputDir, "output-dir", "/tmp", "Where to place the generated files")
+
+flag.Parse()
+</code></pre>
+
+<p><code>errorsToCheck</code> is an easy way to collect all the errors for every run. I
+printed them in a file, if the errors were easy to fix with a code change I did
+that, if they were easier to change modifying the current conference page I did
+that.</p>
+
+<pre><code>// Instantiate default collector
+c := colly.NewCollector(
+	// Visit only domains: coursera.org, www.coursera.org
+	colly.AllowedDomains("gianarb.it", "www.gianarb.it"),
+
+	// Cache responses to prevent multiple download of pages
+	// even if the collector is restarted
+	colly.CacheDir("./gianarb_cache"),
+)
+talks := []Talk{}
+c.OnHTML("table[id=\""+year+"\"] tbody", func(e *colly.HTMLElement) {
+	e.ForEach("tr", func(_ int, row *colly.HTMLElement) {
+		talk := Talk{}
+                        // for each line "tr" do amazing things
+		talks = append(talks, talk)
+	})
+})
+
+// Before making a request print "Visiting ..."
+c.OnRequest(func(r *colly.Request) {
+	log.Println("visiting", r.URL.String())
+})
+err := c.Visit("https://gianarb.it/conferences.html")
+if err != nil {
+	println(err)
+}
+</code></pre>
+
+<p>This is how easy colly is to run. You have to configure the collector and with
+the function <code>OnHTML</code> you can look for whatever you need to scrape. In this case
+I was looking for the table identified with the <code>id</code> equals the year got from
+the CLI. For each TR element I was creating a new talk to append in a slice. The
+<code>talk</code> has to to be populated with the actual values scraped cell by cell. It
+means that ForEach row we need to look for each td (cell in html) and based on
+its index we can identify the content. In my case it looks like this:</p>
+
+<pre><code>c.OnHTML("table[id=\""+year+"\"] tbody", func(e *colly.HTMLElement) {
+	e.ForEach("tr", func(_ int, row *colly.HTMLElement) {
+		talk := Talk{}
+		row.ForEach("td", func(_ int, el *colly.HTMLElement) {
+			switch el.Index {
+			case 0:
+			    // Date
+			case 1:
+                      // Event Name and conference URL (task.EventLink)
+			case 3:
+                      // Video and slides link
+			}
+		})
+		talks = append(talks, talk)
+	})
+})
+</code></pre>
+
+<p>I can show you how I coded the case 3, the one that looks for Video or Slides,
+takes its link and in case of a YouTube Video it also converts the link into an
+embeddable one:</p>
+
+<pre><code>links := map[string]string{}
+el.ForEach("a", func(_ int, el *colly.HTMLElement) {
+	switch el.Text {
+	case "Video":
+		talk.Video = el.Attr("href")
+		if strings.Contains(talk.Video, "youtube.com") {
+			u, err := url.Parse(talk.Video)
+			if err == nil {
+				talk.EmbedVideo = "https://www.youtube.com/embed/" + u.Query().Get("v")
+			} else {
+errorsToCheck[row.Text+"/youtube_video_without_id"] = el.Text
+			}
+		} else {
+			errorsToCheck[row.Text+"/no_youtube_video"] = el.Attr("href")
+		}
+	case "Slides":
+		talk.Slide = el.Attr("href")
+	default:
+		links[el.Text] = el.Attr("href")
+	}
+	talk.Links = links
+})
+</code></pre>
+
+<p>This is how I made a boring task enjoyable! And now I have all the talks (minus
+two that didn’t get converted but I will add manually) converted and ready to be
+rendered as posts.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This post should not start a useless war between static side generator,
+Wordpress or whatever. If you follow me on
+<a href="https://twitter.com/gianarb">Twitter</a> you know that I tweeted recently about
+changing Jekyll with something else, mainly because I was thinking how to make a
+better use of the contents I create. Digging deeper with Jekyll I discovered
+that for now I don’t need more than that and changing tool will end up as
+useless and probably not that fun exercise. I am sure all other tools like
+Wordpress, Hugo, Gatsby have something similar.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

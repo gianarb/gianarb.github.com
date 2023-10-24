@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>About your images, security tips</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Everything unnecessary in your system could be a very stupid vulnerability. We already spoke about this idea in the capability chapter and  the same rule exists when we build an image. Having  tiny images with only what our application needs to run is not just a goal in terms of distribution but also in terms of cost of maintenance and security.">
+    <meta name="keywords" content="docker, scaledocker, book, docker captain, ebook, security">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/about-your-images-security-tips">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>About your images, security tips</h1>
+<main>
+    <p class="meta">28 Dec 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Everything unnecessary in your system could be a very stupid vulnerability. We
+already spoke about this idea in the capability chapter and  the same rule
+exists when we build an image. Having  tiny images with only what our
+application needs to run is not just a goal in terms of distribution but also
+in terms of cost of maintenance and security.  If you have some small
+experience with docker already you probably know the
+<a href="https://hub.docker.com/_/alpine/">alpine</a> image. It is build
+from the Alpine distribution and it’s only 5MB size, if your application can
+run inside it then this is a very good optimization that you can do.  What
+about your binaries? Can your application run standalone? If the answer is yes
+you can think about a very very minimal image. scratch is usually used as a
+base for other images like debian and ubuntu but you can also use it to run
+your golang binary and let me show you something with our micro application.
+In the <a href="https://github.com/gianarb/micro/releases/tag/1.0.0">release page</a>,
+there are a list of binaries already compiled and ready to be used. In this
+case we can download the linux_386 binary.</p>
+
+<p><img class="img-fluid" src="/img/security-image/micro-release.png" /></p>
+
+<pre><code class="language-bash">curl -SsL https://github.com/gianarb/micro/releases/download/1.0.0/micro_1.0.0_linux_386 &gt; micro
+</code></pre>
+
+<p>And we know we can include this binary in the scratch image with this Dockerfile</p>
+
+<pre><code class="language-bash">FROM scratch
+
+ADD ./micro /micro
+EXPOSE 8000
+
+CMD ["/micro"]
+</code></pre>
+
+<pre><code class="language-bash">docker build -t micro-scratch .
+docker run -p 8000:8000 micro-scratch
+</code></pre>
+
+<p>The expectation is an http application on port 8000 but the main difference is
+the size of the image, the old one from alpine is 12M the new one is 5M.</p>
+
+<p>The scratch image is impossibile to use with all applications but if you have a
+binary you can remove a lot of unused overhead.</p>
+
+<p>Another way to understand the status of your image is to scan it to detect
+security vulnerabilities or exposures. Docker Hub and Docker Cloud can do it
+for private images.  This is a great feature to have in your pipeline to scan
+an image after a build.</p>
+
+<p>CoreOS provides an open source project called <a href="https://github.com/coreos/clair">clair</a> to do the same in your environment.</p>
+
+<p>It is an application in Golang that exposes a set of HTTP API to
+pull, push and analyse images. It downloads vulnerabilities from different
+sources like <a href="https://security-tracker.debian.org/tracker">Debian Security
+Tracker</a> or <a href="https://www.redhat.com/security/data/metrics/">RedHat Security
+Data</a>. Each vulnerability is
+stored in Postgres. Clair works like static analyzer, this means that it
+doesn’t need to run our container to scan it but it persists different checks
+directly into the filesystem of the image.</p>
+
+<pre><code class="language-bash">docker run -it -p 5000:5000 registry
+</code></pre>
+
+<p>With this command we are running a private registry to use as a source for the
+image to scan</p>
+
+<pre><code class="language-bash">docker pull gianarb/micro:1.0.0
+docker tag gianarb/micro:1.0.0 localhost:5000/gianarb/micro:1.0.0
+docker push localhost:5000/gianarb/micro:1.0.0
+</code></pre>
+
+<p>Now that we pushed in our private repo the micro image we can setup clair.</p>
+
+<pre><code class="language-bash">mkdir $HOME/clair-test/clair_config
+cd $HOME/clair-test
+curl -L https://raw.githubusercontent.com/coreos/clair/v1.2.2/config.example.yaml -o clair_config/config.yaml
+curl -L https://raw.githubusercontent.com/coreos/clair/v1.2.2/docker-compose.yml -o docker-compose.yml
+</code></pre>
+<p>Modify <code>$HOME/clair_config/config.yml</code> and add the proper source
+<code>postgresql://postgres:password@postgres:5432?sslmode=disable</code></p>
+
+<p>Now you can run the following command to start postgres and clair:</p>
+
+<pre><code class="language-bash">docker-compose up
+</code></pre>
+
+<p>To make our test easier, we will use another CLI called hyperclair that is just
+a client to work with this application. If you are using Mac OS, you can follow
+the above commands, if you are in another OS you can find the correct url in
+the release page</p>
+
+<pre><code class="language-bash">curl -SSl https://github.com/wemanity-belgium/hyperclair/releases/download/0.5.2/hyperclair-darwin-386 &gt; ~/hyperclair
+chmod 755 ~/hyperclair
+</code></pre>
+
+<p>Now we have an executable in ~/hyperclair</p>
+
+<pre><code class="language-bash">~/hyperclair pull localhost:5000/gianarb/micro:1.0.0
+~/hyperclair push localhost:5000/gianarb/micro:1.0.0
+~/hyperclair analyze localhost:5000/gianarb/micro:1.0.0
+~/hyperclair report localhost:5000/gianarb/micro:1.0.0
+</code></pre>
+
+<p>The generated report looks like this:</p>
+
+<p><img class="img-fluid" src="/img/security-image/report-clair.png" /></p>
+
+<p>Hyperclair is just one of the implementations of clair, you can decide to use
+it or build your own implementation in your pipeline.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

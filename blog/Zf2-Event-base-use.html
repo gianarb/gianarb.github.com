@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Zf2 Event, base use</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Integrate in your application an event system is a good way to decouple and extend your application keeping it clean and clear. An event manager allow you to trigger and catch event based on what your application do. You can for example send different kind of notifications like email, slack message and so on from the same event like 'user registration'. Zend Framework a popular and open source PHP framework has a component called EventManager that helps you do integrate such flow.">
+    <meta name="keywords" content="zf2, php, open source, development, event source, event manager, Zend Framework, EventManager">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/Zf2-Event-base-use">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Zf2 Event, base use</h1>
+<main>
+    <p class="meta">21 Nov 2013 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Hi! Some mouths ago I have writted a gist for help me to remember a base use of
+Events and Event Manager into Zend Fremework, in this article I report this
+small tutorial.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">require_once</span> <span class="k">__DIR__</span><span class="mf">.</span><span class="s2">"/vendor/autoload.php"</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+    <span class="cm">/* @var \Zend\EventManager\EventManagerInterface */</span>
+    <span class="k">protected</span> <span class="nv">$eventManager</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">getEventManager</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="n">eventManager</span> <span class="k">instanceof</span> <span class="err">\</span><span class="nc">Zend\EventManager\EventManagerInterface</span><span class="p">){</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">eventManager</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="nf">Zend\EventManager\EventManager</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">eventManager</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="n">echoHello</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getEventManager</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">trigger</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="mf">.</span><span class="s2">"_pre"</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
+        <span class="k">echo</span> <span class="s2">"Hello"</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getEventManager</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">trigger</span><span class="p">(</span><span class="k">__FUNCTION__</span><span class="mf">.</span><span class="s2">"_post"</span><span class="p">,</span> <span class="nv">$this</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Foo</span><span class="p">();</span>
+<span class="nv">$foo</span><span class="o">-&gt;</span><span class="nf">getEventManager</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s1">'echoHello_pre'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$e</span><span class="p">){</span>
+    <span class="k">echo</span> <span class="s2">"Wow! "</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nv">$foo</span><span class="o">-&gt;</span><span class="nf">getEventManager</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s1">'echoHello_post'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$e</span><span class="p">){</span>
+    <span class="k">echo</span> <span class="s2">". This example is very good! </span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nv">$foo</span><span class="o">-&gt;</span><span class="nf">getEventManager</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">attach</span><span class="p">(</span><span class="s1">'echoHello_post'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$e</span><span class="p">){</span>
+    <span class="k">echo</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">by gianarb92@gmail.com </span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">},</span> <span class="o">-</span><span class="mi">10</span><span class="p">);</span>
+<span class="nv">$foo</span><span class="o">-&gt;</span><span class="nf">echoHello</span><span class="p">();</span></code></pre></figure>
+
+<p>The result:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">gianarb@GianArb-2 eventTest :<span class="o">)</span> <span class="nv">$ </span>php try.php
+Wow! Hello. This example is very good!
+
+by gianarb92@gmail.com</code></pre></figure>
+
+<p><a href="https://framework.zend.com/manual/2.0/en/modules/zend.event-manager.event-manager.html">@see Zend Event Manager Ref</a></p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

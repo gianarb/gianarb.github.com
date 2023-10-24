@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Vanity URL for Go mod with zero infrastructure</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A lot of Go modules today are hosted on GitHub. But you can setup vanity URL using a custom domain. This is good to decouple your library from GitHub. The best part is that it does not require any infrastructure, if you don't want to.">
+    <meta name="keywords" content="golang">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/go-mod-vanity-url">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Vanity URL for Go mod with zero infrastructure</h1>
+<main>
+    <p class="meta">13 Nov 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This post is about how I renamed a go module from
+github.com/something/somethingelse to go.gianarb.it/somethingelse. It requires
+zero infrastructure, just a static site that can run on GitHub.</p>
+
+<p>I used one of the many projects I have that nobody cares about
+<a href="https://github.com/gianarb/go-irc">gianarb/go-irc</a>.</p>
+
+<h3 id="why">Why</h3>
+
+<p>You know, is one of those ideas you have in your mind for ages, but who cares?
+At least for me that I don’t have any cool open source project under my name.</p>
+
+<p>I am not one of those people who suffer when realizing that it is not escale. If
+you end up having a project that gets traction and is tight to github.com
+because you didn’t think about another way to go, you are stuck. And even if
+GitHub today is cool, it won’t stay cool forever.</p>
+
+<p>Filippo Valsorda <a href="https://twitter.com/FiloSottile">@FiloSottile</a> today
+<a href="https://twitter.com/FiloSottile/status/1327240411266641920">tweeted</a> about this
+topic, and I looked at how he set up filippo.io/age to solve this little
+dilemma.</p>
+
+<h3 id="goals">Goals</h3>
+
+<p>This is not about how to escape from GitHub but is about setting up a “vanity
+URL” that won’t lock you or your project to GitHub. It does not require any
+infrastructure, just a domain that you can point to a GitHub Pages.</p>
+
+<h3 id="prerequisite">Prerequisite</h3>
+
+<ol>
+  <li>Create a DNS record that points as CNAME to <code>&lt;github-handle&gt;.github.io</code>. I
+used go.gianarb.it</li>
+  <li>Create a repository; it will be the home for your static site. Mine is
+<a href="https://github.com/gianarb/go-libraries">gianarb/go-libraries</a></li>
+  <li>Set the repository up to be a <a href="https://pages.github.com/">GitHub page</a> and
+enable HTTPS. You can enable it via the repository Settings; we will push
+HTML files to it directly, so I used the master branch as the GitHub page’s
+source.</li>
+</ol>
+
+<h3 id="add-your-first-library">Add your first library.</h3>
+
+<p>If your library is already using go mod, you have to change the module name to
+the new one. In my case, from was github.com/gianarb/go-irc to
+go.gianarb.it/irc. I just searched and replaced with my editor in all the
+project. Renaming a module is a bc break; I am not sure how to avoid or mitigate
+that; if you know, let me know!</p>
+
+<p>You can push a new file to your static site repository; I called my irc:</p>
+
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta name="go-import" content="go.gianarb.it/irc git https://github.com/gianarb/go-irc"&gt;
+        &lt;meta http-equiv="refresh" content="0;URL='https://github.com/gianarb/go-irc'"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        Redirecting you to the &lt;a href="https://github.com/gianarb/go-irc"&gt;project page&lt;/a&gt;...
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>Replace your URL accordingly, but as soon as you push this file and GitHub will
+release it to your page, you will be able to import: <code>go.gianarb.it/irc</code>.</p>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>This methods works as a safeguard if you decide to move your code out from
+GitHub. The static site can be deployed to Netlify, S3 or served by Nginx. It
+does not need to stay on GitHub.</p>
+
+<p>Same for your code, if you decide to move from GitHub to GitLab you can do it
+transparently.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

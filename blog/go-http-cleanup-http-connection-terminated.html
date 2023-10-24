@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Go how to cleanup HTTP request terminated.</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cleaning up HTTP request, the most expensive one can be a huge performance improvement for your application. This short article shows how to handle HTTP request termination in Go.">
+    <meta name="keywords" content="golang, go, http">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/go-http-cleanup-http-connection-terminated">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Go how to cleanup HTTP request terminated.</h1>
+<main>
+    <p class="meta">25 Apr 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Expensive HTTP handler is everywhere, doesn’t matter how good you are as a
+developer. Business logic is what matters in our application, and it can be
+pretty complicated. It can create large files, resources on AWS starts
+thousands of containers on Kubernetes.</p>
+
+<p>This kind of procedures have in common they can be very slow and they produce a
+lot of garbage if the system/person who requires that stops prematurely by
+mistake or not.</p>
+
+<p>If your API requests create AWS resources and the client, terminate the call
+you should clean what you created.</p>
+
+<p>if you are generating a report and the customer changes are mind and refresh
+you should stop the procedure.</p>
+
+<p>You bet! Queues, background processes probably fit better but coming back on
+the previous example, if you are computing something and who is waiting for the
+result changed his mind, stop and release resources can be a massive
+optimization.</p>
+
+<pre><code class="language-bash">package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+    "os"
+    "time"
+)
+
+func main() {
+    http.HandleFunc("/a", func(w http.ResponseWriter, r *http.Request) {
+        err := ioutil.WriteFile(os.TempDir()+"/txt", []byte("hello"), 0644)
+        if err != nil {
+            panic(err)
+        }
+        println("new file " + os.TempDir() + "/txt")
+        notify := w.(http.CloseNotifier).CloseNotify()
+        go func() {
+            &lt;-notify
+            println("The client closed the connection prematurely. Cleaning up.")
+            os.Remove(os.TempDir() + "/txt")
+        }()
+        time.Sleep(4 * time.Second)
+        fmt.Fprintln(w, "File persisted.")
+    })
+    http.ListenAndServe(":8080", nil)
+}
+</code></pre>
+
+<p>When you are building an HTTP server in Go, you can use a channel provided by
+the Zhttp.ResponseWriter` to wait for the connection to be closed. And if it
+happens, you can take action.  The prototype above is very simple, every
+request stores a file but I would like, remove the file if the client closes
+the connection.</p>
+
+<pre><code class="language-bash">$ run main.go
+</code></pre>
+
+<p>You can start the server, and from another terminal, you can start a <code>curl</code>, you
+will see that after almost 4 seconds your request will succeed and the file
+will be persisted on disk. Check it!</p>
+
+<pre><code>$ time curl http://localhost:8080/a
+File persisted.
+
+real    0m4.018s
+user    0m0.008s
+sys     0m0.006s
+$ cat /tmp/txt
+</code></pre>
+
+<p>Now let’s suppose that the client terminates the connection because it is too
+slow or the person who made the request doesn’t care anymore.
+Are you going to leave that request going? Event if nobody cares and it is just
+consuming resources?</p>
+
+<p>As you can see I am using the Notifier to remove the file if the client
+terminates the connection:</p>
+
+<pre><code class="language-go">notify := w.(http.CloseNotifier).CloseNotify()
+go func() {
+    &lt;-notify
+    println("The client closed the connection prematurely. Cleaning up.")
+    os.Remove(os.TempDir() + "/txt")
+}()
+</code></pre>
+
+<p>You can check it stopping a <code>curl</code> just after starting it:</p>
+
+<pre><code>$ time curl http://localhost:8080/a
+^C
+
+real    0m1.016s
+user    0m0.008s
+sys     0m0.005s
+</code></pre>
+<p>And the server reports</p>
+
+<pre><code>$ go run main.go
+new file /tmp/txt
+The client closed the connection prematurely. Cleaning up.
+</code></pre>
+
+<p>That’s it! Build and clean after yourself!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

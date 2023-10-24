@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Docker The fundamentals</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Docker The fundamental is the second chapter of my book Scale Docker. Drive your boat like a captain. I decided to share free the second chapter of the book. It covers getting started with Docker. It's a good tutorial for people that are no idea about how container means and how docker works.">
+    <meta name="keywords" content="docker, scaledocker, book, ebook, learn, docker captain">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/docker-the-fundamentals">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Docker The fundamentals</h1>
+<main>
+    <p class="meta">25 Aug 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am writing a book about Docker SwarmKit and how manage a production
+environment for your containers.</p>
+
+<p>The second chapter of the book is a Getting Started about Docker, it covers
+basic concepts about what container means and it’s a started point to
+understand the concepts expressed into the book.</p>
+
+<h2>Drive your boat like a Captain.
+<small>Docker in production</small></h2>
+
+<p>The book is work in progress but you can find more information into the site
+<a href="/blog/scaledocker">scaledocker.com</a>.</p>
+
+<p>To receive the first chapter free leave your email and if you like your twitter account:</p>
+
+<div class="row">
+	<div class="col-md-6">
+        <img src="/img/the-fundamentals.jpg" class="img-fluid" />
+    </div>
+	<div class="col-md-4">
+		<form id="get-chapter">
+		  <div class="form-group">
+			<label for="exampleInputEmail1">Email address *</label>
+			<input type="email" class="form-control" required="required" id="email" placeholder="Email" />
+		  </div>
+		  <div class="form-group">
+			<label for="exampleInputPassword1">Twitter</label>
+			<input type="title" class="form-control" id="twitter" placeholder="@gianarb" pattern="^@.*" />
+			<p class="help-block">The first letter needs to be a @</p>
+		  </div>
+          <p class="text-success get-chapter-thanks">Check your email! Thanks!</p>
+          <p class="text-warning get-chapter-sorry"><span class="err-text"></span>.
+          Please notify the error with a comment or with an email</p>
+		  <button class="btn btn-default">Get your free copy</button>
+		</form>
+	</div>
+</div>
+
+<h2>Contents</h2>
+<ol>
+  <li>Introduction</li>
+  <li>Install Docker on Ubuntu 16.04</li>
+  <li>Install Docker on Mac</li>
+  <li>Install Docker on Windows</li>
+  <li>Run your first HTTP application</li>
+  <li>Docker engine architect</li>
+  <li>Image and Registry</li>
+  <li>Docker Command Line Tool</li>
+  <li>Volumes and File Systems 20</li>
+  <li>Network and Links</li>
+  <li>Conclusion</li>
+</ol>
+
+<p>Enjoy your reading and leave me a feedback about the chapter!</p>
+
+<script>
+    (function() {
+        $(".get-chapter-thanks").hide();
+        $(".get-chapter-sorry").hide();
+        var api = "https://1lkdtyxdx4.execute-api.eu-west-1.amazonaws.com/prod";
+        $("#get-chapter button").click(function(eve) {
+            eve.preventDefault()
+            $(".get-chapter-thanks").hide();
+            $(".get-chapter-sorry").hide();
+            var requestChapter = $.ajax({
+                "url": api+"/the-fundamentals",
+                "type": 'post',
+                "data": {
+                    email: $("#email").val(),
+                    twitter: $("#twitter").val()
+                },
+                "dataType": 'json',
+                "contentType": "application/json"
+            });
+            requestChapter.done(function() {
+                $(".get-chapter-thanks").show();
+            });
+            requestChapter.fail(function(data) {
+                $('.err-text').html("["+data.responseJSON.code+"]"+ data.responseJSON.text);
+                $(".get-chapter-sorry").show();
+            });
+        });
+    })();
+</script>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

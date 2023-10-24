@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Continuous profiling in Go with Profefe</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Taking a snapshot at the right time is nearly impossible. A very easy way to fix this issue is to have a continuous profiling infrastructure that gives you enough confidence of having a profile at the time you need it.">
+    <meta name="keywords" content="golang, pprof, profefe">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/go-continuous-profiling-profefe">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Continuous profiling in Go with Profefe</h1>
+<main>
+    <p class="meta">03 Jan 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>There are a lot of articles about profiling in Go. Julia Evans for examples
+wrote <a href="https://jvns.ca/blog/2017/09/24/profiling-go-with-pprof/">“Profiling Go programs with
+pprof”</a> and I rely on
+it when I do not remember how to properly use pprof.</p>
+
+<p>Rakyll wrote <a href="https://rakyll.org/custom-profiles/">“Custom pprof profiles”</a>.</p>
+
+<p><code>pprof</code> is a powerful tool provided by Go that helps any developer to figure out
+what is going in the Go runtime. When you see a spike in memory in your running
+container the next question is who is using all that memory. Profiles tell you
+the answer.</p>
+
+<p>But they need to be grabbed at the right time. The unique way to have a profile when
+you need it is by taking them continuously. Based on your application you should
+be able to specify how often you have to gather a profile.</p>
+
+<p>This requires a proper infrastructure that we can call “Continuous profiles
+infrastructure”. It is made of collectors, repositories and you need an API to
+store, retrieve and query those profiles.</p>
+
+<p>When we had to set it up at InfluxData we started to craft our own one until I
+saw <a href="https://github.com/profefe/profefe"><code>profefe</code></a> on GitHub. What I love about
+the project is its clear scope. It is a repository for profiles. You can push
+them in Profefe and it provides an API to get them out, it servers the profiles in a
+way that make them easy to visualize directly with <code>go tool pprof</code>, you can even
+merge them together and so on. It also have a clear interface that helps you to
+implement your own storage.</p>
+
+<p>The project
+<a href="https://github.com/profefe/profefe/blob/master/README.md">README.md</a> well
+explains how it works but I am going to summarize the most important actions in
+this article.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>There is a docker image that you can run with the command:</p>
+
+<pre><code>docker run -d -p 10100:10100 profefe/profefe
+</code></pre>
+
+<p>You can push a profile in profefe:</p>
+
+<pre><code>$ curl -X POST \
+    "http://localhost:10100/api/0/profiles?service=apid&amp;type=cpu" \
+    --data-binary @pprof.profefe.samples.cpu.001.pb.gz
+
+{"code":200,"body":{"id":"bo51acqs8snb9srq3p10","type":"cpu","service":"apid","created_at":"2019-12-30T15:18:11.361815452Z"}}
+</code></pre>
+
+<p>You can retrieve it directly via its ID:</p>
+
+<pre><code>$ go tool pprof http://localhost:10100/api/0/profiles/bo51acqs8snb9srq3p10
+
+Fetching profile over HTTP from http://localhost:10100/api/0/profiles/bo51acqs8snb9srq3p10
+Saved profile in /home/gianarb/pprof/pprof.profefe.samples.cpu.002.pb.gz
+File: profefe
+Type: cpu
+Time: Dec 23, 2019 at 4:06pm (CET)
+Duration: 30s, Total samples = 0
+</code></pre>
+
+<p>There is a lot more you can do, when pushing a profile you can set key value
+pairs called <code>labels</code> and they can be used to query a portion of the profiles.</p>
+
+<p>You can use <code>env=prod|test|dev</code> or <code>region=us|eu</code> and so on.</p>
+
+<p>Retrieving a profile only via ID it’s not the unique way to visualize it.
+Profefe merges together profiles from the same type in a specific time range:</p>
+
+<pre><code>GET /api/0/profiles/merge?service=&lt;service&gt;&amp;type=&lt;type&gt;&amp;from=&lt;created_from&gt;&amp;to=&lt;created_to&gt;&amp;labels=&lt;key=value,key=value&gt;
+</code></pre>
+
+<p>It returns the raw compressed binary, it is compatible with <code>go tool pprof</code> as
+well as the single profile by id.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I didn’t develop profefe, <a href="https://github.com/narqo">Vladimir (@narqo)</a> is the
+maintainer, I like it and how it is coded. I think it solves a very common
+issue. He wrote a detailed post about his project
+<a href="https://medium.com/@tvii/continuous-profiling-and-go-6c0ab4d2504b">“Continuous Profiling and Go”</a></p>
+
+<blockquote>
+  <p>Wouldn’t it be great if we could go back in time to the point when the issue
+happened in production and collect all runtime profiles. Unfortunately, to my
+knowledge, we can’t do that.</p>
+</blockquote>
+
+<p>One of my colleague Chris Goller wrote a self contained AWS S3 implementation
+that is now submitted as PR. We are running it since a couple of weeks now. It
+is hard to onboard developers in a new tool, even more during Christmas but the
+API layers makes it very comfortable and friendly to use. Next article will be
+about what we did to get it running in Kubernetes continuously profiling our
+containers.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

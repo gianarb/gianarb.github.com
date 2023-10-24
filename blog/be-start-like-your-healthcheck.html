@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Be smart like your healthcheck</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="In a distributed system environment has a simple way to know the status of your server help you do understand if it's ready to go in production. HealthCheck is simple and common but design a good one can help you do avoid strange behaviors. Docker 1.12 supports healthcheck and we in this blog I share an example of implementation.">
+    <meta name="keywords" content="docker, distributed_system, distributed system, automation, devops, health check">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/be-start-like-your-healthcheck">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Be smart like your healthcheck</h1>
+<main>
+    <p class="meta">25 Aug 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am not a doctor, I am a Software Engineer and this is a tech post! You can
+continue to read!</p>
+
+<p>To monitor monolithic what we usually do is install a tool
+like <a href="https://www.nagios.org/">Nagios</a> to centralize all our metrics and to
+stay in touch with our infrastructure and our application.  In a distributed
+system with more that one services with own metrics the situation is totally
+different.  This about how it’s more dynamic respect a monolithic.  Containers
+or VM that scale up and down and that move around the network, Nagios is a good
+solution to check if our new service after a deploy is safe and ready to be
+attached into the production pool?  I love a talk made by <a href="https://github.com/kelseyhightower">Kelsey
+Hightower</a> during the Monitorama event, he
+speak about healthcheck watch him to follow a <a href="https://vimeo.com/173610242">great demo</a>!</p>
+
+<p>Healthcheck is an API that your service exposes to share it’s status, if you
+make it really start it’s a good tool to understand the situation of your
+service with just a call.  A service could be ready or not and it’s in the best
+situation to communicate its status.  It’s a like a patient, you need to ask
+him all what you need to make the best diagnosis and take a decision about it.</p>
+
+<p>We can stay focused on a REST service, it exposes an API under the route
+/health. The response could has two different Status Code:</p>
+
+<ul>
+  <li>200 if all it’s good and you service is ready</li>
+  <li>500 it there is something wrong and your service is not ready</li>
+</ul>
+
+<p>To make an smart HealthCheck what do we need to check?</p>
+
+<p>This is a real implementation:</p>
+
+<pre><code class="language-php">&lt;?php
+echo 1;
+</code></pre>
+
+<p>It’s better that nothing but we are looking for something smart!  We need to
+check all dependendencies that our service has and it’s for this reason that
+the service itself is the best actor because it knows what it need to be ready.
+I wrote a demo service, the name is <a href="https://github.com/gianarb/micro/blob/master/handle/health.go">micro</a>, it’s in go and
+the version 2 use
+mysql.</p>
+
+<pre><code class="language-go">func Health(username string, password string, addr string) func(http.ResponseWriter, *http.Request) {
+    return func(w http.ResponseWriter, r *http.Request) {
+        res := healtResponse{Status: true}
+        httpStatus := 200
+        dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/micro", username, password, addr)
+        ddb, err := sql.Open("mysql", dsn)
+        if err != nil {
+            log.Fatal(err)
+        }
+        if err := ddb.Ping(); err != nil {
+            res.Status = false
+            res.Info = map[string]string{"database": err.Error()}
+        }
+        c, _ := json.Marshal(res)
+        if res.Status == false {
+            httpStatus = 500
+        }
+        log.Println("%s called /health", r.Host)
+        w.WriteHeader(httpStatus)
+        w.Header().Set("Content-Type", "application/json")
+        w.Write(c)
+    }
+}
+</code></pre>
+<p>Doesn’t matter how many dependencies you service has, you need to check all of
+them, databases, other services that it uses.  In my case I decided to add a
+key-value field, I called it <code>info</code>, it contains some information about whether
+mysql is or is not not working, in order to make the debug flow easy.  If the
+service that you are checking has an healthcheck you are lucky! You can use
+that entrypoint to know if your dependency is fine.  If you are not so lucky if
+you can create a wrapper or just check if you can reach the service, in my case
+I just tried to connect to mysql in order to know if my network supports me! I
+also using the correct database name in order to avoid edge case like “mysql is
+on but the database doesn’t exist”.</p>
+
+<p>The ecosystem supports healthchecks! Nginx looks it to know if a server is
+reachable, if the health check doesn’t work for a while it just make the server
+out for few times. Same for Kubernetes, Swarm and Docker.  Docker provides a
+library in go an <a href="https://github.com/docker/go-healthcheck">healthcheck
+framework</a> that you can use in your
+applications, it is also used in Docker 1.12.</p>
+
+<p>You can describe in your  Dockerfile an HealthCheck</p>
+
+<pre><code>HEALTHCHECK CMD ./cli health
+</code></pre>
+
+<p>If the exit code is 0 Docker marks you container like healthy if it’s different like unhealthy.
+Very easy and flexible, you can check your REST healthcheck in this way</p>
+
+<pre><code>HEALTHCHECK --interval=30s --timeout=30s --retries=3 \
+  CMD curl -si localhost:8000/health | grep 'HTTP/1.1 200 OK' &gt; /dev/null
+</code></pre>
+
+<p><code>--interval</code> is the timing between two healthcheck, <code>--timeout</code> is used to mark
+like unhealthy a service that doesn’t come back after 30s in this case,
+<code>--retries</code> is the attempts to do before make a container unhealthy.</p>
+
+<p>HealtCheck doesn’t replace traditional monitoring system but with a lot of
+instances and services has a single point to check and understand the situation
+after a deploy make your like easy and your products stable.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

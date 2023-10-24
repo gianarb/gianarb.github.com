@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How I tricked the cable mafia with PXE. Install OpenWRT on APU4d</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="No matter how many cables or dongle do you have they are never enough. The best you can do is to trick the system. I tried Pixiecore to PXE boot Alpine on my APU4d installing OpenWRT to it.">
+    <meta name="keywords" content="hardware, homelab, openwrt, pixiecore, apu4">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/home-made-router-msata-netboot">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How I tricked the cable mafia with PXE. Install OpenWRT on APU4d</h1>
+<main>
+    <p class="meta">06 Apr 2021 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I am too lazy to buy a cable or another adapter. But not to buy an APU4d. A specialized for networking hardware with AMD Embedded G series GX-412TC, widely used for routers.</p>
+
+<p>I got it directly from the manufacturer <a href="https://www.pcengines.ch/apu4d4.htm">PC Engine</a>. With a serial-USB cable and a <a href="https://it.aliexpress.com/item/32443776508.html">Huawei Lte miniPCI chip</a>.</p>
+
+<p>I have also got the <a href="https://www.pcengines.ch/msata16g.htm">16GB mSata SSD module</a> because you never know, having a 16GB SSD, 4GB of RAM router sounds like an opportunity to run more tools on it!</p>
+
+<p class="text-center"><img src="/img/apu4d.jpeg" alt="Picture of the APU4D board from PC Engine" class="img-fluid w-75" /></p>
+
+<p>I assembled all of it nicely at my desk. It was too late when I realized I don’t know how to flash an mSATA SSD because I don’t have proper cabling…</p>
+
+<p>No matter how big the box with all my cables and dongles is, I will never own the one I need. It is a mantra nobody can escape. The best you can do is to trick the system.</p>
+
+<p>Luckily for me, the APU4d supports PXE booting, and we know how cool it is, perfect opportunity to try <a href="https://github.com/danderson/netboot/blob/master/pixiecore/README.api.md">pixiecore</a> and have some fun with netbooting.</p>
+
+<p>It worked. If all of this sounds unreasonable, you need to remember that most likely you are right. But you know how much I like simple tools. Pixiecore was on my radar.</p>
+
+<h2 id="get-what-you-need">Get what you need</h2>
+
+<p>First of all, I installed Pixiecore. It is a Go binary, you can run it as a Docker container or, you can compile it with <code>go build</code> but I decided to use Nix shell:</p>
+
+<pre><code class="language-bash">nix-shell -p pixiecore
+</code></pre>
+
+<p>In practice, it is a program that helps you to serve what a piece of hardware needs to PXE boot over the network, it servers IPXE and a TFTP server for example. It is light and not intrusive. You can keep your DHCP server, and if you like, even implement an API to drive how and what to PXE boot dynamically. Today I have to boot only one server in a very boring network. My solution is already too overly engineered. I decided to run it in static mode:</p>
+
+<pre><code class="language-bash">sudo pixiecore boot ./vmlinuz-vanilla initramfs-vanilla \
+    --cmdline='console=ttyS0,115200n8 \
+    alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ \
+    modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
+</code></pre>
+
+<p>The first two arguments of the command line are the Alpine init ramdisk and the kernel. I got them directly from the <a href="http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6">Alpine repository</a>.</p>
+
+<p>The <code>--cmdline</code> option can be used to pass configuration to the operating system. The <a href="https://wiki.alpinelinux.org/wiki/PXE_boot">Alpine netboot wiki page</a> to know the various options supported by the init script.</p>
+
+<p>Now that I have set the PXE distribution tool, I powered on the APU4d board. By default, it tries to boot from a couple of different devices. The last one is PXE mode.</p>
+
+<pre><code class="language-console">sudo pixiecore boot \
+    ./vmlinuz-vanilla initramfs-vanilla \
+    --cmdline='console=ttyS0,115200n8 \
+        ssh_key=https://github.com/gianarb.keys \
+        alpine_repo=http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ \
+        modloop=http://dl-cdn.alpinelinux.org/alpine/v3.9/releases/x86/netboot-3.9.6/modloop-vanilla'
+
+Password:
+[DHCP] Offering to boot 00:0d:b9:5a:3e:10
+[DHCP] Offering to boot 00:0d:b9:5a:3e:10
+[TFTP] Sent "00:0d:b9:5a:3e:10/4" to 192.168.1.87:55360
+[DHCP] Offering to boot 00:0d:b9:5a:3e:10
+[HTTP] Sending ipxe boot script to 192.168.1.87:29233
+[HTTP] Sent file "kernel" to 192.168.1.87:29233
+[HTTP] Sent file "initrd-0" to 192.168.1.87:29233
+</code></pre>
+
+<p><code>192.168.1.87</code> is the IP the APU4 got from my DHCP. Everything is working and from the serial port I see Alpine booting, the <code>root</code> password is <code>root</code>! Classy!</p>
+
+<h2 id="time-to-install-openwrt">Time to install OpenWRT</h2>
+
+<p>I never used OpenWRT before. It is a Linux distribution for routers. You can even flash it to TP-LINK or Netgear devices if supported, at your own risk.</p>
+
+<p>Anyway, since I am now running Alpine in memory on my APU4d I have a functional operating system and access to the device. I can use traditional tools like <code>dd</code> to write OpenWRT directly to disk, manipulate partitions and, so on… I followed the blog post <a href="https://teklager.se/en/knowledge-base/openwrt-installation-instructions/">“OpenWRT installation instructions for APU2/APU3/APU4 boards”</a> written by TekLager.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>My router looks up and running. I was able to reach the administrative Web UI. I didn’t use it yet because I have to relocate it to my new house. So I am sure you will read more about it in future articles.</p>
+
+<p>Pixiecore was on my TODO list because those days hardware, datacenters automation are taking a good part of my daily working activity. Its support for external API makes it a great alternative to provide an installation environment like <a href="https://github.com/tinkerbell/hook">Hook</a> (the one we developed with <a href="httsp://github.com/tinkerbell">Tinkerbell</a>) without having to onboard the full Tinkerbell stack, in particular, I can avoid <a href="https://docs.tinkerbell.org/services/boots/">boots</a> when not needed.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Programmatically Kubernetes port forward in Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Depending on your networking configuration port forwarding will may be the unique way for you to reach pods or services running in Kubernetes. When you develop a CLI integration that has to interact with pods running inside the cluster you can programmatically do a port forwarding in golang.">
+    <meta name="keywords" content="kubernetes, k8s, golang, kubeassemble">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/programmatically-kube-port-forward-in-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Programmatically Kubernetes port forward in Go</h1>
+<main>
+    <p class="meta">05 Dec 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Along the way I saw at least two different ways to manage Kubernetes clusters
+from a networking prospective. Some companies configure a VPN inside the
+Kubernetes Cluster, in this way a developer connected in the VPN can reach pods
+and services.</p>
+
+<p>It is not mandatory but suggested having a good network segmentation in order
+to be able to manage what a person connected in the VPN can touch and see.
+Achieving this level of control is not easy in Kubernetes a lot of the open
+source CNI plugin does not have this feature at all and I understand why in
+operations this is evaluated as a safe approach. It is very convenient if close
+an eye because pods and services are just IPs that you can reach from your
+laptop and if you configure the VPN to push the Kubernetes DNS you can also
+resolve them as DNS lookup.</p>
+
+<p>The alternative I saw is to lock everybody out leaves as unique way to interact
+with a service or a pod the command <code>kubectl port-forward</code>. In this way the
+authentication and authorization method in Kubernetes allows you to decide who
+can do port-forwarding on what based on namespace for example. Or at least you
+can use Kubernetes Audit logs to figure out who did port forwarding if something
+bad happens.</p>
+
+<p>We tried both ways, I was to one pushing for the first, but we never achieved a
+good segmentation and at some point I got locked down, sadly as it sound. Anyway
+I like to automate things and I had to figure out a way to make my scripts to
+work with this new approach.</p>
+
+<p><img src="/img/sub.jpg" alt="" class="img-fluid" /></p>
+
+<p>I started to dig in the <code>kubectl</code> code because we all know that it is capable of
+doing the port forwarding. I had some trouble figuring out the right parameters
+and to make them to work but at the end I did it! So here we are! If I can do it
+you can do it as well!</p>
+
+<p>The main repository with the code and an example is in
+<a href="https://github.com/gianarb/kube-port-forward">github.com/gianarb/kube-port-forward</a>,
+you can run it there. I am gonna explain it a bit here.</p>
+
+<p>It is a simple CLI that mocks what <code>kubectl port-forward</code> already does but I
+extrapolated the code needed to do and control a port forwarding. I will write
+here as soon as the reason about why I did that is open source, I am telling it
+to you right now STAY TUNED! It will be great!</p>
+
+<p>First of all I used the <code>k8s.io/cli-runtime/pkg/genericclioptions</code> library to
+configure a stream, we already used in the <a href="/blog/kubectl-flags-in-your-plugin">blog post about writing a CLI that
+uses the same flags as the kubectl</a>. A
+stream is a <code>struct</code> used by different <code>kubernetes</code> service when they need to
+get or print information from a stream, in this case I am using <code>os.Stdout</code>,
+<code>os.Stdin</code>, <code>os.Stderr</code> for simplicity, but where I do not need to print out the
+output I use a <code>bytes.Stream</code> like this:</p>
+
+<pre><code class="language-go">var berr, bout bytes.Buffer
+buffErr := bufio.NewWriter(&amp;berr)
+buffOut := bufio.NewWriter(&amp;bout)
+</code></pre>
+
+<p>In order to make this code easy to read I had a structure to request the port
+forwarding for a pod:</p>
+
+<pre><code class="language-go">type PortForwardAPodRequest struct {
+	// RestConfig is the kubernetes config
+	RestConfig *rest.Config
+	// Pod is the selected pod for this port forwarding
+	Pod v1.Pod
+	// LocalPort is the local port that will be selected to expose the PodPort
+	LocalPort int
+	// PodPort is the target port for the pod
+	PodPort int
+	// Steams configures where to write or read input from
+	Streams genericclioptions.IOStreams
+	// StopCh is the channel used to manage the port forward lifecycle
+	StopCh &lt;-chan struct{}
+	// ReadyCh communicates when the tunnel is ready to receive traffic
+	ReadyCh chan struct{}
+}
+</code></pre>
+
+<p>And I wrote the function that actually does the port forward:</p>
+
+<pre><code class="language-go">func PortForwardAPod(req PortForwardAPodRequest) error {
+	path := fmt.Sprintf("/api/v1/namespaces/%s/pods/%s/portforward",
+		req.Pod.Namespace, req.Pod.Name)
+	hostIP := strings.TrimLeft(req.RestConfig.Host, "htps:/")
+
+	transport, upgrader, err := spdy.RoundTripperFor(req.RestConfig)
+	if err != nil {
+		return err
+	}
+
+	dialer := spdy.NewDialer(upgrader, &amp;http.Client{Transport: transport}, http.MethodPost, &amp;url.URL{Scheme: "https", Path: path, Host: hostIP})
+	fw, err := portforward.New(dialer, []string{fmt.Sprintf("%d:%d", req.LocalPort, req.PodPort)}, req.StopCh, req.ReadyCh, req.Streams.Out, req.Streams.ErrOut)
+	if err != nil {
+		return err
+	}
+	return fw.ForwardPorts()
+}
+</code></pre>
+<p>An exercise that I can leave for you is to add Service support to this function,
+you can open a PR if you like on
+<a href="https://github.com/gianarb/kube-port-forward">github.com/gianarb/kube-port-forward</a>.</p>
+
+<p>The <code>Stop</code> and <code>Ready</code> channels are crucial to manage the port forward because
+as you see in the example it is a blocking operation it means that it will
+luckily always run inside a goroutine. Those two channels gives you what you
+need to understand when the port forward is ready to get traffic <code>ReadyCh</code> and
+you have the capabilities to stop it <code>StopCh</code>.</p>
+
+<p>My example is basic, I am closing the port forwarding when the <code>SIGTERM</code> signal
+gets notified:</p>
+
+<pre><code class="language-go">sigs := make(chan os.Signal, 1)
+signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+go func() {
+    &lt;-sigs
+    fmt.Println("Bye...")
+    close(stopCh)
+    wg.Done()
+}()
+</code></pre>
+
+<p>I just wait until the readyCh tells me that the connection is
+up and running</p>
+
+<pre><code class="language-go">select {
+case &lt;-readyCh:
+    break
+}
+println("Port forwarding is ready to get traffic. have fun!")
+</code></pre>
+
+<p>As soon as I coded this feature I saw that it was gonna be an easy but useful
+post. I wrote a <a href="/blog/extending-kubernetes-oreilly">report with O’Reilly</a> about
+how to extend Kubernetes, you can find more about Go and Kube there. It is a
+free PDF.</p>
+
+<p>I hope you enjoyed it and <a href="https://twitter.com/gianarb">let me know</a> what cool
+things you are gonna do port-forwarding the universe!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

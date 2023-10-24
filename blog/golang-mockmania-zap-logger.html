@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How to do testing with zap a popular logging library for Golang</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How you can use logging to build assertions when testing. What the popular Golang logging library provided by Uber gives you around unit tests.">
+    <meta name="keywords" content="golang, mockmania, logging, zap">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/golang-mockmania-zap-logger">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How to do testing with zap a popular logging library for Golang</h1>
+<main>
+    <p class="meta">24 Mar 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <div class="alert alert-dark" role="alert">
+   <div class="row">
+       <div class="col-md-2 align-self-center">
+          <a href="https://link.testproject.io/0ak" target="_blank">
+              <img class="img-fluid" src="/img/testproject-logo-small.png" />
+          </a>
+       </div>
+       <div class="col-md-8 text-center">
+           <a href="https://link.testproject.io/0ak" class="alert-link" target="_blank">TestProject</a> is a community all
+           about testing and you know how much I love communities! Join us.
+       </div>
+   </div>
+</div>
+
+<p>If you follow me on <a href="https://twitter.com/gianarb">twitter</a> you know that
+I am passionate about o11y, monitoring and code instrumentation.</p>
+
+<p>I see logs not as a random print statement that you use only when something is
+wrong, but they have value. Logs are the communication channel our applications
+use. As developers it is our job to make them to speak in a comprehensive way.</p>
+
+<p>Logs should be structured and in some way consistent across functions, http
+handlers, applications even languages to simplify their use. From algorithms and
+human operators.</p>
+
+<p>In Go <a href="https://github.com/uber-go/zap">zap</a> is a popular logging library provided by Uber, I
+use it almost by default for all my applications.</p>
+
+<pre><code class="language-go">package main
+
+import "go.uber.org/zap"
+
+func main() {
+	logger, _ := zap.NewProduction()
+	do(logger)
+}
+
+func do(logger *zap.Logger) {
+	logger.Error("Start doing things")
+}
+</code></pre>
+
+<p>So logging and testing? In the same article? I should be really drunk!</p>
+
+<p class="text-center"><img src="/img/kermit-frog-drunk.jpg" alt="" class="img-fluid" /></p>
+
+<p>When I discovered that <code>zap</code> comes with a testing utility package called
+<code>zaptest</code> I felt in love with this library even more:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	"testing"
+
+	"go.uber.org/zap/zaptest"
+)
+
+func Test_do(t *testing.T) {
+	logger := zaptest.NewLogger(t)
+    do(logger)
+}
+</code></pre>
+
+<p>The <code>go test</code> command supports the flag <code>-v</code> to improve verbosity of test
+execution. In practice that’s how you forward to <code>stdout</code> logs and print
+statements during a test execution. <code>zaptest</code> works with that as well.</p>
+
+<p>Very cool, and useful if you write smoke tests, pipeline tests, or how ever you
+call them and see the logs can be spammy, but helpful to figure out the actual
+issue.</p>
+
+<pre><code class="language-go">package main
+
+import (
+	"testing"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"go.uber.org/zap/zaptest"
+)
+
+func Test_do(t *testing.T) {
+	logger := zaptest.NewLogger(t, zaptest.WrapOptions(zap.Hooks(func(e zapcore.Entry) error {
+		if e.Level == zap.ErrorLevel {
+			t.Fatal("Error should never happen!")
+		}
+		return nil
+	})))
+	do(logger)
+}
+</code></pre>
+<p>You can use <code>hooks</code> to check for expected or unexpected logs.</p>
+
+<p>Hook are executed for every log line:</p>
+
+<pre><code class="language-go">func(e zapcore.Entry) error {
+    if e.Level == zap.ErrorLevel {
+        t.Fatal("Error should never happen!")
+    }
+    return nil
+})
+</code></pre>
+
+<p>If you do not expect any error level log line for your execution because you are
+testing the happy path, you can do something like that.</p>
+
+<p><strong>DISCALIMER:</strong> This is another way to write assertion. You will may use them to enforce
+other checks, or to validate the workflow from a different point of view that
+will may be easier to do as first attempt. As I usually say: “an easy and
+partial test is better than no test”.</p>
+
+<p>Do not test only logs, it won’t age well! Keep writing good tests!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

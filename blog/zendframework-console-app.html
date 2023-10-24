@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Build your Zend Framework Console Application</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="ZF Console is a component written by zf-campus and Apigility organization that help you to build console application using different Zend Framework components">
+    <meta name="keywords" content="php, zf2, zend framework, open source, oss, cli">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/zendframework-console-app">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Build your Zend Framework Console Application</h1>
+<main>
+    <p class="meta">21 May 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Blogpost about console-skeleton-app for your console application <a href="https://t.co/WuVq0GZlxE">https://t.co/WuVq0GZlxE</a> <a href="https://twitter.com/hashtag/PHP?src=hash">#PHP</a> <a href="https://twitter.com/hashtag/ZF?src=hash">#ZF</a> <a href="https://twitter.com/hashtag/console?src=hash">#console</a> <a href="https://twitter.com/hashtag/develop?src=hash">#develop</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/613292048708468736">June 23, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div class="alert alert-success" role="alert"><strong>Github: </strong>Article written about <a target="_blank" href="https://github.com/gianarb/console-skeleton-app">console-skeleton-app</a> 1.0.0</div>
+
+<p>I’m writing a skeleton app to build console/bash application in PHP.
+This project is very easy and it depends on ZF\Console a zfcampus project and Zend\Console builds by ZF community.
+I have a todo list for the future but for the time being it’s just a blog post about these two modules.</p>
+
+<ul>
+  <li>Integration with container system to manage dependency injection</li>
+  <li>Docs to test your command</li>
+  <li>Use cases and different implementations</li>
+</ul>
+
+<h2 id="zfconsole-and-other-components">ZF\Console and other components</h2>
+
+<ul>
+  <li><a href="https://github.com/zfcampus/zf-console">ZF\Console</a> is maintained by zfcampus and it is used by Apigility</li>
+  <li><a href="https://github.com/zendframework/zend-console">zendframework\zend-console</a> is maintained by zendframework, all the info are in the <a href="https://framework.zend.com/manual/current/en/modules/zend.console.introduction.html">documantation</a></li>
+</ul>
+
+<h2 id="tree">Tree</h2>
+
+<p>This is my folders structure proposal, there are three entrypoint in the <code>bin</code> directory, one for bash, one for php and a bat for Window.
+I use composer to manage my dependencies and I included .lock file because this project is an APPLICATION not a library..
+<code>/config</code> directory contains only routing definitions but in the future we can add services and other configurations.
+<code>src/Command/</code> contains my commands.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">├── bin
+│   └── console.php
+├── composer.json
+├── composer.lock
+├── config
+│   └── routes.php
+├── src
+│   └── Command
+│       ├── Conf.php
+│       ├── Database.php
+│       └── Download.php
+└── vendor
+    └── ...</code></pre></figure>
+
+<h2 id="bootstrap">Bootstrap</h2>
+
+<p>The Application’s entrypoints are just example and they require few changes.
+First we have to change the version in the parameters.php configuration file and also change the application name <code>'app'</code> to what fits.
+To load configurations from different sources I will use the well known <code>Zend\Config</code> component.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="k">__DIR__</span><span class="mf">.</span><span class="s1">'/../vendor/autoload.php'</span><span class="p">;</span>
+
+<span class="kn">use</span> <span class="nc">Zend\Console\Console</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">ZF\Console\Application</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">ZF\Console\Dispatcher</span><span class="p">;</span>
+
+<span class="nv">$version</span> <span class="o">=</span> <span class="s1">'0.0.1'</span><span class="p">;</span>
+
+<span class="nv">$application</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Application</span><span class="p">(</span>
+    <span class="s1">'app'</span><span class="p">,</span>
+    <span class="nv">$version</span><span class="p">,</span>
+    <span class="k">include</span> <span class="k">__DIR__</span> <span class="mf">.</span> <span class="s1">'/../config/routes.php'</span><span class="p">,</span>
+    <span class="nc">Console</span><span class="o">::</span><span class="nf">getInstance</span><span class="p">(),</span>
+    <span class="k">new</span> <span class="nc">Dispatcher</span><span class="p">()</span>
+<span class="p">);</span>
+
+<span class="nv">$exit</span> <span class="o">=</span> <span class="nv">$application</span><span class="o">-&gt;</span><span class="nf">run</span><span class="p">();</span>
+<span class="k">exit</span><span class="p">(</span><span class="nv">$exit</span><span class="p">);</span></code></pre></figure>
+
+<h2 id="routes">Routes</h2>
+<p><code>config/routes.php</code> contains router configurations. This is just an example but you can see all options <a href="https://github.com/zfcampus/zf-console#defining-console-routes">here</a>.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">return</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s1">'name'</span>  <span class="o">=&gt;</span> <span class="s1">'hello'</span><span class="p">,</span>
+        <span class="s1">'route'</span> <span class="o">=&gt;</span> <span class="s2">"--name="</span><span class="p">,</span>
+        <span class="s1">'short_description'</span> <span class="o">=&gt;</span> <span class="s2">"Good morning!! This is a beautiful day"</span><span class="p">,</span>
+        <span class="s2">"handler"</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">'App\Command\Hello'</span><span class="p">,</span> <span class="s1">'run'</span><span class="p">],</span>
+    <span class="p">],</span>
+<span class="p">];</span></code></pre></figure>
+
+<h2 id="command">Command</h2>
+
+<p>Basic command to wish you a good day!
+I decided that a command doesn’t extends any class because in my opinion is a good way to impart readability and simplicity.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">App\Command</span><span class="p">;</span>
+
+<span class="kn">use</span> <span class="nc">ZF\Console\Route</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Zend\Console\Adapter\AdapterInterface</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Hello</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="n">run</span><span class="p">(</span><span class="kt">Route</span> <span class="nv">$route</span><span class="p">,</span> <span class="kt">AdapterInterface</span> <span class="nv">$console</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$route</span><span class="o">-&gt;</span><span class="nf">getMatchedParam</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"@gianarb"</span><span class="p">);</span>
+        <span class="nv">$console</span><span class="o">-&gt;</span><span class="nf">writeLine</span><span class="p">(</span><span class="s2">"Hi </span><span class="si">{</span><span class="nv">$name</span><span class="si">}</span><span class="s2">, you have call me. Now this is an awesome day!"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="troubleshooting-and-tricks">Troubleshooting and tricks</h2>
+<ul>
+  <li>OSx return an error because zf-console use a function blocked into the mac os php installation. Have a look at  PR<a href="https://github.com/zfcampus/zf-console/pull/22">#22</a></li>
+  <li>See <a href="https://www.sitepoint.com/packaging-your-apps-with-phar/">this</a> article to package your application in a phar archive..</li>
+</ul>
+
+<p><br />
+<br />
+<br /></p>
+
+<div class="well"><a target="_blank" href="https://twitter.com/__debo">@__debo</a> thanks for trying to fix my bad English</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

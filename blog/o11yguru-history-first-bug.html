@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>o11y.guru the history of the first bug</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Part of the o11y.guru series this is about the first bug I discovered with the help of honeycomb and how I had to fix it twice in order to make it to work.">
+    <meta name="keywords" content="o11y.guru, bug, honeycomb, twitter">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/o11yguru-history-first-bug">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>o11y.guru the history of the first bug</h1>
+<main>
+    <p class="meta">07 Nov 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <div class="jumbotron">
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>This article is part of a series I am writing about a
+side project I made called <a href="https://o11y.guru">o11y.guru</a>. Who knows what this
+series or the project itself will become. The reason why I started it was to
+have my <strong>wonderland</strong>. A place where I was able to do my mistakes without any
+intermediary.</p>
+
+  <p>This series is about my journey there. I will keep the this <code>Introduction</code>
+common to all the articles part of this series and I will keep a <code>Table of
+Content</code> up to date. The best way to follow my journey here is to subscribe to
+the RSS feed or to follow me on <a href="https://twitter.com/gianarb">@twitter</a>.</p>
+
+  <h3 id="what-is-this-project">what is this project?</h3>
+
+  <p>I had this idea to create a mechanism to enable other people that uses twitter
+to follow a group of leaders in a particular space. I decided to start from the
+observability (#o11y) because it is the area where I am in at the moment.</p>
+
+  <p><a href="https://o11y.guru">o11y.guru</a> is pretty simple, a list of faces and a
+button, they you press it and if you will authorize the twitter application you
+will get to follow them.</p>
+
+  <h3 id="table-of-content">Table of Content</h3>
+
+  <ol>
+    <li><a href="/blog/o11yguru-introduction">First day and first set of iterations</a></li>
+    <li>Build process and automation driven by simplicity</li>
+    <li>Monitoring and instrumentation with Honeycomb</li>
+    <li><a href="/blog/o11yguru-history-first-bug">The history of the first bug</a></li>
+    <li>OpenTelemetry it is time to embrace a unicorn standard</li>
+    <li>The magic of structured logging</li>
+    <li>Infrastructure monitoring with InfluxCloud</li>
+    <li>Infrastructure as code with Terraform and CherryServer. First deploy.</li>
+    <li>FAQ</li>
+  </ol>
+
+</div>
+
+<h2 id="the-history-of-the-first-bug">The history of the first bug</h2>
+
+<p>After the first deploy I used my twitter account
+<a href="https://twitter.com/dev_campy">@gianarb</a> and
+<a href="https://twitter.com/dev_campy">@devcampy</a> to try the application. I have also
+asked a friend to try it out.</p>
+
+<p>So far so good, the way I coded the following workflow is very basic, and
+probably it will quickly reach its scalability limit. It is a loop with a
+<code>time.Sleep(5 * time.Second)</code> break between each account to avoid the Twitter
+rate limit.</p>
+
+<pre><code class="language-go">
+for _, guru := range gurus {
+    time.Sleep(5 * time.Second)
+    err = newFriendship(ctx, twitterClient, guru)
+    if err != nil {
+        logger.Warn(err.Error(), zap.Error(err))
+    }
+}
+</code></pre>
+
+<p>No retry or things like that for now. Very simple. I hope to iterate on it in
+the future when it will start to not working well enough anymore.</p>
+
+<p>It does not report any error if the Twitter API request to follow a person
+fails, it just go to the next one. All three tests went well for what I was able
+to say, all three accounts followed the gurus.</p>
+
+<p>One of the first benefit about using HoneyComb is that out of the box they are
+able to detect errors looking at the events you return and the graph is made by
+them. Just clicking around to their UI I ended up with weirdness like this graph:</p>
+
+<p><img src="/img/o11y-guru-series/first-bug-http-status.png" alt="Requests break down by HTTP Status" class="img-fluid" /></p>
+
+<p>I noticed some <code>500</code> error page, and I do not like that. As you can see
+there is an <code>Error</code> tab, built by Honeycomb again and this is what it showed to me:</p>
+
+<p><img src="/img/o11y-guru-series/first-bug-span-with-error.png" alt="Span with an error" class="img-fluid" /></p>
+
+<p>At this point it is clear to me where the problem is: “You can’t follow
+yourself”. It sounds reasonable.</p>
+
+<p>I changed the code and I added a simple <code>if</code> statement to skip the guru if it is
+the person actually following all the other people.</p>
+
+<pre><code class="language-go">// me comes from above when I validate that the token behaves to a user.
+
+if guru == me.ScreenName {
+    continue
+}
+</code></pre>
+
+<p>It does not sound trivial at all but when I tried the fix didn’t work.</p>
+
+<p><img src="/img/o11y-guru-series/rambo.jpg" alt="" class="img-fluid" /></p>
+
+<p>I decided to face up the problem differently. <em>Spoiler alert: I didn’t
+write any unit test yet. Feel free to leave now.</em></p>
+
+<p>Looking at the trace I knew I had set for every <strong>following request</strong> the guru name
+to follow and at the root span I had who required to follow the
+gurus. In practice, I had in the root span <code>required_by=me.ScreenName</code>, and for every
+guru its span with their name. The next image has those two
+spans side by side:</p>
+
+<ul>
+  <li>At the left the span <code>newFriendship</code> describes a single following action (a
+twitter create friendship api request). As you can see it has the <code>error="you
+can't follow yourself"</code> and the <code>follower_screenname=gianarb</code>.</li>
+  <li>The one to the right is the root span, it has the <code>required_by=GianArb</code> field,
+it is the <code>me.ScreenName</code> variable.</li>
+</ul>
+
+<p><img src="/img/o11y-guru-series/first-bug-compare-spans.png" alt="" class="img-fluid" /></p>
+
+<p>Looking at this span the situation is clear, I was comparing <code>GianArb</code> the
+<code>required_by</code> variable that you see in the right with <code>gianarb</code>, the
+<code>follower_screenname</code> you see at the left span.</p>
+
+<p>At the end of the story the check needs to be case-insensitive. And that’s how
+it is now:</p>
+
+<pre><code>if strings.EqualFold(guru, me.ScreenName) {
+    continue
+}
+</code></pre>
+
+<p>This is the history of the first but I randomly discovered and I had to fix
+twice for <code>o11y.guru</code>.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

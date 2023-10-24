@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How I started with NixOS</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I played with NixOS for the last couple of months. This is a story about how I picked it up, or how I should have done it.">
+    <meta name="keywords" content="nixos">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/how-i-started-with-nixos">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How I started with NixOS</h1>
+<main>
+    <p class="meta">01 Oct 2021 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I frequently change operating-system and distribution moving between macOS and Linux because I didn’t marry any of them yet.</p>
+
+<p>Just before having a MacBook again, I was an ArchLinux user, a happy one. I have to admit it was not that different compared with other distributions, at least as a user.  Yes, fewest packages installed, a few services, please don’t freak out, as I wrote I enjoyed it.</p>
+
+<p>I see a value when it comes to describing as code your desires, learning from other people sharing their code, importing or copy-pasting it in different places.</p>
+
+<p>Developers do that all day. I am a representative, I hope what I write will match my desires. After so many years I am full of hope.</p>
+
+<p>With this in mind, Arch, Debian, or Ubuntu do not make a difference. It is all about the package manager. NixOS and Nix looked to me as a step forward in this sense.</p>
+
+<p>I decided to end my vacation with macOS earlier. I picked up my personal Asus Zenbook 3 from its box to install NixOS.</p>
+
+<p>Coming from ArchLinux the NixOS installation process is similar, we are on our own:</p>
+
+<ol>
+  <li>Format disks</li>
+  <li>Write partition table</li>
+  <li>Mount partitions</li>
+  <li>And so on</li>
+</ol>
+
+<p>The main difference comes when you run <code>nixos-generate-config</code>:</p>
+
+<pre><code># nixos-generate-config --root /mnt
+</code></pre>
+
+<p>The command tries its best to detect kernel modules from your hardware, mount points, and so on. This phase is a great time to start your first fight of many with NixOS.
+The generated file will be in <code>/mnt/etc/nixos/configuration.nix</code> and <code>/mnt/etc/nixos/hardware-configuration.nix</code>. Open the generated file to can validate if they have sense. Don’t worry. It is a Linux distribution. If something is missed, it will tell us.
+The <code>hardware-configuration.nix</code> file as the name suggests identifies your hardware.</p>
+
+<p>Not everything can be detected yet, I use <code>luks</code> to encrypt my disks; the generated <code>hardware-configuration</code> needs a bit of help to figure it out.</p>
+
+<pre><code class="language-nix">  boot.initrd.luks.devices = {
+    root = {
+      device = "/dev/nvme0n1p2";
+      name = "root";
+      preLVM = true;
+      allowDiscards = true;
+    };
+  };
+</code></pre>
+
+<p>Nix as a programming language takes a bit of practice, but NixOS is different. Many people share their configuration in GitHub, a boost in productivity.
+I keep a list of NixOS configurations or Nix-related repositories that I look at when I don’t know how to solve a particular issue. <a href="https://github.com/gianarb/dotfiles/tree/master/nixos#credits">I really think you should do the same</a> because nobody wants to spend a day fixing its laptop, even worst if it is the one you use at work.</p>
+
+<h2 id="start-simple">Start simple</h2>
+
+<p>My end goal was to checkout my NixOS configuration as part of my dotfiles in a git repository. Too much when you don’t even know how NixOS works.</p>
+
+<p>I have put aside this goal for a few weeks, and my new goal was to get my laptop working in all its part. The complicated part, that I didn’t solve in total is audio, it works but the volume control is not as good as it should be. You can check the configuration I use in my dotfiles but the solution does not matter.</p>
+
+<h2 id="check-it-out">Check it out</h2>
+
+<p>When I was happy with my configuration it was time to finally move it in its final destination. I joined the “stable era” for my Nix configuration, everything was good enough and it was not changing costantly. Perfect time for some refactoring.</p>
+
+<p>I decided to use my <a href="https://github.com/gianarb/dotfiles">dotfiles repository</a> with a <code>nixos</code> subdirectory. This is the one I had when I first moved the configuration from my local environment to Git:</p>
+
+<pre><code>$ tree -L 1 ./nixos
+./nixos
+└── machines
+    └── AsusZenbook
+        ├── configuration.nix
+        └── hardware-configuration.nix
+</code></pre>
+
+<p>Those <code>*.nix</code> files are a copy of the one I have in <code>/etc/nixos</code>.</p>
+
+<p>Now I had to teach NixOS where the new configuration are, the are various way, I decided to delete everything inside <code>/etc/nixos/configuration.nix</code>, leaving only an <code>import</code> to the configuration I moved as part of my dotfiles.</p>
+
+<p>NOTE: I clone my dotfiles at <code>/home/gianarb/.dotfiles</code>.</p>
+
+<p>I didn’t need <code>/etc/nixos/hardware-configuration.nix</code> and this is the content for my <code>/etc/nixos/configuration.nix</code>:</p>
+
+<pre><code class="language-nix">{ config, ... }:
+
+{
+  imports = ["/home/gianarb/.dotfiles/nixos/machines/AsusZenbook/configuration.nix"];
+}
+
+</code></pre>
+
+<h2 id="pick-a-second-use-case">Pick a second use case</h2>
+
+<p>I got a new Thelio System76 workstation (thanks to EraDB) and it was the perfect opportunity to re-use my fresh NixOS configuration, and my new skill.</p>
+
+<p>At this point I am still working from my Asus Zenbook, but it is time to get a new <code>./machines/thelio</code> directory without a <code>hardware-configuratio.nix</code>, but only with the <code>configuration.nix</code> in there. The idea is to start extracting what you want to reuse from your first machine in its own files that can be imported everywhere you want.</p>
+
+<p>I started from my user, because it is a common desire to reuse the same user across different machines. That’s why I have in my dotfiles a <code>users</code> subdirectory.</p>
+
+<pre><code>gianarb@huge ~/.dotfiles  (master=) $ cat nixos/users/gianarb/default.nix
+{ config, inputs, lib, pkgs, ... }:
+with lib;
+{
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.gianarb = {
+    isNormalUser = true;
+    uid = 1000;
+    createHome = true;
+    extraGroups = [
+      "root"
+      "wheel"
+      "networkmanager"
+      "video"
+      "dbus"
+      "audio"
+      "sound"
+      "pulse"
+      "input"
+      "lp"
+      "docker"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEKy/Uk6P2qaDtZJByQ+7i31lqUAw9xMDZ5LFEamIe6l"
+    ];
+  };
+}
+</code></pre>
+
+<p>I have imported it in both machines as we did previously for the all configuration and I splitted other applications like: <code>i3</code>, my audio configuration, vscode and so on. You can find all of them inside the <code>applications</code> directory:</p>
+
+<pre><code>$ tree -L 1 nixos/applications/
+nixos/applications/
+├── i3.nix
+├── sound-pipewire.nix
+├── sound-pulse.nix
+├── steam.nix
+├── sway.nix
+├── tailscale.nix
+└── vscode.nix
+</code></pre>
+
+<p>Double checking that the refactoring is just a matter of re-building NixOS:</p>
+
+<pre><code># nixos-rebuild test
+# nixos-rebuild switch
+</code></pre>
+
+<h2 id="time-to-install-nixos-the-second-target">Time to install NixOS the second target</h2>
+
+<p>I had everything I needed to re-install NixOS with my configuration into another target. It was time to setup a USB stick and boot Thelio from the USB.
+The system I want is described as Nix configuration, the installation looks the same as the one we have done, or the one described in the documentation, but at this point, we do not need to generated configuration. We have our own one.
+The only part we need, the first time, if we want is the <code>hardware-configuration.nix</code>.</p>
+
+<ol>
+  <li>When you have booted from USB you can do what you have done previously, and what it is explained in the <a href="https://nixos.org/manual/nixos/stable/#sec-installation">NixOS installation guide</a>, format and parition disk.</li>
+  <li>When you have the disk layout done you can mount it to <code>/mnt</code> and you can clone/download somewhere the git repository with your nix configuration. I usually create an clone it where I want it to end up: <code>/home/gianarb/.dotfiles</code>.</li>
+  <li>Time to run <code>nixos-generate-config</code> as you do all the time</li>
+  <li>Replace <code>/ect/nixos/configuration.nix</code> with the <code>import</code>, copy the generated <code>hardware-configuration.nix</code> to your <code>machines</code> folder</li>
+  <li>Last step is to open the hardware-configuration and figure out if it has sense for your hardware.</li>
+  <li>When you are happy with it you can run <code>nixos-install</code> and it will install it from the configuration you have just declared.</li>
+</ol>
+
+<p>If it sounds like a convoluted process, it can be simplfied. But I didn’t yet invested into it yet! I don’t want to reinstall them all the time. You can read this article if you want to erase your laptop every day: <a href="https://grahamc.com/blog/erase-your-darlings">“Erase your darlings by Graham Christensen”</a>.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>You just read about my journey with NixOS. With a centralized repository I can assemble, compile, and ship images to run on AWS, or ISO I can PXE boot.
+I can build and compile a NixOS derivation that I can use as installation driver, for example cloning my dotfiles.</p>
+
+<p>As next project I want to build an ISO that I can flash into a Raspberry PI who will act as media hub for my speakers playing Bluetooth audio or Spotify playlists via <a href="https://github.com/dtcooper/raspotify">raspotify</a>.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

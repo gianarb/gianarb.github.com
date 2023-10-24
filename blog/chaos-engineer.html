@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Chaos Engineering</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I took part at a panel at the Jazoon conference in Switzerland called Chaos Engineering. Where I had a change to learn about techniques and practices around this topic that even if I new about it I never had the chance to put my head on it. In this article I am summarizing my ideas and what I get mainly around the definition of Chaos Enginnering.">
+    <meta name="keywords" content="chaos, netflix, jazoon, engineer, resiliency">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/chaos-engineer">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Chaos Engineering</h1>
+<main>
+    <p class="meta">23 Aug 2018 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>At the <a href="https://jazoon.com/">Jazoon</a> conference in Switzerland, I had the chance
+to speak at the Chaos Engineering panel with <a href="https://twitter.com/russmiles">Russ
+Miles</a> from <a href="https://chaosiq.io">ChaosIQ</a> and
+<a href="https://twitter.com/aaronblohowiak">Aaron P Blohowiak</a> from Netflix.</p>
+
+<p>The organizers put me in the panel probably because “chaos” was part of the title
+for the talk I just gave in the morning. I was too curious to mention that I
+never did it before, at least on purpose!</p>
+
+<p>So I was really out of my comfort zone dealing with these two folks that know
+their shit so well!</p>
+
+<p>I am sure that as Engineers we are part of the Chaos, we create entropy inside the
+system during every deploy and even if we have all the tests in the world the
+first time it is tough to make it work. But I indeed never associated the
+word engineering to chaos. And that’s the real challenge.</p>
+
+<p>So, let’s define Chaos and Engineering altogether.</p>
+
+<p>Let’s start with <code>Chaos</code> because it is the easy one, as I said we as developers create
+chaos, distribution creates chaos, and customers create chaos. If somebody tells you
+that his production environment is excellent, you should not listen to him,
+Production is a nightmare, complicated and painful place. At least if somebody uses it.</p>
+
+<p>And if it is just a bit more complicated than a static site it never works 100%,
+the chaos governs it, and that’s where the sentence Engineering becomes
+essential.</p>
+
+<p><code>Engineering</code> at least for what I can understand means to be driven by data and
+not feeling. So associating these two concepts together you have a powerful way
+to measure the chaos.</p>
+
+<p>I think you can’t avoid chaos, so the best way to handle it is to learn from
+what it generates in your system to anticipate unpredictable situations.</p>
+
+<p>As developers, ops or devops we are pessimistic about our system, and we know
+that it will fail: servers crashes, CoreOS auto updates itself, third party
+services stop to work. Usual the answer is to wait for it to happen usually
+Friday night.</p>
+
+<p>Chaos Engineering is an exercise, a practice to leverage “unusual but possible”
+situations as teaching vector to our system.</p>
+
+<p>It is another tool to achieve resiliency and to test scalability.</p>
+
+<p>Chaos Engineering doesn’t bring down all your production system in an
+unrecoverable way. It designs exercises that you and your team will use to
+increase your operational experience and confidence.</p>
+
+<p>Observability is a sort of requirement to understand how a chaotic event changes
+the “normal” state of your system. But from another point of view a chaotic even
+shed some light for a particular part of your system showing up lack of
+monitoring and instrumentation.</p>
+
+<p>There open source framework like <a href="https://github.com/chaostoolkit">Chaos-tookit</a>
+or famous tools like <a href="https://github.com/Netflix/chaosmonkey">chaos-money</a>.</p>
+
+<p>I will try to start with some very simple example without writing too much
+code. I will get out from my system these metrics:</p>
+
+<ol>
+  <li>Number of requests (probably from ingress/nginx)</li>
+  <li>The number of requests with status code &gt; 499</li>
+  <li>Http request latency</li>
+</ol>
+
+<p>After that, I will try to simulate an outage removing or scaling down particular
+pods (the one that gets all the traffic) and I will look at how the metrics will
+change and how long it takes to recover.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

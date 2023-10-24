@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Git global gitignore</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Git is the most popular code version control. It helps you to manage and share your code, writing a history about the evolution of it over time. It also allow teams to work together managing conflicts and large codebases. Based on languages, projects or operating system there are files that you should never commit such as .DS_Store on mac. You can setup a user level gitignore file to keep them out.">
+    <meta name="keywords" content="developer, git, version, team, mac, DS_Store, vcs">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/Git-globa-gitignore">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Git global gitignore</h1>
+<main>
+    <p class="meta">21 Nov 2013 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p><code>.gitignore </code> helps me manage my commits by setting which files or
+directory don’t end in my repository. I know two good practices if you work for
+example on an open source project:</p>
+
+<ul>
+  <li>You don’t commit your IDE configurations</li>
+  <li>Not use .gitignore file for exclude IDE configuration, because this is
+personal problem. There are differents IDE, if all devs exclude this files on
+a repository level the lists is very long.</li>
+</ul>
+
+<p>I follow this practices for all my projects, if you are Mac user you have a
+DS_STORE files, there is a method for exclude this file of default.</p>
+
+<p><code>~./.gitconfig</code> is your configuration file, every user has it. If you execute this command</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$.</span> git config <span class="nt">--global</span> core.excludesfile ~/.gitignore_global</code></pre></figure>
+
+<p>into this file it write thiese lines</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>core]
+excludesfile <span class="o">=</span> /Users/gianarb/.gitignore_global</code></pre></figure>
+
+<p><code>/Users/gianarb/.gitignore_global</code> is my global gitignore file!</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># IDE #</span>
+<span class="c">#######</span>
+.idea
+
+<span class="c"># COMPOSER #</span>
+<span class="c">############</span>
+composer.phar
+
+<span class="c"># OS generated files #</span>
+<span class="c">######################</span>
+.DS_Store
+.DS_Store?
+._<span class="k">*</span>
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db</code></pre></figure>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

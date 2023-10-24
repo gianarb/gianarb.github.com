@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>OpenTelemetry the instrumentation library, I hope</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="OpenTelemetry, OpenCensus, OpenTracing, Open your heart">
+    <meta name="keywords" content="codeinstrumentation, o11y, tracing, observability, opentracing, opencensus, opentelemetry, cncf">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/opentelemetry-the-instrumentation-library-i-hope">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>OpenTelemetry the instrumentation library, I hope</h1>
+<main>
+    <p class="meta">20 Nov 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Hello! If you follow my rumbling here or on
+<a href="https://twitter.com/gianarb">twitter</a> you know that I like to speak about
+observability and tracing.</p>
+
+<p>If you don’t know what I am speaking about this is an
+<a href="/blog/faq-distributed-tracing">FAQ</a> about distributed tracing and something
+about <a href="/blog/what-is-distributed-tracing-opentracing-opencensus">OpenTracing and OpenCensus</a>.</p>
+
+<p>Observability is the ability to figure out what is going on in your application
+from the outside. In order to do that you need to instrument your applications
+in order to expose the right information.</p>
+
+<p>The instrumentation is not easy, there are too many developers and too many
+opinions, too many languages but in order observe a system that cross all the
+applications and services everything needs to come together in the same way.
+Otherwise the aggregation will become very a complicated job.</p>
+
+<p>When you instrument an application there is a lot of code to write and inject,
+you can not do or change it based on the vendor or services you are using to
+store your telemetry: Zipkin, InfluxDB, NewRelic, HoneyComb and so on.</p>
+
+<p>That’s why over the last couple of years big foundations and companies such as
+LightSteps, Google, CNCF, Uber tried to get their hands on the democratization
+of code instrumentation. First with OpenTracing, after that with OpenCensus and
+now with OpenTelemetry that is the merge between OpenCensus and OpenTracing.</p>
+
+<p>At the beginning when this project went out a was very tired and stressed about
+the topic. I made a workshop last year about code instrumentation at <a href="https://cloudconf.it">the
+CloudConf</a> and I wish it was easier to prepare and
+develop. At the end attendees were satisfied btw, so I am happy enough.</p>
+
+<p>Since the beginning I had a very bad feeling about OpenTracing and OpenCensus,
+it is necessary as a project but the fact that we had two ways because they
+didn’t want to agree on only one for me was unbelievable.</p>
+
+<p>Anyway, now that I pushed that feeling back I will give it another try. I will
+get my <a href="https://github.com/gianarb/workshop-observability">observability
+workshop</a> and I will refresh
+it to use OpenTelemetry because as I said, we need a way to instrument
+applications, cross vendor and cross languages.</p>
+
+<p>Here some link about it:</p>
+
+<ul>
+  <li><a href="https://opentelemetry.io/">opentelemetry.io</a></li>
+  <li><a href="https://github.com/open-telemetry">github.com/open-telemetry</a></li>
+  <li><a href="https://lists.cncf.io/g/cncf-opentelemetry-community">Mailing List</a></li>
+</ul>
+
+<p>At KubeCon 2019 <a href="https://twitter.com/lizthegrey">lizthegrey</a> gave a demo about
+OpenTelemetry and I am confident that my experience will be a bit better.</p>
+
+<p>It is not easy to democratize something, even less when you need to change the
+habit for developers across programming languages. But that’s the goal for
+OpenTelemetry and I think we need to get there and to make it a commodity. It is
+not a joke!</p>
+
+<p>If you would like to help me, let me know!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

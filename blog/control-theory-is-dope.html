@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Control Theory is dope</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is an introductive article about control theory applied to microservices and cloud computing. It is a very high level overview about control theory driven by what I loved most about it.">
+    <meta name="keywords" content="software design, design pattern">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/control-theory-is-dope">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Control Theory is dope</h1>
+<main>
+    <p class="meta">04 Sep 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>For the last two years at InfluxData I worked on our custom orchestrator that
+empower InfluxCloud v1 to run. I have some talk about it at InfluxDays, but they
+are not recorded so, I can’t really post them here, sadly.</p>
+
+<p>If you are thinking: “Why you should write your own orchestrator?”, I have few
+answers for you.</p>
+
+<ol>
+  <li>Back in the day Kubernetes was not so popular, 4 years ago when InfluxCloud
+started it was not at least.</li>
+  <li>We had since the beginning to manage data and state, people still says that
+Kubernetes is not for them today, image how it was 4 years ago.</li>
+</ol>
+
+<p>Btw now InfluxCloud v2 leverages Kubernetes.</p>
+
+<p>Writing a good orchestrator is super fun! When I started but still today a big
+part of it are frustrating and not so good but the one we wrote following
+reactive planning and control theory are lovely! This article is an introduction
+about Control Theory. <a href="https://twitter.com/goller">Chris Goller</a> Solution
+Architect at InfluxData was the first person that told me about how Control
+Theory works in theory, and he pushed me to try reactive planning for our
+orchestrator.</p>
+
+<p>As Kubernetes contributor I recognized some of those patterns as looking at
+shared informers, controller and so on. So I understood since the beginning that
+those patterns was everywhere around me!</p>
+
+<p><a href="https://twitter.com/colmmacc">Colm MacCárthaigh</a> from Amazon Web Service with
+his  talks (like the one posted here) helped me to find resources to read, more
+patterns and use cases for it.</p>
+
+<div class="embed-responsive embed-responsive-16by9 col-xs-12 text-center">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/O8xLxNje30M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
+    picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<h2 id="why-it-works">Why it works</h2>
+
+<p>When I started to work as a Web Developer, designing APIs or websites I had
+different challenges to face. To write a solid CRUD you put all your effort
+when a request comes to your API, you validate it, apply transformation to
+sanitize the input and if it is valid you save it
+in your database. You need to build good UX, complex validations systems and so
+on. But what lands in the database is right and rock solid.</p>
+
+<p>There are other systems where you do not have a database that tells you what is
+right or not. You need to <strong>measure</strong> the current state, <strong>calculate</strong> what
+needs to get back to your desired state and you need to <strong>apply</strong> what you
+calculated.</p>
+
+<p>Those systems are everywhere:</p>
+
+<ul>
+  <li>The boiler you have at home to keep the water warm needs to constantly check if the
+desired temperature you set is the current one. What it is stored in its
+memory is what you desire, not the truth.</li>
+  <li>The example Colm MacCárthaigh used is the Autoscaler. It keeps checking the
+state of your system based on the scalability rules you set. For example if
+CPU is over 70% spin up 3 nodes. The autoscaler measures the current state of
+your CPUs and when it is over it calculates what needs to be done and it
+executes the scale up or down.</li>
+  <li>When you read Kubernetes documentation is will see reference to Controller,
+reconciliation loop, desired state and so on. All of those concepts come from
+Control Theory.</li>
+</ul>
+
+<p>Orchestrator but more in general big microservices environment do not have the
+concept of data locality as we used to have in the past. The data you need can
+change continously, and they need to collected from different sources and
+combined in order to calculate what needs to be done.</p>
+
+<p>I think this is the main reason about why patterns coming from Control Theory
+works well.</p>
+
+<p>If you need to write a program that provisions 3 virtual machines and attach them
+to a random DNS record you can approach this problems in 2 ways. You can write a
+procedure that:</p>
+
+<ol>
+  <li>Creates 3 instances.</li>
+  <li>Takes the public IPs.</li>
+  <li>Creates the DNS record with the IPs as A record.</li>
+</ol>
+
+<p>Another way you have to fix this issue is to start from checking what you have,
+making a plan to matches what it is not as you desire. So it will look like
+this:</p>
+
+<ol>
+  <li>Check how many instances there are and mark what you need to do, if there are
+2 of them you need one, if there are 5 you need to delete 2, you there are 0
+of them you need to create all of them.</li>
+  <li>Check if the DNS record is already there and how many IPs are assigned to it.</li>
+  <li>If it does exist you do not need to create it but you need to check if the
+IPs assigned to it are the same of the instances, If they are not you need to
+reconcile the DNS record fixing the IPs.</li>
+  <li>The record does not exist? You can create it.</li>
+</ol>
+
+<p>If you are wondering how all those checks makes the system more reliable is because
+you never know what you already created or what it is already where. Let’s
+assume you are on AWS. API requests can fails at the middle of your process and
+you need to know where you are. AWS itself can stop or terminate instances, or
+some other procedures can do it or for manual mistake.</p>
+
+<p>Approaching the problem in this way allows you to repeat the flow over and over
+because it idempotent and at every retry the process will be able to reconcile
+any divergence between what you asked for (3 VMs and one DNS record) and what it
+is actually running. This process is called reconciliation loop.</p>
+
+<h2 id="101-architecture">101 architecture</h2>
+
+<p>Colm MacCárthaigh highlights three major areas around how a successful Control
+Theory implementation looks like:</p>
+
+<ol>
+  <li>Measurement process</li>
+  <li>Controller</li>
+  <li>Actuator</li>
+</ol>
+
+<h2 id="measurement-process">Measurement process</h2>
+
+<p>The way you retrieve the current state of the system is crucial in order to have
+a low latency. They are crucial in order to calculate what needs to be done
+because from the current state your program get different decisions.</p>
+
+<h2 id="controller">Controller</h2>
+
+<p>This section is where I have more experience with. The desired state is stored
+and clear usually. You know here to go. You get the measurements and with this
+information you need to write a procedure capable of making a plan stating from
+your current state to get to the desired one.</p>
+
+<p>I wrote a few weeks ago an introduction about <a href="https://gianarb.it/blog/reactive-planning-is-a-cloud-native-pattern">reactive
+planning</a>
+it is the way I used to calculate a plan.</p>
+
+<p>I am also preparing a PoC in Golang with actual code you can run and test to
+share in practice what means reactive planning.</p>
+
+<h2 id="actuator">Actuator</h2>
+
+<p>It is the part that take a calculated plan, and it executes it. I worked a lot
+with schedulers that are able to take a set of steps and execute them one by one
+or in parallel based on needs.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Think about one of them problem you have a try to think in a more reactive way,
+starting from checking where you are and not from doing things. Reliability and
+stability for your code will improve drastically.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

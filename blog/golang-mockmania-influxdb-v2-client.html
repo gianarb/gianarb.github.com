@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Golang MockMania InfluxDB Client v2</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="golang, mockmania">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/golang-mockmania-influxdb-v2-client">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Golang MockMania InfluxDB Client v2</h1>
+<main>
+    <p class="meta">09 Feb 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">One minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Recently I had to develop an integration with the <a href="https://github.com/influxdata/influxdb-client-go">InfluxDB Client v2 Golang
+SDK</a>.</p>
+
+<p>This SDK is useful to interact with InfluxDB v2, create organizations and users,
+write new points, and submit queries; it accepts the Golang http.Client.</p>
+
+<pre><code class="language-golang">influx, err := influxdb.New(myHTTPInfluxAddress, myToken, influxdb.WithHTTPClient(myHTTPClient))
+if err != nil {
+	panic(err)
+}
+</code></pre>
+
+<p>Having the ability to pass the HTTP client from the outside
+<code>influxdb.WithHTTPClient(myHTTPClient)</code> improves the familiarity golang
+developers have with the library; they know how to configure Transporters or how
+to inject logging, tracing, debugging.  For what concerns <code>Golang MockMania</code>, it
+gives to use the possibility to pass the
+<a href="https://golang.org/pkg/net/http/httptest/#example_Server">httptest</a> client.</p>
+
+<pre><code class="language-golang">influxDBServer := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+
+}))
+influxClient, err := influxdb.New(myHTTPInfluxAddress, myToken, influxdb.WithHTTPClient(influxDBServer.Client()))
+</code></pre>
+
+<p>At this point you can write the response you expect from the influxdb server
+using the <code>http.ResponseWriter</code>.</p>
+
+<p>Either way, even if you have to check what influxdb receives from the sdk or if
+you have to obtain a specific answer from InfluxDB to validate what your
+business logic will do, nothing will stop you from using checking the
+http.Request or utilizing the http.ResponseWriter to get what you expect.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

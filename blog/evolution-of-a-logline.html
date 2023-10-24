@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Evolution of a logline</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This is a story that represent the evolution I had in thinking and writing logs for an application. It highlights why they are important as a communication mechanism from your application and the outside. Explaining what I think are the responsibility we have as a developer when writing logs.">
+    <meta name="keywords" content="observability, monitoring">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/evolution-of-a-logline">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Evolution of a logline</h1>
+<main>
+    <p class="meta">15 Jan 2021 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This story represents the evolution of a logline for myself when I write and
+interpret it.</p>
+
+<p>Late in 2012, I worked as a developer for a software agency in Turin,
+specialized in software for tour operators. It was my second “real” job and the
+first one not as a solo developer. Exciting time!  An AJAX application with PHP
+and MySQL backend running as a service developed mainly by a single person, the
+lead developer.  I interpreted the log back then as the equivalent of a save
+point in a game. The tail was the primary tool to figure out what was going on;
+a logline was helpful to figure out that a lot of customers were reaching a
+particular line of code. The interpretation of the situation was up to humans.</p>
+
+<p>Every developer involved in the project participates in adding the logline in
+the codebase directly, developing the code, or indirectly when chatting about a
+particular feature over lunch or doing a code review.  Building a context from
+an unknown log line was a useless exercise because the lead was always there
+to help you figure out what that logline was supposed to tell.</p>
+
+<p>Even the stream’s speed was a crucial metric to figure out the sanity of the
+application. Where the logs too fast? The application was under heavy load, and
+probably it was slow, not fast enough, or not smooth as usual, well something
+was going on, and it was not good!</p>
+
+<p>You can judge this story as unpractical but not as unusual. This approach does
+not scale; it has an unmeasurable risk of “bus factor” but, if you don’t have a
+panel in your Grafana dashboard representing the distribution of loglines, you
+should look at it. Just for fun.</p>
+
+<h1 id="bus-factor">Bus Factor</h1>
+
+<p>Bus factor represents the risk of knowledge and responsibility centralization in
+a single location. If the lead in my story resigns or gets hit by a bus, nobody
+will build context from “not that descriptive” log lines quickly like him. And
+the “speed of tail” requires to be very familiar with the stream. Sharing
+knowledge and responsibility across the company, writing documentation, and
+doing staff rotations are standard techniques that mitigate such risk.</p>
+
+<h2 id="automation">Automation</h2>
+
+<p>When your application state’s interpretation requires a human, it is tough to
+build automation for it. Standardization in the way your application
+communicates to the outside is another way to spread the knowledge in a team,
+allowing you to write automation for it.</p>
+
+<p>The format of a logline is the protocol to develop.</p>
+
+<p>The format has to be parsable and useable by automation. You have to see logs as
+a point in time, as time series more than as something that I should carefully
+watch and try to interpret by myself.</p>
+
+<p>A logline that looks like this:</p>
+
+<pre><code>1610107485 New user inserted in the DB with ID=1234
+</code></pre>
+
+<p>Will become:</p>
+
+<pre><code>time=1610107485 service="db" action="insert" id=1234 resource="user"
+</code></pre>
+
+<p>You can add a message that can be used to communicate with a person: msg=”new
+user registered.” but not sure if it is mandatory, you can combine it later.</p>
+
+<p>We do this exercise with ElasticSearch, applying full-text algorithms, and
+tokenizing on the message. It is expensive, and it hides the developer’s
+responsibility when it comes to consciously describe the current state of the
+system with a logline. No, they are not random printf anymore.  You can even see
+it as JSON if you prefer.</p>
+
+<p>Or, more in general, as a description of a particular point in time via
+key-value pairs that you can aggregate, visualize, and use to drive powerful
+automation, I work a lot in the cloud field. For me, reconciliation or a
+system’s ability to repair itself is often based on those pieces of information.
+If you want to go deeper on this topic, structured logging is what you should
+look for.</p>
+
+<h2 id="flexibility">Flexibility</h2>
+
+<p>Having a logging library that allows you to do structured logging is a
+must-have, and there is no answer about the number of key-value pairs you need.
+The overall goal is to derive issues to learn the behavior of an application
+from those points. It is not something that you use when having problems. The
+application exposes the tool we have to figure out what a piece of code we
+didn’t write is doing in production.  In a highly distributed system, a logline
+with the right fields such as hostname, PID, region, Git SHA, or version can
+distinguish where the application having problems is running without looking
+across many dashboards, Kubernetes UIs, and CLI.</p>
+
+<p>Parsing and manipulating a structured log is more convenient than a random text
+that has to be parsed and tokenized, but everything has a limit, so you have to
+find the right balance based on experience. It is another never-ending iterative
+process that we can call the evolution logline!</p>
+
+<p><img src="/img/watch-4638673_1280.jpg" alt="This picture represents the time it takes to learn something new. It is a
+picture of an open book with an old clock." class="img-fluid" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<ul>
+  <li>Logline is the way you tech your application on how to communicate with the
+outside.</li>
+  <li>Communication is useful in many fields. It is an opportunity to learn
+something new or a way to communicate that we are in trouble. Same as logs,
+use them as an opportunity to learn how a system works overall.</li>
+  <li>As a developer, do not see a logline as a random printf. The way it is
+structured and articulated improves the communication quality between your
+application the outside world.</li>
+  <li>A logline is not a fire and forget but an entity that evolves in time.</li>
+  <li>Logs represent the internal state of your application at some point in time
+and somewhere in your codebase.</li>
+</ul>
+
+<p>Recently I spoke with <a href="https://twitter.com/lizthegrey">Liz</a> and
+<a href="https://twitter.com/shelbyspees">Shelby</a> from HoneyComb about observability and
+monitoring during
+<a href="https://www.heavybit.com/library/podcasts/o11ycast/ep-32-managing-hardware-with-gianluca-arbezzano-of-equinix-metal/?utm_campaign=coschedule&amp;utm_source=twitter&amp;utm_medium=heavybit&amp;utm_content=Ep.%20%2332,%20Managing%20Hardware%20with%20Gianluca%20Arbezzano%20of%20Equinix%20Metal">o11ycast</a>
+a podcast about observability if you want to know more about this topic.</p>
+
+<p class="small">Hero image via <a href="https://pixabay.com/illustrations/dna-string-biology-3d-1811955/">Pixabay</a></p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

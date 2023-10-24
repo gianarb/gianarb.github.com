@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>E2E testing Tinkerbell Setup tutorial in Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My takeaway from having a to write a end to end test for the Tinkerbell Vagrant setup tutorial. How I wrote it and why, lesson learned and tips.">
+    <meta name="keywords" content="vagrant, tinkerbell, golang, testing, framework">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/e2e-test-tinkerbell-vagrant-setup-with-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>E2E testing Tinkerbell Setup tutorial in Go</h1>
+<main>
+    <p class="meta">03 Aug 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Nine minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p><a href="https://tinkerbell.org">Tinkerbell</a> is a tool open sourced recently by
+<a href="https://packet.com">Packet, an Equinix company</a>, the company I work for.</p>
+
+<p>It is a provisioner for bare metal. You can switch servers on and off via API,
+executing workflows and install operating systems on a server that does not have
+one!</p>
+
+<p>Tinkerbell is in its early days as open source project but the concept is battle
+tested from 6 years of production use internally at Packet.</p>
+
+<p>I am excited to learn a lot of the cool technologies that are making datacenters
+working, but I am not here to write about it<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
+
+<p>One of my recent tasks<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> was about end to end testing the Vagrant Setup
+tutorial<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> we wrote.</p>
+
+<p>I like the idea! The Setup tutorial is important for our community because it is
+the entry point for a lot of people and having a consistent way to test its
+accuracy is crucial.</p>
+
+<p>It is also a quick way to get a valuable end to end test running that covers the
+entire project, at a high level.</p>
+
+<p>Tinkerbell is under development and it is easy to make mistakes and break
+things at this point, we have to know when it happens. Tinkerbell requires
+virtualisation capabilities, and we do not have an end to end testing framework
+for that yet.</p>
+
+<h2 id="tell-me-more-about-the-test-itself">Tell me more about the test itself</h2>
+
+<p>It is a long tasks but let’s summarize it (have a look at the tutorial, it helps
+to read this article moving forward):</p>
+
+<ol>
+  <li>The script has to start a vagrant machine called provisioner</li>
+  <li>When the provisioner is up it has to exec via ssh a docker-compose command
+that starts a bunch of containers, one of those is Tink grpc server</li>
+  <li>When Tinkerbell is up and running we have to do a bunch of things like:
+ a. Register a new hardware
+ b. Create a template
+ c. Create the workflow that will get executed in the worker from a template</li>
+  <li>Start the worker</li>
+  <li>Wait and check if the workflows executes as expected.</li>
+</ol>
+
+<p>NOTE: the test should  clean up after itself, Vagrant is not ideal
+to get parallelization of VMs, and we do not support it. A dirty environment
+will break future tests as it is today.</p>
+
+<h2 id="how-to-write-this-test">How to write this test</h2>
+
+<p>There are a million way to write end to end test the one I evaluated are bash
+and Go.</p>
+
+<p>The project is in Go, Tinkerbell serves a gRPC server and a client, I thought it
+was a good idea to write everything in Go to try the client itself and because
+it is easier to coordinate long running actions with channels and context
+compared with bash for example. Or at least that’s what I think.</p>
+
+<p>I can also keep the code inside the <code>testing</code> framework that Go provides keeping
+the test closer to the code and the developers that contribute to the project,
+compared with a random <code>scripts.sh</code>.</p>
+
+<p>I am not sure if this will be useful in the future but one of my goal was to
+serve a clean API and a small framework that can be used to write other tests
+that starts from the Vagrant setup. This is the API I designed:</p>
+
+<pre><code class="language-go">type Vagrant struct {}
+
+func Up(ctx context.Context, opts ...VagrantOpt) (*Vagrant, error) {}
+
+func (v *Vagrant) Destroy(ctx context.Context) error {}
+
+func (v *Vagrant) Exec(ctx context.Context, args ...string) ([]byte, error) {}
+</code></pre>
+
+<p>Consistency is important, developers who knows vagrant or that will have to fix
+the tests coming from the tutorial will know <code>Up</code>, <code>Destroy</code> and <code>Exec</code> because
+those verbs are used by Vagrant and in the documentation itself.</p>
+
+<p>Even for Go developers <code>Exec</code> is not a new function, <code>os/exec</code><sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup> exists and it
+does a similar job, the one I wrote is over ssh.</p>
+
+<p>This library now has its own repository:
+<a href="https://github.com/gianarb/vagrant-go">gianarb/vagrant-go</a>.</p>
+
+<h2 id="go-challenges-and-tips-and-tricks">Go challenges and tips and tricks</h2>
+
+<p>I would like to share some of the challenges I faced when writing the Vagrant
+framework and some tips useful for this task.</p>
+
+<h2 id="opt-are-great">Opt are great!</h2>
+
+<p>I have to say options are great! It is a well known pattern in Go and it
+translates to:</p>
+
+<pre><code class="language-go">ctx := context.Background()
+
+machine, err := vagrant.Up(ctx,
+    vagrant.WithLogger(t.Logf),
+    vagrant.WithMachineName("provisioner"),
+    vagrant.WithWorkdir("../../deploy/vagrant"),
+)
+if err != nil {
+    t.Fatal(err)
+}
+</code></pre>
+
+<p>It allowed me to add new options and to tune the Vagrant struct with strong
+default. If you never used it, do it! It is pretty easy, you need an interface
+like this:</p>
+
+<pre><code class="language-go">type VagrantOpt func(*Vagrant)
+</code></pre>
+
+<p>In this way you can write as many <code>With</code>function you need:</p>
+
+<pre><code class="language-go">func WithStderr(s io.ReadWriter) VagrantOpt {
+	return func(v *Vagrant) {
+		v.Stderr = s
+	}
+}
+
+func RunAsync() VagrantOpt {
+	return func(v *Vagrant) {
+		v.async = true
+	}
+}
+</code></pre>
+
+<p>I execute the opts as part of the <code>Up</code> function:</p>
+
+<pre><code class="language-go">func Up(ctx context.Context, opts ...VagrantOpt) (*Vagrant, error) {
+	const (
+		defaultVagrantBin = "vagrant"
+		defaultName       = "vagrant"
+		defaultWorkdir    = "."
+	)
+	v := &amp;Vagrant{
+		VagrantBinPath: defaultVagrantBin,
+		Name:           defaultName,
+		Workdir:        defaultWorkdir,
+		log: func(format string, args ...interface{}) {
+			fmt.Println(fmt.Sprintf(format, args))
+		},
+	}
+	for _, opt := range opts {
+		opt(v)
+	}
+
+    // ...
+}
+</code></pre>
+
+<h3 id="test-segmentation-with-packages">test segmentation with packages</h3>
+
+<p>I don’t want to run the vagrant end to end tests as part of the default test
+suite because they take too much time and they require Vagrant installed. They
+do not even run in CI in the same way unit test works, but I will get to it
+later.</p>
+
+<p>I learned that packages that starts with <code>_</code> does not get executed when using
+something like <code>./...</code>.</p>
+
+<p>I wrote the framework and tests as part of the package:</p>
+
+<pre><code class="language-console">./test/_vagrant/
+    ./vagrant.go
+    ./vagrant_test.go
+</code></pre>
+
+<p>In this way to run the tests you have to explicitly call the package out:</p>
+
+<pre><code class="language-console">$ go test ./test/_vagrant
+</code></pre>
+
+<h3 id="observability-or-what-is-going-on">Observability or “what is going on?”</h3>
+
+<p>Go has its own way to print logs during the execution of the tests:</p>
+
+<pre><code class="language-console">$ go test -v ./...
+</code></pre>
+
+<p>It works because <code>testing</code> has a function called <code>t.Log</code> and <code>t.Logf</code>. Those
+functions watches the <code>-v</code> flags. To be complaint with that and to keep the
+<code>Vagrant</code> struct agnostic I wrote a <code>WithLogger</code>:</p>
+
+<pre><code class="language-go">func WithLogger(log func(string, ...interface{})) VagrantOpt {
+	return func(v *Vagrant) {
+		v.log = log
+	}
+}
+</code></pre>
+
+<p>The function it accepts as a argument is <code>t.Logf</code>.</p>
+
+<p>Continuous Integrations runs with verbosity enabled for this task because it is
+long and complicated, the logging prints all the outputs from the <code>vagrant up</code>
+and <code>destroy</code> command, and the stdout for the <code>exec</code> over ssh, it gives a very
+good overview about what is going on.</p>
+
+<h3 id="stdout-and-stdin-buffer-and-loggers">Stdout and Stdin, buffer and loggers</h3>
+
+<p>I don’t have a lot to say about this other than: “it was very hard to do!!”.
+The code that fixed my problems can be summarized in this way:</p>
+
+<pre><code class="language-go">stderrPipe, err := cmd.StderrPipe()
+if err != nil {
+    return nil, fmt.Errorf("exec error: %v", err)
+}
+stdoutPipe, err := cmd.StdoutPipe()
+if err != nil {
+    return nil, fmt.Errorf("exec error: %v", err)
+}
+
+go v.pipeOutput(ctx, fmt.Sprintf("%s stderr", cmd.String()), bufio.NewScanner(stderrPipe))
+go v.pipeOutput(ctx, fmt.Sprintf("%s stdout", cmd.String()), bufio.NewScanner(stdoutPipe))
+
+err = cmd.Start()
+</code></pre>
+
+<pre><code class="language-go">func (v *Vagrant) pipeOutput(ctx context.Context, name string, scanner *bufio.Scanner) {
+	for scanner.Scan() {
+		select {
+		case &lt;-ctx.Done():
+			return
+		default:
+			v.log("[pipeOutput %s] %s", name, scanner.Text())
+		}
+	}
+}
+</code></pre>
+
+<h3 id="kill-process-and-subprocess">Kill process and subprocess</h3>
+
+<p>There are a lot of process going on when creating or destroying a VM with
+Vagrant. There is VirtualBox for example, and we have an edge case for the
+worker machine because the <code>up</code> commands technically never ends, it is in
+pending until you <code>destroy</code> the machine. But you can’t run multiple commands
+against the same machine because <code>up</code> holds a lock and it blocks <code>destroy</code> to
+execute. <code>os/exec</code> helps here but you have to tune it a little bit:</p>
+
+<pre><code class="language-go">cmd := exec.CommandContext(ctx, v.VagrantBinPath, args...)
+cmd.Dir = v.Workdir
+cmd.Stdout = v.Stdout
+cmd.Stderr = v.Stderr
+cmd.SysProcAttr = &amp;syscall.SysProcAttr{Setpgid: true}
+</code></pre>
+
+<p>Now when killing <code>cmd</code> the subprocess terminates as well.</p>
+
+<h2 id="continuous-integration">Continuous Integration</h2>
+
+<p>We decided to go with GitHub Actions with a self running runner, in this way we
+can use Packet bare metal that supports virtualisation.</p>
+
+<p>As I told you I don’t want this test to run for all the commit, or for all the
+pull request because it is time and resource consuming. It is also risky, so I
+want maintainers to decide when to trigger it.</p>
+
+<p>That’s why it gets triggered with a GitHub label:</p>
+
+<pre><code class="language-yaml">name: Setup with Vagrant on Packet
+on:
+  push:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  vagrant-setup:
+    if: contains(github.event.pull_request.labels.*.name, 'ci-check/vagrant-setup')
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Vagrant Test
+      run: |
+        export VAGRANT_DEFAULT_PROVIDER="virtualbox"
+        go test -v ./test/_vagrant
+</code></pre>
+
+<p>This is what it takes to make the process working!! And I am still surprised it
+is so easy! When a contributor label a PR with <code>ci-check/vagrant-setup</code> the
+process starts. My idea was to remove the label straight away, but I am
+<a href="https://github.community/t/actions-ecosystem-action-remove-labels-fails-resource-not-accessible-by-integration/124188">blocked</a>.</p>
+
+<p>An alternative that we are evaluating is to run it as a cronjob<sup id="fnref:5" role="doc-noteref"><a href="#fn:5" class="footnote" rel="footnote">5</a></sup> as well.</p>
+
+<h2 id="testing-is-the-real-power">Testing is the real power</h2>
+
+<p>E2E testing are fun to write because they bring a lot of challenges in terms of
+coordination and stability. You have to write good code in order to make them
+stable. I hope you learned something from my experience and if you have any
+question let me know <a href="https://twitter.com/gianarb">here</a>. I am happy to go
+deeper on some of those topics based on your suggestions.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>If you are curious ask me any question on Twitter @gianarb <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>https://github.com/tinkerbell/sandbox/pull/7 <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>https://tinkerbell.org/setup/local-with-vagrant/ <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>https://golang.org/pkg/os/exec/#pkg-examples <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5" role="doc-endnote">
+      <p>https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

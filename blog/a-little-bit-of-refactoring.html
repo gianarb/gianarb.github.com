@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>A little bit of refactoring</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Strategy to refactoring your code. Tricks about performance from PHPKonf Istanbul Conference.">
+    <meta name="keywords" content="php, refactoring, development, open source, speaker, conference, tech">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/a-little-bit-of-refactoring">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>A little bit of refactoring</h1>
+<main>
+    <p class="meta">24 Apr 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I wrote this note during the <a href="https://phpkonf.org/">PHPKonf</a>, I spoke about
+<a href="/jenkins-real-world/#/">Jenkins and Continuous Delivery</a> but
+during the days I followed few interested talks and this is my list of notes.</p>
+
+<p>Is the code reusable? For a few people the response is yes, for other ones is
+no. I agree with <a href="https://twitter.com/ocramius">Ocramius</a> that the response is
+no. An abstraction is reusable, an interface is reusable, but it’s very hard to
+reuse a final implementation.  First of all because when you finish to write it
+your code is already old, your function is already legacy and you start to
+maintain it, you search bugs and edge cases.</p>
+
+<p>One of the way to reduce the time dedicated to do refactroring is prevent and
+defende your code from bad integration, in OOP usually you have a sort of
+visibility (private, public, protected) and other different way to defend your
+code, opinable but the ocramius’s talk about <a href="https://ocramius.github.io/extremely-defensive-php/#/">Extremly defensive
+php</a> is good to see.</p>
+
+<p>Refactoring is a methodology to make better your code. There are different
+improvement topics like readable, performance, solidity.</p>
+
+<ul>
+  <li>make your code readable for the new generation is one of the best stuff that
+you can do to show your love for your team and your company.</li>
+  <li>If your site require more time to be loaded usually you lost your client.
+“less performance is a bug” cit. <a href="https://twitter.com/fabpot">Fabien Potencier</a></li>
+  <li>When your run your code all it’s fine, you are a good developer and your
+feature works. After the deploy in production your code is the same but
+usually there is a bd category of people, your client, that will use it in a
+very strange way, usually it’s synonym of bug or edge case. Each bug fix make
+your code more solid.</li>
+</ul>
+
+<p>Test your code before start to change it, you know automation is good but if
+you love seems a machine to it manually.  Setup a continuous integration
+system, it can be do just one step like run tests but remember to increase that
+with all steps that you usually do to test the compliance of your code like
+style, standard, static analysis just to enforce that you are not a machine.
+Create a good environment and an automatic lifecycle for your application allow
+you to stay focused on the code and not lost your time around stupid task,
+remember that when a routine is good the machine fail less respect a human,
+usually.</p>
+
+<p>Refactoring is one of the best stuff that you can do for other people and to
+make your feature ready for the real world, usually it’s hard for no-tech
+company understands it because few times they don’t see any kind of change
+create a good environment to save time and use it to do refactoring is a godo
+strategy.  Automation is the unique method that I know to do that. There are
+different layer of automation just to start my 2coins is just put a make file
+on your codebase and when you do something for the second time stop to write it
+on your console and write a new make task to share with you team.  After that
+install Jenkins and allow it do run this task for you before put on your on the
+master branch (for git users, trunk for svn users).</p>
+
+<p>Make your development environment comfortable and increase the conformability’s
+perception about the lifecycle it’s the best way to do refactoring without the
+fear to die.  If you are fear to die usually you don’t do nothing.</p>
+
+<blockquote class="twitter-tweet tw-align-center" data-lang="en"><p lang="en" dir="ltr">Great
+talk as always Gianluca :) <a href="https://twitter.com/GianArb">@GianArb</a>
+<a href="https://twitter.com/hashtag/phpkonf?src=hash">#phpkonf</a> <a href="https://t.co/ZW2G1UsXm7">pic.twitter.com/ZW2G1UsXm7</a></p>&mdash;
+Fontana Lorenzo (@fntlnz) <a href="https://twitter.com/fntlnz/status/733986655334486016">May 21,
+2016</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Add the PHPKonf in your list! See you next year!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

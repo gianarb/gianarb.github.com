@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>LinuxKit operating system built for container</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="LinuxKit is a new tool presented during the DockerCon 2017 built by Docker to manage cross architecture and cross kernel testing. LinuxKit is a secure, portable and lean operating system built for containers. It supports different hypervisor as MacOS hyper or QEMU to run testsuite on different architectures. In this article I am showing you some basic concept above this tool. How it works and why it can be useful.">
+    <meta name="keywords" content="docker, linuxkit, container, linux, open source, immutability, operating system, docker captain">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/linuxkit-operating-system-build-for-containers">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>LinuxKit operating system built for container</h1>
+<main>
+    <p class="meta">18 Apr 2017 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">11 minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Linuxkit is a new project presented by Docker during the DockerCon 2017. If we
+look at the description of the project on
+<a href="https://github.com/linuxkit/linuxkit">GitHub</a>:</p>
+
+<blockquote>
+  <p>A secure, portable and lean operating system built for containers</p>
+</blockquote>
+
+<p>I am feeling already exited. I was an observer of the project when <a href="https://twitter.com/justincormack">Justin
+Cormack</a> and the other
+<a href="https://github.com/linuxkit/linuxkit/graphs/contributors">contributors</a> was
+working on a private repository. I was invited as part of ci-wg group into the
+CNCF and I loved this project from the first day.</p>
+
+<p>You can think about linuxkit as a builder for Linux operating system everything
+based on containers.</p>
+
+<p>It’s a project that can stay behind your continuous integration system to allow
+us to test on different kernel version and distribution. You can a light kernels
+with all the services that you need and you can create different outputs
+runnable on cloud providers as Google Cloud Platform, with Docker or with QEMU.</p>
+
+<h2 id="continuous-delivery-new-model">Continuous delivery, new model</h2>
+
+<p>I am not really confident about Google Cloud Platform but just to move over I am
+going to do some math with AWS as provider.
+Let’s suppose that I have the most common continuous integration system, one big
+box always up an running configured to support all your projects or if you are
+already good you are running containers to have separated and isolated
+environment.</p>
+
+<p>Let’s suppose that you Jenkins is running all times on m3.xlarge:</p>
+
+<p><code>m3.xlarge</code> used 100% every months costs 194.72$.</p>
+
+<p>Let’s have a dream. You have a very small server with just a frontend
+application for your CI and all jobs are running in a separate instance, tiny as
+a t2.small.</p>
+
+<p><code>t2.small</code> used only 1 hour costs 0.72$ .</p>
+
+<p>I calculated 1 hour because it’s the minimum that you can pay and I hope that
+your CI job can run for less than 1 hour.
+Easy math to calculate the number of builds that you need to run to pay as you
+was paying before.</p>
+
+<p>194.72 / 0.72 ~ 270 builds every month.</p>
+
+<p>If you are running less than 270 builds a months you can save some money
+too. But you have other benefits:</p>
+
+<ol>
+  <li>More jobs, more instances. Very easy to scale. Easier that Jenkins
+master/slave and so on.</li>
+  <li>How many times during holidays your Jenkins is still up and running without
+to have nothing to do? During these days you are just paying for the frontend
+app.</li>
+</ol>
+
+<p>And these are just the benefit to have a different setup for your continuous
+delivery.</p>
+
+<h2 id="linuxkit-ci-implementation">LinuxKit CI implementation</h2>
+
+<p>There is a directory called
+<a href="https://github.com/linuxkit/linuxkit/tree/master/test">./test</a> that contains
+some linuxkit use case but I am going to explain in practice how linuxkit is
+tested. Because it uses itself, awesome!</p>
+
+<p>In first you need to download and compile linuxkit:</p>
+<pre><code class="language-shell">git clone github.com:linuxkit/linuxkit $GOPATH/src/github.com/linuxkit/linuxkit
+make
+./bin/moby
+</code></pre>
+<p>You can move it in your <code>$PATH</code> with <code>make install</code>.</p>
+
+<pre><code>$ moby
+Please specify a command.
+
+USAGE: moby [options] COMMAND
+
+Commands:
+  build       Build a Moby image from a YAML file
+  run         Run a Moby image on a local hypervisor or remote cloud
+  version     Print version information
+  help        Print this message
+
+Run 'moby COMMAND --help' for more information on the command
+
+Options:
+  -q    Quiet execution
+  -v    Verbose execution
+</code></pre>
+
+<p>At the moment the CLI is very simple, the most important commands are build and
+run.  linuxkit is based on YAML file that you can use to describe your kernel,
+with all applications and all the services that you need.  Let’s start with the
+<a href="https://github.com/linuxkit/linuxkit/blob/master/test/test.yml">linuxkit/test/test.yml</a>.</p>
+
+<pre><code class="language-yaml">kernel:
+  image: "mobylinux/kernel:4.9.x"
+  cmdline: "console=ttyS0"
+init:
+  - mobylinux/init:8375addb923b8b88b2209740309c92aa5f2a4f9d
+  - mobylinux/runc:b0fb122e10dbb7e4e45115177a61a3f8d68c19a9
+  - mobylinux/containerd:18eaf72f3f4f9a9f29ca1951f66df701f873060b
+  - mobylinux/ca-certificates:eabc5a6e59f05aa91529d80e9a595b85b046f935
+onboot:
+  - name: dhcpcd
+	image: "mobylinux/dhcpcd:0d4012269cb142972fed8542fbdc3ff5a7b695cd"
+	binds:
+	 - /var:/var
+	 - /tmp:/etc
+	capabilities:
+	 - CAP_NET_ADMIN
+	 - CAP_NET_BIND_SERVICE
+	 - CAP_NET_RAW
+	net: host
+	command: ["/sbin/dhcpcd", "--nobackground", "-f", "/dhcpcd.conf", "-1"]
+  - name: check
+	image: "mobylinux/check:c9e41ab96b3ea6a3ced97634751e20d12a5bf52f"
+	pid: host
+	capabilities:
+	 - CAP_SYS_BOOT
+	readonly: true
+outputs:
+  - format: kernel+initrd
+  - format: iso-bios
+  - format: iso-efi
+  - format: gcp-img
+</code></pre>
+
+<p>Linuxkit builds everythings inside a container, it means that you don’t need a
+lot of dependencies it’s very easy to use. It generates different <code>output</code> in
+this case <code>kernel+initrd</code>, <code>iso-bios</code>, <code>iso-efi</code>, <code>gpc-img</code>  depends of the
+platform that you are interested to use to run your kernel.</p>
+
+<p>I am trying to explain a bit how this YAML works. You can see that there are
+different primary section: <code>kernel</code>, <code>init</code>, <code>onboot</code>, <code>service</code> and so on.</p>
+
+<p>Pretty much all of them contains the keyword <code>image</code> because as I said before
+everything is applied on containers, in this example they are store in
+<a href="https://hub.docker.com/u/mobylinux/">hub.docker.com/u/mobylinux/</a>.</p>
+
+<p>The based kernel is <code>mobylinux/kernel:4.9.x</code>, I am just reporting what the
+<a href="https://github.com/linuxkit/linuxkit#yaml-specification">README.md</a> said:</p>
+
+<ul>
+  <li><code>kernel</code> specifies a kernel Docker image, containing a kernel and a
+filesystem tarball, eg containing modules. The example kernels are built from
+<code>kernel/</code></li>
+  <li><code>init</code> is the base <code>init</code> process Docker image, which is unpacked as the base
+system, containing <code>init</code>, <code>containerd</code>, <code>runc</code> and a few tools. Built from
+<code>pkg/init/</code></li>
+  <li><code>onboot</code> are the system containers, executed sequentially in order. They
+should terminate quickly when done.</li>
+  <li><code>services</code> is the system services, which normally run for the whole time the
+system is up</li>
+  <li><code>files</code> are additional files to add to the image</li>
+  <li><code>outputs</code> are descriptions of what to build, such as ISOs.</li>
+</ul>
+
+<p>At this point we can try it. If you are on MacOS as I was you don’t need to
+install anything one of the runner supported by <code>linuxkit</code> is <code>hyperkit</code> it
+means that everything is available in your system.</p>
+
+<p><code>./test</code> contains different test suite but now we will stay focused on
+<code>./test/check</code> directory. It contains a set of checks to validate how the
+kernel went build by LinuxKit. They are the smoke tests that are running on each
+new pull request created on the repository for example.</p>
+
+<p>As I said everything runs inside a container, if you look into the check
+directory there is a makefile that build a mobylinux/check image, that image
+went run in LinuxKit, into the <code>test.yml</code> file:</p>
+
+<pre><code class="language-yaml">onboot:
+  - name: check
+	image: "mobylinux/check:c9e41ab96b3ea6a3ced97634751e20d12a5bf52f"
+	pid: host
+	capabilities:
+	 - CAP_SYS_BOOT
+	readonly: true
+</code></pre>
+
+<p>You can use the
+<a href="https://github.com/linuxkit/linuxkit/blob/master/test/check/Makefile">Makefile</a>
+inside the check directory to build a new version of check, you can just use
+the command <code>make</code>.</p>
+
+<p>When you have the right version of your test we can build the image used by moby:</p>
+
+<pre><code>cd $GOPATH/src/github.com/linuxkit/linuxkit
+moby build test/test.yml
+</code></pre>
+
+<p>Part of the output is:</p>
+
+<pre><code class="language-shell">Create outputs:
+  test-bzImage test-initrd.img test-cmdline
+  test.iso
+  test-efi.iso
+  test.img.tar.gz
+</code></pre>
+
+<p>And if you look into the directory you can see that there are all these files
+into the root. These files can be run from qemu, google cloud platform,
+hyperkit and so on.</p>
+
+<pre><code class="language-shell">moby run test
+</code></pre>
+<p>On MacOS with this command LinuxKit is using hyperkit to start a VM, I can not copy
+paste all the output but you can see the hypervisor logs:</p>
+
+<pre><code>virtio-net-vpnkit: initialising, opts="path=/Users/gianlucaarbezzano/Library/Containers/com.docker.docker/Data/s50"
+virtio-net-vpnkit: magic=VMN3T version=1 commit=0123456789012345678901234567890123456789
+Connection established with MAC=02:50:00:00:00:04 and MTU 1500
+early console in extract_kernel
+input_data: 0x0000000001f2c3b4
+input_len: 0x000000000067b1e5
+output: 0x0000000001000000
+output_len: 0x0000000001595280
+kernel_total_size: 0x000000000118a000
+booted via startup_32()
+Physical KASLR using RDRAND RDTSC...
+Virtual KASLR using RDRAND RDTSC...
+
+Decompressing Linux... Parsing ELF... Performing relocations... done.
+Booting the kernel.
+[    0.000000] Linux version 4.9.21-moby (root@84baa8e89c00) (gcc version 6.2.1 20160822 (Alpine 6.2.1) ) #1 SMP Sun Apr 9 22:21:32 UTC 2017
+[    0.000000] Command line: earlyprintk=serial console=ttyS0
+[    0.000000] x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
+[    0.000000] x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
+[    0.000000] x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+[    0.000000] x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+[    0.000000] x86/fpu: Enabled xstate features 0x7, context size is 832 bytes, using 'standard' format.
+[    0.000000] x86/fpu: Using 'eager' FPU context switches.
+[    0.000000] e820: BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x000000003fffffff] usable
+</code></pre>
+<p>When the VM is ready LinuxKit is starting all the <code>init</code>, <code>onboot</code>, the logs is
+easy to understand as the <code>test.yml</code> is starting <code>containerd</code>, <code>runc</code>:</p>
+
+<pre><code>init:
+  - mobylinux/init:8375addb923b8b88b2209740309c92aa5f2a4f9d
+  - mobylinux/runc:b0fb122e10dbb7e4e45115177a61a3f8d68c19a9
+  - mobylinux/containerd:18eaf72f3f4f9a9f29ca1951f66df701f873060b
+  - mobylinux/ca-certificates:eabc5a6e59f05aa91529d80e9a595b85b046f935
+onboot:
+  - name: dhcpcd
+	image: "mobylinux/dhcpcd:0d4012269cb142972fed8542fbdc3ff5a7b695cd"
+	binds:
+	 - /var:/var
+	 - /tmp:/etc
+	capabilities:
+	 - CAP_NET_ADMIN
+	 - CAP_NET_BIND_SERVICE
+	 - CAP_NET_RAW
+	net: host
+	command: ["/sbin/dhcpcd", "--nobackground", "-f", "/dhcpcd.conf", "-1"]
+  - name: check
+	image: "mobylinux/check:c9e41ab96b3ea6a3ced97634751e20d12a5bf52f"
+	pid: host
+	capabilities:
+	 - CAP_SYS_BOOT
+	readonly: true
+</code></pre>
+
+<pre><code>Welcome to LinuxKit
+
+			##         .
+		  ## ## ##        ==
+		   ## ## ## ## ##    ===
+	   /"""""""""""""""""\___/ ===
+	  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~
+	   \______ o           __/
+		 \    \         __/
+		  \____\_______/
+
+
+/ # INFO[0000] starting containerd boot...                   module=containerd
+INFO[0000] starting debug API...                         debug="/run/containerd/debug.sock" module=containerd
+INFO[0000] loading monitor plugin "cgroups"...           module=containerd
+INFO[0000] loading runtime plugin "linux"...             module=containerd
+INFO[0000] loading snapshot plugin "snapshot-overlay"...  module=containerd
+INFO[0000] loading grpc service plugin "healthcheck-grpc"...  module=containerd
+INFO[0000] loading grpc service plugin "images-grpc"...  module=containerd
+INFO[0000] loading grpc service plugin "metrics-grpc"...  module=containerd
+</code></pre>
+<p>The last step is the <code>check</code> that runs the real test suite:</p>
+
+<pre><code>kernel config test succeeded!
+info: reading kernel config from /proc/config.gz ...
+
+Generally Necessary:
+- cgroup hierarchy: properly mounted [/sys/fs/cgroup]
+- CONFIG_NAMESPACES: enabled
+- CONFIG_NET_NS: enabled
+- CONFIG_PID_NS: enabled
+- CONFIG_IPC_NS: enabled
+- CONFIG_UTS_NS: enabled
+- CONFIG_CGROUPS: enabled
+- CONFIG_CGROUP_CPUACCT: enabled
+- CONFIG_CGROUP_DEVICE: enabled
+- CONFIG_CGROUP_FREEZER: enabled
+- CONFIG_CGROUP_SCHED: enabled
+
+........
+.......
+
+Moby test suite PASSED
+
+			##         .
+		  ## ## ##        ==
+		   ## ## ## ## ##    ===
+	   /"""""""""""""""""\___/ ===
+	  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~~ ~ /  ===- ~~~
+	   \______ o           __/
+		 \    \         __/
+		  \____\_______/
+
+[    3.578681] ACPI: Preparing to enter system sleep state S5
+[    3.579063] reboot: Power down
+</code></pre>
+
+<p>The last log is the output of
+<a href="https://github.com/linuxkit/linuxkit/blob/master/test/check/check-kernel-config.sh">check-kernel-config.sh</a>
+files.</p>
+
+<p>If you are on linux you can do the same command but by the default you are going
+to use <a href="https://www.qemu-project.org/">qemu</a> an open source machine emulator.</p>
+
+<pre><code class="language-bash">sudo apt-get install qemu
+</code></pre>
+
+<p>I did some test in my Asus Zenbook with Ubuntu, when you run <code>moby run</code> this is
+the command executed with qemu:</p>
+
+<pre><code>/usr/bin/qemu-system-x86_64 -device virtio-rng-pci -smp 1 -m 1024 -enable-kvm
+	-machine q35,accel=kvm:tcg -kernel test-bzImage -initrd test-initrd.img -append
+	console=ttyS0 -nographic
+</code></pre>
+
+<p>By default is testing on <code>x86_64</code> but qemu supports a lot of other archs and
+devices. You can simulate an arm and a rasperry pi for example. At the
+moment LinuxKit is not ready to emulate other architecture. But this is the main
+scope for this project. It’s just a problem of time. It will be able soon!</p>
+
+<p>Detect if the build succeed or failed is not easy as you probably expect. The
+status inside the VM is not the one that you get in your laptop. At the moment
+to understand if the code in your PR is good or bad we are parsing the output:</p>
+
+<pre><code>define check_test_log
+	@cat $1 |grep -q 'Moby test suite PASSED'
+endef
+</code></pre>
+<p><a href="https://github.com/linuxkit/linuxkit/blob/master/Makefile">./linuxkit/Makefile</a></p>
+
+<p>Explain how linuxkit tests itself at the moment is the best way to get how it
+works. It is just one piece of the puzzle, if you have a look here <a href="https://github.com/linuxkit/linuxkit/pulls">every
+pr</a> has a GitHub Status that point to
+a website that contains logs related that particular build. That part is not
+managed by linuxkit because it’s only the builder used to create the
+environment. All the rest is managed by
+<a href="https://github.com/docker/datakit">datakit</a>. I will speak about it probably in
+another blogpost.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>runc, docker, containerd, rkt but also Prometheus, InfluxDB, Telegraf a lot of
+projects supports different architecture and they need to run on different
+kernels with different configuration and capabilities. They need to run on your
+laptop, in your IBM server and in a Raspberry Pi.</p>
+
+<p>This project is in an early state but I understand why Docker needs something
+similar and also, other projects as I said are probably going to get some
+benefits from a solution like this one. Have it open source it’s very good and
+I am honored to be part of the amazing group that put this together. I just did
+some final tests and I tried to understand how it’s designed and how it works.
+This is the result of my test. I hope that can be helpful to start in the right
+mindset.</p>
+
+<p>My plan is to create a configuration to test InfluxDB and play a bit with <code>qemu</code>
+to test it on different architectures and devices. Stay around a blogpost will
+come!</p>
+
+<p>Some Links:</p>
+
+<ul>
+  <li><a href="https://blog.docker.com/2017/04/introducing-the-moby-project/">INTRODUCING MOBY PROJECT: A NEW OPEN-SOURCE PROJECT TO ADVANCE THE SOFTWARE
+CONTAINERIZATION MOVEMENT</a></li>
+  <li><a href="https://github.com/linuxkit">github.com/linuxkit</a></li>
+  <li><a href="https://github.com/moby">github.com/moby</a></li>
+</ul>
+
+<p class="text-muted">
+    Reviewers: <a href="https://twitter.com/justincormack">Justin Cormack</a>
+</p>
+
+<div class="post row">
+  <div class="col-md-12">
+      <div class="bs-callout bs-callout-info row">
+	<div class="row">
+		<div class="col-md-12">
+			<h2><a href="//gianarb.it/blog/docker-the-fundamentals" target="_blank">get "Docker the Fundamentals"</a> <small>by. Drive your boat as a Captain</small></h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-3">
+			<a href="//gianarb.it/blog/docker-the-fundamentals" target="_blank"><img src="/img/the-fundamentals.jpg" class="img-fluid" /></a>
+		</div>
+		<div class="col-md-9">
+			<p>
+			You can get the Chapter 2 of the book <a href="/blog/scaledocker" target="_blank">"Drive your boat as a Captain"</a> just leave click on the
+			cover and leave your email to receive a free copy.</p>
+			<p>This chapter is getting started with Docker Engine and the basic
+			concept around registry, pull, push and so on. It's a good way to start from
+			zero with Docker.</p>
+		</div>
+	</div>
+</div>
+
+  </div>
+</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

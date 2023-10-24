@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Interface segregation in action with Go</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="It takes a couple of hours to get an hello world up and running in a new language but it takes ages to learn it deeply. Even if Go has a learning curve that is affordable some concepts take time to stick in mind. Interface are everywhere and this flexibility makes them crucial to write maintainable Go code.">
+    <meta name="keywords" content="golang">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/interface-segreation-in-action-with-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Interface segregation in action with Go</h1>
+<main>
+    <p class="meta">20 Aug 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Everybody should write an article about Golang interface! I don’t know why I
+waited so long for mine!</p>
+
+<p>Golang interfaces are your best friends when it comes to mocking an object or to
+specify a well scoped set of functionalities required by a function to interact
+with an object.</p>
+
+<p>Yep! That’s how they work, you have an entire object that does a lot of cool
+things, but when you pass it to a function only a subset of it get used, that’s
+when you can replace the structure itself with an interface that only requires
+what it is needed by the structure.</p>
+
+<p>In this way you will have a smaller piece of code to mock in your test and to
+deal with (this is a good way to hide functions you don’t want other people or
+yourself in a rush to use).</p>
+
+<p>Even more when you remember to keep the interface small via composition.</p>
+
+<p>For example let’s suppose you have to build an interface that describes a generic
+resource that you can Create, Update and Delete. This is useful to standardize
+something that can be persisted in a database. I am setting this up
+so.</p>
+
+<p>You should not use <code>interface{}</code> because it is too generic. I used it for
+simplicity but Kubernetes for examples uses an object called
+<a href="https://godoc.org/k8s.io/apimachinery/pkg/runtime"><code>runtime.Object</code></a> and it way
+better. Go 2 will have generics that will make this situation even easier. Or
+you can use code generation as well. But the idea to use a serializable object
+like Kubernetes is good.</p>
+
+<pre><code class="language-golang">type Resource interface {
+    Create(ctx context.Context) error
+    Update(ctx context.Context, updated interface{}) error
+    Delete(ctx context.Context) error
+}
+</code></pre>
+
+<p>This is a reasonably small interface, it is easy to satisfy but I do not like
+the name. I think it does not give me the ability to figure out what’s its
+purpose. It represents, a resource but I prefer to call interface as actions or
+a adjective. In this case the structure who implements this interface can be
+stored in a database. I think a better name for it is:
+<a href="https://en.wiktionary.org/wiki/persistable">“Persistable”</a> because it makes
+clear its purpose.</p>
+
+<p>A strategy to make an interface smaller in this case is to break it in actions:</p>
+
+<pre><code class="language-golang">type Creatable interface {
+    Create(ctx context.Context) error
+}
+
+type Updatable interface {
+    Update(ctx context.Context, updated interface{}) error
+}
+
+type Deletable interface {
+    Delete(ctx context.Context) error
+}
+</code></pre>
+
+<p>And you can use composition to create an interface that requires all the three
+actions to work if you need it:</p>
+
+<pre><code class="language-golang">type Persistable interface {
+    Deletable
+    Updatable
+    Creatable
+}
+</code></pre>
+
+<p>This is useful when a function uses more than one of those actions, if you have
+an interface that contains also <code>Get</code> or <code>View</code> you can think about a different
+split <code>ReadOnly</code> contains <code>Get</code>, <code>View</code> and <code>Modifiable</code> that will require only
+the functions <code>Update</code>, <code>Create</code>, <code>Delete</code>.</p>
+
+<p>Imagine you are writing a set of http handlers to expose a CRUD API around your
+resources:</p>
+
+<pre><code>Create
+Update
+Delete
+List
+GetByID
+</code></pre>
+
+<p>Usually it looks like this, you can create an interface for every function, all
+your resources will implement the functions and you will be able to write a
+single “Create” handle for all the resources:</p>
+
+<pre><code class="language-golang">func CreateHandle(c Creatable) func(w http.ResponseWriter, r *http.Request) {
+    return http.HandleFunc("/resource", func(w http.ResponseWriter, r *http.Request) {
+        if err := c.Create(r.Context); if err != nil {
+            w.WriteHeader(http.StatusInternalServerError)
+            return
+        }
+        w.WriteHeader(http.StatusCreated)
+    })
+}
+</code></pre>
+
+<p>If you have to write a test for the handler it does not matter how complicated
+the resource is, you just have to mock the <code>Creatable</code> interface, one single
+function. This is a very basic example, if you need to add validation the
+<code>Creatable</code> function can require a <code>func Valid() error</code> that you can
+add incrementally in all your resources.</p>
+
+<pre><code class="language-golang">func CreateHandle(c Creatable) func(w http.ResponseWriter, r *http.Request) {
+    return http.HandleFunc("/resource", func(w http.ResponseWriter, r *http.Request) {
+        if err := c.Valid(); err != nil {
+            w.WriteHeader(http.StatusBadRequest)
+            return
+        }
+        if err := c.Create(r.Context); if err != nil {
+            w.WriteHeader(http.StatusInternalServerError)
+            return
+        }
+        w.WriteHeader(http.StatusCreated)
+    })
+}
+</code></pre>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

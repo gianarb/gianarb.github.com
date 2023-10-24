@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>My experience with Krew to manage kubectl plugins</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Kubectl plugins are extremely useful to provide a set of friendly utilities to interact with kubernetes in your environment. Krew is a project that helps you managing the plugin lifecycle. I have to add profefe to it and this is what I learned.">
+    <meta name="keywords" content="kubernetes">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/my-experiene-with-krew-to-manage-kubectl-plugins">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>My experience with Krew to manage kubectl plugins</h1>
+<main>
+    <p class="meta">16 Jan 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I wrote a good number of kubectl plugins so far, but there is a lot more I can
+do with them. Every time I write a new one I discover something new and that is
+why I am always excited to see what will happen with the next one.</p>
+
+<p><a href="[https://gianarb.it/blog/unit-testing-kubernetes-client-in-go](https://gianarb.it/blog/unit-testing-kubernetes-client-in-go)">“Unit Testing Kubernetes Client in
+Go”</a>
+and <a href="[https://gianarb.it/blog/kubectl-flags-in-your-plugin](https://gianarb.it/blog/kubectl-flags-in-your-plugin)">“Kubectl flags in your kubectl
+plugin”</a>
+are two of the lessons learned along the way.</p>
+
+<p>With
+<a href="[https://github.com/profefe/kube-profefe](https://github.com/profefe/kube-profefe)">kubectl-profefe</a>
+I decided to have a look at
+<a href="[https://github.com/kubernetes-sigs/krew](https://github.com/kubernetes-sigs/krew)">krew</a>.
+It is a package manager for kubectl plugins. It is a plugin itself with the end
+goal to help you installing and managing the lifecycle for your plugin.</p>
+
+<pre><code>$ kubectl krew install profefe
+</code></pre>
+
+<p>It gives you the ability, with a single command to install, update or delete the
+kubectl-profefe cli command.</p>
+
+<p>Twitter got pretty excited recently about
+<a href="[https://github.com/ahmetb/kubectl-tree](https://github.com/ahmetb/kubectl-tree)">kubectl-tree</a>,
+a plugin from
+<a href="[https://twitter.com/ahmetb](https://twitter.com/ahmetb)">@ahmetb</a> an old
+friend of mine and active Kubernetes contributor and maintainer for krew as
+well. It helps you to visualize kubernetes resources as a tree to simplify the
+comprehension of the hierarchy and the connection between resources.</p>
+
+<p>Two other examples that I would like to mention are from @ahmetb too. Kubectl
+plugins don’t need to be extremely complicated, but you always have to keep in
+mind the mantra “usability first.” It doesn’t matter how many lines of code you
+write: the end goal should be to develop something usable and well-integrated
+with kubernetes! <code>kubectl ctx</code> and <code>kubectl ns</code> are fabulous examples of
+something easy but helpful. We switch between context and namespace more than
+once a day between production clusters, local development, and so on. It is not
+a very complicated thing to do natively: for example, changing context with
+kubectl is just a matter of typing:</p>
+
+<pre><code>$ kubectl config use new-context
+</code></pre>
+
+<p>Worst case scenario for the namespace, you have to type the <code>-n</code> flags every
+time you run a kubectl command that is not in the namespace you have set by
+default for the context you are using.</p>
+
+<p>But <code>kubectl ctx</code> and <code>kubectl ns</code> simplify this process even more. You only
+have to type:</p>
+
+<pre><code>$ kubectl ctx new-context
+</code></pre>
+
+<p>Or</p>
+
+<pre><code>$ kubectl ns new-namespace
+</code></pre>
+
+<p>If you are developing an open-source kubectl plugin and you need a friendly and
+easy way to distribute it, you should have a look at krew. The publication
+process is straightforward, <a href="[https://github.com/kubernetes-sigs/krew-index/pull/415](https://github.com/kubernetes-sigs/krew-index/pull/415)">this is the
+PR</a>
+I had to submit for profefe, you have to type some YAML as usual.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

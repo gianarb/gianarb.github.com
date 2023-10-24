@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>testcontainer library to programmatically provision integration tests in Go with containers</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Provisioning the environment for integration tests is not easy. You need a flexible strategy to build isolated environment per test and to inject the data you need to verify your assertions. I have ported a popular library from Java to Golang called testcontainers. It wraps the Docker API in order to provide a simple test friendly library that you can use to run containers in test cases.">
+    <meta name="keywords" content="devops, infrastructure as code, docker, golang, test, integration test">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/testcontainers-go">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>testcontainer library to programmatically provision integration tests in Go with containers</h1>
+<main>
+    <p class="meta">08 Jan 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Five minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>There are a lot of information in the title I know, but I am not good enough to
+make it simple.</p>
+
+<p>Back in the days, I tried to make some contribution to <a href="https://github.com/openzipkin/zipkin">OpenZipkin</a> an open
+source tracing infrastructure in Java. I never really worked in that language, and apparently, I failed, but it wasn’t all a waste of time.</p>
+
+<p>OpenZipkin has an excellent integration test suite, and I liked the approach it took to write
+integration tests for all the backends it supports MySql, ElasticSeach,
+Cassandra.</p>
+
+<p>Provision the integration test environment is complicated even when you do it
+wrong:</p>
+
+<ol>
+  <li>Without a per test isolation.</li>
+  <li>Without a cleanup process.</li>
+  <li>Without putting the right effort to have isolated tests.</li>
+</ol>
+
+<p>If you try to make integration tests in the right way, you will have a very hard
+time, but Zipkin uses a project called
+<a href="https://github.com/testcontainers/testcontainers-java">testcontainers-java</a>. It is a library
+that wraps the Docker SDK to offer a friendly API to write integration
+tests using containers.</p>
+
+<h2 id="why-containers">Why containers</h2>
+
+<p>In 2019 everyone knows the answer, containers are great for integration testings
+because they are a lightweight and flexible technology. Docker provides the
+architecture that simplifies how you can turn them on and off.</p>
+
+<p>You can spin up a bunch of containers for every integration tests, they will be
+fresh new, and you can terminate them at the end of the tests. This increases
+isolation a lot, and it makes your tests more stable and easy to reproduce.</p>
+
+<h2 id="golang">Golang</h2>
+
+<p>I develop in Go every day I loved the approach, so I decided to port that
+library to Golang and it eventually get moved to the
+<a href="https://github.com/testcontainers">testcontainers</a> GitHub
+organization under the repository <a href="https://github.com/testcontainers/testcontainers-go">testcontainers/testcontainers-go</a>.</p>
+
+<p>There is a lot to do but I think at this point the API is stable and we have
+everything we need to use it. All the rest will be driven by yourself asking for
+new features or from contributors that will port more things from the java
+project.</p>
+
+<p>This is our “Hello World.”</p>
+
+<pre><code class="language-golang">package main
+
+import (
+    "context"
+    "fmt"
+    "net/http"
+    "testing"
+
+    testcontainers "github.com/testcontainers/testcontainers-go"
+)
+
+// TestNginxLatestReturn verifies that a requesto to root returns 200 as status
+// code
+func TestNginxLatestReturn(t *testing.T) {
+    ctx := context.Background()
+    // Request an nginx container that exposes port 80
+    req := testcontainers.ContainerRequest{
+        Image:        "nginx",
+        ExposedPorts: []string{"80/tcp"},
+    }
+    nginxC, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+        ContainerRequest: req,
+        Started:          true,
+    })
+    if err != nil {
+        t.Error(err)
+    }
+    // At the end of the test remove the container
+    defer nginxC.Terminate(ctx)
+    // Retrieve the container IP
+    ip, err := nginxC.Host(ctx)
+    if err != nil {
+        t.Error(err)
+    }
+    // Retrieve the port mapped to port 80
+    port, err := nginxC.MappedPort(ctx, "80")
+    if err != nil {
+        t.Error(err)
+    }
+    resp, err := http.Get(fmt.Sprintf("http://%s:%s", ip, port.Port()))
+    if resp.StatusCode != http.StatusOK {
+        t.Errorf("Expected status code %d. Got %d.", http.StatusOK, resp.StatusCode)
+    }
+}
+</code></pre>
+
+<p>This is a straightforward test, but you can imagine a lot of other use cases. Let’s say that you need to test how your <code>application A</code> interact with an <code>application B</code> that
+depends on Redis. You can programmatically build the environment you need in the tests:</p>
+
+<pre><code>// You spin up the Redis container
+req := testcontainers.ContainerRequest{
+    Image:        "redis",
+    ExposedPorts: []string{"6379/tcp"},
+}
+redisC, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+    ContainerRequest: req,
+    Started:          true,
+})
+if err != nil {
+    t.Error(err)
+}
+defer redisC.Terminate(ctx)
+ip, err := redisC.Host(ctx)
+if err != nil {
+    t.Error(err)
+}
+redisPort, err := redisC.MappedPort(ctx, "6479/tcp")
+if err != nil {
+    t.Error(err)
+}
+
+// Spin up Application B
+appB, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+    ContainerRequest: req,
+    Started:          true,
+    Env: map[string]string{
+        "REDIS_HOST": fmt.Sprintf("http://%s:%s", ip, redisPort.Port()),
+    },
+})
+if err != nil {
+    t.Error(err)
+}
+ipB, err := redisC.Host(ctx)
+if err != nil {
+    t.Error(err)
+}
+portB, err := redisC.MappedPort(ctx, "8081/tcp")
+if err != nil {
+    t.Error(err)
+}
+
+defer appB.Terminate(ctx)
+defer redis.Terminate(ctx)
+
+// Now you can use the go function from your application A that interact with
+// application B
+bclient := appA.NewServiceBClient(ipB, portB)
+content, err := bclient.GetKey("my-key")
+
+// Check what you need to check
+</code></pre>
+
+<h2 id="programmable-environment-is-the-key">Programmable environment is the key</h2>
+
+<p>I wrote about my relationship with <a href="/blog/infrastructure-as-real-code">infrastructure as
+code</a> in a previous article but once again
+the fact that you can programmatically build your infrastructure
+using real code is the key for all this flexibility.</p>
+
+<p>As plus for integration tests, you can build the environment you need from inside the test case itself, this ability provides significant control over it.</p>
+
+<p>If you need to worm up etcd with some data, you spin up the etcd container and
+you push your data using the traditional Go <a href="https://github.com/etcd-io/etcd/tree/master/client">etcd client</a>:</p>
+
+<pre><code>// Spin up Etcd
+req := testcontainers.ContainerRequest{
+    Image:        "quay.io/coreos/etcd:latest",
+    ExposedPorts: []string{"2379/tcp"},
+}
+etcdC, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
+    ContainerRequest: req,
+    Started:          true,
+})
+if err != nil {
+    t.Error(err)
+}
+defer etcdC.Terminate(ctx)
+ip, err := etcdC.Host(ctx)
+if err != nil {
+    t.Error(err)
+}
+etcdPort, err := redisC.MappedPort(ctx, "2379/tcp")
+if err != nil {
+    t.Error(err)
+}
+
+// Configure the etcd client
+cfg := client.Config{
+    Endpoints:               []string{"http://" + ip + ":" + etcdPort},
+    Transport:               client.DefaultTransport,
+    // set timeout per request to fail fast when the target endpoint is unavailable
+    HeaderTimeoutPerRequest: time.Second,
+}
+c, err := client.New(cfg)
+if err != nil {
+    log.Fatal(err)
+}
+kapi := client.NewKeysAPI(c)
+
+// Set the key foo
+resp, err := kapi.Set(context.Background(), "/foo", "bar", nil)
+</code></pre>
+
+<p>I wrote this article because after a few weeks of coding and revisions I have
+finally tagged
+<a href="https://github.com/testcontainers/testcontainers-go/releases/tag/0.0.1"><code>v0.0.1</code></a>
+and the library is ready to be tried we need feedback and feature requests to
+Prioritize the work to do. So feel free to try it and to open GitHub
+<a href="https://github.com/testcontainers/testcontainer-go/issues">issues</a>.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

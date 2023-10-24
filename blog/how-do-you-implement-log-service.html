@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Zend Framework 2 - How do you implement log service?</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Logging is a requirement for every application. In PHP and in every other language. It is the way your application has to tell you what its doing. This article is about how to implement a logger in a Zend Framework 2 application in PHP. This solution achieve simplicity and usability.">
+    <meta name="keywords" content="php, zf2, zend framework, zend, open source">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/how-do-you-implement-log-service">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Zend Framework 2 - How do you implement log service?</h1>
+<main>
+    <p class="meta">26 Jul 2013 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>A log system is an essential element for any application. It is a way to check
+the status and use of the application. For a basic implementation you can refer
+to the  fig-stanrdars organization
+<a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md">PSR-3</a>
+article, that describes th elogger interface.</p>
+
+<p>Zend Framework 2 implement a <a href="https://github.com/zendframework/zf2/tree/master/library/Zend/Log">Logger
+Component</a>,
+the following is an example of how to use it with service manager.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+	<span class="s1">'service_manager'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+		<span class="s1">'abstract_factories'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+			<span class="s1">'Zend\Log\LoggerAbstractServiceFactory'</span><span class="p">,</span>
+		<span class="p">),</span>
+	<span class="p">),</span>
+	<span class="s1">'log'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+		<span class="s1">'Log\App'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+			<span class="s1">'writers'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+				<span class="k">array</span><span class="p">(</span>
+					<span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'stream'</span><span class="p">,</span>
+					<span class="s1">'priority'</span> <span class="o">=&gt;</span> <span class="mi">1000</span><span class="p">,</span>
+					<span class="s1">'options'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+						<span class="s1">'stream'</span> <span class="o">=&gt;</span> <span class="s1">'data/app.log'</span><span class="p">,</span>
+					<span class="p">),</span>
+				<span class="p">),</span>
+			<span class="p">),</span>
+		<span class="p">),</span>
+	<span class="p">),</span>
+<span class="p">);</span></code></pre></figure>
+
+<p><a href="https://github.com/zendframework/zf2/blob/master/library/Zend/Log/LoggerServiceFactory.php">LoggerAbstractServiceFactory</a>
+is a Service Factory, as an example,  into service Manager class Logger and will
+be used in the whole application. Log/App is the name of a single logger, and
+writer is an adapter that is used to choose the method of writing, in this case
+everything is written to file, but you can use a DB adapter and write your log
+into database.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">GianArb\Controller</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">GeneralController</span>
+	<span class="kd">extends</span> <span class="nc">AbastractActionController</span>
+<span class="p">{</span>
+	<span class="k">public</span> <span class="k">function</span> <span class="n">testAction</span><span class="p">(){</span>
+		<span class="nv">$logger</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getServiceLocator</span><span class="p">()</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s1">'Log\App'</span><span class="p">);</span>
+		<span class="nv">$logger</span><span class="o">-&gt;</span><span class="nb">log</span><span class="p">(</span><span class="err">\</span><span class="nc">Zend\Log\Logger</span><span class="o">::</span><span class="no">INFO</span><span class="p">,</span> <span class="s2">"This is a little log!"</span><span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>With this configuration Log\App writes a string into data/app.log file, with
+INFO property. By default you can use an array of properties.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="k">protected</span> <span class="nv">$priorities</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">EMERG</span>  <span class="o">=&gt;</span> <span class="s1">'EMERG'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">ALERT</span>  <span class="o">=&gt;</span> <span class="s1">'ALERT'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">CRIT</span>   <span class="o">=&gt;</span> <span class="s1">'CRIT'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">ERR</span>    <span class="o">=&gt;</span> <span class="s1">'ERR'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">WARN</span>   <span class="o">=&gt;</span> <span class="s1">'WARN'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">NOTICE</span> <span class="o">=&gt;</span> <span class="s1">'NOTICE'</span><span class="p">,</span>
+	<span class="k">self</span><span class="o">::</span><span class="no">INFO</span>   <span class="o">=&gt;</span> <span class="s1">'INFO'</span><span class="p">,</span>
+<span class="k">self</span><span class="o">::</span><span class="no">DEBUG</span>  <span class="o">=&gt;</span> <span class="s1">'DEBUG'</span><span class="p">,</span>
+<span class="p">);</span></code></pre></figure>
+
+<p>Usage of different keys is a good practice because it is very easy to write
+filter or log categories.</p>
+
+<p>Another good practice, valid for all services in general, is to create your
+class extending single service.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">use</span> <span class="nc">Zend\Log\Logger</span>
+<span class="n">class</span> <span class="nc">MyLogger</span> <span class="k">extends</span> <span class="nc">Logger</span></code></pre></figure>
+
+<p>This choice helps managing future customizations  of services and is another
+important layer for managing unexpected updates.</p>
+
+<p>Rali, thanks for your help with my robotic english! :P</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Serverless means extendibility</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Looking at the GitHub Actions design and connecting the docs I think I got why serverless is useful. It is a great mechanism to extend platform and SaaS.">
+    <meta name="keywords" content="serverless, github action, serverless, api gateway lambda">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/serverless-means-extendibility">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Serverless means extendibility</h1>
+<main>
+    <p class="meta">22 Jan 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Two minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I wrote an article about a <a href="/blog/kubernetes-GitHub-action">GitHub Action</a> I
+recently created to deploy my code to kubernetes. Very nice.  Writing the action
+and the post, I realized what serverless is all about.  I wrote it in the
+incipit of the article, but I think this topic deserves its dedicated post.
+Serverless is not yet for web applications. I know some of you will probably
+disagree but this is my blog, and that’s why I have one, to write whatever I
+like!</p>
+
+<p><img src="/img/brave_dad.png" alt="" /></p>
+
+<p>I used Lambda and API Gateway to distribute two pdf I wrote about <a href="https://scaledocker.com">“how to scale
+Docker”</a>, it looks to me way more complicated than a go
+daemon. So I wrote them because I got the free tier and because I like to try
+new things.  There are excellent applications written in that way for example
+<a href="https://acloud.guru/">acloud.guru</a> but I am probably not ready for that! My bad</p>
+
+<p>Anyway, I know what I am ready for: We should use serverless to offer
+extendibility for our as a service platform.</p>
+
+<p>Good for us distributed system and hispters applications are all based on
+events, Kafka and so on. Plus now we have
+<a href="https://github.com/opencontainers/runc">runC</a>,
+<a href="https://github.com/moby/buildkit">buildkit</a> and a lot of the building blocks
+useful to implement a solid serverless implementation.</p>
+
+<p>It is not easy, at scale this is a complicated problem but we are in a better
+situation now, and it is a massive improvement from a product perspective:</p>
+
+<ol>
+  <li>Using containers, we can offer total isolation, and we can take a very
+carefully and self defensive approach.</li>
+  <li>An API already provides extendibility but, you still need to have your server
+and to run your application by yourself to enjoy them. With a serverless
+approach, it will be much easy for the customer to implement their workflow.</li>
+  <li>You can ask your customer to share their implementation creating a vibrant
+and virtuous ecosystem.</li>
+</ol>
+
+<p>You can use a subset of the event that you write in Kafka as a trigger for the
+function, VaultDB to store secrets that will be injected inside the service and
+so on.</p>
+
+<p><img src="/img/heart.jpg" alt="" /></p>
+
+<p>There is a lot more, but I am excited! Is somebody doing something like that? If
+so, let me know <a href="https://twitter.com/gianarb">@gianarb</a>, I would like to chat!</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

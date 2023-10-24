@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Zend Framework 2 - Console usage a speed help</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CLI tools are an easy way to interact with an application because you can drive users or even other developers in a well know direction. It is a very good way to decrease possible mistakes. Zend Framework 2 a PHP open source framework has a Console package that helps you to address common issue like argument management, command parsing and to format a colored and nice output.">
+    <meta name="keywords" content="zf2, php, cli, Zend Framework, development, debug">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/zf2-console-usage-speed-help">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Zend Framework 2 - Console usage a speed help</h1>
+<main>
+    <p class="meta">22 Aug 2013 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Less than one minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>With Zend Framework is very easy to write a command line tool to manage
+different things. But what if there are more commands? How do you remeber them
+all?</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">ModuleTest</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Zend\Console\Adapter\AdapterInterface</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">Module</span> <span class="p">{</span>
+	<span class="k">public</span> <span class="k">function</span> <span class="n">getConsoleUsage</span><span class="p">(</span><span class="kt">AdapterInterface</span> <span class="nv">$console</span><span class="p">)</span>
+	<span class="p">{</span>
+		<span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+			<span class="k">array</span><span class="p">(</span><span class="s1">'test &lt;params1&gt; &lt;params2&gt; [--params=]'</span><span class="p">,</span> <span class="s1">'Description of test command'</span><span class="p">),</span>
+			<span class="k">array</span><span class="p">(</span><span class="s1">'run &lt;action&gt;'</span><span class="p">,</span> <span class="s1">'Start anction'</span><span class="p">)</span>
+		<span class="p">);</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>You can write this function in a Module.php file, and create a basic helper to
+help you see when you write a bad command.</p>
+
+<p>English by Rali :smile: Thanks!!!! :smile:</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

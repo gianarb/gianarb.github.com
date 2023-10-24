@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Chef Server startup notes</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="This tutorial explain how to setup a chef server on digitalocean from zero. It also shows how to use it to make a provisioning of one Chef Client. Chef is one of the most used provisioning tool. DevOps tool to apply infrastructure as code.">
+    <meta name="keywords" content="chef, devops, automation, ruby, infrastructure, infra as code, digitalocean">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/chef-server-startup-notes">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Chef Server startup notes</h1>
+<main>
+    <p class="meta">10 Nov 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Eight minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I worked with different provisioning tools and configuration managers in the
+last couple of years: Chef, Saltstack, Puppet, Shell, Python, Terraform.
+Everything that was allowing me to make automation and describe my
+infrastructure as a code.</p>
+
+<p>I really think that this is the correct street and every companies need to stop
+to persist random commands in a server:</p>
+
+<ul>
+  <li>The code used to describe your infrastructure is reausable.</li>
+  <li>The code is a good backup and you can put it in your repository to study of
+it changed and manage rollbacks.</li>
+  <li>Your servers become collaborative and your team can review what you do.</li>
+</ul>
+
+<p>Chef is my first configuration manager, I started to use it with Vagrant few
+years ago but I never had change to deep drive into it and into the full
+chef-server configuration from scratch.</p>
+
+<p>I had this change few days ago and I am here to share some notes. I used
+digitalocean to start 1 Chef Server and two nodes, during this post I am not
+focused about the recipe and cookbook syntax but I will share some commands and
+notes that I took during my test to start and configure a Chef Server.</p>
+
+<p>First of all <code>doctl</code> is the command line application provided by digitalocean
+to manage droplets and everything, I used that tool to start my droplets.</p>
+
+<p>The Chef Server doesn’t run in little box, we need 2gb RAM, I tried with small
+size but nothing was working, the installation process gone out of memory very
+soon. Thanks Ruby.</p>
+
+<pre><code class="language-sh">$ doctl compute droplet create chef-server \
+  --region ams2 --size 2gb --image 20385558 \
+  --access-token $DO --ssh-keys $DO_SSH
+
+$ doctl compute droplet create n1 \
+  --region ams2 --size 512mb --image 20385558 \
+  --access-token $DO --ssh-keys $DO_SSH
+</code></pre>
+<p><code>$DO</code> contains my digitalocean access key and <code>$DO_SSH</code> the id of the ssh key
+to log into the servers. You can leave the last one empty and you will receive
+an email with the password.</p>
+
+<p>When the process is gone you will be able to copy the ip of the chef-server and go into it.</p>
+
+<pre><code class="language-bash">$ doctl compute droplet ls
+
+ID              Name            Public IPv4     Public IPv6     Memory  VCPUs   Disk    Region  Image           Status  Tags
+30cw4230        chef-server                                     2gb     1       20      ams2    Debian 8.6 x64  new
+q0514230        n1                                              512     1       20      ams2    Debian 8.6 x64  new
+</code></pre>
+
+<p>This provisioning script installs Chef-Server from the official deb package and
+also install chef-manage.  Chef-manage provides a nice web interface to manage
+users, cookbooks and everything is stored into the server.</p>
+
+<pre><code class="language-bash">cd /tmp
+sudo apt-get update
+sudo apt-get install -y unzip curl
+curl -LS https://packages.chef.io/stable/ubuntu/16.04/chef-server-core_12.9.1-1_amd64.deb -o chef-server-core_12.9.1-1_amd64.deb
+sudo dpkg -i chef-server-core_12.9.1-1_amd64.deb
+sudo chef-server-ctl reconfigure
+</code></pre>
+
+<p>Our server is up an running reachable over HTTPS (port 443). This configuration
+is just for testing purpose. It’s not a good practice leave a Chef Server public
+as we are doing. It’s a better idea to close it under a VPN for example.</p>
+
+<p>Chef supports an authentication and authorization level based on users and
+companies. We are creating a new user called <code>Gianluca Arbezzano</code> with username
+<code>ga@thumpflow.com</code> and as password <code>hellociaobye</code>.
+We are also create an organization and we are associating user with org.</p>
+<pre><code class="language-bash">chef-server-ctl user-create gianarb Gianluca Arbezzano ga@thumpflow.com 'hellociaobye' --filename /root/gianarb_test.pem
+chef-server-ctl org-create tf 'ThumpFlow' --association_user gianarb --filename /root/tf-validator.pem
+chef-server-ctl org-user-add tf gianarb
+</code></pre>
+
+<p>At this point we can configure a nice UI for our Chef Server with this simple
+commands:</p>
+
+<pre><code class="language-bash">sudo chef-server-ctl install chef-manage
+sudo chef-server-ctl reconfigure
+sudo chef-manage-ctl reconfigure --accept-license
+</code></pre>
+
+<p>Chef-Server works with the concept of Organization and User. The organization
+is a group of users that share cookbooks, rules and so on.  Users can update
+cookbooks and there is also a set of permission to manage access on particular
+resources like:</p>
+
+<ul>
+  <li>Add a new node</li>
+  <li>Syncronize cookbook with the server</li>
+  <li>add new users</li>
+</ul>
+
+<p>At this point we have one user with its own key and credential. You can come
+back into  the UI and use username (gianarb) and password (hellociaobye) to
+login in.  The key (–filename) is used to configure knife and encrypt
+communication between client and server.  There are 3 main actors and this
+point that we need to know:</p>
+
+<ul>
+  <li>Chef-Server contains all our recipes, cookbooks and it’s the brain of the cluster.</li>
+  <li>Nodes are all servers configurated by Chef.</li>
+  <li>Workstation are usually enable to syncronize, update cookbooks. For example
+Jenkins or your Continuous Integration System after every new commit can push
+every changes into the server.</li>
+</ul>
+
+<p>Chef Server has a HTTP api and <code>knife</code> is a CLI that provide an easy
+integration for your node and workstation.  With this command we are installing
+knife. You can do it in your local environment, to become a workstation and into
+the server. (it’s usually a god practice create a user, we are doing everything
+as root right know but it’s BAD! don’t be bad!).</p>
+
+<p>We have two certificate one is <code>gianarb_test.pem</code> and it’s identify a specific
+user, we need to generate our for every workstation/member of the team and the
+<code>validation_client</code> represent the organization, it could be the same across
+multiple users.</p>
+
+<pre><code class="language-bash">curl -O -L http://www.opscode.com/chef/install.sh
+bash ./install.sh
+</code></pre>
+
+<p>You can copy paste the 2 keys into the local machine and run this command that
+will drive your into the process to create a <code>~/.chef/knife.rb</code> file that your
+cli uses to communicate with the chef server.</p>
+
+<pre><code class="language-bash">knife configure
+</code></pre>
+
+<p>This is an example of generated knife configuration file that I did in my
+server.  I lose times to understand the <code>chef_server_url</code> it contains the
+hostname of the server but also the `/organization/<organization_short_name>'
+be careful about this or knife will come back with an HTML response in your terminal.</organization_short_name></p>
+
+<pre><code class="language-ruby">log_level                :info
+log_location             STDOUT
+node_name                'gianarb'
+client_key               '/root/gianarb_test.pem'
+validation_client_name   'tf-validator'
+validation_key           '/root/tf-validator.pem'
+chef_server_url          'https://chef-server:443/organizations/tf'
+syntax_check_cache_path  '/root/.chef/syntax_check_cache'
+cookbook_path            ["/home/gianarb/git/chef-pluto/cookbooks"]
+ssl_verify_mode          :verify_none
+</code></pre>
+
+<p>The last 2 commands download and validate the SSH certificate because in the
+default configuration the CA is unofficial and we need to force our client to
+trust the cert.</p>
+
+<pre><code class="language-bash">knife ssl fetch
+knife ssl check
+</code></pre>
+
+<p>Know that we did that in our server and also in our local environment we can
+clone <a href="https://github.com/gianarb/chef-pluto">chef-pluto</a> a repository that contains recipes, rules and cookbooks to
+configure our node, we need to syncronize it into the server.</p>
+
+<pre><code class="language-bash">git clone git@github.com:gianarb/chef-pluto.git /home/gianarb/git/chef-pluto/chef-pluto
+cd /home/gianarb/git/chef-pluto/chef-pluto
+knife update /
+</code></pre>
+<p>The last command update all our repository into the chef server. You can log in
+into the web ui and see the <code>micro</code> cookbook and the <code>power</code> rule.</p>
+
+<p><a href="https://github.com/gianarb/micro">micro</a> is an application that I wrote in go and it just expose the ip of the
+machine. It’s a binary and the cookbook downloads and starts it, pretty
+straightforward.</p>
+
+<p>At this point we need to make a provisioning of our first node, usually is the
+server that install and start the Chef Client into the node, what we can do
+it’s store a private key into the server to allow chef to connect to the node.
+I copied the digitalocean private key into the server (~/do), from security
+point of view you can create a dedicate one. You can also use the -P option if
+you are not using an ssh-key to run this example.</p>
+
+<pre><code class="language-bash">knife bootstrap &lt;ip-node&gt; -N node1 --ssh-user root -r 'role[power]' -i ~/do
+</code></pre>
+
+<p>If everything it’s good you can reach the application from port <code>8000</code> into the
+browser. The log is something like:</p>
+
+<pre><code class="language-bash">$ knife bootstrap 95.85.52.211 -N testNode --ssh-user root -r 'role[power]' -i ~/do
+Doing old-style registration with the validation key at /root/tf-validator.pem...
+Delete your validation key in order to use your user credentials instead
+
+Connecting to 95.85.52.211
+95.85.52.211 -----&gt; Existing Chef installation detected
+95.85.52.211 Starting the first Chef Client run...
+95.85.52.211 Starting Chef Client, version 12.15.19
+95.85.52.211 resolving cookbooks for run list: ["micro"]
+95.85.52.211 Synchronizing Cookbooks:
+95.85.52.211   - micro (0.1.0)
+95.85.52.211 Installing Cookbook Gems:
+95.85.52.211 Compiling Cookbooks...
+95.85.52.211 Converging 2 resources
+95.85.52.211 Recipe: micro::default
+95.85.52.211   * remote_file[Download micro] action create_if_missing (up to date)
+95.85.52.211   * service[Start micro] action start
+95.85.52.211     - start service service[Start micro]
+95.85.52.211
+95.85.52.211 Running handlers:
+95.85.52.211 Running handlers complete
+95.85.52.211 Chef Client finished, 1/2 resources updated in 02 seconds
+</code></pre>
+
+<p>knife started the client, syncronized cookbooks, it assigned the <code>power</code> role
+at the node and run the correct recipes.  Your server is ready and you can
+create and delete nodes to make your infrastructure complex how much you like.</p>
+
+<p>Chef is quite old and it’s in ruby (the first one could be a plus but the
+second one no really) but it continue to be a good way to make a provisioning o
+your infrastructure. Lots of people moved to Ansible but the agent that they
+reject offer a very good orchestration feature that it’s something that I
+usually search.</p>
+
+<p>I worked with StalStack and it’s very nice, the syntax is easy
+and it seems less expensive in terms of configuration, resources and setup but
+I am not really sure about the YAML specification. I am not a ruby developer
+and I don’t love the ruby syntax but in the end is a programming languages and
+I am doing infrastructure as a code.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

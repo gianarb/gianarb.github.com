@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How to test CLI commands made with Go and Cobra</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CLI commands are common in Go. Testing them is an effective way to run a big amount of code that is actually very close to the end user. I use Cobra, pflags and Viper and that's what I do when I write unit test for Cobra commands">
+    <meta name="keywords" content="golang, mockmania, cobra, cli">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/golang-mockmania-cli-command-with-cobra">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How to test CLI commands made with Go and Cobra</h1>
+<main>
+    <p class="meta">09 Mar 2020 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Four minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Almost everything is a CLI application when writing Go. At least for me. Even
+when I write an HTTP daemon I still have to design a UX for configuration
+injection, environment variables, flags and things like that.</p>
+
+<p>The set of libraries I use is very standard, I use
+<a href="https://github.com/spf13/cobra">Cobra</a>,
+<a href="https://github.com/spf13/pflag">pflags</a> and occasionally
+<a href="https://github.com/spf13/viper">Viper</a>. I can say, without a doubt that <a href="https://twitter.com/spf13">Steve
+Francia</a> is awesome!</p>
+
+<p>This is how a command looks like directly from the Cobra documentation:</p>
+
+<pre><code>var rootCmd = &amp;cobra.Command{
+  Use:   "hugo",
+  Short: "Hugo is a very fast static site generator",
+  Long: `A Fast and Flexible Static Site Generator built with
+                love by spf13 and friends in Go.
+                Complete documentation is available at http://hugo.spf13.com`,
+  Run: func(cmd *cobra.Command, args []string) {
+    // Do Stuff Here
+  },
+}
+</code></pre>
+
+<p>I like to write a constructor function that returns a command, in this case it
+will be something like:</p>
+
+<pre><code>func NewRootCmd() *cobra.Command {
+    return &amp;cobra.Command{
+      Use:   "hugo",
+      Short: "Hugo is a very fast static site generator",
+      Long: `A Fast and Flexible Static Site Generator built with
+                love by spf13 and friends in Go.
+                Complete documentation is available at http://hugo.spf13.com`,
+      Run: func(cmd *cobra.Command, args []string) {
+        // Do Stuff Here
+      },
+  }
+}
+</code></pre>
+
+<p>The reason why I like the have this function is because it helps me to clearly
+see the dependency my command requires. In this case nothing. I also like to use
+not the Run function but the RunE one, it works in the same way but it expects
+an error in return.</p>
+
+<pre><code>func NewRootCmd(in string) *cobra.Command {
+    return &amp;cobra.Command{
+      Use:   "hugo",
+      Short: "Hugo is a very fast static site generator",
+      Long: `A Fast and Flexible Static Site Generator built with
+                love by spf13 and friends in Go.
+                Complete documentation is available at http://hugo.spf13.com`,
+      RunE: func(cmd *cobra.Command, args []string) (error) {
+          fmt.Fprintf(cmd.OutOrStdout(), in)
+          return nil
+      },
+  }
+}
+</code></pre>
+
+<p>In order to execute the command, I use cmd.Execute().</p>
+
+<p>Let’s write a test function:</p>
+
+<p>The output with <code>go test -v</code> contains “hi” because by default cobra prints to
+stdout, but we can replace it to assert that automatically</p>
+
+<pre><code>func Test_ExecuteCommand(t *testing.T) {
+	cmd := NewRootCmd("hi")
+	cmd.Execute()
+}
+</code></pre>
+
+<pre><code>=== RUN   Test_ExecuteCommand
+hi--- PASS: Test_ExecuteCommand (0.00s)
+PASS
+ok      ciao    0.006s
+</code></pre>
+
+<p>The trick here is to replace the stdout with something that we can read
+programmatically like a bytes.Buffer for example:</p>
+
+<pre><code class="language-go">func Test_ExecuteCommand(t *testing.T) {
+	cmd := NewRootCmd("hi")
+	b := bytes.NewBufferString("")
+	cmd.SetOut(b)
+	cmd.Execute()
+	out, err := ioutil.ReadAll(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(out) != "hi" {
+		t.Fatalf("expected \"%s\" got \"%s\"", "hi", string(out))
+	}
+}
+</code></pre>
+
+<p>Personally I do not think there is much more to know in order to effectively
+test CLI commands, they can be very complex, but if you can mock its
+dependencies and check what the execution prints out you are very flexible!</p>
+
+<p>Another thing you have to control when running a command is its arguments and
+its flags because based on them you will get different behavior that you have to
+test in order to figure out that your commands work with all of them.</p>
+
+<p>The logic works the same for both but arguments are very easy, you just have to
+set the argument in the command with the function
+<code>cmd.SetArgs([]string{"hello-by-args"}).</code></p>
+
+<pre><code class="language-go">package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"testing"
+
+	"github.com/spf13/cobra"
+)
+
+func NewRootCmd() *cobra.Command {
+	return &amp;cobra.Command{
+		Use:   "hugo",
+		Short: "Hugo is a very fast static site generator",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Fprintf(cmd.OutOrStdout(), args[0])
+			return nil
+		},
+	}
+}
+
+func Test_ExecuteCommand(t *testing.T) {
+	cmd := NewRootCmd()
+	b := bytes.NewBufferString("")
+	cmd.SetOut(b)
+	cmd.SetArgs([]string{"hi-via-args"})
+	cmd.Execute()
+	out, err := ioutil.ReadAll(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(out) != "hi-via-args" {
+		t.Fatalf("expected \"%s\" got \"%s\"", "hi-via-args", string(out))
+	}
+}
+</code></pre>
+
+<p>Flags works in the same:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"testing"
+
+	"github.com/spf13/cobra"
+)
+
+var in string
+
+func NewRootCmd() *cobra.Command {
+	cmd := &amp;cobra.Command{
+		Use:   "hugo",
+		Short: "Hugo is a very fast static site generator",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			fmt.Fprintf(cmd.OutOrStdout(), in)
+			return nil
+		},
+	}
+	cmd.Flags().StringVar(&amp;in, "in", "", "This is a very important input.")
+	return cmd
+}
+
+func Test_ExecuteCommand(t *testing.T) {
+	cmd := NewRootCmd()
+	b := bytes.NewBufferString("")
+	cmd.SetOut(b)
+	cmd.SetArgs([]string{"--in", "testisawesome"})
+	cmd.Execute()
+	out, err := ioutil.ReadAll(b)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(out) != "testisawesome" {
+		t.Fatalf("expected \"%s\" got \"%s\"", "testisawesome", string(out))
+	}
+}
+</code></pre>
+
+<p>This is it! I like a lot to write unit tests for cli command because in real
+life they are way more complex than the one I used here. It means that they run
+a lot more functions but the command is well scoped in terms of dependencies (if
+you write a constructor function) and in terms of input and output. So it is
+easy to write an assertion and write table tests with different inputs.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

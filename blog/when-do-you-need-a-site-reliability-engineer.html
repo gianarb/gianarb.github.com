@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>When do you need a Site Reliability Engineer?</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="I read everyday more job description looking for SRE. In the meantime I hear and live the frustration about who does not understand what SRE means and hires somebody that won't fit.">
+    <meta name="keywords" content="sre, site reliability engineer">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/when-do-you-need-a-site-reliability-engineer">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>When do you need a Site Reliability Engineer?</h1>
+<main>
+    <p class="meta">05 Jul 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>I have started to work as a Site Reliability Engineer more than two years ago as
+first hired SRE at InfluxData.  I survived and learned to all the eras that
+every company that onboard a new position live:</p>
+
+<ol>
+  <li>Lack of knowledge about what the job role means</li>
+  <li>Adjustment</li>
+  <li>Growth</li>
+  <li>Re-adjustment</li>
+  <li>Repeat</li>
+</ol>
+
+<p>You are an SRE not because you care about reliability, everybody cares about
+reliability but because the system is too complex to be driven by a person that
+also does other things.</p>
+
+<p>There are no differences with any other “first hired” in a company. Even the
+first project manager gets hired when the person who was doing that job can’t
+make it anymore because the company needs somebody 100% focused on the product.</p>
+
+<p>The Site Reliability Engineer as a role should improve <strong>service</strong> reliability.
+Visibility, observability, logging, scalability, instrumentation are all areas
+when it should step to serve better tooling to troubleshoot, identify issues.
+Because as we all know, even not that complex distributed system are difficult
+to debug, this complexity is caused by what it is called partial failure. The
+idea that a distributed system will never fail drastically alltogheter, but it
+is continuously in a condition of failure mitigated by re-try policies and or
+redundancy.</p>
+
+<p>The ability to acknowledge a problem before it will get reported by a customer
+improves reliability.</p>
+
+<p>It is not a responsibility for the Site Reliability Engineer to fix the actual
+bug in the service, it can. For all those reasons the SRE knows how to code, and
+it should modify the application, and it needs to be close to the team that
+builds the service, just as every heterogeneous group has who takes care about
+the design, UI, deploy, management.</p>
+
+<h2 id="are-they-the-unique-people-on-call">are they the unique people on-call?</h2>
+<p>Obviously no. It’s hard to reach a scale where you can manage a sustainable
+rotation only with SREs, and every developer is responsible for the code it
+ships. If you managed to have a rotation for every service with different
+people, all of the teammates should be on-call.</p>
+
+<p>The SREs other than being part of the rotation is the person responsible for the
+MTTR (mean time to repair) and the number of false positive.  The Site
+Reliability Engineer needs to be able to make the MTTR as short as possible, and
+the number of false positive as low as it can. They should improve how the
+service is monitored, instrumented, and easy to debug.</p>
+
+<h2 id="do-i-need-an-sre-in-every-service-team">do I need an SRE in every service team?</h2>
+
+<p>It is hard to quantify a number, but the SREs needs to have a structure that
+gives them time to hang out together and to see each other as a unique team as
+well to share knowledge and to avoid the use of too many technologies across the
+company. Even more, if the company is not at a gigantic scale in term of the
+number of people.  The amount of SREs per team depends on now crucial, and
+complex reliability for the service is, how big the service team is. You can
+share SREs with organizations and services if they are not too big or too
+complicated or if the unit itself has excellent reliability skills embedded in.</p>
+
+<h2 id="what-sre-is-not">What SRE is not</h2>
+
+<p>SRE  does not replace your ops team; it is not a person with DevOps skills that
+knows containers and Kubernetes. It knows cloud, containers, and kubernetes
+because it is a pretty new “unicorn” role.</p>
+
+<p>It is a side effect of being a coder that loves to see its code running smoothly
+under real load.</p>
+
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

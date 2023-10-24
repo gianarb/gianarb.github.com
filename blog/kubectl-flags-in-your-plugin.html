@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>kubectl flags in your plugin</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Develop cure custom kubectl plugins with friendly flags from the kubectl">
+    <meta name="keywords" content="kubernetes, flags, kubectl, plugin, kubeassemble">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/kubectl-flags-in-your-plugin">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>kubectl flags in your plugin</h1>
+<main>
+    <p class="meta">07 Oct 2019 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>This is not at all a new topic, no hacking involved, but it is something
+everybody needs to know where we design kubectl plugin.</p>
+
+<p>I was recently working at one and I had to make the user experience as friendly
+as possible compared with the <code>kubectl</code>, because that’s what a good developer does!
+Tricks other developers to make their life comfortable, if you are used to do:</p>
+
+<pre><code class="language-bash">$ kubectl get pod -n your-namespace -L app=http
+</code></pre>
+
+<p>To get pods from a particular namespace <code>your-namemespace</code> filtered by label
+<code>app=http</code> and your plugin does something similar or it will benefit from an
+interaction that remembers the classic <code>get</code> you should re-use those flags.</p>
+
+<p>Example: design a <code>kubectl-plugin</code> capable of running a <code>pprof</code> profile against a
+set of containers.</p>
+
+<p>My expectation will be to do something like:</p>
+
+<pre><code class="language-bash">$ kubectl pprof -n your-namespace -n pod-name-go-app
+</code></pre>
+
+<p>The Kubernetes community writes a lot of their code in Go, it means that there
+are a lot of libraries that you can re-use.</p>
+
+<p><a href="https://github.com/kubernetes/cli-runtime/tree/master/pkg/genericclioptions">kubernetes/cli-runtime</a>
+is a library that provides utilities to create kubectl plugins. One of their
+packages is called <code>genericclioptions</code> and as you can get from its name the goal
+is obvious.</p>
+
+<pre><code class="language-go">
+// import "github.com/spf13/cobra"
+// import "github.com/spf13/pflag"
+// import "k8s.io/cli-runtime/pkg/genericclioptions"
+
+// Create the set of flags for your kubect-plugin
+flags := pflag.NewFlagSet("kubectl-plugin", pflag.ExitOnError)
+pflag.CommandLine = flags
+
+// Configure the genericclioptions
+streams := genericclioptions.IOStreams{
+    In:     os.Stdin,
+    Out:    os.Stdout,
+    ErrOut: os.Stderr,
+}
+
+// This set of flags is the one used for the kubectl configuration such as:
+// cache-dir, cluster-name, namespace, kube-config, insecure, timeout, impersonate,
+// ca-file and so on
+kubeConfigFlags := genericclioptions.NewConfigFlags(false)
+
+// It is a set of flags related to a specific resource such as: label selector
+(-L), --all-namespaces, --schema and so on.
+kubeResouceBuilderFlags := genericclioptions.NewResourceBuilderFlags()
+
+var rootCmd = &amp;cobra.Command{
+    Use:   "kubectl-plugin",
+    Short: "My root command",
+    Run: func(cmd *cobra.Command, args []string) {
+		cmd.SetOutput(streams.ErrOut)
+    }
+}
+
+// You can join all this flags to your root command
+flags.AddFlagSet(rootCmd.PersistentFlags())
+kubeConfigFlags.AddFlags(flags)
+kubeResouceBuilderFlags.AddFlags(flags)
+</code></pre>
+
+<p>This is the output:</p>
+
+<pre><code class="language-bash">$ kubectl-plugin --help
+My root command
+
+Usage:
+  kubectl-plugin [flags]
+
+Flags:
+      --as string                      Username to impersonate for the operation
+      --as-group stringArray           Group to impersonate for the operation, this flag can be repeated to specify multiple groups.
+      --cache-dir string               Default HTTP cache directory (default "/home/gianarb/.kube/http-cache")
+      --certificate-authority string   Path to a cert file for the certificate authority
+      --client-certificate string      Path to a client certificate file for TLS
+      --client-key string              Path to a client key file for TLS
+      --cluster string                 The name of the kubeconfig cluster to use
+      --context string                 The name of the kubeconfig context to use
+  -f, --filename strings               identifying the resource.
+  -h, --help                           help for kubectl-pprof
+      --insecure-skip-tls-verify       If true, the server's certificate will not be checked for validity. This will make your HTTPS connections insecure
+      --kubeconfig string              Path to the kubeconfig file to use for CLI requests.
+  -n, --namespace string               If present, the namespace scope for this CLI request
+  -R, --recursive                      Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory. (default true)
+      --request-timeout string         The length of time to wait before giving up on a single server request. Non-zero values should contain a corresponding time unit (e.g. 1s, 2m, 3h). A value of zero means don't timeout requests. (default "0")
+  -l, --selector string                Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)
+  -s, --server string                  The address and port of the Kubernetes API server
+      --token string                   Bearer token for authentication to the API server
+      --user string                    The name of the kubeconfig user to use
+</code></pre>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

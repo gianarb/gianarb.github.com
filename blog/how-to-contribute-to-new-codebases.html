@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>How I discover new codebases</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Strategies I use when I want to contribute to new codebases">
+    <meta name="keywords" content="codebase">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/how-to-contribute-to-new-codebases">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>How I discover new codebases</h1>
+<main>
+    <p class="meta">24 Oct 2023 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Three minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p><img src="/img/you-gen-a-new-job-no-docs-read-the-code-meme.jpg" alt="" /></p>
+
+<p>Today is my time to be honest with you. I think this meme describes a lot of
+places and codebases that I had to deal with or that I contributed to.</p>
+
+<p>I don’t want to tell you why because there are many reasons about how you can
+end up with a blob of undocumented code and I can write an article on its own
+but I want to share the strategy I use to figure it out.</p>
+
+<p>Why am I the right person to do so? Because I change job frequently, not
+because of undocumented code obviously and I like to contribute to opensource
+software that I use, and sometime I end up contributing to small undocumented
+libraries, or to overly documented massive projects.</p>
+
+<ol>
+  <li>Take a look at the CI/CD system</li>
+</ol>
+
+<p>Many applications have a basic CI/CD system, to run tests, to check code
+formatting and sometime to build the software itself. When I don’t event know
+the language because you I am contributing to a codebase developed in a
+language I am not familiar with the CI/CD teaches a lot about the toolchain
+that I need to have in order to be effective. Moving forward I tend to replace
+tools I don’t like with alternatives I am more familiar with but at the
+beginning CI/CD, makefiles, npm packages or equivalent files are gold. Worst
+case if they don’t have unit tests or they don’t build their code in CI/CD I
+end up knowing about what they use to format their code, it does not look much
+but usually it drives to the required tech stack.</p>
+
+<ol>
+  <li>Dockerfile</li>
+</ol>
+
+<p>Dockerfile are useful to figure out dependency tree and system dependencies
+that can teach you a lot about the codebase you are dealing with. It is also
+useful to figure out if my teammate are familiar with containers, or more old
+style cmake and <code>./configure</code> kind of people.</p>
+
+<ol>
+  <li>The entrypoint, look for that!</li>
+</ol>
+
+<p><code>fn main</code>, <code>func main</code>, <code>index.php</code> look for the entrypoint! If I see more than
+one entrypoint I am in a monorepo, if there is only one it is a single
+application. If I can’t find one maybe is a library but libraries should have
+an entrypoint as well, so look for <code>Option</code> or <code>Configure</code> classes or objects.
+If you find one the class using it is often the library endpoint.</p>
+
+<ol>
+  <li>Run the test suite</li>
+</ol>
+
+<p>I like to run code locally when I can because it makes things a bit more real,
+It validates that I figured out the right toolchain and that I am starting from a
+trusted checkpoint.</p>
+
+<ol>
+  <li>I need an easy win</li>
+</ol>
+
+<p>Why are you looking at such codebase? Do not miss the why! If it is your first
+day at work and you got assigned to an apparently easy bug to fix this is your
+goal, so try to figure out the right path, you know how to build the software
+now, you know how to run the testsuite so leverage that when running the entire
+application is still an unknown or is not possible.</p>
+
+<p>I am not saying that tests should be the end goal for you, because there are
+codebase with zero or unless tests, but they can be helpful at the beginning as a
+north start, if they are unreliable or absent point 5 is still valid but there
+is no escape the entrypoint needs to be discovered and used to validate that
+your change has the right impact.</p>
+
+<p>When I feel brave, I figured out the part of the code I want to contribute and
+the are no tests I write a small scripts that imports such path so I can run
+the subset of the code in isolation, quickly and repeatedly without too much
+noise. At some point it ca even be turned into a unit test.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

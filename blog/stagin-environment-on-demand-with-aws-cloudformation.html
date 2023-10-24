@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Staging environment on demand with AWS Cloudformation</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Environment are ephemeral. They come and go really quickly based on needs. AWS delivers a service called CloudFormation that allows you to easy describe via JSON or YALM specification a lot of AWS resources like EC2, Route53 hosted zone and domains, RDS, VPC, subnet and almost everything you normally do via console. This is infrastructure as code applied to AWS resource allows you to version and push on git entire AWS environment. You can replicate it over and over.">
+    <meta name="keywords" content="devops, aws, automation, cloudformation, json, cloud, amazon web service, cf, infrastructure as code, infra as code">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/stagin-environment-on-demand-with-aws-cloudformation">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Staging environment on demand with AWS Cloudformation</h1>
+<main>
+    <p class="meta">08 Jul 2015 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">20 minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <blockquote class="twitter-tweet tw-align-center" lang="en"><p lang="en" dir="ltr">Staging environment on demand. To Work on <a href="https://twitter.com/hashtag/AWS?src=hash">#AWS</a> low level with <a href="https://twitter.com/hashtag/cloudformation?src=hash">#cloudformation</a> <a href="https://t.co/VWBR129637">https://t.co/VWBR129637</a> <a href="https://twitter.com/hashtag/cloud?src=hash">#cloud</a> <a href="https://twitter.com/hashtag/devops?src=hash">#devops</a></p>&mdash; Gianluca Arbezzano (@GianArb) <a href="https://twitter.com/GianArb/status/621691855810494464">July 16, 2015</a></blockquote>
+<script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<h2 id="staging-environment">Staging Environment</h2>
+<p>There are few environments during my developer workflow, today I chose a little example:</p>
+
+<ul>
+  <li>Production enviroment always exists, it runs the stable application and you can not use it for your test.</li>
+  <li><strong>Staging</strong> enviroment is a “pre-production” state.</li>
+  <li>Develop enviroment is instable and it runs new features and fixes, here there’s the work of all team but it’s not ready to go in production.</li>
+</ul>
+
+<p><img src="/img/cloudformation-staging/staging.jpg" alt="Staging graph" /></p>
+
+<p>Staging environment in my opinion could be “volatile” version, we use it when our product is ready to go in production for the last time it was unused. Maybe this statement isn’t real in your work but if you think a little team of consultants that
+ work on different projects maybe this words have a sense.</p>
+
+<h2 id="aws-cloudformation">AWS Cloudformation</h2>
+<p>CloudFormation is an AWS service that helps you to orchestate all AWS services, you can write a template in JSON and you can use it to create an infrastructure with one click.
+This solution helps me  to build and destroy this environment and we can pay it only if it’s necessary, if you use a <code>stagin env == production env</code> it can be very very expensive.
+This solution could help you to down cost.</p>
+
+<h2 id="current-infrastructure">Current infrastructure</h2>
+
+<p><img src="/img/cloudformation-staging/infra.jpg" alt="RDS and EC2 infrastructure" /></p>
+
+<p>This is my template to build a simple application Frontend + MySQL (RDS).
+In this implementation I build network configuration and I create one instance of RDS and one EC2 (my frontend).
+<code>Parameters</code> key is the list of external parameters that I can use to configure my template, for example database and EC2 key pair, my root’s password..
+<code>Resources</code> key contains description of all actors of this infrastructure.</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"Parameters"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"VPCName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"staging"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"VPC name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"ProjectName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"app"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Project name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebKey"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"web-key"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Ssh key to log into the web instances"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebInstanceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"m3.medium"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Web instance type"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebInstanceImage"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ami-47a23a30"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Web instance image"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseInstanceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"db.m3.medium"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Database instance type"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"mydb"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Database instance's name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseMasterUsername"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"gianarb"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Name of master user"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseEngineVersion"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"5.6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"MySQL version"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseUserPassword"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"test1234"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"User password"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabasePublicAccess"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseMultiAZ"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"Resources"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Staging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::VPC"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.0.0/16"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"EnableDnsSupport"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"EnableDnsHostnames"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"InstanceTenancy"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VPCName"</span><span class="p">}}]</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseSubnet1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Subnet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"AvailabilityZone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"eu-west-1a"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.1.0/28"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"MapPublicIpOnLaunch"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db-1a"</span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseSubnet2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Subnet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"AvailabilityZone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"eu-west-1b"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.1.16/28"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"MapPublicIpOnLaunch"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db-1b"</span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebSubnet1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Subnet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"AvailabilityZone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"eu-west-1a"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.0.8/28"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"MapPublicIpOnLaunch"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web-1a"</span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"RDSSubnet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::RDS::DBSubnetGroup"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"DBSubnetGroupDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db-prod-subnet-group"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"SubnetIds"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w"> </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseSubnet1"</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w"> </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseSubnet2"</span><span class="w"> </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Database"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::RDS::DBInstance"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"AllocatedStorage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"AllowMajorVersionUpgrade"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"DBInstanceClass"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"DatabaseInstanceType"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"DBName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"DatabaseName"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"DBInstanceIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"DatabaseName"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Engine"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"MySQL"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"EngineVersion"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"DatabaseEngineVersion"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"DBSubnetGroupName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RDSSubnet"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"MasterUsername"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseMasterUsername"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"MasterUserPassword"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseUserPassword"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"MultiAZ"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VPCSecurityGroups"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseSG"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"PubliclyAccessible"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabasePublicAccess"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Fn::Join"</span><span class="p">:[</span><span class="s2">"."</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">"db"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ProjectName"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"VPCName"</span><span class="p">}]]}</span><span class="w"> </span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebInstance"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Instance"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"ImageId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebInstanceImage"</span><span class="p">},</span><span class="w">
+            </span><span class="nl">"InstanceType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebInstanceType"</span><span class="p">},</span><span class="w">
+            </span><span class="nl">"KeyName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebKey"</span><span class="p">},</span><span class="w">
+            </span><span class="nl">"BlockDeviceMappings"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"DeviceName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/dev/sdm"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"Ebs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"VolumeType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"io1"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"Iops"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"DeleteOnTermination"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"VolumeSize"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"20"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"DeviceName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/dev/sdk"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"NoDevice"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+                 </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"SubnetId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSubnet1"</span><span class="w"> </span><span class="p">},</span><span class="w">
+            </span><span class="nl">"SecurityGroupIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSG"</span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"StagingZone"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::Route53::HostedZone"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Fn::Join"</span><span class="p">:[</span><span class="s2">"."</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ProjectName"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"VPCName"</span><span class="p">}]]},</span><span class="w">
+        </span><span class="nl">"VPCs"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"VPCId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="p">},</span><span class="w"> </span><span class="nl">"VPCRegion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eu-west-1"</span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"StagingInternetGateway"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::InternetGateway"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="nl">"Key"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Fn::Join"</span><span class="p">:[</span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"VPCName"</span><span class="p">},</span><span class="w"> </span><span class="s2">"igw"</span><span class="p">]]}}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"StagingIgwAttach"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::VPCGatewayAttachment"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"InternetGatewayId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingInternetGateway"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"StagingRouteTable"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::RouteTable"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"VpcId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="p">}</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"LocalRoute"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Route"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"DestinationCidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0/0"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"GatewayId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingInternetGateway"</span><span class="p">},</span><span class="w">
+          </span><span class="nl">"RouteTableId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingRouteTable"</span><span class="p">}</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Web1LocalRoute"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::SubnetRouteTableAssociation"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"RouteTableId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingRouteTable"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"SubnetId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSubnet1"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Db1LocalRoute"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::SubnetRouteTableAssociation"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"RouteTableId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingRouteTable"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"SubnetId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseSubnet1"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Db2LocalRoute"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::SubnetRouteTableAssociation"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"RouteTableId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingRouteTable"</span><span class="p">},</span><span class="w">
+        </span><span class="nl">"SubnetId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DatabaseSubnet2"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseSG"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::SecurityGroup"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"GroupDescription"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Database security groups"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"SecurityGroupIngress"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"IpProtocol"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"FromPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">3306</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ToPort"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"3306"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"SourceSecurityGroupId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"WebSG"</span><span class="p">}</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db-sg"</span><span class="p">}],</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebSG"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::SecurityGroup"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"GroupDescription"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Web security groups"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"SecurityGroupIngress"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"IpProtocol"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ToPort"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"FromPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"CidrIp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0/0"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"IpProtocol"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"tcp"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"ToPort"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"FromPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">22</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"CidrIp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0/0"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w">  </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web-sg"</span><span class="p">}],</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseRecordSet"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::Route53::RecordSet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"HostedZoneId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingZone"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="nl">"Comment"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"DNS name for database"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"Name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Fn::Join"</span><span class="p">:[</span><span class="s2">"."</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">"db"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ProjectName"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"VPCName"</span><span class="p">}]]},</span><span class="w">
+         </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CNAME"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"TTL"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"300"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"ResourceRecords"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+           </span><span class="p">{</span><span class="w"> </span><span class="nl">"Fn::GetAtt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Database"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Endpoint.Address"</span><span class="p">]}</span><span class="w">
+         </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>You can load this teamplate in your account and after environment creations you are ready to work with one EC2 instance and one RDS with MySQL 5.6 installed.
+You can log into the web interface with key-pair chosen during the creation flow (default ga-eu) and I set default this mysql credential:</p>
+
+<ul>
+  <li>user gianarb</li>
+  <li>password test1234</li>
+</ul>
+
+<p>But you can change it before running this template because they are <code>Parameters</code>.
+This approach in my opinion is very powerful because you can start versioning your infrastructure and you can delete and restore it quickly because if you delete the cloudformation stack it rollbacks all resources, it is very easy!</p>
+
+<h2 id="trick">Trick</h2>
+
+<p>Parameters node create a form into the AWS CloudFormation console to choose a lot of different variable values, for example name of intances or key-pair to log in your EC2.</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"Parameters"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"VPCName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"staging"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"VPC name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"ProjectName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"app"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Project name"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"WebKey"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"String"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Default"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"web-key"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Ssh key to log into the web instances"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<hr class="style-two" />
+
+<p>Resources node contains all elements of your infrastructure, EC2, RDS, VCP.. You can use the parameteters with a simple <code>Ref Key</code>.
+es. <code>[{"Key": "Name", "Value": "ProjectName"}]</code> describe the name of the specific project into the parameter form.</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"Resources"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Staging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::VPC"</span><span class="p">,</span><span class="w">
+       </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.0.0/16"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"EnableDnsSupport"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"EnableDnsHostnames"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"InstanceTenancy"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"Tags"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VPCName"</span><span class="p">}}]</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"DatabaseSubnet1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::EC2::Subnet"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"AvailabilityZone"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"eu-west-1a"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"CidrBlock"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"10.15.1.0/28"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"MapPublicIpOnLaunch"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VpcId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"Ref"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Staging"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"Tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nl">"Key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Name"</span><span class="p">,</span><span class="w"> </span><span class="nl">"Value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"db-1a"</span><span class="p">}]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<hr class="style-two" />
+
+<p>In your template you can describe VPC and create its subnet. You can also describe the specific resource and you can use it to build another</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">WebSubnet</span><span class="mi">1</span><span class="s2">": {
+  "</span><span class="err">Type</span><span class="s2">" : "</span><span class="err">AWS::EC</span><span class="mi">2</span><span class="err">::Subnet</span><span class="s2">",
+  "</span><span class="err">Properties</span><span class="s2">" : {
+    "</span><span class="err">AvailabilityZone</span><span class="s2">" : "</span><span class="err">eu-west</span><span class="mi">-1</span><span class="err">a</span><span class="s2">",
+    "</span><span class="err">CidrBlock</span><span class="s2">" : "</span><span class="mf">10.15</span><span class="err">.</span><span class="mf">0.8</span><span class="err">/</span><span class="mi">28</span><span class="s2">",
+    "</span><span class="err">MapPublicIpOnLaunch</span><span class="s2">" : true,
+    "</span><span class="err">VpcId</span><span class="s2">": {
+      "</span><span class="err">Ref</span><span class="s2">" : "</span><span class="err">Staging</span><span class="s2">"
+    },
+    "</span><span class="err">Tags</span><span class="s2">" : [{"</span><span class="err">Key</span><span class="s2">": "</span><span class="err">Name</span><span class="s2">", "</span><span class="err">Value</span><span class="s2">": "</span><span class="err">web</span><span class="mi">-1</span><span class="err">a</span><span class="s2">"}]
+  }
+},</span></code></pre></figure>
+
+<p>In this example I resumed <code>Staging</code> VPC to build its subnet.</p>
+
+<hr class="style-two" />
+
+<p>This chapter is insteresting because it creates a RecordSet to map a CNAME DNS in your VPC and now in your Web instances you can resolve MYSql host with <code>db.app.staging</code>.</p>
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="nl">"DatabaseRecordSet"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"AWS::Route53::RecordSet"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"Properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"HostedZoneId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"StagingZone"</span><span class="w">
+     </span><span class="p">},</span><span class="w">
+     </span><span class="nl">"Comment"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"DNS name for database"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"Name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"Fn::Join"</span><span class="p">:[</span><span class="s2">"."</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s2">"db"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ProjectName"</span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="nl">"Ref"</span><span class="p">:</span><span class="s2">"VPCName"</span><span class="p">}]]},</span><span class="w">
+     </span><span class="nl">"Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CNAME"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"TTL"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"300"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"ResourceRecords"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w"> </span><span class="nl">"Fn::GetAtt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Database"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Endpoint.Address"</span><span class="p">]}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+<p><br />
+<br />
+<br /></p>
+
+<div class="well"><a target="_blank" href="https://twitter.com/EmanueleMinotto">@EmanualeMinotto</a> thanks for trying to fix my bad English</div>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

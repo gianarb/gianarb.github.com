@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>My workflow with NixOS. How do I work with it</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="In the last two years I pick up NixOS as I tool I want to use. The learning curve is steep but I think I have a workflow that I like">
+    <meta name="keywords" content="nixos">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/my-workflow-with-nixos">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>My workflow with NixOS. How do I work with it</h1>
+<main>
+    <p class="meta">12 Sep 2022 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Seven minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <h2 id="some-context">Some context</h2>
+
+<p>Coding is fun when you can figure out the right workflow. There is nothing fun
+when it comes to writing software in a way that is not sustainable or that does
+not sparks joy.</p>
+
+<p>I started to use Nix and NixOS almost two years ago, in a previous job in
+a totally different context.</p>
+
+<p>Back then we had to quickly and often provision operating system, build
+software and so on. Since I moved back to write Software and to write Rust I
+have to admit that building my code, or shipping operating systems is not
+something I have to do very often, but I decided to keep learning and fighting
+against NixOS because it fits my mindset.</p>
+
+<p>Recently I resumed a few NUCs I keep in a box because everybody
+deserves a home lab, and a good home lab deserves some netbooting, so it was
+time to play with NixOS for something that is not my workstation or my laptop.</p>
+
+<h2 id="the-workflow">The workflow</h2>
+
+<p>Nix is code, finally. It means that there are libraries, you can import them,
+run tests, and execute such code. YAML, Json in my experience, at some point
+are a limitation, or they create friction, you ended up with an easy to break
+template engine.</p>
+
+<p>I decided to invest some time to figure out how to use flake. And this is where
+I am so far:</p>
+
+<pre><code class="language-nix">{
+  description = "A generic and minimal netbooting OS for my homelab";
+
+  inputs =
+    {
+      nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    };
+
+  outputs = { self, nixpkgs, ... }:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations = {
+        generic = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./configuration.nix
+          ];
+        };
+      };
+      packages.${system}.netboot = nixpkgs.legacyPackages.${system}.symlinkJoin {
+        name = "netboot";
+        paths = with self.nixosConfigurations.generic.config.system.build; [
+          netbootRamdisk
+          kernel
+          netbootIpxeScript
+        ];
+        preferLocalBuild = true;
+      };
+    };
+}
+</code></pre>
+
+<p>I am not the right person to tell you what all of this does because I am not an
+expert and it is the outcome of many videos on YouTube, questions on
+discourse.nixos.org, articles and beers, a lot of beers.</p>
+
+<p>The <code>output</code> part describes what I want to build and as you can see there are
+two outcomes. One is a <code>nixosConfigurations</code>, potentially it can contain more
+than one NixOS description but right now I have a single one called <code>generic</code>
+and as you can see it imports a module called <code>configuration.nix</code>. You can see
+it as a ready to go NixOS provisioned as I want. This is 99% a copy paste of a
+traditional <code>configuration.nix</code> file as you may know them. The one I use comes
+from  <a href="https://nixos.wiki/wiki/Netboot">“Netbooting Wiki” in NixOS.org</a>.</p>
+
+<pre><code class="language-nix">{ config, pkgs, lib, modulesPath, ... }: with lib; {
+  imports = [
+    (modulesPath + "/installer/netboot/netboot-base.nix")
+  ];
+  users.users.root.openssh.authorizedKeys.keys = [
+    "ssh-sfdbsrbs"
+  ];
+
+  ## Some useful options for setting up a new system
+  services.getty.autologinUser = mkForce "root";
+
+  environment.systemPackages = [ pkgs.tailscale ];
+
+  networking.dhcpcd.enable = true;
+
+  services.openssh.enable = true;
+  services.tailscale.enable = true;
+
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  systemd.services.tailscale-autoconnect = {
+    description = "Automatic connection to Tailscale";
+
+    # make sure tailscale is running before trying to connect to tailscale
+    after = [ "network-pre.target" "tailscale.service" ];
+    wants = [ "network-pre.target" "tailscale.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    # set this service as a oneshot job
+    serviceConfig.Type = "oneshot";
+
+    # have the job run this shell script
+    script = with pkgs; ''
+      # wait for tailscaled to settle
+      sleep 2
+
+      # check if we are already authenticated to tailscale
+      status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+      if [ $status = "Running" ]; then # if so, then do nothing
+        exit 0
+      fi
+
+      # otherwise authenticate with tailscale
+      ${tailscale}/bin/tailscale up -authkey tskey-really
+    '';
+  };
+
+  networking.firewall = {
+    checkReversePath = "loose";
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedUDPPorts = [ config.services.tailscale.port ];
+  };
+
+  system.stateVersion = "22.05";
+}
+</code></pre>
+
+<p>The only difference compared with a traditional non-flake configuration is the import:</p>
+
+<pre><code>  imports = [
+    (modulesPath + "/installer/netboot/netboot-base.nix")
+  ];
+</code></pre>
+
+<p>Flake provides the utility variable <code>modulesPath</code> as a shortcut for accessing
+the nixpkgs modules described as flake input.</p>
+
+<p>This OS does a few simple things:</p>
+
+<ul>
+  <li>Setup a public ssh key for the root user that I can use to ssh into the server.</li>
+  <li>It register itself to Tailscale</li>
+</ul>
+
+<p>The output <code>nixosConfigurations</code> is used via <code>nixos-build</code>.
+It took me some time to figure out that <code>nixos-build</code> used in the right wat does not replace my current operating system.
+Do not run <code>nixos-build switch</code> if you won’t want to screw up your local NixOS OS! Instead you can build this
+operating system in the <code>./result</code> directory via:</p>
+
+<pre><code>$ nixos-rebuild build --flake .#generic
+</code></pre>
+
+<p>A single configuration can describe different NixOS, that’s why you have to
+identify what you want to build with ` .#generic`.</p>
+
+<p>The second output builds the same OS but it shapes the content of the
+<code>./result</code> directory as I want it (I am not sure if I need it but this is what
+the NixOS netbooting wiki does, so far so good).</p>
+
+<p>To build it you can use <code>nix build</code>:</p>
+
+<pre><code>$ nix build .#netboot
+</code></pre>
+
+<p>Pretty cool! I can tar.gz that and ship it where I want. Straightforward.</p>
+
+<h2 id="how-to-run-this-vm">How to run this VM</h2>
+
+<p>Do you know how boring and time consuming it is to test a new operating system?</p>
+
+<p>If you want to do it on real hardware you have to set it up, and if you want to
+use QEMU you have a few days in front of you to remember all the flags you need, how
+to bridge the guest with the host and who knows what. I tried for a few days
+and I failed, until I discovered:</p>
+
+<pre><code>$ nixos-rebuild build-vm --flake .#generic
+building the system configuration...
+
+Done.  The virtual machine can be started by running /nix/store/dk4i22xmacnxxdmgvjhlyain5spb11yn-nixos-vm/bin/run-nixos-vm
+</code></pre>
+
+<p>Pure gold! If you run the <code>run-nixos-vm</code> script a QEMU virtual machine will
+appear ready for you to test your operating system. Kind of cool! I can even
+see it showing up in the Tailscale admin console!</p>
+
+<p>A zero friction experience that boost my ability to try what I am working on.</p>
+
+<h2 id="integration-tests">Integration tests</h2>
+
+<p>Nix provides a testing framework, but I started to use it recently. It spins up
+one or more virtual machines and assert that they work as expected. I wrote
+a test that looks for the tailscale network inteface:</p>
+
+<pre><code class="language-nix">let
+  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/archive/0f8f64b54ed07966b83db2f20c888d5e035012ef.tar.gz";
+  pkgs = import nixpkgs { };
+in
+pkgs.nixosTest
+  ({
+    system = "x86_64-linux";
+
+    nodes.machine = import ./configuration.nix;
+
+    testScript = ''
+      start_all()
+      machine.succeed("sleep 5")
+      machine.succeed(
+          "ifconfig | grep tailscale0",
+      )
+    '';
+  })
+</code></pre>
+
+<p>This test uses the same <code>configuration.nix</code> I used to generate my netbooting
+NixOS. It starts a node called <code>machine</code> and via python script it runs the bash
+command <code>ifconfig | grep tailscale0</code>.  I am sure I can do better than <code>sleep 5</code>
+but as I said, I am far away from being good at this.</p>
+
+<p>You can use this approach to run assertions on multiple nodes,
+here an example from Nix.dev <a href="https://nix.dev/tutorials/integration-testing-using-virtual-machines">“Integration testing using virtual machines
+(VMs)”</a>.</p>
+
+<h2 id="steep-learning-curve">Steep learning curve</h2>
+
+<p>Everyone agrees that Nix and NixOS are not easy technology to pick up. And I
+can confirm, there are articles, blogs, dotfiles available everywhere but they
+look all different and it is hard to figure out if they are new, old or how to
+apply them to your use case.</p>
+
+<p>Flake is an attempt from the community to standardize all of that, and much
+more. We will see!</p>
+
+<p>It is also true that motivation and context can flat the curve. My plan is to
+write more about this topic since I am trying to spin up and automated a home
+lab.</p>
+
+<p>I have to figure out how to do secret management but as soon as I have
+it sorted out I will share my homelab configuration as I share my laptops
+configuration in my <a href="https://github.com/gianarb/dotfiles/tree/main/nixos">dotfiles</a>.</p>
+
+<p>Stay tuned.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-language" content="en">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Symfony and InfluxDB to monitor PHP application</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="How monitoring your Symfony and PHP applications with InfluxDB.">
+    <meta name="keywords" content="php, influxdb, monitoring, open source, time series, symfony">
+    <meta name="google-site-verification" content="FoOIQ005srOjHlH19pNWapHvlOOVgCqHsz47IfQ6QNo" />
+    <link rel="canonical" href="https://gianarb.it/blog/symfony-and-influxdb-to-monitor-php-applications">
+    <link rel="icon" type="image/png" href="/img/favicon.png" />
+
+    <link rel='alternate' type='application/atom+xml' title='Atom 0.3' href='/atom.xml'>
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+</head>
+
+    <body>
+      <script>
+            function advchecker() {
+               document.getElementById('adv-sponsor').style.display = "block";
+            }
+      </script>
+      <!--<div class="carbon-banner">-->
+      <!--<script async style="display:none;" onerror="advchecker()" type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CE7DLK7L&placement=gianarbit" id="_carbonads_js"></script>-->
+<!--</div>-->
+
+<h1>Symfony and InfluxDB to monitor PHP application</h1>
+<main>
+    <p class="meta">02 Jul 2016 · <!-- thanks to https://www.davidputney.com/2016/07/how-medium-style-read-time-estimate.html -->
+
+
+<span class="blog-read-time">Six minute read</span>
+ · on <a href="/blog">Gianluca's blog</a></p>
+
+<p style="display:none;" class="note" id="adv-sponsor">Hey! I see you use an adblocker as I do as
+well! I use Carbon Adv to support this tiny website a network with developers
+in mind. Please consider disabling the adblocker for this website to support my
+work.</p>
+
+    <article>
+    <p>Symfony is one of the most famous PHP Frameworks in use right now, today we are
+going to use it to understand how much is important to know how one our
+features performs.  We don’t monitor CPU usage, I/O disk or the number of
+server errors but we are monitoring the final feature from the business point
+of view.
+This approach is very important because understanding which is the
+impact of a new release on a specific, critical feature is the best way to
+understand how a customer use our service.</p>
+
+<p>In this article we are implementing
+a monitor for one of the most diffuse business requirements, the
+authentication.</p>
+
+<p>In order to understand how many people try to do a login, and
+track how many of them perform a wrong authentication and use this metrics to
+understand how the system evolves.
+Sometimes happens that right after a deploy
+the number of wrong logins  grows faster than usual, this could be a sign that
+the feature doesn’t work as expected.  We begin from the standard Symfony
+application</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>composer create-project symfony/framework-standard-edition influxdb_app
+<span class="nv">$ </span><span class="nb">cd </span>influxdb_app/
+<span class="nv">$ </span>php bin/console server:run</code></pre></figure>
+
+<p>We create a route under authorization (/admin), it is private and only admin
+users are allowed to see that and one public homepage (/).</p>
+
+<p>You can follow the official tutorial, or this step from the Symfony application
+directly from GitHub.  We have an admin panel and a public site, the idea is
+use our InfluxDB PHP SDK to understand how this feature works. We use the
+Dependency Injection Container (DiC) provided by Symfony to create our
+influxdb.client.</p>
+
+<p>Go into the project’s root and use composer to install the library: composer
+require influxdb/influxdb-php The first things to do is add some parameters:
+host and port of our InfluxDB. To do that open app/config/parameters.yml and
+add this fields:</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">influxdb_host</span><span class="pi">:</span> <span class="s">127.0.0.1</span>
+<span class="na">influxdb_port</span><span class="pi">:</span> <span class="m">8086</span>
+<span class="na">influxdb_db</span><span class="pi">:</span> <span class="s">symfony_influx</span></code></pre></figure>
+
+<p>We use the REST Api to send metrics to InfluxDB, please if your connection
+params are different change them.</p>
+
+<p>The second step is configure the Symfony’s
+DiC in order to get our client around the application, open
+app/config/services.yml and add this line.</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">services</span><span class="pi">:</span>
+    <span class="c1"># ...</span>
+    <span class="na">influxdb_client</span><span class="pi">:</span>
+      <span class="na">class</span><span class="pi">:</span> <span class="s">InfluxDB\Client</span>
+      <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">%influxdb_host%'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">%influxdb_port%'</span><span class="pi">]</span>
+    <span class="na">influxdb_database</span><span class="pi">:</span>
+      <span class="na">class</span><span class="pi">:</span> <span class="s">InfluxDB\Database</span>
+      <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">%influxdb_db%'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">@influxdb_client'</span><span class="pi">]</span></code></pre></figure>
+
+<p>With this specification we are asking at the DiC to provide a influxdb_client,
+it’s a InfluxDB\Client object with two constructor parameters: influxdb_host,
+influxdb_port.</p>
+
+<p>InfluxDB could have different databases, influxdb_database is a
+service that use the influxdb_clint to work with only one database influxdb_db.
+Now we have a influxdb.database ready to be used!  Only to try if all works
+fine open DefaultController and try to send a page view metrics:</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php">   <span class="cd">/**
+     * @Route("/", name="homepage")
+     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">indexAction</span><span class="p">(</span><span class="kt">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$result</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">get</span><span class="p">(</span><span class="s2">"influxdb_database"</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">writePoints</span><span class="p">([</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span>
+          <span class="s1">'page_view'</span><span class="p">,</span>  <span class="c1">// name of the measurement</span>
+          <span class="mi">1</span>             <span class="c1">// the measurement value</span>
+        <span class="p">)]);</span>
+
+        <span class="c1">// replace this example code with whatever you need</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">render</span><span class="p">(</span><span class="s1">'default/index.html.twig'</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">'base_dir'</span> <span class="o">=&gt;</span> <span class="nb">realpath</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="nf">getParameter</span><span class="p">(</span><span class="s1">'kernel.root_dir'</span><span class="p">)</span><span class="mf">.</span><span class="s1">'/..'</span><span class="p">),</span>
+        <span class="p">]);</span>
+    <span class="p">}</span></code></pre></figure>
+
+<p><img class="img-fluid" alt="InfluxDB admin panel" src="/img/influxdb_admin.png" /></p>
+
+<p>Go into the homepage and in the meantime do a query like SELECT * FROM
+“symfony_influx”.”“.page_view into the InfluxDB’s admin panel, you are sending
+a new point after each visit! Very good but we have another target!  If you
+have some problem and you are using my repository see the difference between
+this and the last step on GitHub.</p>
+
+<p>Sent a point in this method it’s not a good
+practice because our controller has two responsability: Rendering of the page
+Sent a point In this example the situation is not dangerous because the
+application is very easy and with a very low traffic, but symfony provide a
+strong event system, perfect to split the logic on different classes and
+simplify our code, we try to follow this approach for our last step, we create
+a listener to sent a point when an user fails a login.  In first we must create
+a listener into src/AppBundle/Listener/MonitorAuthenticationListener.php.</p>
+
+<figure class="highlight"><pre><code class="language-php" data-lang="php"><span class="cp">&lt;?php</span>
+<span class="kn">namespace</span> <span class="nn">AppBundle\Listener</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">Symfony\Component\Security\Core\Event\AuthenticationFailureEvent</span><span class="p">;</span>
+<span class="kn">use</span> <span class="nc">InfluxDB\Point</span><span class="p">;</span>
+<span class="kd">class</span> <span class="nc">MonitorAuthenticationListener</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$database</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">__construct</span><span class="p">(</span><span class="nv">$database</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span> <span class="o">=</span> <span class="nv">$database</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="n">onFailure</span><span class="p">(</span><span class="kt">AuthenticationFailureEvent</span> <span class="nv">$event</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="n">database</span><span class="o">-&gt;</span><span class="nf">writePoints</span><span class="p">([</span><span class="k">new</span> <span class="nc">Point</span><span class="p">(</span>
+            <span class="s1">'login'</span><span class="p">,</span>
+            <span class="mi">1</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">'status'</span> <span class="o">=&gt;</span> <span class="s1">'error'</span><span class="p">]</span>
+        <span class="p">)]);</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>We use the DiC to attach this listener at the security.authentication.failure
+event. This event is called after each failed login. To do that open
+app/config/services.yml and add this configuration.</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">services</span><span class="pi">:</span>
+    <span class="c1"># ....</span>
+    <span class="s">security.authentication.monitoring</span><span class="pi">:</span>
+        <span class="na">class</span><span class="pi">:</span> <span class="s">AppBundle\Listener\MonitorAuthenticationListener</span>
+        <span class="na">arguments</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">@influxdb_database'</span><span class="pi">]</span>
+        <span class="na">tags</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="pi">{</span> <span class="nv">name</span><span class="pi">:</span> <span class="nv">kernel.event_listener</span><span class="pi">,</span> <span class="nv">event</span><span class="pi">:</span> <span class="nv">security.authentication.failure</span><span class="pi">,</span> <span class="nv">method</span><span class="pi">:</span> <span class="nv">onFailure</span> <span class="pi">}</span></code></pre></figure>
+
+<p>We are injecting into the constructor our influxdb database, in this way we use
+it to send points like our old example into the controller.  This is the last
+practical section of this tutorial, please if you have lost something try to
+check this diff from the last step on GitHub.  Try to do some wrong login and
+check the situation into the Admin Panel with a query like</p>
+
+<figure class="highlight"><pre><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="nv">"symfony_influx"</span><span class="p">.</span><span class="nv">""</span><span class="p">.</span><span class="n">login</span><span class="p">.</span></code></pre></figure>
+
+<p><img class="img-fluid" alt="InfluxDB admin panel" src="/img/chronograf.png" /></p>
+
+<p>The admin panel is not the best way to check our metrics, InfluxData provide a
+great dashboard called Chronograf, try to use this metric to create a graph
+specific to understand how your feature works.  This post is only a getting
+started to understand a good way to send metrics without connect directly your
+business logic with the monitoring system, but with a real traffic this
+approach is totally inefficient.</p>
+
+<p>Send point by point increase the traffic in your network and the latency create
+performance problems, telegraf is a collector that you can use to mitigate this
+problem, in this way you can not send your points directly to InfluxDB but you
+can use this agent installed on your server that collect and send bulk of data
+for you.</p>
+
+    </article>
+</main>
+
+
+      <small class="footer">Something weird with this website? <a href="https://github.com/gianarb/gianarb.github.com/issues/new" target="_blank">Let me know</a>.</small>
+
+    </body>
+</html>
+
