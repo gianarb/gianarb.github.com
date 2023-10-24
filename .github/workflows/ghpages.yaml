@@ -7,14 +7,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2-beta
+    - uses: cachix/install-nix-action@v22
       with:
-        node-version: '12'
-    - run: npm install
-    - uses: helaili/jekyll-action@2.0.4
-      env:
-        JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
-      with:
-        target_branch: 'gh-pages'
+        nix_path: nixpkgs=channel:nixos-unstable
+    - run: nix-shell --command "jekyll build"
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v2
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
