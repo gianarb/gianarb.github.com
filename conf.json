@@ -1,13 +1,13 @@
 {
   "firstname": "Gianluca",
   "lastname": "Arbezzano",
-  "title": "Software Engineer at Packet",
-  "role": "Senior Staff Software Engineer",
+  "title": "Software Engineer",
+  "role": "Software Engineer",
   "bio": "Gianluca is a Software Engineer currently working on all things related to Kubernetes at Packet, a bare-metal cloud provider. I love to talk about distributed systems, testing, and infrastructure. When I am not coding, I blog at gianarb.it, or I ramble on [Twitter](@gianarb) about growing vegetables and gardening.",
   "email": "ciao@gianarb.it",
   "company": {
-    "name": "Packet",
-    "url": "https://packet.com"
+    "name": "Rockfish Data",
+    "url": "https://rockfish.ai"
   },
   "img": {
     "big": "https://drive.google.com/open?id=0BzcmoKaDlxSGQ3VtbzZJZlFOdWc",
@@ -15,9 +15,8 @@
   },
   "url": {
     "site": "https://gianarb.it",
-    "twitter": "https://twitter.com/gianarb",
+    "mastodon": "https://hachyderm.io/@gianarb",
     "github": "https://github.com/gianarb",
-    "twitch": "https://twitch.tv/gianarb",
     "linkedin": "https://https://www.linkedin.com/in/gianlucarbezzan://www.linkedin.com/in/gianlucarbezzano/"
   }
 }

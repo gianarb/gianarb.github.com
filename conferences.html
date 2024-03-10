@@ -18,6 +18,9 @@ tags: [Technology Evangelism, speaker, conference, docker, security, distributed
             </div>
         </div>
 
+        {% assign talks2023 = site.my_talks | where:'date', "2023" %}
+        {% include talks_per_year.html year="2023" url="yes" talks=talks2023 %}
+
         {% assign talks2020 = site.my_talks | where:'date', "2020" %}
         {% include talks_per_year.html year="2020" url="yes" talks=talks2020 %}
 
