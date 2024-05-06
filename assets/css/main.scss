@@ -46,6 +46,10 @@ small.footer {
     float: right;
 }
 
+span.small {
+    font-size: small;
+}
+
 /* Note box */
 
 p.note
@@ -60,4 +64,18 @@ p.note
      padding: 1em;
      margin-left: 3em;
      margin-right: 3em;
+}
+
+@media print {
+  a::after {
+    content: " (" attr(href) ")";
+  }
+  a, a:hover, a:visited, a:active {
+    color: inherit;
+    text-decoration: none;
+  }
+  .footer {
+      display: none;
+  }
+
 }
