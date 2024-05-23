@@ -1,0 +1,64 @@
+---
+layout: post
+title:  "It looks all about AI but it is not. Live at VivaTech"
+date:   2024-05-23 06:08:27
+categories: [post]
+tags: []
+summary: "Counting words in flyers and adv AI wins but you can spot something better"
+changefreq: monthly
+---
+
+I am spending a few days at VivaTech, my current employer [Rockfish
+Data](https://rockfish.ai) won a challenge organized by
+[Orange](https://orange.fr) and the kindly hosted us at their booth.
+
+We are not the only one, to me it looks like this conferences targets
+innovation departements and if you didn't work at a company big enough like
+myself you probably didn't even know what it is.
+
+![Picture of the VivaTech entrance. A huge VIVA written with led readable from both side](/img/vivatech-2024-entrance.jpg)
+
+Innovative solutions by definitions needs to be discovered, it is something
+that you don't know or have yet, so there are experts and teams who are
+dedicated to find innovative solutions for business needs. Where do you find
+this solutions? At VivaTech, sometime.
+
+Who innovates? Sometime the departement itself develops those skills, venture
+capital is another way to contribute to innovative solution, or buying from
+startup. Orange and many companies here do all of those things and here they
+show case their innovative solution and their collaborations with startups.
+
+This is why you will see small booths hosted by giants like AWS, MicroSoft or
+even nations like Italy, Armenia, Germany, China they are all here with the
+startup they decided to collaborate with.
+
+For a startup it is a great opportunity to be presents by those giants like
+interesting solutions. Team members of the innovation team will bring to you
+decision makers internal the company as potential customer, or their customer
+directly. I had the opportunity to speak with a few members of the EU data
+team, I need say they went straight to what they were looking for.
+
+If you have a walk here you will see AI everywhere. It is by far the most
+common words is all the advertising. Every company placed AI near its name.
+Slack AI, AWS Generative AI, Salesforce AI assistance and you name it. I didn't
+spot yet the [iTerm2 AI](https://xeiaso.net/notes/2024/ai-hype/) booth yet but
+I bet it is here somewhere.
+
+But I am looking for more. There are innovative solutions for smart cities,
+things you see on YouTube only, a lot of robots of any kind. The one serving
+foods, arms assembling complicated things and so on.
+
+What I like the most is the vibe built around innovation. Italy, my own country
+has a booth where it hosts a lot of small startups that I never hear about, a
+lot are doing sustainability and green economy. I am glad to know that even if
+compared with other countries we are not that risk prone and our investments
+are far away from what other countries do it looks like we care about our
+planed. I take it as a good sign.
+
+I know people reading my blog are technical, VivaTech is not KubeCon, people
+stop at my booth to ask about value proposition, market feet, not about eBPF or
+syscall but I find this space interesting, please if you are here come to say
+hi and tell me about something extremely nerd. Do you need ideas? NixOS,
+containerd, eBPF!
+
+![GO2 robots that looks like the Boston Dynamic one](/img/vivatech-2024-go2-robot.jpg)
