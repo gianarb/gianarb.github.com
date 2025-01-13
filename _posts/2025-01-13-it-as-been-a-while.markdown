@@ -74,4 +74,4 @@ I am not the same person!
 
 Today I don't really know what it means, but it is easier to define things when
 you look at them from far away and today I am all hands into my life! [Please
-reach out to say hello my good old friend](ciao@gianarb.it)!
+reach out to say hello my good old friend](mailto:ciao@gianarb.it)!
