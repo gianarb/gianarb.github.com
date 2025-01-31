@@ -14,7 +14,7 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
     - run: nix-shell --command "jekyll build"
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@v3
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -27,4 +27,4 @@ jobs:
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
