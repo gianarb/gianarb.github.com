@@ -1,5 +1,3 @@
-deps:
-	npm install
-serve: deps
+serve:
 	jekyll serve -w --future --drafts
 
