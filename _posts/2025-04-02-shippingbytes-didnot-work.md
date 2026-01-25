@@ -1,12 +1,18 @@
 ---
 layout: post
-title:  "ShippingBytes did not work for me"
+title:  "ShippingBytes did not work for me (this article did not age well)"
 date:   2025-04-02 06:08:27
 categories: [post]
 tags: []
-summary: "ShippingBytes is on hold!"
+summary: "ShippingBytes is on hold! (update: not anymore)"
 changefreq: monthly
 ---
+
+<section>
+    <div class="row">
+        <p class="note">This article did not age well. I got an update for you here: <a href="/blog/shippingbytes-got-vat-i-got-a-business" target="_blank">"I own a business and ShippingBytes got its own VAT number"</a>.</p>
+    </div>
+</section>
 
 June 2024 I started a new website called ShippingBytes. I thought I was looking
 for a place where I could write tech articles about lesson learned and similar

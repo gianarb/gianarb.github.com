@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 60" width="280" height="60">
+  <title>ShippingBytes</title>
+  <defs>
+    <style>
+      @font-face {
+        font-family: 'Exo';
+        src: local('Exo Light'), local('Exo-Light');
+        font-weight: 300;
+      }
+    </style>
+  </defs>
+  <!-- Icon scaled down -->
+  <g transform="translate(5, 5) scale(0.5)">
+    <!-- Double helix background -->
+    <g fill="none" stroke-linecap="round">
+      <path d="M20 0 Q5 12 20 25" stroke="#BBC480" stroke-width="6"/>
+      <path d="M20 75 Q5 88 20 100" stroke="#BBC480" stroke-width="6"/>
+      <path d="M80 0 Q95 12 80 25" stroke="#D4E79E" stroke-width="6"/>
+      <path d="M80 75 Q95 88 80 100" stroke="#D4E79E" stroke-width="6"/>
+      <line x1="20" y1="8" x2="80" y2="8" stroke="#542344" stroke-width="3"/>
+      <line x1="20" y1="20" x2="80" y2="20" stroke="#542344" stroke-width="3"/>
+      <line x1="20" y1="80" x2="80" y2="80" stroke="#542344" stroke-width="3"/>
+      <line x1="20" y1="92" x2="80" y2="92" stroke="#542344" stroke-width="3"/>
+      <path d="M8 35 L8 65" stroke="#BBC480" stroke-width="6"/>
+      <path d="M92 35 L92 65" stroke="#D4E79E" stroke-width="6"/>
+    </g>
+    <!-- Keyboard key -->
+    <g transform="translate(18, 28)">
+      <rect x="0" y="0" width="64" height="44" rx="6" fill="#fffef9" stroke="#26547C" stroke-width="3"/>
+      <rect x="4" y="4" width="56" height="34" rx="4" fill="#f7f6f3"/>
+      <text x="32" y="30" font-family="ui-monospace, 'SF Mono', Monaco, 'Courier New', monospace" font-size="22" font-weight="bold" fill="#26547C" text-anchor="middle">S</text>
+    </g>
+  </g>
+  <!-- Wordmark -->
+  <text x="70" y="40" font-family="'Exo', system-ui, -apple-system, sans-serif" font-size="26" font-weight="300" fill="#2d2d2d">ShippingBytes</text>
+</svg>
