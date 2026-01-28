@@ -1,16 +1,49 @@
 -
-  company: RockFish AI
-  title: Software Engineer
+  company: ShippingBytes
+  title: Sole Director
   description: |
-    RockFish AI is a startup based in San Francisco. RockFish develops machine
-    learning algorithms to generate syntetic data useful to train artifical
-    neural networks.
+     ShippingBytes is a consultancy firm where Gianluca supports startups and
+     established companies in navigating the technical landscape.
+ 
+     Cloud computing, scalability, observability, and data-intensive
+     applications such as databases and machine learning workflow engines.
+ 
+     As an open-source maintainer and contributor, I can help you maintain your
+     projects and take care of the developer ecosystem.
   techologies:
     - golang
+    - rust
+    - kubernetes
+    - devops
+    - reliability and observability (SRE)
+  start_date: January 2026
+  end_date: now
+  site: https://shippingbytes.com
+  logo: ""
+  display: true
+-
+  company: RockFish AI
+  title: Founding Engineer
+  description: |
+     RockFish AI is a startup based in San Francisco. RockFish develops machine
+     learning algorithms to generate synthetic data useful for training artificial
+     neural networks.
+ 
+     As the first engineer here, I did a bit of everything. I designed and implemented public
+     and internal APIs, a workflow engine to run training and inference, and the
+     data pipeline to onboard and move customer data.
+ 
+     I set up infrastructure on multiple cloud providers such as AWS, Azure, and GCP
+     using Terraform and Kubernetes.
+  techologies:
+    - golang
+    - typescript
+    - rust (apache arrow and datafusion)
+    - google cloud
     - python
     - machine learning
   start_date: December 2022
-  end_date: now
+  end_date: December 2025
   site: https://rockfish.ai
   logo: ""
   display: true
@@ -18,29 +51,29 @@
   company: Era Software (acquired by ServiceNow)
   title: Software Engineer
   description: |
-    Era Software is a startup based in Seattle. Era develops a database
-    specialized in log management. A drop in replacement for ElasticSearch at
-    Petabyte scale.  As a Software Engineer write Rust code at various level of
-    the stack. Query planning, data layout and data lifecycle. Era Software got
-    acquired by ServiceNow and it now operates under LightStep.
+     Era Software is a startup based in Seattle. Era develops a database
+     specialized in log management, serving as a drop-in replacement for ElasticSearch at
+     petabyte scale. As a Software Engineer, I wrote Rust code at various levels of
+     the stack, focusing on query planning, data layout, and data lifecycle. Era Software was
+     acquired by ServiceNow and now operates under LightStep.
   techologies:
-    -rust
+    - rust
   start_date: August 2021
   end_date: December 2022
   site: https://lightstep.com/
   logo: ""
   display: true
 -
-  company: Equinix Metal
+  company: PackedHost (acquired by Equinix)
   title: Principal Software Engineer
   description: |
-    Equinix Metal previously known as PacketHost is bare metal Cloud Provider
-    now part of the Equinix portfolio. I am a software engineer part of the
-    Developer Relation team. My responsibility is to develop and maintain
-    developer friendly integrations with the Equinix Metal Platform. I am one
-    of the maintainers and contributors for the Tinkerbell open-source project.
-    A bare metal and datacenter automation tool based on containers
-    technologies and PXE.
+     Equinix Metal, previously known as PacketHost, is a bare metal cloud provider
+     now part of the Equinix portfolio. I was a software engineer on the
+     Developer Relations team. My responsibility was to develop and maintain
+     developer-friendly integrations with the Equinix Metal Platform. I was one
+     of the maintainers and contributors for the Tinkerbell open-source project,
+     a bare metal and datacenter automation tool based on container
+     technologies and PXE.
   techologies:
     - golang
     - docker
@@ -54,18 +87,17 @@
   company: InfluxData
   title: Site Reliability Engineer
   description: |
-    InfluxData is a US startup based in San Francisco. It is developing open
-    source tools to manage time series data. InfluxDB is the database and it is
-    the first product delivered. It builds a full solution around monitor and
-    metrics: Kapacitor (downsampling and alerting), Telegraf (collector),
-    Chronograf (dashboards and UI) are the other parts of the stack. I work as a
-    Site Reliability Engineer mainly on the InfluxCloud product. I develop the
-    backend that manages EC2 services on AWS and containers to spin up and manage
-    clusters on our IaaS offering. Since early 2018 I helped designing and
-    implementing the new SaaS called InfluxCloud v2 that uses modern tools such
-    as Kubernetes. In September 2019 I started to work as part of the compute
-    team to develop an elastic and highly scalable task system to empower
-    InfluxCloud with long running process, bach jobs and data analysis
+     InfluxData is a US startup based in San Francisco. It develops open-source
+     tools to manage time series data. InfluxDB is the database and was the first product delivered.
+     It builds a full solution around monitoring and metrics: Kapacitor (downsampling and alerting),
+     Telegraf (collector), and Chronograf (dashboards and UI) are the other parts of the stack.
+     I worked as a Site Reliability Engineer mainly on the InfluxCloud product. I developed the
+     backend that managed EC2 services on AWS and containers to spin up and manage
+     clusters on our IaaS offering. Since early 2018, I helped design and
+     implement the new SaaS called InfluxCloud v2, which uses modern tools such
+     as Kubernetes. In September 2019, I started working as part of the compute
+     team to develop an elastic and highly scalable task system to empower
+     InfluxCloud with long-running processes, batch jobs, and data analysis.
   techologies:
     - AWS
     - golang
@@ -81,14 +113,12 @@
   company: CurrencyFair Ltd
   title: Software Engineer
   description: |
-    CurrencyFair is an Irish financial tech company, it moves each day money
-    around the world. I started as a Software Engineer in the Mobile and API
-    Team. We are currently building a REST API to support third-party
-    integrations and our mobile applications. Right now I am working more as
-    build engineer and Solution Architect to improve our delivery pipeline, our
-    level of automation and to design and maintain a flexible and safe
-    environment for all our applications. With tools like Jenkins, Chef, Docker
-    and as a service platform like AppDynamics, Logentries and so on.
+     CurrencyFair is an Irish fintech company that moves money around the world daily.
+     I started as a Software Engineer on the Mobile and API team. We built a REST API to support
+     third-party integrations and our mobile applications. I also worked as a build engineer
+     and Solution Architect to improve our delivery pipeline, increase automation, and design
+     and maintain a flexible and secure environment for all our applications. I used tools
+     like Jenkins, Chef, Docker, and platforms such as AppDynamics and Logentries.
   techologies:
     - AWS, chef, jenkins, java, php, oracledb
   start_date: November 2015
@@ -100,15 +130,15 @@
   company: Corley S.r.l.
   title: Software Engineer
   description: |
-    Corley’s company has a great experience in web and mobile application
-    development and it offers a specialized consulting service to a company
-    interested in migrating to the cloud, to achieve high availability,
-    automation, and scalability. I worked as a Software Engineer to design and
-    implement scalable REST API in PHP but also single page applications and
-    hybrid mobile app with AngularJS and Cordova. I also worked as Solution
-    Architect to support our clients during them journeys in Cloud environments
-    as AWS and DigitalOcean and to realize successfully migrations to the
-    Cloud.
+     Corley is a company with extensive experience in web and mobile application
+     development. It offers specialized consulting services to companies
+     interested in migrating to the cloud to achieve high availability,
+     automation, and scalability. I worked as a Software Engineer to design and
+     implement scalable REST APIs in PHP, as well as single-page applications and
+     hybrid mobile apps with AngularJS and Cordova. I also worked as a Solution
+     Architect to support our clients during their journeys in cloud environments
+     such as AWS and DigitalOcean and to successfully execute migrations to the
+     cloud.
   techologies:
     - AWS
     - mysql
@@ -127,9 +157,9 @@
   company: DigitalBees S.r.l
   title: Software Engineer
   description: |
-    DigitalBees is media company operating in music videos and adv. I Developed
-    and maintained an API, and a video marketplace to search and embed multimedia
-    contents into third party websites.
+     DigitalBees is a media company specializing in music videos and advertising. I developed
+     and maintained an API and a video marketplace to search and embed multimedia
+     content into third-party websites.
   techologies:
     - Zend Framework 2
     - MongoDB
@@ -146,8 +176,8 @@
   company: CONTUR S.r.l.
   title: Software Engineer
   description: |
-    CONTUR S.r.l. is a leading company specialized in developing an application
-    for tourism and travel field operators.
+     CONTUR S.r.l. is a leading company specializing in developing applications
+     for tourism and travel operators.
   techologies:
     - PHP
     - Zend Framework
@@ -160,11 +190,11 @@
   company: LACE COREP
   title: Developer
   description: |
-    LACE is a scientific lab where electromagnetic compatibility is studied and
-    measured; as part of Polytechnic of Turin, it gave great importance to
-    research and a new trial on new technologies.
-    I spent most of my time writing and operating an application able to manage
-    the entire lifecycle of tools leaving and coming to the laboratory.
+     LACE is a scientific lab where electromagnetic compatibility is studied and
+     measured. As part of the Polytechnic of Turin, it places great importance on
+     research and trials of new technologies.
+     I spent most of my time writing and operating an application to manage
+     the entire lifecycle of tools entering and leaving the laboratory.
   techologies:
     - PHP
     - PostgreSQL
