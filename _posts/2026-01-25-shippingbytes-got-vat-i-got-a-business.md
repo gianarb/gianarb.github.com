@@ -4,7 +4,7 @@ title:  "I own a business and ShippingBytes got its own VAT number"
 date:   2026-01-25 06:08:27
 categories: [post]
 tags: [shippingbytes, work]
-summary: ""
+summary: "From \"ShippingBytes did not work\" to owning a business: why I made the shift, how I work, and what I’m offering."
 changefreq: monthly
 ---
 
